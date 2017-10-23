@@ -9,8 +9,8 @@ Stormcaller - The opponent's battleships are surrounded by bad weather and unabl
 
 Perhaps the grid of territorys will look like this: (S represents a random commander's territory) (-> represents the player's location)
 <br />
-{-----}{-----}{-----}{-----}{-----} <br />
-{  -> }{     }{  S  }{     }{     } <br />
-{-----}{     }{-----}{-----}{-----} <br />
-{     }{  T  }{     }{     }{     } <br />
-{-----}{-----}{-----}{-----}{-----} <br />
+"{-----}{-----}{-----}{-----}{-----}" <br />
+"{  -> }{     }{  S  }{     }{     }" <br />
+"{-----}{     }{-----}{-----}{-----}" <br />
+"{     }{  T  }{     }{     }{     }" <br />
+"{-----}{-----}{-----}{-----}{-----}" <br />
