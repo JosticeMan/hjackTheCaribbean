@@ -14,3 +14,7 @@ Perhaps the grid of territorys will look like this: (S represents a random comma
 "{-----}{     }{-----}{-----}{-----}" <br />
 "{     }{  T  }{     }{     }{     }" <br />
 "{-----}{-----}{-----}{-----}{-----}" <br />
+
+Additional Optional Cosmetics: 
+- Add character icons to the chat display and have the msgs be displayed on the line in the middle of the icon
+
