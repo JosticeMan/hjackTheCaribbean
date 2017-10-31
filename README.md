@@ -7,7 +7,7 @@ BoinkRader - Gives the player a general idea of where one of the opponent's ship
 CriticalMissile - Sets a missile off that will guarantee a hit on a boat in a turn but the user cannot do anything in that time.  <br />
 Stormcaller - The opponent's battleships are surrounded by bad weather and unable to make a player for one turn. <br />
 
-Perhaps the grid of territorys will look like this: (S represents a random commander's territory) (-> represents the player's location)
+Perhaps the grid of territorys will look like this:
 <br />
  |________________| <br />
  |P          ==   | <br />
