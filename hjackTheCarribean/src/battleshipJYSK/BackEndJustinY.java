@@ -17,7 +17,7 @@ public class BackEndJustinY {
 	 ------------------------------------------
 	 
 	 FOR THE GAMEBOARD:
-	 Use 2D arrays to keep track of the ship placements and areas hit 
+	 Use 2D arrays to keep track of the ship placements and areas hit. 
 	 ------------------------------------------
 	 KEY: 
 	 X - Areas hit
@@ -64,4 +64,36 @@ public class BackEndJustinY {
 	 Give commanders a special fig (icon) so that the dialogues are more appealing, cosmetic wise. 
 	 ------------------------------------------
 	*/
+	
+	private boolean playing;
+
+	private int commanderLevel;
+	
+	private String[][] theGameBoard;
+	
+	public BackEndJustinY() {
+		playing = false;
+		commanderLevel = 1;
+	}
+	
+	public void startPlaying() {
+		playing = true;
+		while(playing) {
+			generateMap();
+		}
+		commanderLevel++;
+	}
+	
+	/**
+	 * 
+	 */
+	public void generateMap() {
+		int dimension = 5+(commanderLevel - 1);
+		theGameBoard = new String[dimension][dimension];
+	}
+	
+	public String[][] getTheGameBoard() {
+		return theGameBoard;
+	}
+	
 }
