@@ -69,7 +69,8 @@ public class BackEndJustinY {
 
 	private int commanderLevel;
 	
-	private String[][] theGameBoard;
+	private String[][] thePlayerGameBoard;
+	private String[][] theOpponentGameBoard;
 	
 	public BackEndJustinY() {
 		playing = false;
@@ -85,15 +86,20 @@ public class BackEndJustinY {
 	}
 	
 	/**
-	 * 
+	 * This generates a new 2D array of the appropriate board size; 
 	 */
 	public void generateMap() {
 		int dimension = 5+(commanderLevel - 1);
-		theGameBoard = new String[dimension][dimension];
+		thePlayerGameBoard = new String[dimension][dimension];
+		theOpponentGameBoard = new String[dimension][dimension];
 	}
 	
-	public String[][] getTheGameBoard() {
-		return theGameBoard;
+	public String[][] getThePlayerGameBoard() {
+		return thePlayerGameBoard;
+	}
+	
+	public String[][] getTheOpponentGameBoard() {
+		return theOpponentGameBoard;
 	}
 	
 }
