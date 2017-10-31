@@ -18,7 +18,7 @@ Perhaps the grid of territorys will look like this: (S represents a random comma
 Additional Optional Cosmetics: 
 - Add character icons to the chat display and have the msgs be displayed on the line in the middle of the icon
 
-Dan&&Steven
+Dan&&Steven<br/>
 3 Stats
 HP(multiples of 10)(50 cap)
 Attack(cap 25)
