@@ -68,6 +68,7 @@ public class BackEndJustinY {
 	private boolean playing;
 
 	private int commanderLevel;
+	private boolean isPlayerTurn;
 	
 	private String[][] thePlayerGameBoard;
 	private String[][] theOpponentGameBoard;
@@ -77,12 +78,21 @@ public class BackEndJustinY {
 		commanderLevel = 1;
 	}
 	
-	public void startPlaying() {
+	public void startBattle() {
 		playing = true;
+		generateMap(); //Generate the opponent and player game board for the game to begin
+		determineFirstTurn(); //Essentially a coin flip that determines who makes the first move
 		while(playing) {
-			generateMap();
+
 		}
 		commanderLevel++;
+	}
+	
+	public void determineFirstTurn() {
+		if(Math.random() < .50) {
+			isPlayerTurn = true;
+		}
+		isPlayerTurn = false;
 	}
 	
 	/**
