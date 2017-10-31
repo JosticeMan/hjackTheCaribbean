@@ -18,3 +18,38 @@ Perhaps the grid of territorys will look like this: (S represents a random comma
 Additional Optional Cosmetics: 
 - Add character icons to the chat display and have the msgs be displayed on the line in the middle of the icon
 
+Dan&&Steven<br/>
+3 Stats
+HP(multiples of 10)(50 cap)
+Attack(cap 25)
+Speed (how many times we can move,1-5)
+
+Grid 5x5 on first boss(up to a 10x10 on the last)
+
+7 ships
+balanced
+20
+10
+1
+attack
+10
+15
+1
+speed
+10
+10
+2
+every boss kill we can upgrade the following:
++10
++5
++1
+
+7 ship sizes:
+2
+1
+1
+3
+3
+4
+5
+
