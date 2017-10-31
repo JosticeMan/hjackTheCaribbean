@@ -17,6 +17,9 @@ Perhaps the grid of territorys will look like this:
  | T        M ==  | <br />
  |________________| <br />
 
+MAP KEY:
+
+
 Additional Optional Cosmetics: 
 - Add character icons to the chat display and have the msgs be displayed on the line in the middle of the icon
 
