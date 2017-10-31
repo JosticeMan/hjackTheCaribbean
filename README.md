@@ -26,24 +26,24 @@ Speed (how many times we can move,1-5)
 
 Grid 5x5 on first boss(up to a 10x10 on the last)
 
-7 ships
+7 ships <br />
 balanced
 20
 10
-1
+1 <br />
 attack
 10
 15
-1
+1 <br />
 speed
 10
 10
-2
-every boss kill we can upgrade the following:
+2 <br />
+every boss kill we can upgrade the following: <br />
 +10
 +5
 +1
-
+<br />
 7 ship sizes:
 2
 1
