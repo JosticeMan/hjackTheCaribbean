@@ -9,11 +9,13 @@ Stormcaller - The opponent's battleships are surrounded by bad weather and unabl
 
 Perhaps the grid of territorys will look like this: (S represents a random commander's territory) (-> represents the player's location)
 <br />
-"{-----}{-----}{-----}{-----}{-----}" <br />
-"{  -> }{     }{  S  }{     }{     }" <br />
-"{-----}{     }{-----}{-----}{-----}" <br />
-"{     }{  T  }{     }{     }{     }" <br />
-"{-----}{-----}{-----}{-----}{-----}" <br />
+ |________________| <br />
+ |P          ==   | <br />
+ |=====     M     | <br />
+ |              =B| <br />
+ | ===            | <br />
+ | T        M ==  | <br />
+ |________________| <br />
 
 Additional Optional Cosmetics: 
 - Add character icons to the chat display and have the msgs be displayed on the line in the middle of the icon
