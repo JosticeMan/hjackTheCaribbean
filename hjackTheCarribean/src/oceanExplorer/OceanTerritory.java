@@ -75,12 +75,12 @@ public class OceanTerritory {
 	 * Gives this room access to anotherRoom (and vice-versa)
 	 * and sets a door between them, updating the directions
 	 * @param direction
-	 * @param anotherRoom
-	 * @param door
+	 * @param anotherTerritory
+	 * @param riptide
 	 */
-	public void setConnection(int direction, OceanTerritory anotherRoom, Riptides door) {
-		addRoom(direction, anotherRoom, door);
-		anotherRoom.addRoom(oppositeDirection(direction), this, door);
+	public void setConnection(int direction, OceanTerritory anotherTerritory, Riptides riptide) {
+		addRoom(direction, anotherTerritory, riptide);
+		anotherTerritory.addRoom(oppositeDirection(direction), this, riptide);
 	}
 	
 	public int oppositeDirection(int direction) {
@@ -89,8 +89,8 @@ public class OceanTerritory {
 		return (direction + 2)%4;
 	}
 
-	public void addRoom(int direction, OceanTerritory cave, Riptides door) {
-		borderingTerritories[direction] = cave;
+	public void addRoom(int direction, OceanTerritory territory, Riptides door) {
+		borderingTerritories[direction] = territory;
 		riptides[direction] = door;
 		setDirections();
 	}
