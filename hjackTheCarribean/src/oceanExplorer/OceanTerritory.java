@@ -7,8 +7,8 @@ public class OceanTerritory {
 	private String contents; //A symbol representing what's in the room
 	private String defaultContents;
 	//The rooms are organized by direction, 'null' signifies no room/doors in that direction
-	private OceanTerritory[] borderingRooms;
-	private Riptides[] doors;
+	private OceanTerritory[] borderingTerritories;
+	private Riptides[] riptides;
 	
 	public static final int NORTH = 0;
 	public static final int EAST = 1;
@@ -24,8 +24,8 @@ public class OceanTerritory {
 		//contents
 		
 		//Note: By default, arrays will populate with 'null', meaning there are no connections
-		borderingRooms = new OceanTerritory[4];
-		doors = new Riptides[4];
+		borderingTerritories = new OceanTerritory[4];
+		riptides = new Riptides[4];
 		setDirections();
 	}
 
@@ -42,9 +42,9 @@ public class OceanTerritory {
 		directions = "";
 		boolean doorFound = false;
 		for(int i = NORTH; i < WEST + 1; i++) {
-			if(doors[i] != null) {
+			if(riptides[i] != null) {
 				doorFound = true;
-				directions += "\n   There is a " + doors[i].getDescription() + " to " + toDirection(i) + ". " + doors[i].getDetails();
+				directions += "\n   There is a " + riptides[i].getDescription() + " to " + toDirection(i) + ". " + riptides[i].getDetails();
 			}
 		}
 		if(!doorFound) {
@@ -90,8 +90,8 @@ public class OceanTerritory {
 	}
 
 	public void addRoom(int direction, OceanTerritory cave, Riptides door) {
-		borderingRooms[direction] = cave;
-		doors[direction] = door;
+		borderingTerritories[direction] = cave;
+		riptides[direction] = door;
 		setDirections();
 	}
 	
@@ -125,10 +125,10 @@ public class OceanTerritory {
 		//First, protect against null pointer exception
 		//(user cannot go through a non existent door)
 		if(direction < 4) {
-			if(borderingRooms[direction] != null && 
-					doors[direction] != null) {
+			if(borderingTerritories[direction] != null && 
+					riptides[direction] != null) {
 				OceanExplorerMain.currentTerritory.leave();
-				OceanExplorerMain.currentTerritory = borderingRooms[direction];
+				OceanExplorerMain.currentTerritory = borderingTerritories[direction];
 				OceanExplorerMain.currentTerritory.enter();
 				OceanExplorerMain.inventory.updateMap();
 			}
@@ -211,9 +211,9 @@ public class OceanTerritory {
 		this.defaultContents = defaultContents;
 	}
 
-	public Riptides getDoor(int direction) {
-		if(direction >= 0 && direction < doors.length) {
-			return doors[direction];
+	public Riptides getRiptide(int direction) {
+		if(direction >= 0 && direction < riptides.length) {
+			return riptides[direction];
 		}
 		else {
 			return null;

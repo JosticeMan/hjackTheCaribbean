@@ -20,7 +20,7 @@ public class Inventory {
 				String text = "";
 				for(OceanTerritory cr : row) {
 					//If door is open, leave open
-					if(cr.getDoor(OceanTerritory.WEST) != null && cr.getDoor(OceanTerritory.WEST).isOpen()) {
+					if(cr.getRiptide(OceanTerritory.WEST) != null && cr.getRiptide(OceanTerritory.WEST).isOpen()) {
 						text += " ";
 					}
 					else {
@@ -35,7 +35,7 @@ public class Inventory {
 					}
 					else if(i == 2) {
 						//Draw space if door to south is open 
-						if(cr.getDoor(OceanTerritory.SOUTH) != null && cr.getDoor(OceanTerritory.SOUTH).isOpen()) {
+						if(cr.getRiptide(OceanTerritory.SOUTH) != null && cr.getRiptide(OceanTerritory.SOUTH).isOpen()) {
 							text += "   "; //3 spaces
 						}
 						else {
