@@ -33,16 +33,24 @@ public class NPC {
 	}
 	
 	public void interact() {
-		OceanExplorerMain.print("Hi! I'm an NPC. I say nothing at all till you say 'bye'.");
+		printNPCGreeting();
 		String response = OceanExplorerMain.in.nextLine();
-		while(!response.equalsIgnoreCase("bye")) {
-			OceanExplorerMain.print("...");
-			response = OceanExplorerMain.in.nextLine();
-		}
+		processResponse(response);
 		OceanExplorerMain.print("Well, that was fun. Later!");
 		active = false;
 	}
 
+	public void printNPCGreeting() {
+		OceanExplorerMain.print("Hi! I'm an NPC. I say nothing at all till you say 'bye'.");
+	}
+	
+	public void processResponse(String response) {
+		while(!response.equalsIgnoreCase("bye")) {
+			OceanExplorerMain.print("...");
+			response = OceanExplorerMain.in.nextLine();
+		}
+	}
+	
 	public boolean isActive() {
 		return active;
 	}
@@ -73,8 +81,8 @@ public class NPC {
 	public void act() {
 		if(active) {
 			int[] move = calculateMovement();
-			int newRow = currentRow + move[0];
-			int newCol = currentCol + move[1];
+			int newRow = move[0];
+			int newCol = move[1];
 			setPosition(newRow, newCol);
 		}
 	}

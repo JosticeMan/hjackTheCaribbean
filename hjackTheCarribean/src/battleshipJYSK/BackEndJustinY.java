@@ -65,20 +65,20 @@ public class BackEndJustinY {
 	 ------------------------------------------
 	*/
 	
-	private boolean playing;
+	private static boolean playing;
 
-	private int commanderLevel;
-	private boolean isPlayerTurn;
+	private static int commanderLevel;
+	private static boolean isPlayerTurn;
 	
-	private String[][] thePlayerGameBoard;
-	private String[][] theOpponentGameBoard;
+	private static String[][] thePlayerGameBoard;
+	private static String[][] theOpponentGameBoard;
 	
 	public BackEndJustinY() {
 		playing = false;
-		commanderLevel = 1;
 	}
 	
-	public void startBattle() {
+	public static void startBattle(int gameLevel) {
+		commanderLevel = gameLevel;
 		playing = true;
 		generateMap(); //Generate the opponent and player game board for the game to begin
 		determineFirstTurn(); //Essentially a coin flip that determines who makes the first move
@@ -88,7 +88,7 @@ public class BackEndJustinY {
 		commanderLevel++;
 	}
 	
-	public void determineFirstTurn() {
+	public static void determineFirstTurn() {
 		if(Math.random() < .50) {
 			isPlayerTurn = true;
 		}
@@ -98,7 +98,7 @@ public class BackEndJustinY {
 	/**
 	 * This generates a new 2D array of the appropriate board size; 
 	 */
-	public void generateMap() {
+	public static void generateMap() {
 		int dimension = 5+(commanderLevel - 1);
 		thePlayerGameBoard = new String[dimension][dimension];
 		theOpponentGameBoard = new String[dimension][dimension];

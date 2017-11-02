@@ -48,7 +48,7 @@ public class OceanTerritory {
 			}
 		}
 		if(!doorFound) {
-			directions = "There are no doors in your room. You're trapped";
+			directions = "You are surrounded by riptides. You're trapped! Game Over!";
 		}
 	}
 
