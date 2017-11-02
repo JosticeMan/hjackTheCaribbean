@@ -1,4 +1,4 @@
-package caveExplorer;
+package oceanExplorer;
 
 public class TwoDArrayPractice {
 

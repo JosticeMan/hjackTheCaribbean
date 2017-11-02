@@ -1,19 +1,19 @@
-package caveExplorer;
+package oceanExplorer;
 
 import java.util.Scanner;
 
-public class CaveExplorer {
+public class OceanExplorerMain {
 
-	public static CaveRoom[][] caves; //Every one in the cave
+	public static OceanTerritory[][] territories; //Every one in the cave
 	public static Scanner in; //For user input
-	public static CaveRoom currentRoom; //Changes based on how the user navigated
+	public static OceanTerritory currentTerritory; //Changes based on how the user navigated
 	public static Inventory inventory; //Where are all objects found are kept
 	public static boolean playing = true;
 	public static NPC[] npcs;
 	
 	public static void main(String[] args) {
 		in = new Scanner(System.in);
-		CaveRoom.setUpCaves();
+		OceanTerritory.setUpTerritories();
 		
 		inventory = new Inventory();
 		startExploring();
@@ -23,10 +23,10 @@ public class CaveExplorer {
 		while(playing) {
 			npcActions();
  			print(inventory.getDescription());
- 			print(currentRoom.getDescription());
+ 			print(currentTerritory.getDescription());
  			print("What would you like to do?");
  			String input = in.nextLine();
- 			currentRoom.interpretInput(input);
+ 			currentTerritory.interpretInput(input);
  		}
 	}
 	

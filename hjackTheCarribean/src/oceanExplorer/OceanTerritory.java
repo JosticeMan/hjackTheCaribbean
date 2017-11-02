@@ -1,21 +1,21 @@
-package caveExplorer;
+package oceanExplorer;
 
-public class CaveRoom {
+public class OceanTerritory {
 
 	private String description; //Tells the room looks like
 	private String directions; //Tells what you can do 
 	private String contents; //A symbol representing what's in the room
 	private String defaultContents;
 	//The rooms are organized by direction, 'null' signifies no room/doors in that direction
-	private CaveRoom[] borderingRooms;
-	private Door[] doors;
+	private OceanTerritory[] borderingRooms;
+	private Riptides[] doors;
 	
 	public static final int NORTH = 0;
 	public static final int EAST = 1;
 	public static final int SOUTH = 2;
 	public static final int WEST = 3;
 	
-	public CaveRoom(String description) {
+	public OceanTerritory(String description) {
 		this.description = description;
 		setDefaultContents(" ");
 		contents = defaultContents;
@@ -24,8 +24,8 @@ public class CaveRoom {
 		//contents
 		
 		//Note: By default, arrays will populate with 'null', meaning there are no connections
-		borderingRooms = new CaveRoom[4];
-		doors = new Door[4];
+		borderingRooms = new OceanTerritory[4];
+		doors = new Riptides[4];
 		setDirections();
 	}
 
@@ -78,7 +78,7 @@ public class CaveRoom {
 	 * @param anotherRoom
 	 * @param door
 	 */
-	public void setConnection(int direction, CaveRoom anotherRoom, Door door) {
+	public void setConnection(int direction, OceanTerritory anotherRoom, Riptides door) {
 		addRoom(direction, anotherRoom, door);
 		anotherRoom.addRoom(oppositeDirection(direction), this, door);
 	}
@@ -89,7 +89,7 @@ public class CaveRoom {
 		return (direction + 2)%4;
 	}
 
-	public void addRoom(int direction, CaveRoom cave, Door door) {
+	public void addRoom(int direction, OceanTerritory cave, Riptides door) {
 		borderingRooms[direction] = cave;
 		doors[direction] = door;
 		setDirections();
@@ -98,7 +98,7 @@ public class CaveRoom {
 	public void interpretInput(String input) {
 		while(!isValid(input)) {
 			printAllowedEntry();
-			input = CaveExplorer.in.nextLine();
+			input = OceanExplorerMain.in.nextLine();
 		}
 		int direction = determineDirection(input, validKeys());
 		//Task: convert user input into a direction
@@ -127,10 +127,10 @@ public class CaveRoom {
 		if(direction < 4) {
 			if(borderingRooms[direction] != null && 
 					doors[direction] != null) {
-				CaveExplorer.currentRoom.leave();
-				CaveExplorer.currentRoom = borderingRooms[direction];
-				CaveExplorer.currentRoom.enter();
-				CaveExplorer.inventory.updateMap();
+				OceanExplorerMain.currentTerritory.leave();
+				OceanExplorerMain.currentTerritory = borderingRooms[direction];
+				OceanExplorerMain.currentTerritory.enter();
+				OceanExplorerMain.inventory.updateMap();
 			}
 		} 
 		else {
@@ -150,30 +150,30 @@ public class CaveRoom {
 	 * This will be where your group sets up all the caves
 	 * and all the connections
 	 */
-	public static void setUpCaves() {
+	public static void setUpTerritories() {
 		//ALL OF THIS CODE CAN BE CHANGED
 		//1. Decide how big your caves should be
-		CaveExplorer.caves = new NPCRoom[5][5];
+		OceanExplorerMain.territories = new NPCRoom[5][5];
 		//2. Populate with caves and a default description: hint: when starting, use coordinates (helps debugging)
-		for(int row = 0; row < CaveExplorer.caves.length; row++) {
+		for(int row = 0; row < OceanExplorerMain.territories.length; row++) {
 			//PLEASE PAY ATTENTION TO THE DIFFERENCE:
-			for(int col = 0; col < CaveExplorer.caves[row].length; col++) {
+			for(int col = 0; col < OceanExplorerMain.territories[row].length; col++) {
 				//create a "default" cave
-				CaveExplorer.caves[row][col] = 
+				OceanExplorerMain.territories[row][col] = 
 						new NPCRoom("This cave has coords ("+row+","+col+")");
 			}
 		}
 		//3. Replace default rooms with custom rooms
 		//--- WE WILL DO LATER
-		CaveExplorer.npcs = new NPC[1];
-		CaveExplorer.npcs[0] = new NPC();
-		CaveExplorer.npcs[0].setPosition(1, 1);
+		OceanExplorerMain.npcs = new NPC[1];
+		OceanExplorerMain.npcs[0] = new NPC();
+		OceanExplorerMain.npcs[0].setPosition(1, 1);
 		//4. Set your starting room:
-		CaveExplorer.currentRoom = CaveExplorer.caves[0][1];
-		CaveExplorer.currentRoom.enter();
+		OceanExplorerMain.currentTerritory = OceanExplorerMain.territories[0][1];
+		OceanExplorerMain.currentTerritory.enter();
 		//5. Set up doors
-		CaveRoom[][] c = CaveExplorer.caves;
-		c[0][1].setConnection(SOUTH, c[1][1], new Door());
+		OceanTerritory[][] c = OceanExplorerMain.territories;
+		c[0][1].setConnection(SOUTH, c[1][1], new Riptides());
 		/**
 		 * Special requests:
 		 * moving objects in caves
@@ -211,7 +211,7 @@ public class CaveRoom {
 		this.defaultContents = defaultContents;
 	}
 
-	public Door getDoor(int direction) {
+	public Riptides getDoor(int direction) {
 		if(direction >= 0 && direction < doors.length) {
 			return doors[direction];
 		}

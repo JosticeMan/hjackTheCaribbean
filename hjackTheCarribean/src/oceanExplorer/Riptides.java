@@ -1,13 +1,13 @@
-package caveExplorer;
+package oceanExplorer;
 
-public class Door {
+public class Riptides {
 
 	private boolean locked;
 	private boolean open;
 	private String description;
 	private String details;
 	
-	public Door() {
+	public Riptides() {
 		locked = false;
 		open = true;
 		description = "passage";
