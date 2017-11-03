@@ -63,7 +63,7 @@ public class BackEndJustinY {
 	 IF TIME ALLOWS IT: 
 	 Give commanders a special fig (icon) so that the dialogues are more appealing, cosmetic wise. 
 	 ------------------------------------------\
-	 TEST
+	 DERP
 	*/
 	
 	private static boolean playing;
