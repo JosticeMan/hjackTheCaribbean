@@ -54,7 +54,7 @@ public class CaveExplorer {
 	  
 	public static void multiLinePrint(String s){
 		  String printString = "";
-		  int cutoff = 55;
+		  int cutoff = 500;
 		  //this while loop last as long as there are words left in the original String
 		  while(s.length() > 0){
 
