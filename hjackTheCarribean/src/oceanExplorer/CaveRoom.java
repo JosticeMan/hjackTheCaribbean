@@ -168,6 +168,10 @@ public class CaveRoom {
 		CaveExplorer.npcs = new NPC[1];
 		CaveExplorer.npcs[0] = new NPC();
 		CaveExplorer.npcs[0].setPosition(1, 1);
+		
+		CaveRoom SunnyRoom = new NPCRoom("This is Sunny's room");
+		CaveExplorer.caves[4][4] = SunnyRoom;
+		
 		//4. Set your starting room:
 		CaveExplorer.currentRoom = CaveExplorer.caves[0][1];
 		CaveExplorer.currentRoom.enter();
