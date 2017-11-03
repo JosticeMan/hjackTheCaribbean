@@ -124,11 +124,11 @@ public class CaveRoom {
 	public void respondToKey(int direction) {
 		//First, protect against null pointer exception
 		//(user cannot go through a non existent door)
-		if(direction < 4) {
+		if(direction < numberOfDirections()) {
 			if(borderingRooms[direction] != null && 
 					doors[direction] != null) {
 				CaveExplorer.currentRoom.leave();
-				CaveExplorer.currentRoom = borderingRooms[direction];
+				CaveExplorer.currentRoom = borderingRooms[manageCurrentRoomShift(direction)];
 				CaveExplorer.currentRoom.enter();
 				CaveExplorer.inventory.updateMap();
 			}
@@ -138,6 +138,14 @@ public class CaveRoom {
 		}
 	} 
 
+	public int numberOfDirections() {
+		return 4;
+	}
+	
+	public int manageCurrentRoomShift(int direction) {
+		return direction;
+	}
+	
 	/**
 	 * Override to give response to keys other than wasd
 	 * @param direction
@@ -170,7 +178,7 @@ public class CaveRoom {
 		CaveRoom sRoom = new SunnyRoom("This is Sunny's room");
 		CaveExplorer.caves[4][4] = sRoom;
 		//Justin's Room (This will be the room for boss fights)
-		CaveRoom jRoom = new JustinBossRoom("You've entered the territory of a commander! The commander is coming soon. Prepare to play a game of battleship or run!");
+		CaveRoom jRoom = new JustinBossRoom("Announcer: You've entered the territory of a commander! The commander is coming soon. Prepare to play a game of battleship or run!", 1);
 		CaveExplorer.caves[3][4] = jRoom;
 		
 		//4. Set your starting room:
