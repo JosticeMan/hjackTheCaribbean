@@ -2,10 +2,12 @@ package battleshipJYSK;
 
 public class FrontEndSunnyK {
 	
+	private String[][] playerMap;
+	
 	//Shows both player and boss' fields
 	public void displayMap()
 	{
-		private String[][] playerMap = BackEndJustinY.getThePlayerGameBoard();
-		for(int i = 0; i < )
+		String[][] playerMap = BackEndJustinY.getThePlayerGameBoard();
+		
 	}
 }
