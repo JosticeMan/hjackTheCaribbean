@@ -10,17 +10,17 @@ public class Inventory {
 
 	public void updateMap() {
 		map = " ";
-		for(int col = 0; col < OceanExplorerMain.territories[0].length - 1; col++) {
+		for(int col = 0; col < CaveExplorer.caves[0].length - 1; col++) {
 			map += "____"; // 4 underscores
 		}
 		map += "___ \n"; // 3 underscores
-		for(OceanTerritory[] row: OceanExplorerMain.territories) {
+		for(CaveRoom[] row: CaveExplorer.caves) {
 			//3 rows of text
 			for(int i = 0; i < 3; i++) {
 				String text = "";
-				for(OceanTerritory cr : row) {
+				for(CaveRoom cr : row) {
 					//If door is open, leave open
-					if(cr.getRiptide(OceanTerritory.WEST) != null && cr.getRiptide(OceanTerritory.WEST).isOpen()) {
+					if(cr.getDoor(CaveRoom.WEST) != null && cr.getDoor(CaveRoom.WEST).isOpen()) {
 						text += " ";
 					}
 					else {
@@ -35,7 +35,7 @@ public class Inventory {
 					}
 					else if(i == 2) {
 						//Draw space if door to south is open 
-						if(cr.getRiptide(OceanTerritory.SOUTH) != null && cr.getRiptide(OceanTerritory.SOUTH).isOpen()) {
+						if(cr.getDoor(CaveRoom.SOUTH) != null && cr.getDoor(CaveRoom.SOUTH).isOpen()) {
 							text += "   "; //3 spaces
 						}
 						else {
