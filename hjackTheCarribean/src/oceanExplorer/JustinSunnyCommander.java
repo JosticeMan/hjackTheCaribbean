@@ -19,7 +19,7 @@ public class JustinSunnyCommander extends NPC {
 		this.level = level;
 		this.name = name;
 		
-		String[] tempCG = {this.name + ": I see you have traveled to my domain! How dare you step in " + this.name + "'s territory! Prepare yourself!", this.name + ": Who dares challenges me? The Great " + this.name + "!?", this.name + ": You want this land? Come and get some!"};
+		String[] tempCG = {this.name + ": How dare you step in " + this.name + "'s territory! Prepare yourself!", this.name + ": Who dares challenges me? The Great " + this.name + "!?", this.name + ": You want this land? Come and get some!"};
 		commanderGreetings = tempCG;
 	}
 	
