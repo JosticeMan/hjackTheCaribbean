@@ -153,24 +153,37 @@ public class CaveRoom {
 	public static void setUpCaves() {
 		//ALL OF THIS CODE CAN BE CHANGED
 		//1. Decide how big your caves should be
-		CaveExplorer.caves = new NPCRoom[5][5];
+		CaveExplorer.caves = new CaveRoom[5][5];
 		//2. Populate with caves and a default description: hint: when starting, use coordinates (helps debugging)
 		for(int row = 0; row < CaveExplorer.caves.length; row++) {
 			//PLEASE PAY ATTENTION TO THE DIFFERENCE:
 			for(int col = 0; col < CaveExplorer.caves[row].length; col++) {
 				//create a "default" cave
 				CaveExplorer.caves[row][col] = 
-						new NPCRoom("This cave has coords ("+row+","+col+")");
+						new CaveRoom("This cave has coords ("+row+","+col+")");
 			}
 		}
+		
+		//Steven room goes here
+		CaveExplorer.caves[1][2]=new StevenRoom("This is Steven's");
+		CaveExplorer.caves[0][1].setConnection(EAST,CaveExplorer.caves[0][2],new Door());
+		CaveExplorer.caves[0][2].setConnection(SOUTH,CaveExplorer.caves[1][2],new Door());
+		
+		//Dan room
+		CaveExplorer.caves[1][3]=new StevenRoom("This is Dan's Room.");
+		CaveExplorer.caves[0][2].setConnection(EAST,CaveExplorer.caves[0][3],new Door());
+		CaveExplorer.caves[0][3].setConnection(SOUTH,CaveExplorer.caves[1][3],new Door());
+		
 		//3. Replace default rooms with custom rooms
 		//--- WE WILL DO LATER
+
 		CaveExplorer.npcs = new NPC[1];
 		CaveExplorer.npcs[0] = new NPC();
 		CaveExplorer.npcs[0].setPosition(1, 1);
 		
 		CaveRoom SunnyRoom = new NPCRoom("This is Sunny's room");
 		CaveExplorer.caves[4][4] = SunnyRoom;
+
 		
 		//4. Set your starting room:
 		CaveExplorer.currentRoom = CaveExplorer.caves[0][1];
