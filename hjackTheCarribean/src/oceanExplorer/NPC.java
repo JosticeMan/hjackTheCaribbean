@@ -3,7 +3,7 @@ package oceanExplorer;
 public class NPC {
 
 	//Fields relating to navigation 
-	private OceanTerritory[][] floor; //Where the NPC roams
+	private CaveRoom[][] floor; //Where the NPC roams
 	private int currentRow;
 	private int currentCol;
 	private NPCRoom currentRoom;
@@ -22,7 +22,7 @@ public class NPC {
 	 * }
 	 */
 	public NPC() {
-		this.floor = OceanExplorerMain.territories;
+		this.floor = CaveExplorer.caves;
 		this.activeDescription = "There is a person waiting to talk to you.";
 		this.inactiveDescription = "The person you spoke to earlier is standing here";
 		//To indicate the NPC doesn't have a position yet, use coordinates (-1, -1)
@@ -33,24 +33,16 @@ public class NPC {
 	}
 	
 	public void interact() {
-		printNPCGreeting();
-		String response = OceanExplorerMain.in.nextLine();
-		processResponse(response);
-		OceanExplorerMain.print("Well, that was fun. Later!");
+		CaveExplorer.print("Hi! I'm an NPC. I say nothing at all till you say 'bye'.");
+		String response = CaveExplorer.in.nextLine();
+		while(!response.equalsIgnoreCase("bye")) {
+			CaveExplorer.print("...");
+			response = CaveExplorer.in.nextLine();
+		}
+		CaveExplorer.print("Well, that was fun. Later!");
 		active = false;
 	}
 
-	public void printNPCGreeting() {
-		OceanExplorerMain.print("Hi! I'm an NPC. I say nothing at all till you say 'bye'.");
-	}
-	
-	public void processResponse(String response) {
-		while(!response.equalsIgnoreCase("bye")) {
-			OceanExplorerMain.print("...");
-			response = OceanExplorerMain.in.nextLine();
-		}
-	}
-	
 	public boolean isActive() {
 		return active;
 	}
@@ -93,7 +85,7 @@ public class NPC {
 		int rand = (int) (Math.random() * possibleMoves.length);
 		moves[0] = possibleMoves[rand][0] + currentRow;
 		moves[1] = possibleMoves[rand][1] + currentCol;
-		while(currentRoom.getRiptide(rand) == null || !(OceanExplorerMain.territories[moves[0]][moves[1]] instanceof NPCRoom)) {
+		while(currentRoom.getDoor(rand) == null || !(CaveExplorer.caves[moves[0]][moves[1]] instanceof NPCRoom)) {
 			rand = (int) (Math.random() * possibleMoves.length);
 			moves[0] = possibleMoves[rand][0] + currentRow;
 			moves[1] = possibleMoves[rand][1] + currentCol;

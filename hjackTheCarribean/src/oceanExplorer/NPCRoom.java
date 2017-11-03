@@ -1,6 +1,6 @@
 package oceanExplorer;
 
-public class NPCRoom extends OceanTerritory {
+public class NPCRoom extends CaveRoom {
 
 	private NPC presentNPC;
 	
@@ -56,7 +56,7 @@ public class NPCRoom extends OceanTerritory {
 			  presentNPC.interact();
 		  }
 		  else {
-			  OceanExplorerMain.print("There is nothing to interact with.");
+			  CaveExplorer.print("There is nothing to interact with.");
 		  }
 		} else {
 			System.out.println("That key does not exist.");

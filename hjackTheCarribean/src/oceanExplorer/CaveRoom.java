@@ -1,21 +1,21 @@
 package oceanExplorer;
 
-public class OceanTerritory {
+public class CaveRoom {
 
 	private String description; //Tells the room looks like
 	private String directions; //Tells what you can do 
 	private String contents; //A symbol representing what's in the room
 	private String defaultContents;
 	//The rooms are organized by direction, 'null' signifies no room/doors in that direction
-	private OceanTerritory[] borderingTerritories;
-	private Riptides[] riptides;
+	private CaveRoom[] borderingRooms;
+	private Door[] doors;
 	
 	public static final int NORTH = 0;
 	public static final int EAST = 1;
 	public static final int SOUTH = 2;
 	public static final int WEST = 3;
 	
-	public OceanTerritory(String description) {
+	public CaveRoom(String description) {
 		this.description = description;
 		setDefaultContents(" ");
 		contents = defaultContents;
@@ -24,8 +24,8 @@ public class OceanTerritory {
 		//contents
 		
 		//Note: By default, arrays will populate with 'null', meaning there are no connections
-		borderingTerritories = new OceanTerritory[4];
-		riptides = new Riptides[4];
+		borderingRooms = new CaveRoom[4];
+		doors = new Door[4];
 		setDirections();
 	}
 
@@ -42,13 +42,13 @@ public class OceanTerritory {
 		directions = "";
 		boolean doorFound = false;
 		for(int i = NORTH; i < WEST + 1; i++) {
-			if(riptides[i] != null) {
+			if(doors[i] != null) {
 				doorFound = true;
-				directions += "\n   There is a " + riptides[i].getDescription() + " to " + toDirection(i) + ". " + riptides[i].getDetails();
+				directions += "\n   There is a " + doors[i].getDescription() + " to " + toDirection(i) + ". " + doors[i].getDetails();
 			}
 		}
 		if(!doorFound) {
-			directions = "You are surrounded by riptides. You're trapped! Game Over!";
+			directions = "There are no doors in your room. You're trapped";
 		}
 	}
 
@@ -75,12 +75,12 @@ public class OceanTerritory {
 	 * Gives this room access to anotherRoom (and vice-versa)
 	 * and sets a door between them, updating the directions
 	 * @param direction
-	 * @param anotherTerritory
-	 * @param riptide
+	 * @param anotherRoom
+	 * @param door
 	 */
-	public void setConnection(int direction, OceanTerritory anotherTerritory, Riptides riptide) {
-		addRoom(direction, anotherTerritory, riptide);
-		anotherTerritory.addRoom(oppositeDirection(direction), this, riptide);
+	public void setConnection(int direction, CaveRoom anotherRoom, Door door) {
+		addRoom(direction, anotherRoom, door);
+		anotherRoom.addRoom(oppositeDirection(direction), this, door);
 	}
 	
 	public int oppositeDirection(int direction) {
@@ -89,16 +89,16 @@ public class OceanTerritory {
 		return (direction + 2)%4;
 	}
 
-	public void addRoom(int direction, OceanTerritory territory, Riptides door) {
-		borderingTerritories[direction] = territory;
-		riptides[direction] = door;
+	public void addRoom(int direction, CaveRoom cave, Door door) {
+		borderingRooms[direction] = cave;
+		doors[direction] = door;
 		setDirections();
 	}
 	
 	public void interpretInput(String input) {
 		while(!isValid(input)) {
 			printAllowedEntry();
-			input = OceanExplorerMain.in.nextLine();
+			input = CaveExplorer.in.nextLine();
 		}
 		int direction = determineDirection(input, validKeys());
 		//Task: convert user input into a direction
@@ -125,12 +125,12 @@ public class OceanTerritory {
 		//First, protect against null pointer exception
 		//(user cannot go through a non existent door)
 		if(direction < 4) {
-			if(borderingTerritories[direction] != null && 
-					riptides[direction] != null) {
-				OceanExplorerMain.currentTerritory.leave();
-				OceanExplorerMain.currentTerritory = borderingTerritories[direction];
-				OceanExplorerMain.currentTerritory.enter();
-				OceanExplorerMain.inventory.updateMap();
+			if(borderingRooms[direction] != null && 
+					doors[direction] != null) {
+				CaveExplorer.currentRoom.leave();
+				CaveExplorer.currentRoom = borderingRooms[direction];
+				CaveExplorer.currentRoom.enter();
+				CaveExplorer.inventory.updateMap();
 			}
 		} 
 		else {
@@ -150,30 +150,30 @@ public class OceanTerritory {
 	 * This will be where your group sets up all the caves
 	 * and all the connections
 	 */
-	public static void setUpTerritories() {
+	public static void setUpCaves() {
 		//ALL OF THIS CODE CAN BE CHANGED
 		//1. Decide how big your caves should be
-		OceanExplorerMain.territories = new NPCRoom[5][5];
+		CaveExplorer.caves = new NPCRoom[5][5];
 		//2. Populate with caves and a default description: hint: when starting, use coordinates (helps debugging)
-		for(int row = 0; row < OceanExplorerMain.territories.length; row++) {
+		for(int row = 0; row < CaveExplorer.caves.length; row++) {
 			//PLEASE PAY ATTENTION TO THE DIFFERENCE:
-			for(int col = 0; col < OceanExplorerMain.territories[row].length; col++) {
+			for(int col = 0; col < CaveExplorer.caves[row].length; col++) {
 				//create a "default" cave
-				OceanExplorerMain.territories[row][col] = 
+				CaveExplorer.caves[row][col] = 
 						new NPCRoom("This cave has coords ("+row+","+col+")");
 			}
 		}
 		//3. Replace default rooms with custom rooms
 		//--- WE WILL DO LATER
-		OceanExplorerMain.npcs = new NPC[1];
-		OceanExplorerMain.npcs[0] = new NPC();
-		OceanExplorerMain.npcs[0].setPosition(1, 1);
+		CaveExplorer.npcs = new NPC[1];
+		CaveExplorer.npcs[0] = new NPC();
+		CaveExplorer.npcs[0].setPosition(1, 1);
 		//4. Set your starting room:
-		OceanExplorerMain.currentTerritory = OceanExplorerMain.territories[0][1];
-		OceanExplorerMain.currentTerritory.enter();
+		CaveExplorer.currentRoom = CaveExplorer.caves[0][1];
+		CaveExplorer.currentRoom.enter();
 		//5. Set up doors
-		OceanTerritory[][] c = OceanExplorerMain.territories;
-		c[0][1].setConnection(SOUTH, c[1][1], new Riptides());
+		CaveRoom[][] c = CaveExplorer.caves;
+		c[0][1].setConnection(SOUTH, c[1][1], new Door());
 		/**
 		 * Special requests:
 		 * moving objects in caves
@@ -211,9 +211,9 @@ public class OceanTerritory {
 		this.defaultContents = defaultContents;
 	}
 
-	public Riptides getRiptide(int direction) {
-		if(direction >= 0 && direction < riptides.length) {
-			return riptides[direction];
+	public Door getDoor(int direction) {
+		if(direction >= 0 && direction < doors.length) {
+			return doors[direction];
 		}
 		else {
 			return null;
