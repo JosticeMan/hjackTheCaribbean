@@ -21,7 +21,7 @@ public class CaveExplorer {
 	
 	public static void startExploring() {
 		while(playing) {
-			npcActions();
+			//npcActions();
  			print(inventory.getDescription());
  			print(currentRoom.getDescription());
  			print("What would you like to do?");
