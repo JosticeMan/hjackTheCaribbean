@@ -88,7 +88,9 @@ public class BackEndJustinY {
 	private static int[][] playerShips; //This contains the coordinates of all the player's ships
 	private static int[][] commanderShips; //This contains the coordinates of all the AI's ships
 	
-	private static int[][] playerHitMarks; //This will track all the places that the commander hit
+	//THIS IS NOT THE BEST WAY TO IMPLEMENT THIS
+	//Could implement Lists/Sets in this scenario to make the Algorithm more efficient
+	private static int[][] playerHitMarks; //This will track all the places that the commander hit 
 	private static int[][] commanderHitMarks; //This will track all the places that the player hit
 	
 	private static String[][] thePlayerGameBoard; //This will monitor the game board of the player
