@@ -103,7 +103,7 @@ public class CaveRoom {
 		int direction = determineDirection(input, validKeys());
 		//Task: convert user input into a direction
 		//don't use more than one
-		respondToKey(direction);
+		respondToKey(manageCurrentRoomShift(direction));
 	}
 	
 	/**
@@ -124,11 +124,11 @@ public class CaveRoom {
 	public void respondToKey(int direction) {
 		//First, protect against null pointer exception
 		//(user cannot go through a non existent door)
-		if(direction < numberOfDirections()) {
+		if(direction < 4) {
 			if(borderingRooms[direction] != null && 
 					doors[direction] != null) {
 				CaveExplorer.currentRoom.leave();
-				CaveExplorer.currentRoom = borderingRooms[manageCurrentRoomShift(direction)];
+				CaveExplorer.currentRoom = borderingRooms[direction];
 				CaveExplorer.currentRoom.enter();
 				CaveExplorer.inventory.updateMap();
 			}
@@ -137,10 +137,6 @@ public class CaveRoom {
 			performAction(direction);
 		}
 	} 
-
-	public int numberOfDirections() {
-		return 4;
-	}
 	
 	public int manageCurrentRoomShift(int direction) {
 		return direction;

@@ -29,15 +29,11 @@ public class JustinBossRoom extends CaveRoom {
 		System.out.println("You can only enter 'w', 'a', or 's' to run or, you can enter 'e' to start the game!");
 	}
 	
-	public int numberOfDirections() {
-		return 3;
-	}
-	
 	public int manageCurrentRoomShift(int direction) {
-		if(direction > 0) {
-			return direction + 1;
+		if(direction == 0) {
+			return direction;
 		}
-		return direction;
+		return direction + 1;
 	}
 	
 	public void performAction(int direction) {
