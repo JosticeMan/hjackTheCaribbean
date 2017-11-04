@@ -38,6 +38,24 @@ public class CaveExplorer {
 	}
 	
 	/**
+	 * This method returns a random integer/set of integers from the given array
+	 * @param arr - Integer Array that contains random numbers
+	 * @return - A random integer/set of integers from the given array
+	 */
+	public static int randomInt(int[] arr) {
+		return arr[(int) (Math.random() * arr.length)];
+	}
+	
+	/**
+	 * This method returns a random string/set of strings from the given array
+	 * @param arr - String Array that contains random string(s)
+	 * @return - A random string/set of strings from the given array
+	 */
+	public static String randomString(String[] arr) {
+		return arr[(int) (Math.random() * arr.length)];
+	}
+	
+	/**
 	 * Chooses & prints a random phrase from a String Array
 	 * @param arr - String Array that contains random phrases
 	 */
@@ -47,11 +65,19 @@ public class CaveExplorer {
 		
 	}
 	
+	/**
+	 * This method prints whatever string is inputed using multiLinePrint() to wrap the sentences around at the given character limit per line
+	 * @param s - The message that you want to print out
+	 */
 	public static void print(String s){
 		  multiLinePrint(s);
 		  System.out.println("");
 	  }
-	  
+	
+	/**
+	 * This method prints whatever string is inputed to wrap the sentences around at the given character limit per line
+	 * @param s - The message that you want to print out
+	 */
 	public static void multiLinePrint(String s){
 		  String printString = "";
 		  int cutoff = 500;
