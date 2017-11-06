@@ -7,9 +7,19 @@ public class Inventory {
 	private Ship beginningShip;
 
 	
+	private int lastDirection;
+	
 	public Inventory() {
 		updateMap();
 		beginningShip=new Ship(10,100,40);
+	}
+
+	public int getLastDirection() {
+		return lastDirection;
+	}
+
+	public void setLastDirection(int lastDirection) {
+		this.lastDirection = lastDirection;
 	}
 
 	public void updateMap() {
