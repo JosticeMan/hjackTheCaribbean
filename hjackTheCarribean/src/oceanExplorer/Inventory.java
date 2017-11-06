@@ -5,8 +5,18 @@ public class Inventory {
 	private String map;
 	
 	
+	private int lastDirection;
+	
 	public Inventory() {
 		updateMap();
+	}
+
+	public int getLastDirection() {
+		return lastDirection;
+	}
+
+	public void setLastDirection(int lastDirection) {
+		this.lastDirection = lastDirection;
 	}
 
 	public void updateMap() {
