@@ -2,7 +2,8 @@ package oceanExplorer;
 
 public class Inventory {
 
-	private String map; 
+	private String map;
+	
 	
 	public Inventory() {
 		updateMap();
