@@ -169,10 +169,45 @@ public class CaveRoom {
 		CaveExplorer.caves[0][1].setConnection(EAST,CaveExplorer.caves[0][2],new Door());
 		CaveExplorer.caves[0][2].setConnection(SOUTH,CaveExplorer.caves[1][2],new Door());
 		
+		
+		//end
 		//Dan room
-		CaveExplorer.caves[1][3]=new StevenRoom("This is Dan's Room.");
-		CaveExplorer.caves[0][2].setConnection(EAST,CaveExplorer.caves[0][3],new Door());
-		CaveExplorer.caves[0][3].setConnection(SOUTH,CaveExplorer.caves[1][3],new Door());
+		
+		
+		
+		
+		//end
+		//Andrew room
+		
+		
+		
+		
+		//end
+		//Kevin room
+		
+		
+		
+		
+		//end
+		//Sunny room
+		
+		
+		
+		
+		//end
+		//Justin room
+		
+		
+		
+		
+		//end
+		
+		
+		
+		
+		
+		
+		
 		
 		//3. Replace default rooms with custom rooms
 		//--- WE WILL DO LATER
