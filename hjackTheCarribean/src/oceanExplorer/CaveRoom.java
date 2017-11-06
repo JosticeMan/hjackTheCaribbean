@@ -197,12 +197,10 @@ public class CaveRoom {
 		//Justin's Room (This will be the room for boss fights)
 		CaveRoom jRoom = new JustinBossRoom("Announcer: You've entered the territory of a commander! The commander is coming soon. Prepare to play a game of battleship or run!", 1);
 		CaveExplorer.caves[2][4] = jRoom;
-		/*
 		CaveExplorer.caves[1][1].setConnection(EAST,CaveExplorer.caves[1][2],new Door());
 		CaveExplorer.caves[1][2].setConnection(SOUTH,CaveExplorer.caves[2][2],new Door());
 		CaveExplorer.caves[2][2].setConnection(EAST,CaveExplorer.caves[2][3],new Door());
 		CaveExplorer.caves[2][3].setConnection(EAST,CaveExplorer.caves[2][4],new Door());
-		*/
 		//end
 		//4. Set your starting room:
 		CaveExplorer.currentRoom = CaveExplorer.caves[0][1];
