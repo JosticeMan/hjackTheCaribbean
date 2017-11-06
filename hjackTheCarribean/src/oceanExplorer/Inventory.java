@@ -6,7 +6,7 @@ public class Inventory {
 	private static int[] bossPowerUps; //It will contain 3 amounts corresponding to the amount of a certain power-up the player has
 	/*
 	 They're as follow: (Their code will be handled by my back-end class in the battleship package
-	 BoinkRader - Gives the player a general idea of where one of the opponent's ship is. 
+	 BoinkRadar - Gives the player a general idea of where one of the opponent's ship is. 
 	 CriticalMissile - Sets a missile off that will guarantee a hit on a boat in a turn but the user cannot do anything in that time. 
      Stormcaller - The opponent's battleships are surrounded by bad weather and unable to make a player for one turn. 
 	*/

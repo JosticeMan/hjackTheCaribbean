@@ -70,7 +70,7 @@ public class BackEndJustinY {
 	 Track powerups in another 2D Array (Should be retrieved from another class) and when the user triggers the powerup during the turn, activate effect
 	 ------------------------------------------
 	 PLANNED POWERUPS:
-	 BoinkRader - Gives the player a general idea of where one of the opponent's ship is. 
+	 BoinkRadar - Gives the player a general idea of where one of the opponent's ship is. 
 	 CriticalMissile - Sets a missile off that will guarantee a hit on a boat in a turn but the user cannot do anything in that time. 
      Stormcaller - The opponent's battleships are surrounded by bad weather and unable to make a player for one turn. 
 	 ------------------------------------------
