@@ -167,20 +167,41 @@ public class CaveRoom {
 						new CaveRoom("This cave has coords ("+row+","+col+")");
 			}
 		}
-		//3. Replace default rooms with custom rooms
-		//--- WE WILL DO LATER
+		//Steven room goes here
+		CaveExplorer.caves[1][2]=new StevenRoom("This is Steven's");
+		CaveExplorer.caves[0][1].setConnection(EAST,CaveExplorer.caves[0][2],new Door());
+		CaveExplorer.caves[0][2].setConnection(SOUTH,CaveExplorer.caves[1][2],new Door());
+		//end
+		//Dan room
 		
+		
+		
+		
+		//end
+		//Andrew room
+		
+		
+		
+		
+		//end
+		//Kevin room
+		
+		
+		
+		
+		//end
 		//Sunny's Room
 		CaveRoom sRoom = new SunnyRoom("This is Sunny's room");
-		CaveExplorer.caves[4][4] = sRoom;
+		//end
 		//Justin's Room (This will be the room for boss fights)
 		CaveRoom jRoom = new JustinBossRoom("Announcer: You've entered the territory of a commander! The commander is coming soon. Prepare to play a game of battleship or run!", 1);
 		CaveExplorer.caves[2][4] = jRoom;
+		/*
 		CaveExplorer.caves[1][1].setConnection(EAST,CaveExplorer.caves[1][2],new Door());
 		CaveExplorer.caves[1][2].setConnection(SOUTH,CaveExplorer.caves[2][2],new Door());
 		CaveExplorer.caves[2][2].setConnection(EAST,CaveExplorer.caves[2][3],new Door());
 		CaveExplorer.caves[2][3].setConnection(EAST,CaveExplorer.caves[2][4],new Door());
-		
+		*/
 		//4. Set your starting room:
 		CaveExplorer.currentRoom = CaveExplorer.caves[0][1];
 		CaveExplorer.currentRoom.enter();
