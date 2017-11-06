@@ -65,12 +65,7 @@ public class SunnyRoom extends CaveRoom {
 	}
 	
 	public String getContents() {
-		if(containsNPC() && presentNPC.isActive()) {
-			return "S";
-		}
-		else {
-			return super.getContents();
-		}
+		return "S";
 	}
 	
 	public String getDescription() {
