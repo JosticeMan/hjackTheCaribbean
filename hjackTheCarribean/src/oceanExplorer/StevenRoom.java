@@ -30,7 +30,7 @@ public class StevenRoom extends CaveRoom {
 		}
 	}
 	public String getContents() {
-		return "S";
+		return "s";
 	}
 	
 	public String getDescription() {
