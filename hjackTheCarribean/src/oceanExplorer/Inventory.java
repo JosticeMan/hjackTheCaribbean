@@ -3,6 +3,7 @@ package oceanExplorer;
 public class Inventory {
 
 	private String map; 
+	private Ship beginningShip;
 	
 	public Inventory() {
 		updateMap();
@@ -53,4 +54,9 @@ public class Inventory {
  		// return "You have nothing in your inventory.";
 		return map;
  	}
+
+	public Ship getBeginningShip() {
+		return beginningShip;
+	}
+	
 }
