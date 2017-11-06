@@ -3,7 +3,7 @@ package oceanExplorer;
 public class AndrewRoom extends CaveRoom {
 
 	private CaveRoom[] borderingRooms;
-	private String currentDirections;
+	private String currentDirections;//
 
 	public AndrewRoom(String description) {
 		super(description);
