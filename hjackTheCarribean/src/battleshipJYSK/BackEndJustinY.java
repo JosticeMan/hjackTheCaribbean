@@ -1,6 +1,6 @@
 package battleshipJYSK;
 
-import oceanExplorer.CaveExplorer;
+import oceanExplorer.*;
 
 public class BackEndJustinY {
 
@@ -70,7 +70,7 @@ public class BackEndJustinY {
 	 Track powerups in another 2D Array (Should be retrieved from another class) and when the user triggers the powerup during the turn, activate effect
 	 ------------------------------------------
 	 PLANNED POWERUPS:
-	 BoinkRader - Gives the player a general idea of where one of the opponent's ship is. 
+	 BoinkRadar - Gives the player a general idea of where one of the opponent's ship is. 
 	 CriticalMissile - Sets a missile off that will guarantee a hit on a boat in a turn but the user cannot do anything in that time. 
      Stormcaller - The opponent's battleships are surrounded by bad weather and unable to make a player for one turn. 
 	 ------------------------------------------
@@ -138,12 +138,27 @@ public class BackEndJustinY {
 		theOpponentGameBoard = new String[dimension][dimension];
 	}
 	
-	public String[][] getThePlayerGameBoard() {
+	public static String[][] getThePlayerGameBoard() {
 		return thePlayerGameBoard;
 	}
 	
-	public String[][] getTheOpponentGameBoard() {
+	public static String[][] getTheOpponentGameBoard() {
 		return theOpponentGameBoard;
+	}
+	
+	/**
+	 * Returns whether or not the player has at least one of the appropriate powerup
+	 * @param type
+	 * @return
+	 */
+	public static boolean handlePowerUp(int type) {
+		return oceanExplorer.Inventory.getBossPowerUps()[type] > 0;
+	}
+	
+	public static void decrementPowerUp(int type) {
+		int[] newPowerUpCount = oceanExplorer.Inventory.getBossPowerUps();
+		newPowerUpCount[type]--;
+		oceanExplorer.Inventory.setBossPowerUps(newPowerUpCount);
 	}
 	
 }
