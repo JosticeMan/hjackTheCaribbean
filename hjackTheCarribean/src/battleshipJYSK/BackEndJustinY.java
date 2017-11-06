@@ -1,6 +1,6 @@
 package battleshipJYSK;
 
-import oceanExplorer.CaveExplorer;
+import oceanExplorer.*;
 
 public class BackEndJustinY {
 
@@ -138,12 +138,27 @@ public class BackEndJustinY {
 		theOpponentGameBoard = new String[dimension][dimension];
 	}
 	
-	public String[][] getThePlayerGameBoard() {
+	public static String[][] getThePlayerGameBoard() {
 		return thePlayerGameBoard;
 	}
 	
-	public String[][] getTheOpponentGameBoard() {
+	public static String[][] getTheOpponentGameBoard() {
 		return theOpponentGameBoard;
+	}
+	
+	/**
+	 * Returns whether or not the player has at least one of the appropriate powerup
+	 * @param type
+	 * @return
+	 */
+	public static boolean handlePowerUp(int type) {
+		return oceanExplorer.Inventory.getBossPowerUps()[type] > 0;
+	}
+	
+	public static void decrementPowerUp(int type) {
+		int[] newPowerUpCount = oceanExplorer.Inventory.getBossPowerUps();
+		newPowerUpCount[type]--;
+		oceanExplorer.Inventory.setBossPowerUps(newPowerUpCount);
 	}
 	
 }
