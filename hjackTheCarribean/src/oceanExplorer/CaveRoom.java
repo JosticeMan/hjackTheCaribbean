@@ -192,6 +192,7 @@ public class CaveRoom {
 		//end
 		//Sunny's Room
 		CaveRoom sRoom = new SunnyRoom("This is Sunny's room");
+		CaveExplorer.caves[4][4] = sRoom;
 		//end
 		//Justin's Room (This will be the room for boss fights)
 		CaveRoom jRoom = new JustinBossRoom("Announcer: You've entered the territory of a commander! The commander is coming soon. Prepare to play a game of battleship or run!", 1);
