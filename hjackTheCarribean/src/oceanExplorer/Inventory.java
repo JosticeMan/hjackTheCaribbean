@@ -7,6 +7,7 @@ public class Inventory {
 	
 	public Inventory() {
 		updateMap();
+		beginningShip=new Ship(10,100,40);
 	}
 
 	public void updateMap() {
