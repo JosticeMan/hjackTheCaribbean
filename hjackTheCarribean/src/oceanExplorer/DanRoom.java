@@ -8,7 +8,7 @@ public class DanRoom extends CaveRoom {
 	public DanRoom(String description) 
 	{
 		super(description);
-		hp = 25;
+		max = 25;
 	}
 
 	public String validKeys() {
@@ -22,7 +22,7 @@ public class DanRoom extends CaveRoom {
 	
 	public void performAction(int direction) 
 	{
-		if(direction==4) 
+		if(direction == 4) 
 		{
 			CaveExplorer.print("Your health was "+CaveExplorer.inventory.getBeginningShip().getHp()+" points.");
 			CaveExplorer.print(restoreHealth());
@@ -37,7 +37,7 @@ public class DanRoom extends CaveRoom {
 	
 	public String restoreHealth() 
 	{
-		CaveExplorer.inventory.getBeginningShip().setHp(15);
+		CaveExplorer.inventory.getBeginningShip().setHp(max);
 		return "Your health has been restored.";
 	}
 }

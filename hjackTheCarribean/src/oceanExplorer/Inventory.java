@@ -4,7 +4,6 @@ public class Inventory {
 
 	private String map; 
 	private Ship beginningShip;
-	private int hp;
 	private String desc;
 	
 	public Inventory() {
@@ -54,14 +53,10 @@ public class Inventory {
 		}
 	}
 
-	public void updateStats()
-	{
-		desc += "\n"+"You have "+CaveExplorer.inventory.getBeginningShip().getHp()+" HP.";
-	
-	}
+
 	public String getDescription() {
  		// return "You have nothing in your inventory.";
-		return map + desc;
+		return map + "\n"+"You have "+CaveExplorer.inventory.getBeginningShip().getHp()+" HP.";
  	}
 
 	public Ship getBeginningShip() {
