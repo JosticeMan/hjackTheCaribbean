@@ -20,13 +20,14 @@ public class DanRoom extends CaveRoom {
 	}
 	
 	
-	public void performAction(int direction) {
+	public void performAction(int direction) 
+	{
 		if(direction==4) 
 		{
-		 
+			CaveExplorer.print("Your health was "+CaveExplorer.inventory.getBeginningShip().getHp()+" points.");
 			CaveExplorer.print(restoreHealth());
+			CaveExplorer.print("Your health is now "+CaveExplorer.inventory.getBeginningShip().getHp()+" points.");
 		}
-
 		else
 		{
 			CaveExplorer.print("That key does nothing.");
@@ -36,7 +37,7 @@ public class DanRoom extends CaveRoom {
 	
 	public String restoreHealth() 
 	{
-		hp = CaveExplorer.inventory.getBeginningShip().getHp();;
+		CaveExplorer.inventory.getBeginningShip().setHp(15);
 		return "Your health has been restored.";
 	}
 }
