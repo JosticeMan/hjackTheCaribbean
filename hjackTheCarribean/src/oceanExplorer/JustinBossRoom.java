@@ -37,7 +37,7 @@ public class JustinBossRoom extends CaveRoom {
 	}
 	
 	public void performAction(int direction) {
-		if(direction == 3) {
+		if(direction == 4) {
 		    currentCommander.interact();
 		} else {
 			System.out.println("Random Sailor: Are you really that afraid!? What are you pressing?");
