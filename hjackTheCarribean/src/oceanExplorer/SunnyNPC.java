@@ -27,7 +27,7 @@ public class SunnyNPC extends NPC {
 		
 		
 	}
-	
+	 
 	public void sayRandomPower()
 	{
 		CaveExplorer.randomText(powerUps);
