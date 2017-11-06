@@ -35,7 +35,7 @@ public class AndrewRoom extends CaveRoom {
 			System.out.println("You've reversed the spell!");
 			changeValidKeys();
 		}else if(direction == 5) {
-			forceGoLast();
+			//forceGoLast();
 		}else{
 			System.out.println("Try pressing f.");
 		}
@@ -44,7 +44,6 @@ public class AndrewRoom extends CaveRoom {
 	public void enter() {
 		setContents("x");
 	}
-	
 
 }
 
