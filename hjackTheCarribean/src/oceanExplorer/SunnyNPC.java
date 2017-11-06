@@ -28,7 +28,7 @@ public class SunnyNPC extends NPC {
 		CaveExplorer.print("Argghh! Did you know there are multiple power ups? Would you like to hear some?");
 		String response = CaveExplorer.in.nextLine();
 		while(!response.equalsIgnoreCase("yes")) {
-			 
+		
 			response = CaveExplorer.in.nextLine();
 		}
 		CaveExplorer.print("Well, that was fun. Later!");
