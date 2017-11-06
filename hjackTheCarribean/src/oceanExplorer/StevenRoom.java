@@ -29,7 +29,9 @@ public class StevenRoom extends CaveRoom {
 			CaveExplorer.print("That key does nothing.");
 		}
 	}
-	
+	public String getContents() {
+		return "S";
+	}
 	
 	public String getDescription() {
 		if(CaveExplorer.inventory.getBeginningShip()==null) {
