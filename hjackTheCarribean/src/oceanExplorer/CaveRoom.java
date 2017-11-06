@@ -172,7 +172,8 @@ public class CaveRoom {
 		
 		//end
 		//Dan room
-		
+		CaveExplorer.caves[0][3]=new DanRoom("This is fountain");
+		CaveExplorer.caves[0][2].setConnection(EAST,CaveExplorer.caves[0][3],new Door());
 		
 		
 		

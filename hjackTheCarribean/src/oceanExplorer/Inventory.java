@@ -51,6 +51,10 @@ public class Inventory {
 		}
 	}
 
+	public void updateStats()
+	{
+		
+	}
 	public String getDescription() {
  		// return "You have nothing in your inventory.";
 		return map;
