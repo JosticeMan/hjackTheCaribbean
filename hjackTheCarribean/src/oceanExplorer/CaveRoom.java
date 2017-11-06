@@ -185,10 +185,10 @@ public class CaveRoom {
 		
 		//end
 		//Kevin room
-
-		
-		
-		
+		CaveExplorer.caves[0][0] = new KevinRoom("This is Kevin Room");
+		CaveExplorer.caves[0][0].setConnection(WEST, CaveExplorer.caves[0][1], new Door());
+		CaveExplorer.caves[0][0].setConnection(SOUTH, CaveExplorer.caves[1][0], new Door());
+			
 		//end
 		//Sunny's Room
 		CaveRoom sRoom = new SunnyRoom("This is Sunny's room");
