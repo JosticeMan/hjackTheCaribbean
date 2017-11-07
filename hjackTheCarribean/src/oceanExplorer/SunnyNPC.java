@@ -12,6 +12,7 @@ public class SunnyNPC extends NPC {
     Stormcaller - The opponent's battleships are surrounded by bad weather and unable to make a player for one turn. 
 	*/
 	
+	private boolean active = true;
 	private String[] powerUps;
 	private String[] responses;
 	
@@ -27,6 +28,11 @@ public class SunnyNPC extends NPC {
 		
 		
 	}
+	
+	public boolean isActive()
+	{
+		return active;
+	}
 	 
 	public void sayRandomPower()
 	{
@@ -37,10 +43,11 @@ public class SunnyNPC extends NPC {
 		CaveExplorer.print("Argghh! Did you know there are multiple power ups? Would you like to hear some?");
 		String response = CaveExplorer.in.nextLine();
 		while(!response.equalsIgnoreCase("bye")) {
-			CaveExplorer.print(powerUps[(int) (Math.random()*powerUps.length)]);
+			sayRandomPower();
 			response = CaveExplorer.in.nextLine();
 		}
-		CaveExplorer.print("Well, that was fun. Later!");
+		CaveExplorer.print("Arrr! Come back if you need a reminder of what the power ups are!");
+		active = false;
 	}
 
 }
