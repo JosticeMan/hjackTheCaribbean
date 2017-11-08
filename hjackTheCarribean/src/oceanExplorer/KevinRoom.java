@@ -10,7 +10,7 @@ public class KevinRoom extends CaveRoom {
 	}
 	
 	public void printAllowedEntry() {
-		System.out.println("You can only enter 'q', 'w', 'e', or num keys 1-4 to interact.");
+		System.out.println("You can only enter num keys 1-4 to interact.");
 	}
 	public void performAction(int direction) {
 		if(direction <4) {
