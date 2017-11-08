@@ -18,7 +18,7 @@ public class AndrewRoom extends CaveRoom {
 	}
 	
 	public void changeValidKeys() {
-		currentDirections = "wasdfe";
+		currentDirections = "wdsafe";
 	}
 	//OVERIDE
 	
@@ -27,7 +27,7 @@ public class AndrewRoom extends CaveRoom {
 	}
 	
 	public void printAllowedEntry() {
-		System.out.println("You can only enter 'w', 'a', 's', or 'd'");
+		System.out.println("You can only enter 'w', 'a', 's', or 'd' and some other keys");
 	}
 	
 	public void performAction(int direction) {
