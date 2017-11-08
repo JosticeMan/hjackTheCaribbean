@@ -6,18 +6,18 @@ public class KevinRoom extends CaveRoom {
 		super(description);
 	}
 	public String validKeys() {
-		return "qwer";
+		return "wdsa1234";
 	}
 	
 	public void printAllowedEntry() {
-		System.out.println("You can only enter 'q', 'w', 'e', or 'r' to interact.");
+		System.out.println("You can only enter 'q', 'w', 'e', or num keys 1-4 to interact.");
 	}
 	public void performAction(int direction) {
-		if(direction >3) {
+		if(direction <4) {
 			super.performAction(direction);
 		}
 		else {
-			CaveExplorer.inventory.addItems(direction);
+			CaveExplorer.inventory.addItems(direction-4);
 			System.out.println("You have "+CaveExplorer.inventory.numItems()+ " items."); 
 		}	
 	} 
