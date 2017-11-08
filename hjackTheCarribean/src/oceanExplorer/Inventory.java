@@ -23,9 +23,11 @@ public class Inventory {
 	 CriticalMissile - Sets a missile off that will guarantee a hit on a boat in a turn but the user cannot do anything in that time. 
      Stormcaller - The opponent's battleships are surrounded by bad weather and unable to make a player for one turn. 
 	*/
+	private String desc;
 	
 	public Inventory() {
 		updateMap();
+		desc = "";
 		beginningShip=new Ship(10,100,40);
 	}
 
@@ -86,9 +88,10 @@ public class Inventory {
 		}
 	}
 
+
 	public String getDescription() {
  		// return "You have nothing in your inventory.";
-		return map;
+		return map + "\n"+"You have "+CaveExplorer.inventory.getBeginningShip().getHp()+" HP.";
  	}
 
 	public Ship getBeginningShip() {

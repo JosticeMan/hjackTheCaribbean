@@ -172,8 +172,10 @@ public class CaveRoom {
 		CaveExplorer.caves[0][1].setConnection(EAST,CaveExplorer.caves[0][2],new Door());
 		CaveExplorer.caves[0][2].setConnection(SOUTH,CaveExplorer.caves[1][2],new Door());
 		//end
-		//Dan room
+		//Dan roome
 		
+		CaveExplorer.caves[0][3]=new DanRoom("This is fountain. Interact with 'e' so you can restore your health.");
+		CaveExplorer.caves[0][2].setConnection(EAST,CaveExplorer.caves[0][3],new Door());
 		
 		
 		
