@@ -17,7 +17,7 @@ public class KevinRoom extends CaveRoom {
 			super.performAction(direction);
 		}
 		else {
-			CaveExplorer.inventory.addItems(direction-4);
+			CaveExplorer.inventory.addItems(direction-3);
 			System.out.println("You have "+CaveExplorer.inventory.numItems()+ " items."); 
 		}	
 	} 
