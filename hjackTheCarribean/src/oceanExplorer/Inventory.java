@@ -75,6 +75,7 @@ public class Inventory {
 
 	public void addItems(int direction) {
 		kItems += direction;
+		numItems();
 	}
 	public int numItems() {
 		return kItems;
