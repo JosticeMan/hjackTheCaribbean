@@ -40,4 +40,8 @@ public class DanRoom extends CaveRoom {
 		CaveExplorer.inventory.getBeginningShip().setHp(max);
 		return "Your health has been restored.";
 	}
+	
+	public String getContents() {
+		return "D";
+	}
 }
