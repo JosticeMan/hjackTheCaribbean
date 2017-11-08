@@ -182,7 +182,7 @@ public class CaveRoom {
 		CaveExplorer.caves[0][4]=new AndrewRoom("You feel dizzy.");
 		CaveExplorer.caves[0][4].setConnection(SOUTH,CaveExplorer.caves[1][4],new Door());
 		CaveExplorer.caves[0][4].setConnection(WEST,CaveExplorer.caves[0][3],new Door());
-		
+		CaveExplorer.caves[0][3].setConnection(WEST,CaveExplorer.caves[0][2],new Door());
 		//end
 		//Kevin room
 		CaveExplorer.caves[0][0] = new KevinRoom("This is Kevin Room");
