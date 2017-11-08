@@ -1,12 +1,21 @@
 package oceanExplorer;
 
 public class Inventory {
-	
-	
+
+
+
+
+	private String map; 
 	private Ship beginningShip;
+	private int kItems;
+
+
+	
+	
+
 	
 	private int lastDirection;
-	private String map;
+
 	private static int[] bossPowerUps; //It will contain 3 amounts corresponding to the amount of a certain power-up the player has
 	/*
 	 They're as follow: (Their code will be handled by my back-end class in the battleship package
@@ -84,6 +93,14 @@ public class Inventory {
 
 	public Ship getBeginningShip() {
 		return beginningShip;
+	}
+
+	public void addItems(int direction) {
+		kItems += direction;
+		numItems();
+	}
+	public int numItems() {
+		return kItems;
 	}
 	
 }

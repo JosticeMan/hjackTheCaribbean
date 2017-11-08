@@ -179,16 +179,16 @@ public class CaveRoom {
 		
 		//end
 		//Andrew room
-		
-		
-		
-		
+		CaveExplorer.caves[0][4]=new AndrewRoom("You feel dizzy.");
+		CaveExplorer.caves[0][4].setConnection(SOUTH,CaveExplorer.caves[1][4],new Door());
+		CaveExplorer.caves[0][4].setConnection(WEST,CaveExplorer.caves[0][3],new Door());
+		CaveExplorer.caves[0][3].setConnection(WEST,CaveExplorer.caves[0][2],new Door());
 		//end
 		//Kevin room
-		
-		
-		
-		
+		CaveExplorer.caves[0][0] = new KevinRoom("This is Kevin Room");
+		CaveExplorer.caves[0][0].setConnection(EAST, CaveExplorer.caves[0][1], new Door());
+		CaveExplorer.caves[0][0].setConnection(SOUTH, CaveExplorer.caves[1][0], new Door());
+			
 		//end
 		//Sunny's Room
 		CaveRoom sRoom = new SunnyRoom("This is Sunny's room");

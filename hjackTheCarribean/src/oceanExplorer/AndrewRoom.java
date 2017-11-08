@@ -3,7 +3,7 @@ package oceanExplorer;
 public class AndrewRoom extends CaveRoom {
 
 	private CaveRoom[] borderingRooms;
-	private String currentDirections;
+	private String currentDirections;//
 
 	public AndrewRoom(String description) {
 		super(description);
@@ -18,7 +18,7 @@ public class AndrewRoom extends CaveRoom {
 	}
 	
 	public void changeValidKeys() {
-		currentDirections = "wasdfe";
+		currentDirections = "wdsafe";
 	}
 	//OVERIDE
 	
@@ -27,7 +27,7 @@ public class AndrewRoom extends CaveRoom {
 	}
 	
 	public void printAllowedEntry() {
-		System.out.println("You can only enter 'w', 'a', 's', or 'd'");
+		System.out.println("You can only enter 'w', 'a', 's', or 'd' and some other keys");
 	}
 	
 	public void performAction(int direction) {
@@ -35,7 +35,7 @@ public class AndrewRoom extends CaveRoom {
 			System.out.println("You've reversed the spell!");
 			changeValidKeys();
 		}else if(direction == 5) {
-			forceGoLast();
+			//forceGoLast();
 		}else{
 			System.out.println("Try pressing f.");
 		}
@@ -44,7 +44,6 @@ public class AndrewRoom extends CaveRoom {
 	public void enter() {
 		setContents("x");
 	}
-	
 
 }
 
