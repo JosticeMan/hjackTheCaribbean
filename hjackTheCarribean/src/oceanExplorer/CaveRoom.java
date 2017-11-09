@@ -171,11 +171,15 @@ public class CaveRoom {
 		
 		
 		//end
-		//Dan roome
+		//Dan room
 		
+		//Fountain
 		CaveExplorer.caves[0][3]=new DanRoom("This is fountain. Interact with 'e' so you can restore your health.");
 		CaveExplorer.caves[0][2].setConnection(EAST,CaveExplorer.caves[0][3],new Door());
 		
+		//Trap
+		CaveExplorer.caves[1][3]=new DanTrapRoom("You've been bitten by a sea rat! -3 HP.");
+		CaveExplorer.caves[1][2].setConnection(EAST,CaveExplorer.caves[1][3],new Door());
 		
 		
 		//end
