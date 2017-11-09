@@ -29,7 +29,7 @@ public class CaveExplorer {
  			currentRoom.interpretInput(input);
  		}
 	}
-	
+	//
 	private static void npcActions() {
 		for(NPC n: npcs) {
 			n.act();

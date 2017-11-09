@@ -59,7 +59,7 @@ public class StevenRoom extends CaveRoom {
 			super.interpretInput(input);
 		}
 	}
-
+//
 	
 	public String getDescription() {
 		if(CaveExplorer.inventory.getBeginningShip()==null) {
