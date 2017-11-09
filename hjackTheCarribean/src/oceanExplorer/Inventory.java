@@ -10,7 +10,7 @@ public class Inventory {
 	public Inventory() {
 		updateMap();
 		desc = "";
-		beginningShip=new Ship(10,100,40);
+		
 	}
 
 	public void updateMap() {

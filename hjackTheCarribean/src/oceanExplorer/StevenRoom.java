@@ -32,12 +32,8 @@ public class StevenRoom extends CaveRoom {
 	
 	
 	public String getDescription() {
-		if(CaveExplorer.inventory.getBeginningShip()==null) {
-			return "You do not have a ship. Please go and get one.";
-		}
-		else {
-			return "Your ship's stats is:\nAttack: "+CaveExplorer.inventory.getBeginningShip().getAttack()+"\nHealth: "+CaveExplorer.inventory.getBeginningShip().getHp()+"\nSpeed: "+CaveExplorer.inventory.getBeginningShip().getSpeed();
-		}
+		if()
+
 	}
 	
 	
