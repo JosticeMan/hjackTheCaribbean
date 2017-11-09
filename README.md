@@ -58,3 +58,4 @@ every boss kill we can upgrade the following: <br />
 4
 5
 
+Justin's Second Room Idea: The ship is entering an area with a dense amount of fog. The map's visibility is different with everything blurred out. The ship can either crash during this stage or sail out of the area.
