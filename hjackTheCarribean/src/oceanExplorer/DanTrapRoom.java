@@ -7,6 +7,9 @@ public class DanTrapRoom extends CaveRoom {
 		super(description);
 	}
 	
-	
+	public void trap()
+	{
+		
+	}
 
 }

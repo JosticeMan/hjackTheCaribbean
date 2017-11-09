@@ -1,14 +1,14 @@
 package oceanExplorer;
 
-public class DanRoom extends CaveRoom {
+public class DanFountainRoom extends CaveRoom {
 
 	private int hp;
 	private int max;
 	private boolean isUsed;
 	
-	public DanRoom(String description) 
-	{
-		super(description);
+	public DanFountainRoom(String description) 
+	{		
+		super(description);		
 		max = 25;
 		isUsed = false;
 	}
@@ -24,15 +24,19 @@ public class DanRoom extends CaveRoom {
 	
 	public void performAction(int direction) 
 	{
-		if(direction == 4) 
+		if(direction == 4 && !isUsed) 
 		{
 			CaveExplorer.print("Your health was "+CaveExplorer.inventory.getBeginningShip().getHp()+" points.");
 			CaveExplorer.print(restoreHealth());
 			CaveExplorer.print("Your health is now "+CaveExplorer.inventory.getBeginningShip().getHp()+" points.");
 		}
-		else
+		else if (!isUsed)
 		{
 			CaveExplorer.print("That key does nothing.");
+		}
+		else
+		{
+			CaveExplorer.print("Nothing happened...");
 		}
 	}
 	
