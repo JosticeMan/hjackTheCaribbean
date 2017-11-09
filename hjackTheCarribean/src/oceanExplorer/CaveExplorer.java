@@ -10,6 +10,24 @@ public class CaveExplorer {
 	public static Inventory inventory; //Where are all objects found are kept
 	public static boolean playing = true;
 	public static NPC[] npcs;
+	public static final String[] intro = {  "**You are a newly appointed captain following the completion of apprenticeship under Captain Duran, the legendary pirate of the era.**",
+											"Captain Duran: Arghh! You've trained up to your life for this moment. A chance to conquer the seas!", 
+											"Parrot: Ka-awh!", 
+											"Shipmate: Duran! We're reaching the perimeter of the Carribean soon! A dangerous area indeed!",
+											"Captain Duran: I've heard of the 3 nations that control this territory! The fearsome British, Spanish, and the nice French!",
+											"Captain Duran: Ol buddy! It's time to engrave our names in history!", 
+											"Captain Duran: Let's plunder and conquer! I've heard of great treasures in this area that will surely aid us in our ventures!", 
+											"Shipmates: Ahoy!"};
+	
+	public static final String[] logo = {  
+			"__ __  ____  ____   ____    __  __  _      ______  __ __    ___         __   ____  ____   ____  ____   ____     ___   ____  ____   ",
+			"|  |  ||    ||    | /    |  /  ]|  |/ ]    |      ||  |  |  /  _]       /  ] /    ||    ) |    ||    ) |    )   /  _] /    ||    ) ",
+			"|  |  | |  | |__  ||  o  | /  / |  ' /     |      ||  |  | /  [_       /  / |  o  ||  D  ) |  | |  o  )|  o  ) /  [_ |  o  ||  _  |",
+			"|  _  | |  | __|  ||     |/  /  |    |     |_|  |_||  _  ||    _]     /  /  |     ||    /  |  | |     ||     ||    _]|     ||  |  |",
+			"|  |  | |  |/  |  ||  _  /   |_ |     ]      |  |  |  |  ||   [_     /   ]  |  _  ||    )  |  | |  O  ||  O  ||   [_ |  _  ||  |  |",
+			"|  |  | |  |(  `  ||  |  [     ||  .  |      |  |  |  |  ||     |    [     ||  |  ||  .  ) |  | |     ||     ||     ||  |  ||  |  |",
+			"|__|__||____|[____||__|__|[____||__|[_|      |__|  |__|__||_____|     [____||__|__||__|[_||____||_____||_____||_____||__|__||__|__|"
+			};
 	
 	public static void main(String[] args) {
 		in = new Scanner(System.in);
@@ -20,14 +38,24 @@ public class CaveExplorer {
 	}
 	
 	public static void startExploring() {
+		printIntroduction(); //This will introduce the player to the game world of the Caribbean
 		while(playing) {
 			//npcActions();
  			print(inventory.getDescription());
  			print(currentRoom.getDescription());
- 			print("What would you like to do?");
+ 			print("Shipmate: What are your orders captain? To thou direction shall we sail?");
  			String input = in.nextLine();
  			currentRoom.interpretInput(input);
  		}
+	}
+	
+	public static void printIntroduction() {
+		for(String line: logo) {
+			sprint(line);
+		}
+		for(String entry: intro) {
+			sprint(entry);
+		}
 	}
 	
 	private static void npcActions() {
@@ -72,6 +100,10 @@ public class CaveExplorer {
 	public static void print(String s){
 		  multiLinePrint(s);
 		  System.out.println("");
+	  }
+	
+	public static void sprint(String s){
+		  multiLinePrint(s);
 	  }
 	
 	/**

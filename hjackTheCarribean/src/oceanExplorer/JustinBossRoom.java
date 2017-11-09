@@ -42,7 +42,7 @@ public class JustinBossRoom extends CaveRoom {
 		if(direction == 4) {
 		    currentCommander.interact();
 		} else {
-			System.out.println("Random Sailor: Are you really that afraid!? What are you pressing?");
+			System.out.println("Shipmate: Are you really that afraid!? What are you pressing?");
 		}
 	}
 	

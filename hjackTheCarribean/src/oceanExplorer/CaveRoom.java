@@ -44,14 +44,14 @@ public class CaveRoom {
 		for(int i = NORTH; i < WEST + 1; i++) {
 			if(doors[i] != null) {
 				doorFound = true;
-				directions += "\n   There is a " + doors[i].getDescription() + " to " + toDirection(i) + ". " + doors[i].getDetails();
+				directions += "\nShipmate: I see the ocean is " + doors[i].getDescription() + " to " + toDirection(i) + ". " + doors[i].getDetails();
 			}
 		}
 		if(!doorFound) {
 			directions = "There are no doors in your room. You're trapped";
 		}
 	}
-
+	
 	/**
 	 * Converts an int to a direction
 	 *    toDirection(0) -> "the North"
@@ -164,7 +164,7 @@ public class CaveRoom {
 			for(int col = 0; col < CaveExplorer.caves[row].length; col++) {
 				//create a "default" cave
 				CaveExplorer.caves[row][col] = 
-						new CaveRoom("This cave has coords ("+row+","+col+")");
+						new CaveRoom("Your compass tells you that you are located in coords ("+row+","+col+")");
 			}
 		}
 		//Steven room goes here
@@ -200,7 +200,7 @@ public class CaveRoom {
 		CaveExplorer.caves[3][3].setConnection(NORTH, CaveExplorer.caves[2][3], new Door());
 		//end
 		//Justin's Room (This will be the room for boss fights)
-		CaveRoom jRoom = new JustinBossRoom("Announcer: You've entered the territory of a commander! The commander is coming soon. Prepare to play a game of battleship or run!", 1);
+		CaveRoom jRoom = new JustinBossRoom("Captain Duran: You've entered the territory of a commander! The commander is coming soon. Prepare to play a game of battleship or run!", 1);
 		CaveExplorer.caves[2][4] = jRoom;
 
 
