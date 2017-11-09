@@ -19,8 +19,8 @@ public class AndrewRoom extends CaveRoom {
 	private int directionFacing; //direction the user's ship is facing
 	private int directionToAvoid; //direction the user has to click in order to avoid moving towards the center
 
-	public AndrewRoom(String description) {
-		super(description);
+	public AndrewRoom() {
+		super("You fall into a whirlpool");
 		turnCount = (int)(Math.random()*4)+1;
 		distanceFromCenter = turnCount-1; //user will have to input the right thing at least once to survive
 		
@@ -55,9 +55,9 @@ public class AndrewRoom extends CaveRoom {
 	}
 	
 	public int directionToLeft(int ogDir){
-		if(ogDir == 3}
-		   return 0;
-		return ogDir + 1;
+		if(ogDir == 0}
+		   return 3;
+		return ogDir - 1;
 	}
 	//OVERIDE
 
