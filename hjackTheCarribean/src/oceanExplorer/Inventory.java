@@ -4,13 +4,9 @@ public class Inventory {
 
 	private String map; 
 	private Ship beginningShip;
-	private String desc;
-	private boolean fountainUse;
 	
 	public Inventory() {
-		updateMap();
-		desc = "";
-		
+		updateMap();		
 	}
 
 	public void updateMap() {

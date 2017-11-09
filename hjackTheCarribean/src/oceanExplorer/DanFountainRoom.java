@@ -26,17 +26,11 @@ public class DanFountainRoom extends CaveRoom {
 	{
 		if(direction == 4 && !isUsed) 
 		{
-			CaveExplorer.print("Your health was "+CaveExplorer.inventory.getBeginningShip().getHp()+" points.");
-			CaveExplorer.print(restoreHealth());
-			CaveExplorer.print("Your health is now "+CaveExplorer.inventory.getBeginningShip().getHp()+" points.");
+			restoreHealth();
 		}
-		else if (!isUsed)
+		else 
 		{
 			CaveExplorer.print("That key does nothing.");
-		}
-		else
-		{
-			CaveExplorer.print("Nothing happened...");
 		}
 	}
 	
@@ -45,6 +39,9 @@ public class DanFountainRoom extends CaveRoom {
 	{
 		if (!isUsed)
 		{
+			CaveExplorer.print("Your health was "+CaveExplorer.inventory.getBeginningShip().getHp()+" points.");
+			CaveExplorer.print(restoreHealth());
+			CaveExplorer.print("Your health is now "+CaveExplorer.inventory.getBeginningShip().getHp()+" points.");
 			CaveExplorer.inventory.getBeginningShip().setHp(max);
 			isUsed = true;
 			return "Your health has been restored.";
