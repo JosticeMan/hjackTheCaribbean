@@ -154,7 +154,7 @@ public class CaveRoom {
 	 * This will be where your group sets up all the caves
 	 * and all the connections
 	 */
-	public static void setUpCaves() {
+	public static void setUpCaves(int level) {
 		//ALL OF THIS CODE CAN BE CHANGED
 		//1. Decide how big your caves should be
 		CaveExplorer.caves = new CaveRoom[5][5];
@@ -200,7 +200,7 @@ public class CaveRoom {
 		CaveExplorer.caves[3][3].setConnection(NORTH, CaveExplorer.caves[2][3], new Door());
 		//end
 		//Justin's Room (This will be the room for boss fights)
-		CaveRoom jRoom = new JustinBossRoom("Captain Duran: You've entered the territory of a commander! The commander is coming soon. Prepare to play a game of battleship or run!", 1);
+		CaveRoom jRoom = new JustinBossRoom("Captain Duran: You've entered the territory of a commander! The commander is coming soon. Prepare to play a game of battleship or run!", level);
 		CaveExplorer.caves[2][4] = jRoom;
 
 

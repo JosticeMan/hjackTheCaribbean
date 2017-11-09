@@ -44,7 +44,8 @@ public class JustinSunnyCommander extends NPC {
 	 */
 	public void processEndBattle() {
 		if(winner) {
-			//Insert winner code here
+			CaveExplorer.setPlaying(false);
+			CaveRoom.setUpCaves(CaveExplorer.getLevel());
 		}
 		else {
 			//Insert loser code here

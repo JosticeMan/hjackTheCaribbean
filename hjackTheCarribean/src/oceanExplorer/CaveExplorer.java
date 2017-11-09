@@ -28,15 +28,29 @@ public class CaveExplorer {
 			"|  |  | |  |(  `  ||  |  [     ||  .  |      |  |  |  |  ||     |    [     ||  |  ||  .  ) |  | |     ||     ||     ||  |  ||  |  |",
 			"|__|__||____|[____||__|__|[____||__|[_|      |__|  |__|__||_____|     [____||__|__||__|[_||____||_____||_____||_____||__|__||__|__|"
 			};
+	public static int level;
 	
 	public static void main(String[] args) {
+		level = 1;
 		in = new Scanner(System.in);
-		CaveRoom.setUpCaves();
+		CaveRoom.setUpCaves(level);
 		
 		inventory = new Inventory();
 		startExploring();
 	}
 	
+	public static void setPlaying(boolean playing) {
+		CaveExplorer.playing = playing;
+	}
+
+	public static int getLevel(int level) {
+		return CaveExplorer.level;
+	}
+	
+	public static void setLevel(int level) {
+		CaveExplorer.level = level;
+	}
+
 	public static void startExploring() {
 		printIntroduction(); //This will introduce the player to the game world of the Caribbean
 		while(playing) {
