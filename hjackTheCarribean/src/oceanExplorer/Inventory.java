@@ -5,7 +5,6 @@ public class Inventory {
 
 	private String map; 
 	private Ship beginningShip;
-	private int kItems;
 
 	
 	private int lastDirection;
@@ -73,12 +72,5 @@ public class Inventory {
 		return beginningShip;
 	}
 
-	public void addItems(int direction) {
-		kItems += direction;
-		numItems();
-	}
-	public int numItems() {
-		return kItems;
-	}
 	
 }
