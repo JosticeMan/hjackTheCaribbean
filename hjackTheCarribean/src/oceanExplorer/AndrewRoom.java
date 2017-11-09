@@ -61,16 +61,16 @@ public class AndrewRoom extends CaveRoom {
 	 * 
 	 */
 	public void performAction(int direction) {
-		if(direction != directionToAvoid) {
-			//user failed the right direction
+		if(direction == directionToAvoid) {
+			//user failed to avoid center
 			distanceFromCenter --;
-			updateAvoidCenter
+			System.out.println("You fall closer to the center");
 		}
 			//distance doesn't change
 			turnCount --;
 		//change the direction
-			directionFacing = directionToAvoid;
-			
+			directionFacing = directionToAvoid-1;
+			directionToAvoid = updateAvoidDirection(directionFacing);
 			
 			
 		if(turnCount == 0) {
