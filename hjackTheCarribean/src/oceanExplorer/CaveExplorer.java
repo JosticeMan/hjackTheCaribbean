@@ -10,6 +10,7 @@ public class CaveExplorer {
 	public static Inventory inventory; //Where are all objects found are kept
 	public static boolean playing = true;
 	public static NPC[] npcs;
+	public static int level;
 	public static final String[] intro = {  "**You are a newly appointed captain following the completion of apprenticeship under Captain Duran, the legendary pirate of the era.**",
 											"Captain Duran: Arghh! You've trained up to your life for this moment. A chance to conquer the seas!", 
 											"Parrot: Ka-awh!", 
@@ -28,7 +29,20 @@ public class CaveExplorer {
 			"|  |  | |  | |  ` ||  |  [     ||  .  |      |  |  |  |  ||     |    [     ||  |  ||  .  | |  | |     ||     ||     ||  |  ||  |  |",
 			"|__|__||____|[____||__|__|[____||__|[_|      |__|  |__|__||_____|     [____||__|__||__|[_||____||_____||_____||_____||__|__||__|__|"
 			};
-	public static int level;
+	public static final String[] gameOver1 = {"Shipmate: Capt! Bad news! Something bad is happen--",
+											  "**Your vision suddenly blacks out**", 
+											  "**You are awaken by someone. You make out its Captain Duran**",
+											  "Captain Duran: Pal... I'm sorry but your adventure has come to an end.", 
+											  "Captain Duran: Your ship was sunk after hitting a giant mass and I managed to come in time to save you.", 
+											  "Captain Duran: For your shipmates, they've lost their lives. We're heading back to land."};
+	public static final String[] gameO = {
+			"  ____                         ___                   _ ",
+			" [ ___| __ _ _ __ ___   ___   [ _ ]__   _____ _ __  | |",
+			"| |  _ [ _` | '_ ` _ ] [ _ ] | | | [ ] [ ] _ ) '__| | |",
+			"| |_| | (_| | | | | | |  __/ | |_| |[ V ]  __/ |    |_|",
+			" [____|[__,_|_| |_| |_|[___|  [___]  [_] [___|_|    (_)"
+			};
+				
 	
 	public static void main(String[] args) {
 		level = 1;
@@ -61,6 +75,15 @@ public class CaveExplorer {
  			String input = in.nextLine();
  			currentRoom.interpretInput(input);
  		}
+	}
+	
+	public static void printGameOver() {
+		for(String line: gameO) {
+			sprint(line);
+		}
+		for(String entry: gameOver1) {
+			sprint(entry);
+		}
 	}
 	
 	public static void printIntroduction() {

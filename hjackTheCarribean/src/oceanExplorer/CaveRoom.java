@@ -52,6 +52,10 @@ public class CaveRoom {
 		}
 	}
 	
+	public void setDirection(String directions) {
+		this.directions = directions;
+	}
+	
 	/**
 	 * Converts an int to a direction
 	 *    toDirection(0) -> "the North"
@@ -132,11 +136,18 @@ public class CaveRoom {
 				CaveExplorer.currentRoom.enter();
 				CaveExplorer.inventory.updateMap();
 			}
+			else {
+				nothingCanBeDone();
+			}
 		} 
 		else {
 			performAction(direction);
 		}
 	} 
+	
+	public void nothingCanBeDone() {
+		
+	}
 	
 	public int manageCurrentRoomShift(int direction) {
 		return direction;
@@ -211,6 +222,12 @@ public class CaveRoom {
 		CaveExplorer.caves[2][3].setConnection(EAST,CaveExplorer.caves[2][4],new Door());
 
 		//end
+		//Justin's 2nd Room 
+		CaveRoom j2Room = new JustinFogRoom("This area is populated by dense fog. You can barely see.", 1);
+		CaveExplorer.caves[2][0] = j2Room;
+		
+		CaveExplorer.caves[1][0].setConnection(SOUTH, CaveExplorer.caves[2][0], new Door());
+		
 		//4. Set your starting room:
 		CaveExplorer.currentRoom = CaveExplorer.caves[0][1];
 		CaveExplorer.currentRoom.enter();
