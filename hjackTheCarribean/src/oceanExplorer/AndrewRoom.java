@@ -54,7 +54,11 @@ public class AndrewRoom extends CaveRoom {
 		return -1;
 	}
 	
-	
+	public int directionToLeft(int ogDir){
+		if(ogDir == 3}
+		   return 0;
+		return ogDir + 1;
+	}
 	//OVERIDE
 
 	/**
@@ -68,13 +72,13 @@ public class AndrewRoom extends CaveRoom {
 		}
 			//distance doesn't change
 			turnCount --;
-		//change the direction
-			directionFacing = directionToAvoid-1;
+		//change the direction (basically turn left)
+			directionFacing = directionToLeft(directionFacing);
 			directionToAvoid = updateAvoidDirection(directionFacing);
 			
 			
 		if(turnCount == 0) {
-			//whirlpool disappears
+			System.out.println("The whirlpool disappears.");
 			//OPTIONAL: user is launched towards the last direction they were facing
 		}
 		if(distanceFromCenter == 0) {
