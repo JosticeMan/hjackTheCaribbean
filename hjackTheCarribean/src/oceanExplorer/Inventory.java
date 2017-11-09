@@ -11,7 +11,6 @@ public class Inventory {
 		updateMap();
 		desc = "";
 		beginningShip=new Ship(10,100,40);
-		fountainUse = false;
 	}
 
 	public void updateMap() {
@@ -55,11 +54,6 @@ public class Inventory {
 		}
 	}
 
-
-	public boolean getFountainUse()
-	{
-		return fountainUse;
-	}
 	
 	public String getDescription() {
  		// return "You have nothing in your inventory.";

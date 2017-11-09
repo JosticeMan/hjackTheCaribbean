@@ -4,11 +4,13 @@ public class DanRoom extends CaveRoom {
 
 	private int hp;
 	private int max;
+	private boolean isUsed;
 	
 	public DanRoom(String description) 
 	{
 		super(description);
 		max = 25;
+		isUsed = false;
 	}
 
 	public String validKeys() {
@@ -37,7 +39,15 @@ public class DanRoom extends CaveRoom {
 	
 	public String restoreHealth() 
 	{
-		CaveExplorer.inventory.getBeginningShip().setHp(max);
-		return "Your health has been restored.";
+		if (!isUsed)
+		{
+			CaveExplorer.inventory.getBeginningShip().setHp(max);
+			isUsed = true;
+			return "Your health has been restored.";
+		}
+		else
+		{
+			return "The fountain is dry...";
+		}
 	}
 }
