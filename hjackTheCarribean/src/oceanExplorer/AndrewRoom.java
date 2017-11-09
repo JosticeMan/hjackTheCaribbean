@@ -31,8 +31,9 @@ public class AndrewRoom extends CaveRoom {
 		 * from EAST to NORTH
 		 * from WEST to SOUTH
 		 */
-		directionFacing = CaveExplorer.inventory.getLastDirection(); //will get the first direction the user is facing
-		
+		//directionFacing = CaveExplorer.inventory.getLastDirection(); //will get the first direction the user is facing
+		directionFacing = (int)(Math.random()*4);
+		//Will be random for now
 		/** HAVE TO MAKE getLastDirection() WORK PROPERLY IN INVENTORY**/
 		
 		directionToAvoid = updateAvoidDirection(directionFacing);
