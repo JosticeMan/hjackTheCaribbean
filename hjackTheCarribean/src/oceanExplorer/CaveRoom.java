@@ -137,7 +137,6 @@ public class CaveRoom {
 			performAction(direction);
 		}
 	} 
-
 	/**
 	 * Override to give response to keys other than wasd
 	 * @param direction
