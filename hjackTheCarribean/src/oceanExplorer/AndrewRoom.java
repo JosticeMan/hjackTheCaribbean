@@ -35,7 +35,7 @@ public class AndrewRoom extends CaveRoom {
 		directionFacing = (int)(Math.random()*4);
 		//Will be random for now
 		/** HAVE TO MAKE getLastDirection() WORK PROPERLY IN INVENTORY**/
-		
+		System.out.println("You are facing "+directionFacing+".");
 		directionToAvoid = updateAvoidDirection(directionFacing);
 	}
 	
@@ -69,13 +69,15 @@ public class AndrewRoom extends CaveRoom {
 		if(direction == directionToAvoid) {
 			//user failed to avoid center
 			distanceFromCenter --;
-			System.out.println("You fall closer to the center");
+			System.out.println("You fall closer to the center.");
 		}
 			//distance doesn't change
 			turnCount --;
 		//change the direction (basically turn left)
 			directionFacing = directionToLeft(directionFacing);
 			directionToAvoid = updateAvoidDirection(directionFacing);
+		
+			System.out.println("You are now facing "+directionFacing+".");
 			
 			
 		if(turnCount == 0) {
