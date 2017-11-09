@@ -193,7 +193,7 @@ public class CaveRoom {
 			
 		//end
 		//Sunny's Room
-		CaveRoom sRoom = new SunnyRoom("This is Sunny's room");
+		CaveRoom sRoom = new SunnyRoom("You have reached the corner edge of the ocean.");
 		CaveExplorer.caves[4][4] = sRoom;
 		CaveExplorer.caves[4][4].setConnection(WEST, CaveExplorer.caves[4][3], new Door());
 		CaveExplorer.caves[4][3].setConnection(NORTH, CaveExplorer.caves[3][3], new Door());
