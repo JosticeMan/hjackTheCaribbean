@@ -42,7 +42,7 @@ public class DanFountainRoom extends CaveRoom {
 		if (!isUsed)
 		{
 			
-			CaveExplorer.inventory.getBeginningShip().setHp(max);
+			CaveExplorer.inventory.getBeginningShip().setHp(CaveExplorer.inventory.getBeginningShip().getHp()+30);
 			isUsed = true;
 			return "Your health has been restored.";
 		}
