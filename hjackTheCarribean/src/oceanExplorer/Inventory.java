@@ -55,9 +55,14 @@ public class Inventory {
 	}
 
 	
+	public void setBeginningShip(Ship beginningShip) {
+		this.beginningShip = beginningShip;
+	}
+
 	public String getDescription() {
- 		// return "You have nothing in your inventory.";
-		return map + "\n"+"You have "+CaveExplorer.inventory.getBeginningShip().getHp()+" HP.";
+ 		if(beginningShip!=null)
+ 			return map + "\n"+"You have "+CaveExplorer.inventory.getBeginningShip().getHp()+" HP.";
+ 		return map;
  	}
 
 	public Ship getBeginningShip() {

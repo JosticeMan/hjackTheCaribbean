@@ -165,7 +165,7 @@ public class CaveRoom {
 		}
 		
 		//Steven room goes here
-		CaveExplorer.caves[1][2]=new StevenRoom("This is Steven's");
+		CaveExplorer.caves[1][2]=new StevenRoom("There is nothing here.");
 		CaveExplorer.caves[0][1].setConnection(EAST,CaveExplorer.caves[0][2],new Door());
 		CaveExplorer.caves[0][2].setConnection(SOUTH,CaveExplorer.caves[1][2],new Door());
 		
