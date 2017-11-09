@@ -8,7 +8,7 @@ public class JustinBossRoom extends CaveRoom {
 	public static final String[] FIRST_MIDDLE = {"usti", "ist", "oma", "o", "e", "or", "aphin"};
 	public static final String[] FIRST_END = {"n", "y", "er", "old", "tian", "s", "d"};
 	
-	public static fianl String[] NATIONALITY = {" of France", " of Spain", " of England"};
+	public static final String[] NATIONALITY = {" of France", " of Spain", " of England"};
 	
 	public JustinBossRoom(String description, int level) {
 		super(description); //This manages the description
