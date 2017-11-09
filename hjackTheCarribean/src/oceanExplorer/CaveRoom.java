@@ -137,11 +137,13 @@ public class CaveRoom {
 			performAction(direction);
 		}
 	} 
+
 	
 	public int manageCurrentRoomShift(int direction) {
 		return direction;
 	}
 	
+
 	/**
 	 * Override to give response to keys other than wasd
 	 * @param direction
@@ -168,15 +170,19 @@ public class CaveRoom {
 			}
 		}
 		//Steven room goes here
-		CaveExplorer.caves[1][2]=new StevenRoom("This is Steven's");
+		CaveExplorer.caves[1][2]=new StevenRoom("There is nothing here.");
 		CaveExplorer.caves[0][1].setConnection(EAST,CaveExplorer.caves[0][2],new Door());
 		CaveExplorer.caves[0][2].setConnection(SOUTH,CaveExplorer.caves[1][2],new Door());
 		//end
-		//Dan roome
+		//Dan room
 		
-		CaveExplorer.caves[0][3]=new DanRoom("This is fountain. Interact with 'e' so you can restore your health.");
+		//Fountain
+		CaveExplorer.caves[0][3]=new DanFountainRoom("This is fountain. Interact with 'e' so you can restore your health.");
 		CaveExplorer.caves[0][2].setConnection(EAST,CaveExplorer.caves[0][3],new Door());
 		
+		//Trap
+		CaveExplorer.caves[1][1]=new DanTrapRoom("You've been bitten by a sea rat! -5 HP.");
+//		CaveExplorer.caves[1][2].setConnection(EAST,CaveExplorer.caves[1][3],new Door());
 		
 		
 		//end

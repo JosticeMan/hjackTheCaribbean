@@ -7,6 +7,7 @@ public class Inventory {
 
 	private String map; 
 	private Ship beginningShip;
+
 	private int kItems;
 
 
@@ -24,11 +25,10 @@ public class Inventory {
      Stormcaller - The opponent's battleships are surrounded by bad weather and unable to make a player for one turn. 
 	*/
 	private String desc;
+
 	
 	public Inventory() {
-		updateMap();
-		desc = "";
-		beginningShip=new Ship(10,100,40);
+		updateMap();		
 	}
 
 	public int getLastDirection() {
@@ -88,15 +88,21 @@ public class Inventory {
 		}
 	}
 
+	
+	public void setBeginningShip(Ship beginningShip) {
+		this.beginningShip = beginningShip;
+	}
 
 	public String getDescription() {
- 		// return "You have nothing in your inventory.";
-		return map + "\n"+"You have "+CaveExplorer.inventory.getBeginningShip().getHp()+" HP.";
+ 		if(beginningShip!=null)
+ 			return map + "\n"+"You have "+CaveExplorer.inventory.getBeginningShip().getHp()+" HP.";
+ 		return map;
  	}
 
 	public Ship getBeginningShip() {
 		return beginningShip;
 	}
+
 
 	public void addItems(int direction) {
 		kItems += direction;
@@ -105,5 +111,5 @@ public class Inventory {
 	public int numItems() {
 		return kItems;
 	}
-	
+
 }
