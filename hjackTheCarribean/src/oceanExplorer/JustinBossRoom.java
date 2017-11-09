@@ -8,13 +8,15 @@ public class JustinBossRoom extends CaveRoom {
 	public static final String[] FIRST_MIDDLE = {"usti", "ist", "oma", "o", "e", "or", "aphin"};
 	public static final String[] FIRST_END = {"n", "y", "er", "old", "tian", "s", "d"};
 	
+	public static final String[] NATIONALITY = {" of France", " of Spain", " of England"};
+	
 	public JustinBossRoom(String description, int level) {
 		super(description); //This manages the description
-		currentCommander = new JustinSunnyCommander(randomFirstName(), level);
+		currentCommander = new JustinSunnyCommander(randomFirstName(level), level);
 	}
 	
-	public static String randomFirstName() {
-		return CaveExplorer.randomString(FIRST_START) + CaveExplorer.randomString(FIRST_MIDDLE) + CaveExplorer.randomString(FIRST_END);
+	public static String randomFirstName(int level) {
+		return CaveExplorer.randomString(FIRST_START) + CaveExplorer.randomString(FIRST_MIDDLE) + CaveExplorer.randomString(FIRST_END) + NATIONALITY[level - 1];
 	}
 	
 	//-------------------------
