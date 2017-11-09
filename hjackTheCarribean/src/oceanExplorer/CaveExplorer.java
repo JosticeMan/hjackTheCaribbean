@@ -43,7 +43,7 @@ public class CaveExplorer {
 		CaveExplorer.playing = playing;
 	}
 
-	public static int getLevel(int level) {
+	public static int getLevel() {
 		return CaveExplorer.level;
 	}
 	
