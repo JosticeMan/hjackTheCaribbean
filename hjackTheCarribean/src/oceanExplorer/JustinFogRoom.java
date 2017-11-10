@@ -15,8 +15,8 @@ public class JustinFogRoom extends CaveRoom {
 	public JustinFogRoom(String description, int turns) {
 		super(description + "\n");
 		
-		this.inRoom = false;
-		this.isClear = false;
+		inRoom = false;
+		isClear = false;
 		this.turns = turns;
 		this.visited = -1;
 		this.visitedDescription = "You've wandered into area where you were previously surrounded by fog!";
@@ -39,7 +39,9 @@ public class JustinFogRoom extends CaveRoom {
 	//-------------------------
 	
 	public void nothingCanBeDone() {
-		crashedShip();
+		if(!isClear) {
+			crashedShip();
+		}
 	}
 	
 	public void setDirections() {
@@ -48,13 +50,16 @@ public class JustinFogRoom extends CaveRoom {
 	
 	public void leave() {
 		super.leave();
-		this.inRoom = false;
+		inRoom = false;
 	}
 	
 	public void enter() {
 		super.enter();
 		this.visited++; //This allows the program to track whether or not the player has visited the room
-		this.inRoom = true;
+		if(this.visited == this.turns) {
+			isClear = true;
+		}
+		inRoom = true;
 	}
 	
 	public String getDescription() {
@@ -62,11 +67,10 @@ public class JustinFogRoom extends CaveRoom {
 			return visitedDescription;
 		}
 		if(this.visited == this.turns) {
-			this.isClear = true;
-			return visitedDescription + "\n It appears that the fog has cleared up!";
+			return visitedDescription + "\nIt appears that the fog has cleared up!";
 		}
 		if(this.visited > 0) {
-			return visitedDescription + "\n It appears that the fog still hasn't cleared up!";
+			return visitedDescription + "\nIt appears that the fog still hasn't cleared up!";
 		}
 		return super.getDescription();
 	}
