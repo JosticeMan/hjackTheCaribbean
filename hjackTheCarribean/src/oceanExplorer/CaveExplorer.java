@@ -78,11 +78,14 @@ public class CaveExplorer {
 	}
 	
 	public static void printGameOver() {
+		pause(250);
 		for(String line: gameO) {
 			sprint(line);
 		}
+		pause(1000);
 		for(String entry: gameOver1) {
 			sprint(entry);
+			pause(1000);
 		}
 	}
 	
@@ -90,8 +93,10 @@ public class CaveExplorer {
 		for(String line: logo) {
 			sprint(line);
 		}
+		pause(1000);
 		for(String entry: intro) {
 			sprint(entry);
+			pause(1000);
 		}
 	}
 	
@@ -142,6 +147,19 @@ public class CaveExplorer {
 	public static void sprint(String s){
 		  multiLinePrint(s);
 	  }
+	
+	/**
+	 * This method causes the program to pause 
+	 * @param i - Length of the pause
+	 */
+	public static void pause(int i) {
+		try {
+			Thread.sleep(i);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	/**
 	 * This method prints whatever string is inputed to wrap the sentences around at the given character limit per line

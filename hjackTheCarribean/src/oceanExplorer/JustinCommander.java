@@ -2,7 +2,7 @@ package oceanExplorer;
 
 import battleshipJYSK.*;
 
-public class JustinSunnyCommander extends NPC {
+public class JustinCommander extends NPC {
 
 	/*
 	 Level 1: Commander will randomly attack the player's field (not in the hit places)  
@@ -18,7 +18,7 @@ public class JustinSunnyCommander extends NPC {
 	private String[] commanderAngerName;
 	private String[] commanderAskName;
 	
-	public JustinSunnyCommander(String name, int level) {
+	public JustinCommander(String name, int level) {
 		this.level = level;
 		this.name = name;
 		this.repeatCount = 0;
