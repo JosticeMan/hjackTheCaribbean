@@ -5,32 +5,32 @@ import oceanExplorer.CaveExplorer;
 public class FrontEndSunnyK implements JustinSupporter {
 	
 	private static boolean playing;
-	private SunnySupporter backend;
+	private static SunnySupporter backend;
 	
 	private static int commanderLevel; //This is essentially the difficulty level of the commander
 	private static boolean isPlayerTurn; //This tracks whose turn it is
 	private static String userName; //Username of the player
+	private static boolean isWinner;
 	
 	public FrontEndSunnyK() {
 		backend = new BackEndJustinY(this);
 	}
 	
-	public void play() {
+	public static boolean play(int level, String userName) {
+		commanderLevel = level;
+		userName = userName;
+		isWinner = false;
+		
 		new SunnyIntro().play();
 		CaveExplorer.in.nextLine();
 		startGame();
+		
+		return isWinner;
 	}
 	
-	public void startGame() {
+	public static void startGame() {
 		JustinSunnyPlot[][] playerPlots = backend.getPlayerPlots();
 		JustinSunnyPlot[][] commanderPlots = backend.getCommanderPlots();
-		
-	}
-	
-	//Shows both player and boss' fields
-	public void displayMap()
-	{
-		String[][] playerMap = BackEndJustinY.getThePlayerGameBoard();
 		
 	}
 	

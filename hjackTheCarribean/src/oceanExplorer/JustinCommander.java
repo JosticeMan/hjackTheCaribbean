@@ -36,7 +36,7 @@ public class JustinCommander extends NPC {
 	 * @param user - UserName of the player that the AI is going to face
 	 */
 	public void fight(String user) {
-		this.winner = BackEndJustinY.startBattle(level, user); //This starts the battle
+		this.winner = FrontEndSunnyK.play(level, user); //This starts the battle
 	}
 	
 	/**

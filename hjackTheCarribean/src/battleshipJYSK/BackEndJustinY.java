@@ -91,10 +91,10 @@ public class BackEndJustinY implements SunnySupporter {
 	/**
 	 * This generates a new 2D array of the appropriate board size; 
 	 */
-	public static void generateMap() {
-		int dimension = 5+(commanderLevel - 1);
-		thePlayerGameBoard = new String[dimension][dimension];
-		theOpponentGameBoard = new String[dimension][dimension];
+	public void generateMap() {
+		int dimension = 5+(frontend.getCommanderLevel() - 1);
+		thePlayerGameBoard = new JustinSunnyPlot[dimension][dimension];
+		theOpponentGameBoard = new JustinSunnyPlot[dimension][dimension];
 	}
 	
 	public JustinSunnyPlot[][] getPlayerPlots() {
