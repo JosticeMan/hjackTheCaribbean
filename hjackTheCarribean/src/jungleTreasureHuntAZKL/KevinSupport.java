@@ -1,5 +1,5 @@
 package jungleTreasureHuntAZKL;
 
-public class FrontEndKevinL {
+public interface KevinSupport {
 
 }
