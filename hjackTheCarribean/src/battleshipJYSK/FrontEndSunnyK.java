@@ -1,9 +1,32 @@
 package battleshipJYSK;
 
-public class FrontEndSunnyK {
-	
-	private String[][] playerMap;
+import oceanExplorer.CaveExplorer;
 
+public class FrontEndSunnyK implements JustinSupporter {
+	
+	private static boolean playing;
+	private SunnySupporter backend;
+	
+	private static int commanderLevel; //This is essentially the difficulty level of the commander
+	private static boolean isPlayerTurn; //This tracks whose turn it is
+	private static String userName; //Username of the player
+	
+	public FrontEndSunnyK() {
+		backend = new BackEndJustinY(this);
+	}
+	
+	public void play() {
+		new SunnyIntro().play();
+		CaveExplorer.in.nextLine();
+		startGame();
+	}
+	
+	public void startGame() {
+		JustinSunnyPlot[][] playerPlots = backend.getPlayerPlots();
+		JustinSunnyPlot[][] commanderPlots = backend.getCommanderPlots();
+		
+	}
+	
 	//Shows both player and boss' fields
 	public void displayMap()
 	{
