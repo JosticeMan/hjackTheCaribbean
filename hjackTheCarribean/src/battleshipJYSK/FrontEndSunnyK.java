@@ -34,4 +34,14 @@ public class FrontEndSunnyK implements JustinSupporter {
 		
 	}
 	
+	/**
+	 * This method flips a coin that determines who makes the first move
+	 */
+	public static void determineFirstTurn() {
+		if(Math.random() < .50) {
+			isPlayerTurn = true;
+		}
+		isPlayerTurn = false;
+	}
+	
 }

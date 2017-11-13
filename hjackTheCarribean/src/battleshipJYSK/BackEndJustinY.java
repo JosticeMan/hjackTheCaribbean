@@ -89,35 +89,6 @@ public class BackEndJustinY implements SunnySupporter {
 	}
 	
 	/**
-	 * Main method that will handle the main components of the game between the commander and player
-	 * @param gameLevel - Difficulty of Commander
-	 * @param user - Name of the player
-	 * @return
-	 */
-	public static boolean startBattle(int gameLevel, String user) {
-		commanderLevel = gameLevel;
-		playing = true;
-		userName = user;
-		generateMap(); //Generate the opponent and player game board for the game to begin
-		determineFirstTurn(); //Essentially a coin flip that determines who makes the first move
-		while(playing) {
-
-		}
-		commanderLevel++;
-		return false;
-	}
-	
-	/**
-	 * This method flips a coin that determines who makes the first move
-	 */
-	public static void determineFirstTurn() {
-		if(Math.random() < .50) {
-			isPlayerTurn = true;
-		}
-		isPlayerTurn = false;
-	}
-	
-	/**
 	 * This generates a new 2D array of the appropriate board size; 
 	 */
 	public static void generateMap() {
@@ -126,11 +97,11 @@ public class BackEndJustinY implements SunnySupporter {
 		theOpponentGameBoard = new String[dimension][dimension];
 	}
 	
-	public static String[][] getThePlayerGameBoard() {
+	public JustinSunnyPlot[][] getPlayerPlots() {
 		return thePlayerGameBoard;
 	}
 	
-	public static String[][] getTheOpponentGameBoard() {
+	public JustinSunnyPlot[][] getCommanderPlots() {
 		return theOpponentGameBoard;
 	}
 	
