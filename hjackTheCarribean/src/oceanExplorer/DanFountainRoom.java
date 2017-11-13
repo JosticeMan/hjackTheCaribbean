@@ -51,4 +51,9 @@ public class DanFountainRoom extends CaveRoom {
 			return "The fountain is dry...";
 		}
 	}
+	
+	public String getContents()
+	{
+		return "F";
+	}
 }
