@@ -83,6 +83,7 @@ public class BackEndJustinY implements SunnySupporter {
 
 	private static JustinSunnyPlot[][] thePlayerGameBoard; //This will monitor the game board of the player
 	private static JustinSunnyPlot[][] theOpponentGameBoard; //This will monitor the game board of the AI
+	private int[] previousMove;
 	
 	public static final int NORTH = 0;
 	public static final int EAST = 1;
@@ -92,6 +93,9 @@ public class BackEndJustinY implements SunnySupporter {
 	public BackEndJustinY(JustinSupporter frontend) {
 		this.frontend = frontend;
 		generateMap();
+		
+		int[] mtemp = {0, 0};
+		previousMove = mtemp;
 	}
 	
 	/**
@@ -282,6 +286,45 @@ public class BackEndJustinY implements SunnySupporter {
 	
 	public JustinSunnyPlot[][] getCommanderPlots() {
 		return theOpponentGameBoard;
+	}
+	
+	/**
+	 * Returns the number of not hit ship spots on the board
+	 * @param playerBoard - Player board that you want to check
+	 * @return
+	 */
+	public int countOfShipSpotsNotHit(JustinSunnyPlot[][] playerBoard) {
+		int count = 0;
+		for(int row = 0; row < theOpponentGameBoard.length; row++) {
+			for(int col = 0; col < theOpponentGameBoard[0].length; col++) {
+				if(theOpponentGameBoard[row][col].isShipOccupied() && !(theOpponentGameBoard[row][col].isHasBeenHit())) {
+					count++;
+				}
+			}
+		}
+		return count;
+	}
+	
+	/**
+	 * TO BE USED FOR THE CRITICAL MISSILE POWER-UP OR LEVEL 3 AI
+	 * Returns the coordinates of all the computer's ships that has not been hit yet 
+	 * @param playerBoard - Player board that you want to check
+	 * @return
+	 */
+	public int[][] allPossibleShipsNotHit(JustinSunnyPlot[][] playerBoard) {
+		int unHitSpots = countOfShipSpotsNotHit(playerBoard);
+		int[][] possibleMoves = new int[unHitSpots][1];
+		int numOfCoordinates = 0;
+		for(int row = 0; row < playerBoard.length; row++) {
+			for(int col = 0; col < playerBoard[row].length; col++) {
+				if(playerBoard[row][col].isShipOccupied() && !(playerBoard[row][col].isHasBeenHit())) {
+					int[] cTemp = {row, col}; 
+					possibleMoves[numOfCoordinates] = cTemp;
+					numOfCoordinates++;
+				}
+			}
+		}
+		return possibleMoves;
 	}
 	
 	/**
