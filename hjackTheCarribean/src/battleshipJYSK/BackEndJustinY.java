@@ -108,12 +108,18 @@ public class BackEndJustinY implements SunnySupporter {
 	 * @param e - The ship that the user wants to place
 	 * @return
 	 */
-	public int lengthofShip(Ship e) {
+	public int lengthOfShip(Ship e) {
 		return ((e.getHp() - (e.getHp() % 10)) / 10);
 	}
 	
 	public void placeShip(int row, int col, int direction, Ship e) {
-		
+		int shipLength = lengthOfShip(e);
+		if(direction == WEST || direction == EAST) {
+			
+		}
+		else {
+			//NORTH AND SOUTH HERE
+		}
 	}
 	
 	public boolean isValidShipPlacement(int row, int col, int direction, Ship e) {
