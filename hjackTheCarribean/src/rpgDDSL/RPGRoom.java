@@ -2,11 +2,12 @@ package rpgDDSL;
 
 public class RPGRoom {
 
-	public int type;
+	private int type;
 	private boolean north;
 	private boolean south;
 	private boolean east;
 	private boolean west;
+	
 	
 	public RPGRoom(int type) {
 		this.type = type;
