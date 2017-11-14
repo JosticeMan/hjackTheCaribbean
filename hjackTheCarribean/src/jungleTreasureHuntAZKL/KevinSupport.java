@@ -6,6 +6,6 @@ public interface KevinSupport {
 
 	Object end();
 
-	String getInput();
+	String processInput();
 
 }

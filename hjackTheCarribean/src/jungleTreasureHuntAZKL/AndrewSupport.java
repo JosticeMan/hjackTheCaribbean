@@ -14,6 +14,7 @@ public interface AndrewSupport {
 	
 	public void revealTreasure();
 	public void getLookCount();
+	public String getUserInput();
 	
 	
 	//GAME DESIGN
