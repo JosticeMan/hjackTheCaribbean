@@ -1,5 +1,8 @@
 package battleshipJYSK;
 
+import java.util.Arrays;
+import java.util.Scanner;
+
 import oceanExplorer.*;
 
 public class BackEndJustinY implements SunnySupporter {
@@ -96,6 +99,35 @@ public class BackEndJustinY implements SunnySupporter {
 	public static final int EAST = 1;
 	public static final int SOUTH = 2;
 	public static final int WEST = 3;
+	
+	/*
+	public static void main(String[] args) {
+		/*
+			generateMap();
+			System.out.println(tryShipPlacement(0,1,EAST,2,thePlayerGameBoard));
+			System.out.println(tryShipPlacement(0,3,NORTH,2,thePlayerGameBoard));
+			printMap(thePlayerGameBoard);
+		/*
+			generateMap();
+			tryShipPlacement(0,1,EAST,2,thePlayerGameBoard);
+			System.out.println(Arrays.toString(allPossibleShipsNotHit(thePlayerGameBoard)[2]));
+	}
+	*/
+	
+	/**
+	 * This prints out the generic map for testing purposes
+	 * @param arr
+	 */
+	public static void printMap(JustinSunnyPlot[][] arr) {
+		for(int i = 0; i< arr.length; i++)
+		{
+		    for(int j = 0; j< arr[i].length; j++)
+		    {
+		        System.out.print(arr[i][j]);
+		    }
+		    System.out.println();
+		}
+	}
 	
 	public BackEndJustinY(JustinSupporter frontend) {
 		this.frontend = frontend;
@@ -242,9 +274,24 @@ public class BackEndJustinY implements SunnySupporter {
 	 * This generates a new 2D array of the appropriate board size; 
 	 */
 	public void generateMap() {
-		int dimension = 5+(frontend.getCommanderLevel() - 1);
+		//int dimension = 5+(frontend.getCommanderLevel() - 1);
+		int dimension = 5;
 		thePlayerGameBoard = new JustinSunnyPlot[dimension][dimension];
+		populateBoard(thePlayerGameBoard);
 		theOpponentGameBoard = new JustinSunnyPlot[dimension][dimension];
+		populateBoard(theOpponentGameBoard);
+	}
+	
+	/**
+	 * Populate the specified array with plots using 2D arrays and coordinates
+	 * @param arr
+	 */
+	public void populateBoard(JustinSunnyPlot[][] arr) {
+		for(int row = 0; row < arr.length; row++) {
+			for(int col = 0; col < arr[row].length; col++) {
+				arr[row][col] = new JustinSunnyPlot(row, col);
+			}
+		}
 	}
 	
 	/**
@@ -302,9 +349,9 @@ public class BackEndJustinY implements SunnySupporter {
 	 */
 	public int countOfShipSpotsNotHit(JustinSunnyPlot[][] playerBoard) {
 		int count = 0;
-		for(int row = 0; row < theOpponentGameBoard.length; row++) {
-			for(int col = 0; col < theOpponentGameBoard[0].length; col++) {
-				if(theOpponentGameBoard[row][col].isShipOccupied() && !(theOpponentGameBoard[row][col].isHasBeenHit())) {
+		for(int row = 0; row < playerBoard.length; row++) {
+			for(int col = 0; col < playerBoard[0].length; col++) {
+				if(playerBoard[row][col].isShipOccupied() && !(playerBoard[row][col].isHasBeenHit())) {
 					count++;
 				}
 			}

@@ -14,6 +14,13 @@ public class JustinSunnyPlot {
 		this.col = col;
 	}
 
+	public String toString() {
+		if(shipOccupied) {
+			return "[X]";
+		}
+		return "[ ]";
+	}
+	
 	public boolean isShipOccupied() {
 		return shipOccupied;
 	}
