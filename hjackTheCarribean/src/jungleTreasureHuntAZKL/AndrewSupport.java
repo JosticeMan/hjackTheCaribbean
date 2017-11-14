@@ -13,7 +13,7 @@ public interface AndrewSupport {
 	public void getStepCount();
 	
 	public void revealTreasure();
-	public void getLookInfo();
+	public void getLookCount();
 	
 	
 	//GAME DESIGN
