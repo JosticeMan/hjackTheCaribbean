@@ -8,6 +8,7 @@ public class Inventory {
 	private static String map; 
 	private Ship beginningShip;
 	private int kItems;
+	private Ship[] ships;
 
 
 	
@@ -93,6 +94,9 @@ public class Inventory {
 		}
 	}
 
+	public Ship[] getShip() {
+		return ships;
+	}
 
 	public String getDescription() {
  		// return "You have nothing in your inventory.";

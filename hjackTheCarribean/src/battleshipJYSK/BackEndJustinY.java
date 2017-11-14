@@ -36,8 +36,8 @@ public class BackEndJustinY implements SunnySupporter {
 	 
 	 Referee: Where would you like to place one end of your ship, (replace with ship name here), with size 2 (replace size here)?
 	 User inputs [1,2]
-	 Would you like to make it face NORTH, EAST, SOUTH, OR WEST?
-	 User inputs NORTH
+	 Would you like to make it face NORTH (N) , EAST (E) , SOUTH (S), OR WEST (W)?
+	 User inputs N
 	 
 	 Referee: Here's your ship placement. Are you happy with your choice?
 	 [ ], [ ], [X], [ ], [ ],
@@ -72,10 +72,10 @@ public class BackEndJustinY implements SunnySupporter {
 	 PLANNED POWERUPS:
 	 BoinkRadar - Gives the player a general idea of where one of the opponent's ship is. 
 	 CriticalMissile - Sets a missile off that will guarantee a hit on a boat in a turn but the user cannot do anything in that time. 
-     Stormcaller - The opponent's battleships are surrounded by bad weather and unable to make a player for one turn. 
+     Stormcaller - The opponent's battleships are surrounded by bad weather and unable to make a player move for one turn. 
 	 ------------------------------------------
 	 IF TIME ALLOWS IT: 
-	 Give commanders a special fig (icon) so that the dialogues are more appealing, cosmetic wise. 
+	 Give commanders a special text art (icon) so that the dialogues are more appealing, cosmetic wise. 
 	 ------------------------------------------
 	*/
 	
@@ -83,6 +83,11 @@ public class BackEndJustinY implements SunnySupporter {
 
 	private static JustinSunnyPlot[][] thePlayerGameBoard; //This will monitor the game board of the player
 	private static JustinSunnyPlot[][] theOpponentGameBoard; //This will monitor the game board of the AI
+	
+	public static final int NORTH = 0;
+	public static final int EAST = 1;
+	public static final int SOUTH = 2;
+	public static final int WEST = 3;
 	
 	public BackEndJustinY(JustinSupporter frontend) {
 		this.frontend = frontend;
@@ -94,7 +99,74 @@ public class BackEndJustinY implements SunnySupporter {
 	 * @return
 	 */
 	public int numberOfShips() {
-		return 1;
+		return 1; //Should be something like CaveExplorer.inventory.getShips();
+	}
+	
+	/**
+	 * Return the length of one given ship that the user has 
+	 * HELPER METHOD to assist when plotting the ships
+	 * @param e - The ship that the user wants to place
+	 * @return
+	 */
+	public int lengthOfShip(Ship e) {
+		return ((e.getHp() - (e.getHp() % 10)) / 10);
+	}
+	
+	public void placeShip(int row, int col, int direction, Ship e) {
+		int shipLength = lengthOfShip(e);
+		if(direction == WEST || direction == EAST) {
+			
+		}
+		else {
+			//NORTH AND SOUTH HERE
+		}
+	}
+	
+	public boolean isValidShipPlacement(int row, int col, int direction, Ship e) {
+		if(direction == WEST || direction == EAST) {
+			
+		}
+		else {
+			//NORTH AND SOUTH HERE
+		}
+		return true;
+	}
+	
+	/**
+	 * Interprets the user input and returns the corresponding direction to which the user will want to place his ship at a certain coordinate
+	 * @return
+	 */
+	public int interpretDirectionInput() {
+		String input = CaveExplorer.in.nextLine();
+		if(!isValid(input)) {
+			printValidEntries();
+			input = CaveExplorer.in.nextLine();
+		}
+		return determineDirection(input, validEntries());
+	}
+	
+	/**
+	 * Similar method to the one in Cave Room, this method tells the user the keys and the directions they represent. 
+	 */
+	public void printValidEntries() {
+		CaveExplorer.print("Captain Duran: You are only allowed to type 'n' for NORTH, 'e' for EAST, 's' for SOUTH, and 'w' for WEST!");
+	}
+	
+	/**
+	 * String of all the valid inputs for the direction input
+	 * @return
+	 */
+	public String validEntries() {
+		return "neswNESW";
+	}
+	
+	public boolean isValid(String input) {
+		String validInput = validEntries();
+		return validInput.indexOf(input) > - 1 && input.length() == 1;
+	}
+
+	public int determineDirection(String input, String key) {
+		return key.indexOf(input) % 4;
 	}
 	
 	/**
@@ -114,7 +186,7 @@ public class BackEndJustinY implements SunnySupporter {
 		String input = CaveExplorer.in.nextLine();
 		int[] coords = toCoords(input);
 		while(coords == null){
-			System.out.println("You must enter cordinates of the form:\n          <row>,<col>"
+			CaveExplorer.print("Captain Duran: You must enter cordinates of the form:\n          <row>,<col>"
 					+ "\n<row> and <col> should be integers.");
 			input = CaveExplorer.in.nextLine();
 			coords = toCoords(input);
@@ -161,6 +233,10 @@ public class BackEndJustinY implements SunnySupporter {
 		return oceanExplorer.Inventory.getBossPowerUps()[type] > 0;
 	}
 	
+	/**
+	 * Decrements the count of a particular power up
+	 * @param type
+	 */
 	public static void decrementPowerUp(int type) {
 		int[] newPowerUpCount = oceanExplorer.Inventory.getBossPowerUps();
 		newPowerUpCount[type]--;
