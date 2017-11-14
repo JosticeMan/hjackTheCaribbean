@@ -150,6 +150,7 @@ public class CaveExplorer {
 	
 	/**
 	 * This method causes the program to pause 
+	 * CREDITS TO: NOCKLES for providing the method through his example
 	 * @param i - Length of the pause
 	 */
 	public static void pause(int i) {

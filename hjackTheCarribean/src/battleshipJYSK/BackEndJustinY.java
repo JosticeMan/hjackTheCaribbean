@@ -99,7 +99,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * @return
 	 */
 	public int numberOfShips() {
-		return 1; //Should be something like CaveExplorer.inventory.getShips();
+		return 1; //Should be something like CaveExplorer.inventory.getShips().length;
 	}
 	
 	/**
@@ -111,24 +111,82 @@ public class BackEndJustinY implements SunnySupporter {
 	public int lengthOfShip(Ship e) {
 		return ((e.getHp() - (e.getHp() % 10)) / 10);
 	}
-	
-	public void placeShip(int row, int col, int direction, Ship e) {
-		int shipLength = lengthOfShip(e);
-		if(direction == WEST || direction == EAST) {
-			
+
+	//Might be possible to make more helper methods out of this
+	/**
+	 * Attempts to place the ship at the given coordinate facing the direction
+	 * This method checks for outOfBoundsExceptions and makes sure the slot isn't already occupied
+	 * @param row - Y coordinate of the Ship
+	 * @param col - X coordinate of the Ship
+	 * @param direction - Direction the user wants the ship to face
+	 * @param shipLength - Length of the Ship to be placed
+	 * @param playerBoard - The appropriate player board to place the ship on
+	 * @return - Returns whether or not the program was able to place the ship or not
+	 */
+	public boolean tryShipPlacement(int row, int col, int direction, int shipLength, JustinSunnyPlot[][] playerBoard) {
+		JustinSunnyPlot[][] previousBoard = playerBoard;
+		if(direction == NORTH) {
+			if(row - shipLength >= 0) {
+				for(int shipRow = row; shipRow >= row - shipLength; shipRow--) {
+					if(!(attemptShipPlacementAtCoordinate(shipRow, col, playerBoard, previousBoard))) {
+						return false;
+					}
+				}
+				return true;
+			}
+			return false;
 		}
-		else {
-			//NORTH AND SOUTH HERE
+		else if(direction == EAST) {
+			if(col + shipLength < playerBoard[0].length) {
+				for(int shipCol = col; shipCol < col + shipLength; shipCol++) {
+					if(!(attemptShipPlacementAtCoordinate(row, shipCol, playerBoard, previousBoard))) {
+						return false;
+					}
+				}
+				return true;
+			}
+			return false;
 		}
+		else if(direction == SOUTH) {
+			if(row + shipLength < playerBoard.length) {
+				for(int shipRow = row; shipRow < row + shipLength; shipRow++) {
+					if(!(attemptShipPlacementAtCoordinate(shipRow, col, playerBoard, previousBoard))) {
+						return false;
+					}
+				}
+				return true;
+			}
+			return false;
+		}
+		else if(direction == WEST) {
+			if(col - shipLength >= 0) {
+				for(int shipCol = col; shipCol >= col - shipLength; shipCol--) {
+					if(!(attemptShipPlacementAtCoordinate(row, shipCol, playerBoard, previousBoard))) {
+						return false;
+					}
+				}
+				return true;
+			}
+			return false;
+		}
+		return false;
 	}
 	
-	public boolean isValidShipPlacement(int row, int col, int direction, Ship e) {
-		if(direction == WEST || direction == EAST) {
-			
+	/**
+	 * Method attempts to occupy the coordinate on the board. If it can't, it tells the program to revert the board back to the original state and stop
+	 * @param row - Y Coordinate of the Ship
+	 * @param col - X Coordinate of the Ship
+	 * @param playerBoard - The appropriate player board to place the ship on
+	 * @param previousBoard - Original state of the board
+	 * @return
+	 */
+	public boolean attemptShipPlacementAtCoordinate(int row, int col, JustinSunnyPlot[][] playerBoard, JustinSunnyPlot[][] previousBoard) {
+		if(playerBoard[row][col].isShipOccupied()) {
+			playerBoard = previousBoard;
+			return false;
 		}
-		else {
-			//NORTH AND SOUTH HERE
-		}
+		//If the ship isn't occupied, then make it occupied and report the successful change
+		playerBoard[row][col].setShipOccupied(true);
 		return true;
 	}
 	
@@ -180,6 +238,7 @@ public class BackEndJustinY implements SunnySupporter {
 	
 	/**
 	 * This method will return the coordinates that the user inputs
+	 * CREDITS TO: NOCKLES for providing the method through his example
 	 * @return
 	 */
 	public int[] getCoordInput() {
@@ -196,6 +255,7 @@ public class BackEndJustinY implements SunnySupporter {
 	
 	/**
 	 * This method will convert the user input into an integer array for processing by the program
+	 * CREDITS TO: NOCKLES for providing the method through his example
 	 * @param input
 	 * @return
 	 */
