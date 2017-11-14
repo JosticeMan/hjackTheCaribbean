@@ -52,6 +52,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 		{
 			System.out.print("Sorry, that key is not valid. Please try again.");
 			gameMenu();
+			
 		}
 	}
 	
