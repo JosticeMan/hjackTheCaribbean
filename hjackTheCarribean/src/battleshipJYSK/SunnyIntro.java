@@ -20,6 +20,5 @@ public class SunnyIntro {
 		System.out.print("(Prepare for a game of Battleship)");
 		CaveExplorer.pause(500);
 		System.out.print("\n~ ~ Press enter to begin! ~ ~");
-		
 	}
 }
