@@ -10,7 +10,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 	private static String commanderName;
 	private static int commanderLevel; //This is essentially the difficulty level of the commander
 	private static boolean isPlayerTurn; //This tracks whose turn it is
-	private static String userName; //Username of the player
+	private static String userName; //User name of the player
 	private static boolean isWinner;
 	
 	public FrontEndSunnyK() {
@@ -25,14 +25,37 @@ public class FrontEndSunnyK implements JustinSupporter {
 		
 		new SunnyIntro().play();
 		CaveExplorer.in.nextLine();
-		startGame();
+		gameMenu();
 		
 		return isWinner;
 	}
 	
-	public static void startGame() {
+	public void gameMenu()
+	{
 		JustinSunnyPlot[][] playerPlots = backend.getPlayerPlots();
 		JustinSunnyPlot[][] commanderPlots = backend.getCommanderPlots();
+		System.out.print("If you do not know how to play Battleship, enter 'a' \n If you already know how to play, enter 'd'");
+		String input = CaveExplorer.in.nextLine();
+		if(input.equals("a"))
+		{
+			System.out.print("In Battleship, you have the player board as well as the opponent's board."
+					+ "\n Each player sets up their board by placing their available ships in different configurations." 
+					+ "\n After the board is set up, each player takes turns and targets one spot on one another's board."
+					+ "\n This 'fires' a shot at that target and will either hit or miss a ship, once all ships are sunk "
+					+ "\n on one person's board, a winner is declared! There are also powerups to assist you.");
+		}
+		if(input.equals("d"))
+		{
+			startGame();
+		}
+		else
+		{
+			System.out.print("Sorry, that key is not valid. Please try again.");
+			gameMenu();
+		}
+	}
+	
+	public static void startGame() {
 		
 	}
 	
@@ -44,6 +67,14 @@ public class FrontEndSunnyK implements JustinSupporter {
 			isPlayerTurn = true;
 		}
 		isPlayerTurn = false;
+	}
+
+	public static String getCommanderName() {
+		return commanderName;
+	}
+	
+	public int getCommanderLevel() {
+		return commanderLevel;
 	}
 	
 }
