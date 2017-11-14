@@ -10,6 +10,13 @@ public class BackEndJustinY implements SunnySupporter {
 	/* 
 	 PLANNING:
 	 
+	 11/14/2017
+	 METHODs NEEDED:
+	 - Method that manages the power-ups - Should not conflict with player choice unless it has to
+	 - Method that handles the computer moves
+	 - Method that returns whether or not there is a winner
+	 - Method that hits a certain coordinate on the spot
+	 
 	 GENERAL: 
 	 Commanders will be fought at the end of 3 levels. Beating a commander will reward a random ship to the player.
 	 There will be 3 levels of Commanders that the player will face:
