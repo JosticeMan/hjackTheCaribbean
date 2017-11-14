@@ -72,10 +72,10 @@ public class BackEndJustinY implements SunnySupporter {
 	 PLANNED POWERUPS:
 	 BoinkRadar - Gives the player a general idea of where one of the opponent's ship is. 
 	 CriticalMissile - Sets a missile off that will guarantee a hit on a boat in a turn but the user cannot do anything in that time. 
-     Stormcaller - The opponent's battleships are surrounded by bad weather and unable to make a player for one turn. 
+     Stormcaller - The opponent's battleships are surrounded by bad weather and unable to make a player move for one turn. 
 	 ------------------------------------------
 	 IF TIME ALLOWS IT: 
-	 Give commanders a special fig (icon) so that the dialogues are more appealing, cosmetic wise. 
+	 Give commanders a special text art (icon) so that the dialogues are more appealing, cosmetic wise. 
 	 ------------------------------------------
 	*/
 	
