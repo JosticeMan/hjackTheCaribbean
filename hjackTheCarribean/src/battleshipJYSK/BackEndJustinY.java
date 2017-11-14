@@ -313,7 +313,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 */
 	public int[][] allPossibleShipsNotHit(JustinSunnyPlot[][] playerBoard) {
 		int unHitSpots = countOfShipSpotsNotHit(playerBoard);
-		int[][] possibleMoves = new int[unHitSpots][1];
+		int[][] possibleMoves = new int[unHitSpots][2];
 		int numOfCoordinates = 0;
 		for(int row = 0; row < playerBoard.length; row++) {
 			for(int col = 0; col < playerBoard[row].length; col++) {
