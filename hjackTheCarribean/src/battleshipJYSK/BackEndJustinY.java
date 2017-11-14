@@ -86,6 +86,15 @@ public class BackEndJustinY implements SunnySupporter {
 	
 	public BackEndJustinY(JustinSupporter frontend) {
 		this.frontend = frontend;
+		generateMap();
+	}
+	
+	/**
+	 * Return the number of ships that the user has
+	 * @return
+	 */
+	public int numberOfShips() {
+		return 1;
 	}
 	
 	/**
@@ -95,6 +104,44 @@ public class BackEndJustinY implements SunnySupporter {
 		int dimension = 5+(frontend.getCommanderLevel() - 1);
 		thePlayerGameBoard = new JustinSunnyPlot[dimension][dimension];
 		theOpponentGameBoard = new JustinSunnyPlot[dimension][dimension];
+	}
+	
+	/**
+	 * This method will return the coordinates that the user inputs
+	 * @return
+	 */
+	public int[] getCoordInput() {
+		String input = CaveExplorer.in.nextLine();
+		int[] coords = toCoords(input);
+		while(coords == null){
+			System.out.println("You must enter cordinates of the form:\n          <row>,<col>"
+					+ "\n<row> and <col> should be integers.");
+			input = CaveExplorer.in.nextLine();
+			coords = toCoords(input);
+		}
+		return coords;
+	}
+	
+	/**
+	 * This method will convert the user input into an integer array for processing by the program
+	 * @param input
+	 * @return
+	 */
+	private int[] toCoords(String input) {
+		try{
+			int a = Integer.parseInt(input.substring(0,1));
+			int b = Integer.parseInt(input.substring(2,3));
+			if(input.substring(1,2).equals(",") && input.length() ==3){
+				int[] coords = {a,b};
+				return coords;
+			}
+			else
+			{
+				return null;
+			}
+		}catch(Exception e){
+			return null;
+		}
 	}
 	
 	public JustinSunnyPlot[][] getPlayerPlots() {

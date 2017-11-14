@@ -7,6 +7,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 	private static boolean playing;
 	private static SunnySupporter backend;
 	
+	private static String commanderName;
 	private static int commanderLevel; //This is essentially the difficulty level of the commander
 	private static boolean isPlayerTurn; //This tracks whose turn it is
 	private static String userName; //Username of the player
@@ -16,10 +17,11 @@ public class FrontEndSunnyK implements JustinSupporter {
 		backend = new BackEndJustinY(this);
 	}
 	
-	public static boolean play(int level, String userName) {
+	public static boolean play(int level, String userName, String name) {
 		commanderLevel = level;
 		userName = userName;
 		isWinner = false;
+		commanderName = name;
 		
 		new SunnyIntro().play();
 		CaveExplorer.in.nextLine();
