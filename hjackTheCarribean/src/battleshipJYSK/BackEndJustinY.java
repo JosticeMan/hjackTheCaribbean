@@ -134,6 +134,12 @@ public class BackEndJustinY implements SunnySupporter {
 			System.out.println(Arrays.toString(commanderMove(1)));
 			System.out.println(Arrays.toString(commanderMove(2)));
 			System.out.println(Arrays.toString(commanderMove(3)));
+
+			generateMap();
+			Ship[] temp = {new Ship(20, 10, 10)};
+			commanderPlaceShip(temp);
+			printMap(theOpponentGameBoard);
+			processPowerUp(1);
 		*/
 	}
 	
@@ -213,7 +219,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * @param e - The ship that the user wants to place
 	 * @return
 	 */
-	public int lengthOfShip(Ship e) {
+	public static int lengthOfShip(Ship e) {
 		return ((e.getHp() - (e.getHp() % 10)) / 10);
 	}
 
@@ -221,7 +227,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * Method goes through each of the player's ships and places a similar ship on the board so it's fair for both sides
 	 * @param ships - Array of the ships that the player has
 	 */
-	public void commanderPlaceShip(Ship[] ships) {
+	public static void commanderPlaceShip(Ship[] ships) {
 		for(Ship s: ships) {
 			int[] coords = randomCoordinates(theOpponentGameBoard.length);
 			int direction = randomDirection();
@@ -312,7 +318,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * Returns a random direction for a ship to face
 	 * @return 
 	 */
-	public int randomDirection() {
+	public static int randomDirection() {
 		return (int) (Math.random() * WEST);
 	}
 	
@@ -593,7 +599,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * Manages the dialogue associated with the powerup activation
 	 * @param type
 	 */
-	public void printPowerUpDialogue(int type) {
+	public static void printPowerUpDialogue(int type) {
 		String[][] pDialogues = {{"A spiritual voice is heard"}, {"Shipmate: Deploy the missile! We shall hit them in one turn! We need to recharge in the mean time!"}, {"**You summon a storm upon thou enemy!**", "Shipmate: The storm is rendering their weapons useless! They will be unable to shoot temporarily!"}};
 		for(String dia: pDialogues[type]) {
 			CaveExplorer.print(dia);
@@ -603,7 +609,7 @@ public class BackEndJustinY implements SunnySupporter {
 	/**
 	 * Prints out a hint of the whereabouts of the commander's ships
 	 */
-	public void giveThemCoords() {
+	public static void giveThemCoords() {
 		int[][] possibleCoords = allPossibleShipsNotHit(theOpponentGameBoard);
 		int[] randomCoord = CaveExplorer.randomInt(possibleCoords);
 		CaveExplorer.print("It whispers to you that it senses a ship around " + Arrays.toString(randomCoord));
@@ -616,7 +622,7 @@ public class BackEndJustinY implements SunnySupporter {
      * 3 - Stormcaller - The opponent's battleships are surrounded by bad weather and unable to make a player move for one turn. 
 	 * @param type
 	 */
-	public void processPowerUp(int type) {
+	public static void processPowerUp(int type) {
 		printPowerUpDialogue(type);
 		if(type == 1) {
 			giveThemCoords();
