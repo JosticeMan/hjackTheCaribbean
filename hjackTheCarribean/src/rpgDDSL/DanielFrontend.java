@@ -9,30 +9,42 @@ public class DanielFrontend implements StevenSupport{
 	private String map;
 	private RPGRoom[][] room;
 	private StevenBackend backend;
-	public static Scanner in;
 	private boolean won;
 	
 	public static final void main(String[] args)
 	{
-		StevenBackend b = new StevenBackend(this);
-		DanielFrontend demo = new DanielFrontend(b);
-		in = new Scanner(System.in);
+		
+		DanielFrontend demo = new DanielFrontend();
+		CaveExplorer.in=new Scanner(System.in);
 		demo.play();
 		
 	}
 	public void play() 
 	{
+		backend.setFrontend(this);
 		String input;
 		while(!won) {
 			updateMap();
-			input=in.nextLine();
+			input=CaveExplorer.in.nextLine();
+			while (!backend.isValid(input) || !backend.checkWalls(input))
+			{
+				if (!backend.checkWalls(input))
+				{
+					System.out.println("There is a wall. Please enter a valid direction.");
+				}
+				else
+				{
+					System.out.println("Enter a valid key.");
+				}
+				input = CaveExplorer.in.nextLine();
+			}
 			backend.interpretInput(input);
 		}
 		
 	}
-	public DanielFrontend(StevenBackend x)
+	public DanielFrontend()
 	{
-		this.backend = x;
+		backend= new StevenBackend(this);
 		won=false;
 	}
 	
@@ -49,5 +61,10 @@ public class DanielFrontend implements StevenSupport{
 			map += "\n";
 		}
 		System.out.println(map);
+	}
+	
+	public DanielFrontend getFront()
+	{
+		return this;
 	}
 }

@@ -7,6 +7,7 @@ public class StevenBackend implements DanSupport {
 	private StevenSupport frontend;
 	private RPGRoom[][] map;
 	private int[] human;
+	private DanielFrontend front;
 	
 	public static final int NORTH = 0;
 	public static final int EAST = 1;
@@ -72,13 +73,8 @@ public class StevenBackend implements DanSupport {
 	}
 	
 	public void interpretInput(String input) {
-		while(!isValid(input)) {
-			printAllowedEntry();
-			input = CaveExplorer.in.nextLine();
-		}
+
 		int direction = determineDirection(input, validKeys());
-		//Task: convert user input into a direction
-		//don't use more than one
 		respondToKey(direction);
 	}
 	
@@ -100,12 +96,46 @@ public class StevenBackend implements DanSupport {
 	
 	public boolean isValid(String input) {
 		String validEntries = validKeys();
-		return validEntries.indexOf(input) > - 1 && input.length() == 1&&(input.equalsIgnoreCase("w")&&!map[human[0]][human[1]].isNorth())&&
-				(input.equalsIgnoreCase("d")&&!map[human[0]][human[1]].isEast())
-				&&(input.equalsIgnoreCase("s")&&!map[human[0]][human[1]].isSouth())
-				&&(input.equalsIgnoreCase("a")&&!map[human[0]][human[1]].isWest());
+		return validEntries.indexOf(input) > - 1 && input.length() == 1;
 	}
 	
+	public boolean checkWalls(String input)
+	{
+	/*	return (((input.equalsIgnoreCase("w")&&!map[human[0]][human[1]].isNorth())&&
+				(input.equalsIgnoreCase("d")&&!map[human[0]][human[1]].isEast())
+				||(input.equalsIgnoreCase("s")&&!map[human[0]][human[1]].isSouth())
+				||(input.equalsIgnoreCase("a")&&!map[human[0]][human[1]].isWest())));
+	*/	
+		
+		
+		if ((input.equalsIgnoreCase("w")&&map[human[0]][human[1]].isNorth()))
+		{
+			return false;
+		}
+		else
+		{
+			if ((input.equalsIgnoreCase("d")&&map[human[0]][human[1]].isEast()))
+			{
+				return false;
+			}
+			else
+			{
+				if ((input.equalsIgnoreCase("s")&&map[human[0]][human[1]].isSouth()))
+				{
+					return false;
+				}
+				else
+				{
+					if ((input.equalsIgnoreCase("a")&&map[human[0]][human[1]].isWest())) 
+					{
+						return false;
+					}
+				}
+			}
+		}
+
+		return true;
+	}
 	public void respondToKey(int direction) {
 		//First, protect against null pointer exception
 		//(user cannot go through a non existent door)
@@ -132,4 +162,10 @@ public class StevenBackend implements DanSupport {
 			performAction(direction);
 		}
 	}
+	
+	public void setFrontend(DanielFrontend x)
+	{
+		front = x;
+	}
+	
 }
