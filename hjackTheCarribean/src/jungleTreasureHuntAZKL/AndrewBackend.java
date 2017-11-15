@@ -7,10 +7,15 @@ import java.util.Scanner;
  * 
  * User will start out on an open map
  * Tiles will be the main part of the map
+ * 
+ * NEEDED:
+ * 2D array to keep track of every tile
  */
 public class AndrewBackend implements KevinSupport{
 
 	private AndrewSupport frontend;
+	
+	private AndrewKevenTile[] map;
 	
 	
 	public AndrewBackend(AndrewSupport frontend) {

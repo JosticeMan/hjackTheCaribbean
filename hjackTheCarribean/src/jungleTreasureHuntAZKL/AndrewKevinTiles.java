@@ -1,5 +1,10 @@
 package jungleTreasureHuntAZKL;
 
-public class AndrewKevinTiles {
+public class AndrewKevinTile {
+	
+	private int row;
+	private int col;
+	
+	private Object item;
 
 }
