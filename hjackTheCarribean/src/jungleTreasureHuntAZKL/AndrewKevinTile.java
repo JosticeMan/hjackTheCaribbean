@@ -5,7 +5,7 @@ public class AndrewKevinTile {
 	private int row;
 	private int col;
 	
-	private Object item;
+	private Object occupants;
 	
 	public AndrewKevinTile(int row, int col) {
 		this.row = row;
