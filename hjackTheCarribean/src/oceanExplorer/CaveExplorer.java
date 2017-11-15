@@ -117,6 +117,15 @@ public class CaveExplorer {
 	}
 	
 	/**
+	 * 2nd version of randomInt for 2D arrays
+	 * @param arr
+	 * @return
+	 */
+	public static int[] randomInt(int[][] arr) {
+		return arr[(int) (Math.random() * arr.length)];
+	}
+	
+	/**
 	 * This method returns a random string/set of strings from the given array
 	 * @param arr - String Array that contains random string(s)
 	 * @return - A random string/set of strings from the given array
