@@ -19,6 +19,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 - Method that handles the computer moves
 	 - Method that returns whether or not there is a winner
 	 - Method that hits a certain coordinate on the spot
+	 - Method that returns random dialogue for each nation when a commander's ship is hit/etc
 	 
 	 GENERAL: 
 	 Commanders will be fought at the end of 3 levels. Beating a commander will reward a random ship to the player.
@@ -100,7 +101,6 @@ public class BackEndJustinY implements SunnySupporter {
 	public static final int SOUTH = 2;
 	public static final int WEST = 3;
 	
-	/*
 	public static void main(String[] args) {
 		/*
 			generateMap();
@@ -117,8 +117,11 @@ public class BackEndJustinY implements SunnySupporter {
 			commanderPlaceShip(ships);
 			printMap(theOpponentGameBoard);
 
+			int[] j = {0, 1};
+			int[] h = {1, 2};
+			System.out.print(isNear(j, h));
+		*/
 	}
-	*/
 	
 	/**
 	 * This prints out the generic map for testing purposes
@@ -174,6 +177,38 @@ public class BackEndJustinY implements SunnySupporter {
 				direction = randomDirection();
 			}
 		}
+	}
+	
+	public int[] commanderMove() {
+		int cLevel = frontend.getCommanderLevel();
+		int[][] possibleMoves = new int[3][2];
+		int[] randomChoice = randomCoordinates(boardSize());
+		possibleMoves[0] = randomChoice;
+		while(isNear(previousMove, randomChoice)) {
+			randomChoice = randomCoordinates(boardSize());
+		}
+		possibleMoves[1] = randomChoice;
+		possibleMoves[3] = CaveExplorer.randomInt();
+		previousMove = possibleMoves[cLevel - 1];
+		return previousMove;
+	}
+	
+	/**
+	 * Returns whether or not the two given coordinates are the same or 1 unit away from each other
+	 * @param coord1
+	 * @param coord2
+	 * @return
+	 */
+	public boolean isNear(int[] coord1, int[] coord2) {
+		int yDifference = coord1[0] - coord2[0];
+		int xDifference = coord1[1] - coord2[1];
+		if(coord1[0] == coord2[0]) {
+			return (xDifference <= 1 && xDifference >= -1);
+		}
+		if(coord1[1] == coord2[1]) {
+			return (yDifference <= 1 && yDifference >= -1);
+		}
+		return false;
 	}
 	
 	/**
@@ -330,10 +365,18 @@ public class BackEndJustinY implements SunnySupporter {
 	}
 	
 	/**
+	 * Method returns the board size given the commanderLevel from the frontEnd class
+	 * @return
+	 */
+	public int boardSize() {
+		return 5+(frontend.getCommanderLevel() - 1);
+	}
+	
+	/**
 	 * This generates a new 2D array of the appropriate board size; 
 	 */
 	public void generateMap() {
-		int dimension = 5+(frontend.getCommanderLevel() - 1);
+		int dimension = boardSize();
 		//int dimension = 5;
 		thePlayerGameBoard = new JustinSunnyPlot[dimension][dimension];
 		populateBoard(thePlayerGameBoard);
