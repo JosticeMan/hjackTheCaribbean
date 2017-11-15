@@ -15,14 +15,14 @@ public class AndrewBackend implements KevinSupport{
 
 	private AndrewSupport frontend;
 	
-	private AndrewKevenTile[] map;
+	private AndrewKevenTile[][] map;
 	
 	
 	public AndrewBackend(AndrewSupport frontend) {
 		this.frontend = frontend;
-		
+		map = new  AndrewKevinTile[10][10];
 	}
-
+	
 	@Override
 	public boolean playing() {
 		// TODO Auto-generated method stub
