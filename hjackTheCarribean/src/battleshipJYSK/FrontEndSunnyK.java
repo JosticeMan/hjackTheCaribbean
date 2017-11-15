@@ -70,7 +70,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 		isPlayerTurn = false;
 	}
 
-	public static String getCommanderName() {
+	public String getCommanderName() {
 		return commanderName;
 	}
 	

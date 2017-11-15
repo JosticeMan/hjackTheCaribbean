@@ -95,6 +95,10 @@ public class BackEndJustinY implements SunnySupporter {
 	private static JustinSunnyPlot[][] thePlayerGameBoard; //This will monitor the game board of the player
 	private static JustinSunnyPlot[][] theOpponentGameBoard; //This will monitor the game board of the AI
 	private static int[] previousMove;
+	private static boolean skipCommanderTurn;
+	private static boolean skipPlayerTurn;
+	
+	private static String[] cSkipD;
 	
 	public static final int NORTH = 0;
 	public static final int EAST = 1;
@@ -152,10 +156,32 @@ public class BackEndJustinY implements SunnySupporter {
 		this.frontend = frontend;
 		generateMap();
 		
+		this.skipCommanderTurn = false;
+		this.skipPlayerTurn = false;
+		
+		String[] cSkipTemp = {frontend.getCommanderName() + ": Bongo! Why can't we fire!?", frontend.getCommanderName() + ": This is truly embarassing. We can't even fire for a bit!", frontend.getCommanderName() + ": Britain shall not falter with this delay!"};
+		cSkipD = cSkipTemp;
+		
 		int[] mtemp = {0, 0};
 		previousMove = mtemp;
 	}
 	
+	/**
+	 * Returns whether or not the turn of the player is to be skipped
+	 * @return
+	 */
+	public static boolean isSkipPlayerTurn() {
+		return skipPlayerTurn;
+	}
+
+	/**
+	 * Allows the frontend to set the skip to false once it skips the player turn
+	 * @param skipPlayerTurn
+	 */
+	public static void setSkipPlayerTurn(boolean skipPlayerTurn) {
+		BackEndJustinY.skipPlayerTurn = skipPlayerTurn;
+	}
+
 	/**
 	 * Returns whether or not there is a winner
 	 * @return
@@ -207,10 +233,23 @@ public class BackEndJustinY implements SunnySupporter {
 	}
 	
 	/**
+	 * Return the diaglogue associated with skipping the turn
+	 */
+	public static void printCommanderSkipTurn() {
+		CaveExplorer.print(cSkipD[frontend.getCommanderLevel() - 1]);
+	}
+	
+	/**
 	 * Returns the coordinates of the place the commander wants to hit
 	 * @return
 	 */
 	public static int[] commanderMove(int level) {
+		if(skipCommanderTurn) {
+			int[] j = {-1, -1};
+			printCommanderSkipTurn();
+			skipCommanderTurn = false;
+			return j;
+		}
 		//int cLevel = frontend.getCommanderLevel();
 		int cLevel = level;
 		int[][] possibleMoves = new int[3][2];
@@ -551,14 +590,46 @@ public class BackEndJustinY implements SunnySupporter {
 	}
 	
 	/**
+	 * Manages the dialogue associated with the powerup activation
+	 * @param type
+	 */
+	public void printPowerUpDialogue(int type) {
+		String[][] pDialogues = {{"A spiritual voice is heard"}, {"Shipmate: Deploy the missile! We shall hit them in one turn! We need to recharge in the mean time!"}, {"**You summon a storm upon thou enemy!**", "Shipmate: The storm is rendering their weapons useless! They will be unable to shoot temporarily!"}};
+		for(String dia: pDialogues[type]) {
+			CaveExplorer.print(dia);
+		}
+	}
+	
+	/**
+	 * Prints out a hint of the whereabouts of the commander's ships
+	 */
+	public void giveThemCoords() {
+		int[][] possibleCoords = allPossibleShipsNotHit(theOpponentGameBoard);
+		int[] randomCoord = CaveExplorer.randomInt(possibleCoords);
+		CaveExplorer.print("It whispers to you that it senses a ship around " + Arrays.toString(randomCoord));
+	}
+	
+	/**
 	 * Method that handles the powerUp processes 
-	 * 	 BoinkRadar - Gives the player a general idea of where one of the opponent's ship is. 
-	 *   CriticalMissile - Sets a missile off that will guarantee a hit on a boat in a turn but the user cannot do anything in that time. 
-     *   Stormcaller - The opponent's battleships are surrounded by bad weather and unable to make a player move for one turn. 
+	 * 1 - BoinkRadar - Gives the player a general idea of where one of the opponent's ship is. 
+	 * 2 - CriticalMissile - Sets a missile off that will guarantee a hit on a boat in a turn but the user cannot do anything in that time. 
+     * 3 - Stormcaller - The opponent's battleships are surrounded by bad weather and unable to make a player move for one turn. 
 	 * @param type
 	 */
 	public void processPowerUp(int type) {
-		
+		printPowerUpDialogue(type);
+		if(type == 1) {
+			giveThemCoords();
+		}
+		else if(type == 2) {
+			skipPlayerTurn = true;
+		}
+		else if(type == 3) {
+			skipCommanderTurn = true;
+		}
+		else {
+			
+		}
 	}
 	
 }
