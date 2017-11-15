@@ -20,7 +20,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 - Method that returns whether or not there is a winner - COMPELTED
 	 - Method that hits a certain coordinate on the spot - COMPLETED
 	 - Method that returns random dialogue for each nation when a commander's ship is hit/etc
-	 - Method that interprets powerup input
+	 - Method that interprets powerup input - COMPLETED
 	 
 	 GENERAL: 
 	 Commanders will be fought at the end of 3 levels. Beating a commander will reward a random ship to the player.
@@ -142,6 +142,7 @@ public class BackEndJustinY implements SunnySupporter {
 			printMap(theOpponentGameBoard);
 			processPowerUp(1);
 		*/
+		System.out.println(interpretPowerUpInput());
 	}
 	
 	/**
@@ -162,7 +163,7 @@ public class BackEndJustinY implements SunnySupporter {
 	public BackEndJustinY(JustinSupporter frontend) {
 		this.frontend = frontend;
 		generateMap();
-		
+
 		this.skipCommanderTurn = false;
 		this.skipPlayerTurn = false;
 		
@@ -438,6 +439,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 */
 	public void printValidEntries() {
 		CaveExplorer.print("Captain Duran: You are only allowed to type 'n' for NORTH, 'e' for EAST, 's' for SOUTH, and 'w' for WEST!");
+		CaveExplorer.print("Captain Duran: You can also type 'radar', 'missile', and 'storm' to activate a powerup!");
 	}
 	
 	/**
@@ -575,6 +577,39 @@ public class BackEndJustinY implements SunnySupporter {
 			}
 		}
 		return possibleMoves;
+	}
+	
+	/**
+	 * Return the number of the power up or -1 if the user did not activate the power up trigger
+	 * @return
+	 */
+	public static int interpretPowerUpInput() {
+		String input = CaveExplorer.in.nextLine();
+		return determineType(input);
+	}
+	
+	/**
+	 * Returns an array with the valid keywords to trigger a certain powerup
+	 * @return
+	 */
+	public static String[] validPowerInputs() {
+		String[] pTemp = {"radar", "missile", "storm"};
+		return pTemp;
+	}
+	
+	/**
+	 * Returns the type of the power up by number if the keyword is the input and -1 if not
+	 * @param input
+	 * @return
+	 */
+	public static int determineType(String input) {
+		String[] validTriggers = validPowerInputs();
+		for(int i = 0; i < validTriggers.length; i++) {
+			if(input.equalsIgnoreCase(validTriggers[i])) {
+				return i + 1;
+			}
+		}
+		return -1;
 	}
 	
 	/**
