@@ -1,22 +1,38 @@
 package jungleTreasureHuntAZKL;
-
-import java.util.Scanner;
 /*
  * PLANNING:
  * Basic Treasure Hunting Mini Game
  * 
  * User will start out on an open map
  * Tiles will be the main part of the map
+ * 
+ * NEEDED:
+ * 	2D Array to track map info
+ * 	A user object that moves through the map
+ * 	Tiles that the map is made of
+ * 	Objects that go within the Tile to create attributes of the map
  */
 public class AndrewBackend implements KevinSupport{
 
 	private AndrewSupport frontend;
 	
+	private AndrewKevinTile[][] map;
+	
+	
 	public AndrewBackend(AndrewSupport frontend) {
 		this.frontend = frontend;
 		
+		
+		map = new  AndrewKevinTile[10][10];
+		for(int row = 0; row < map.length; row++) {
+			for(int col = 0; col < map[row].length; col++) {
+				map[row][col] = new AndrewKevinTile(row, col);
+			}
+		}
+		
+		
 	}
-
+	
 	@Override
 	public boolean playing() {
 		// TODO Auto-generated method stub
