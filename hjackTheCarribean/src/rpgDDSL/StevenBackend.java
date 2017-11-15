@@ -8,6 +8,7 @@ public class StevenBackend implements DanSupport {
 	private RPGRoom[][] map;
 	private int[] human;
 	private DanielFrontend front;
+	private int[][] enemyPosition;
 	
 	public static final int NORTH = 0;
 	public static final int EAST = 1;
@@ -40,6 +41,24 @@ public class StevenBackend implements DanSupport {
 		
 	}
 	
+	public void spawnEnemy(int num)
+	{
+		enemyPosition = new int[num][2];
+		int enemyPosX = 0;
+		int enemyPosY = 0;
+		
+		for (int i = 0; i < num; i++)
+		{
+			enemyPosX = (int)Math.random()*map.length;
+			enemyPosY = (int)Math.random()*map[0].length;
+			
+			while (enemyPosX != human[0] && enemyPosY != human[1])
+			{
+				
+			}
+		}
+		
+	}
 	public void makeWalls() {
 		for (int i = 0; i < map.length; i++)
 		{
