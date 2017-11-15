@@ -1,19 +1,34 @@
 package jungleTreasureHuntAZKL;
 
 import java.util.Scanner;
+
+import oceanExplorer.CaveExplorer;
+import oceanExplorer.CaveRoom;
 public class KevinFrontend implements AndrewSupport {
 	
 	private KevinSupport backend;
 	public static Scanner  in;
+	
+	private AndrewKevinTile[][] map;
 
 	public static final void main(String[] args) {
 		in = new Scanner(System.in);
+		KevinFrontend demo = new KevinFrontend();
+		demo.play();
 		//KevinFrontend demo = new KevinFrontend();
 		
 	}
-	
+
+	public KevinFrontend() {
+		backend = new AndrewBackend(this);
+		this.map = backend.getMap();
+	}
+
 	public void play() {
 		startGameMessage();
+		updateMap();
+		
+		
 		/*
 		  while(backend.playing()) {
 			getMapInfo(); //get location of stuffs such as trees
@@ -39,23 +54,40 @@ public class KevinFrontend implements AndrewSupport {
 		
 	}
 
-	private void updateMap() {
-		// TODO Auto-generated method stub
+	public void updateMap() {
+		String displayMap = "";
+		for(int col = 0; col < map[0].length; col++) {
+			displayMap+="X";
+		}
+		displayMap += "XX\n";
 		
+		for(int row = 0; row < map.length; row++) {
+			String text = "X";
+			for(AndrewKevinTile col: map[row]) {
+				text += " "; // Will be modified based off contents of the Tile
+			}
+			text += "X";
+			displayMap += text + "\n";
+			
+		}
+		
+		String text = "";
+		for(int col = 0;col < map[map.length-1].length; col++) {
+			text += "X";
+		}
+		text += "XX";
+		displayMap += text + "\n";
+		
+		System.out.println(displayMap);
 	}
-
+	
 	private void respondToInput(String input) {
 		// TODO Auto-generated method stub
 		
 	}
-
-	public KevinFrontend() {
-		backend = new AndrewBackend(this);
-	}
-
 	@Override
-	public void getMapInfo() {
-		// TODO Auto-generated method stub
+	public AndrewKevinTile[][] getMapInfo() {
+		return backend.getMap();
 		
 	}
 

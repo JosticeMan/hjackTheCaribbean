@@ -5,7 +5,7 @@ public interface AndrewSupport {
 	/**
 	 * 
 	 */
-	public void getMapInfo();
+	public AndrewKevinTile[][] getMapInfo();
 	
 	/**
 	 * 

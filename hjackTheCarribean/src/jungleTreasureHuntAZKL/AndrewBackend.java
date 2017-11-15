@@ -11,12 +11,16 @@ package jungleTreasureHuntAZKL;
  * 	A user object that moves through the map
  * 	Tiles that the map is made of
  * 	Objects that go within the Tile to create attributes of the map
+ * 	Will need a sight radius
  */
 public class AndrewBackend implements KevinSupport{
 
 	private AndrewSupport frontend;
 	
 	private AndrewKevinTile[][] map;
+	private int[][] visibleTile;
+	
+	private int[] player;
 	
 	
 	public AndrewBackend(AndrewSupport frontend) {
@@ -33,6 +37,11 @@ public class AndrewBackend implements KevinSupport{
 		
 	}
 	
+	
+	public AndrewKevinTile[][] getMap(){
+		return this.map;
+		
+	}
 	@Override
 	public boolean playing() {
 		// TODO Auto-generated method stub

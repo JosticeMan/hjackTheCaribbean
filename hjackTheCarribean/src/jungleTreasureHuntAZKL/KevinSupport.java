@@ -7,5 +7,7 @@ public interface KevinSupport {
 	Object end();
 
 	String processInput();
+	
+	AndrewKevinTile[][] getMap();
 
 }
