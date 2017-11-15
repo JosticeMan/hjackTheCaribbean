@@ -161,6 +161,10 @@ public class BackEndJustinY implements SunnySupporter {
 		return ((e.getHp() - (e.getHp() % 10)) / 10);
 	}
 
+	/**
+	 * Method goes through each of the player's ships and places a similar ship on the board so it's fair for both sides
+	 * @param ships - Array of the ships that the player has
+	 */
 	public void commanderPlaceShip(Ship[] ships) {
 		for(Ship s: ships) {
 			int[] coords = randomCoordinates(theOpponentGameBoard.length);
@@ -172,11 +176,21 @@ public class BackEndJustinY implements SunnySupporter {
 		}
 	}
 	
+	/**
+	 * Returns a set of coordinates given a boardSize
+	 * @param boardSize - Size of the field that the game is being held on
+	 * @return
+	 */
 	public int[] randomCoordinates(int boardSize) {
 		int[] nTemp = {(int) (Math.random() * boardSize), (int) (Math.random() * boardSize)};
 		return nTemp;
 	}
 	
+	/**
+	 * MEANT TO BE USED FOR DETERMINING THE DIRECTION OF THE COMMANDER'S SHIPS
+	 * Returns a random direction for a ship to face
+	 * @return 
+	 */
 	public int randomDirection() {
 		return (int) (Math.random() * WEST);
 	}
@@ -431,7 +445,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * @param type
 	 * @return
 	 */
-	public boolean handlePowerUp(int type) {
+	public boolean hasPowerUp(int type) {
 		return oceanExplorer.Inventory.getBossPowerUps()[type] > 0;
 	}
 	
