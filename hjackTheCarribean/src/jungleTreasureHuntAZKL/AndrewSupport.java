@@ -17,13 +17,4 @@ public interface AndrewSupport {
 	public String getUserInput();
 	
 	
-	//GAME DESIGN
-	/* TREASURE HUNT
-	 * |
-	 * |
-	 * |
-	 * 
-	 * 
-	 * 
-	 */
 }
