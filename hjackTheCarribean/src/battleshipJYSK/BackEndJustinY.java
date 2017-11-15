@@ -107,10 +107,16 @@ public class BackEndJustinY implements SunnySupporter {
 			System.out.println(tryShipPlacement(0,1,EAST,2,thePlayerGameBoard));
 			System.out.println(tryShipPlacement(0,3,NORTH,2,thePlayerGameBoard));
 			printMap(thePlayerGameBoard);
-		/*
+
 			generateMap();
 			tryShipPlacement(0,1,EAST,2,thePlayerGameBoard);
 			System.out.println(Arrays.toString(allPossibleShipsNotHit(thePlayerGameBoard)[2]));
+			
+			generateMap();
+			Ship[] ships = {new Ship(40, 10, 10), new Ship(20, 10, 10)};
+			commanderPlaceShip(ships);
+			printMap(theOpponentGameBoard);
+
 	}
 	*/
 	
@@ -118,7 +124,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * This prints out the generic map for testing purposes
 	 * @param arr
 	 */
-	public static void printMap(JustinSunnyPlot[][] arr) {
+	public void printMap(JustinSunnyPlot[][] arr) {
 		for(int i = 0; i< arr.length; i++)
 		{
 		    for(int j = 0; j< arr[i].length; j++)
@@ -155,6 +161,26 @@ public class BackEndJustinY implements SunnySupporter {
 		return ((e.getHp() - (e.getHp() % 10)) / 10);
 	}
 
+	public void commanderPlaceShip(Ship[] ships) {
+		for(Ship s: ships) {
+			int[] coords = randomCoordinates(theOpponentGameBoard.length);
+			int direction = randomDirection();
+			while(!tryShipPlacement(coords[0], coords[1], direction, lengthOfShip(s), theOpponentGameBoard)) {
+				coords = randomCoordinates(theOpponentGameBoard.length);
+				direction = randomDirection();
+			}
+		}
+	}
+	
+	public int[] randomCoordinates(int boardSize) {
+		int[] nTemp = {(int) (Math.random() * boardSize), (int) (Math.random() * boardSize)};
+		return nTemp;
+	}
+	
+	public int randomDirection() {
+		return (int) (Math.random() * WEST);
+	}
+	
 	//Might be possible to make more helper methods out of this
 	/**
 	 * Attempts to place the ship at the given coordinate facing the direction
@@ -167,11 +193,13 @@ public class BackEndJustinY implements SunnySupporter {
 	 * @return - Returns whether or not the program was able to place the ship or not
 	 */
 	public boolean tryShipPlacement(int row, int col, int direction, int shipLength, JustinSunnyPlot[][] playerBoard) {
-		JustinSunnyPlot[][] previousBoard = playerBoard;
 		if(direction == NORTH) {
 			if(row - shipLength >= 0) {
-				for(int shipRow = row; shipRow >= row - shipLength; shipRow--) {
-					if(!(attemptShipPlacementAtCoordinate(shipRow, col, playerBoard, previousBoard))) {
+				for(int shipRow = row; shipRow > row - shipLength; shipRow--) {
+					if(!(attemptShipPlacementAtCoordinate(shipRow, col, playerBoard))) {
+						for(int sRow = row; sRow > shipRow; sRow--) {
+							unSetShipAtCoords(sRow, col, playerBoard);
+						}
 						return false;
 					}
 				}
@@ -182,7 +210,10 @@ public class BackEndJustinY implements SunnySupporter {
 		else if(direction == EAST) {
 			if(col + shipLength < playerBoard[0].length) {
 				for(int shipCol = col; shipCol < col + shipLength; shipCol++) {
-					if(!(attemptShipPlacementAtCoordinate(row, shipCol, playerBoard, previousBoard))) {
+					if(!(attemptShipPlacementAtCoordinate(row, shipCol, playerBoard))) {
+						for(int sCol = col; sCol < shipCol; sCol++) {
+							unSetShipAtCoords(row, sCol, playerBoard);
+						}
 						return false;
 					}
 				}
@@ -193,7 +224,10 @@ public class BackEndJustinY implements SunnySupporter {
 		else if(direction == SOUTH) {
 			if(row + shipLength < playerBoard.length) {
 				for(int shipRow = row; shipRow < row + shipLength; shipRow++) {
-					if(!(attemptShipPlacementAtCoordinate(shipRow, col, playerBoard, previousBoard))) {
+					if(!(attemptShipPlacementAtCoordinate(shipRow, col, playerBoard))) {
+						for(int sRow = row; sRow < shipRow; sRow++) {
+							unSetShipAtCoords(sRow, col, playerBoard);
+						}
 						return false;
 					}
 				}
@@ -203,8 +237,11 @@ public class BackEndJustinY implements SunnySupporter {
 		}
 		else if(direction == WEST) {
 			if(col - shipLength >= 0) {
-				for(int shipCol = col; shipCol >= col - shipLength; shipCol--) {
-					if(!(attemptShipPlacementAtCoordinate(row, shipCol, playerBoard, previousBoard))) {
+				for(int shipCol = col; shipCol > col - shipLength; shipCol--) {
+					if(!(attemptShipPlacementAtCoordinate(row, shipCol, playerBoard))) {
+						for(int sCol = col; sCol > shipCol; sCol--) {
+							unSetShipAtCoords(row, sCol, playerBoard);
+						}
 						return false;
 					}
 				}
@@ -216,16 +253,24 @@ public class BackEndJustinY implements SunnySupporter {
 	}
 	
 	/**
+	 *  Method unsets a occupancy of a ship on a specific coordinate on the board
+	 *  @param row - Y Coordinate of the Ship
+	 * 	@param col - X Coordinate of the Ship
+	 * 	@param playerBoard - The appropriate player board to unset the ship on
+	 */
+	public void unSetShipAtCoords(int row, int col, JustinSunnyPlot[][] playerBoard) {
+		playerBoard[row][col].setShipOccupied(false);
+	}
+	
+	/**
 	 * Method attempts to occupy the coordinate on the board. If it can't, it tells the program to revert the board back to the original state and stop
 	 * @param row - Y Coordinate of the Ship
 	 * @param col - X Coordinate of the Ship
 	 * @param playerBoard - The appropriate player board to place the ship on
-	 * @param previousBoard - Original state of the board
 	 * @return
 	 */
-	public boolean attemptShipPlacementAtCoordinate(int row, int col, JustinSunnyPlot[][] playerBoard, JustinSunnyPlot[][] previousBoard) {
+	public boolean attemptShipPlacementAtCoordinate(int row, int col, JustinSunnyPlot[][] playerBoard) {
 		if(playerBoard[row][col].isShipOccupied()) {
-			playerBoard = previousBoard;
 			return false;
 		}
 		//If the ship isn't occupied, then make it occupied and report the successful change
@@ -274,8 +319,8 @@ public class BackEndJustinY implements SunnySupporter {
 	 * This generates a new 2D array of the appropriate board size; 
 	 */
 	public void generateMap() {
-		//int dimension = 5+(frontend.getCommanderLevel() - 1);
-		int dimension = 5;
+		int dimension = 5+(frontend.getCommanderLevel() - 1);
+		//int dimension = 5;
 		thePlayerGameBoard = new JustinSunnyPlot[dimension][dimension];
 		populateBoard(thePlayerGameBoard);
 		theOpponentGameBoard = new JustinSunnyPlot[dimension][dimension];
@@ -386,7 +431,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * @param type
 	 * @return
 	 */
-	public static boolean handlePowerUp(int type) {
+	public boolean handlePowerUp(int type) {
 		return oceanExplorer.Inventory.getBossPowerUps()[type] > 0;
 	}
 	
@@ -394,7 +439,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * Decrements the count of a particular power up
 	 * @param type
 	 */
-	public static void decrementPowerUp(int type) {
+	public void decrementPowerUp(int type) {
 		int[] newPowerUpCount = oceanExplorer.Inventory.getBossPowerUps();
 		newPowerUpCount[type]--;
 		oceanExplorer.Inventory.setBossPowerUps(newPowerUpCount);
