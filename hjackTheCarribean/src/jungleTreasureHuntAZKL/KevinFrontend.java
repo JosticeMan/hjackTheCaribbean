@@ -8,12 +8,14 @@ public class KevinFrontend implements AndrewSupport {
 
 	public static final void main(String[] args) {
 		in = new Scanner(System.in);
-		KevinFrontend demo = new KevinFrontend();
+		//KevinFrontend demo = new KevinFrontend();
 		
 	}
 	
 	public void play() {
-		while(backend.playing()) {
+		startGameMessage();
+		/*
+		  while(backend.playing()) {
 			getMapInfo(); //get location of stuffs such as trees
 			getStepCount(); // number of steps taken before limit
 			getLookCount(); // number of times to look for traps before limit
@@ -23,6 +25,13 @@ public class KevinFrontend implements AndrewSupport {
 			updateMap(); //basically update line of vision+ old vision
 		}
 		printEndGame(backend.end());
+		*/
+	}
+
+	private void startGameMessage() {
+		String s = "Welcome to the Treasure Hunter Game!! To see the rules type 'r' and to play press 'enter'";
+		 System.out.println(s);
+		
 	}
 
 	private void printEndGame(Object end) {
