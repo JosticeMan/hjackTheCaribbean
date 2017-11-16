@@ -3,7 +3,7 @@ package battleshipJYSK;
 import oceanExplorer.Ship;
 
 public interface SunnySupporter {
-
+ 
 	/**
 	 * @return - Returns the player field 
 	 */
