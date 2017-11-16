@@ -154,19 +154,7 @@ public class AndrewBackend implements KevinSupport{
 		map[row][col].setNonStaticOccupant(1);
 	}
 	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	/*---- KEVINSUPPORT METHODS ----*/
 	
 	public AndrewKevinTile[][] getMap(){
 		return this.map;
@@ -184,6 +172,8 @@ public class AndrewBackend implements KevinSupport{
 		return null;
 	}
 
+	/*---- PLAYER CONTROL METHODS----*/
+	
 	/**
 	 * Checks the tile the player is attempting to move into
 	 * and moves player into tile if there is NOTHING/TREASURE
@@ -228,7 +218,8 @@ public class AndrewBackend implements KevinSupport{
 	public void attemptObserve(int row, int col) {
 		
 	}
-	/*----INPUT PROCESSING METHODS----*/
+	
+	/*---- INPUT PROCESSING METHODS ----*/
 	
 	public void processInput(String input) {
 		if(isValidDirection(input)) {
