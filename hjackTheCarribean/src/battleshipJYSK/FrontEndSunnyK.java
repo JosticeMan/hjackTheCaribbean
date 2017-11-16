@@ -144,6 +144,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 				if(backend.hasPowerUp(type)) {
 					backend.decrementPowerUp(type);
 					backend.processPowerUp(type);
+					return;
 				}
 				else {
 					System.out.println("Shipmate: You do not have any more of that power up!");
