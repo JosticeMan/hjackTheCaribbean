@@ -1,6 +1,8 @@
 package battleshipJYSK;
 
 import oceanExplorer.CaveExplorer;
+import oceanExplorer.Inventory;
+import oceanExplorer.Ship;
 
 public class FrontEndSunnyK implements JustinSupporter {
 	
@@ -12,6 +14,9 @@ public class FrontEndSunnyK implements JustinSupporter {
 	private static boolean isPlayerTurn; //This tracks whose turn it is
 	private static String userName; //User name of the player
 	private static boolean isWinner;
+	
+	static JustinSunnyPlot[][] playerPlots = backend.getPlayerPlots();
+    static JustinSunnyPlot[][] commanderPlots = backend.getCommanderPlots();
 
 	public static final void main(String[] args)
 	{
@@ -38,9 +43,6 @@ public class FrontEndSunnyK implements JustinSupporter {
 	
 	public static void gameMenu()
 	{
-		JustinSunnyPlot[][] playerPlots = backend.getPlayerPlots();
-		JustinSunnyPlot[][] commanderPlots = backend.getCommanderPlots();
-		
 		System.out.print("If you do not know how to play Battleship, enter 'a' \n If you already know how to play, enter 'd'");
 		String input = CaveExplorer.in.nextLine();
 		if(input.equals("a"))
@@ -109,17 +111,29 @@ public class FrontEndSunnyK implements JustinSupporter {
 	}
 	public static void askCoordsForShips()
 	{
-		//uses backend.getCo;ordInput
+		//uses backend.getCoordInput
 
+		Ship[] ships = CaveExplorer.inventory.getShip();
+		
 		for(int i = 0; i < backend.numberOfShips(); i++)
 		{
 			System.out.print("Where would you like to place ship #"+i+"?");
 			int[] coords =  backend.getCoordInput();
 			
-			System.out.print("Which direction would you like to place it in? Enter 'N','E','W','S'");
+			System.out.print("Which direction would you like to place it in? Enter 'N','E','S','W'");
+			int direction = backend.interpretDirectionInput();
 			
-			//int direction = backend.interpretDirectionInput();
+			int lengthOfCurrentShip = backend.lengthOfShip(ships[i]);
 			
+			while(!backend.tryShipPlacement(coords[0], coords[1], direction, lengthOfCurrentShip, playerPlots))
+			{
+				System.out.print("Where would you like to place ship #"+i+"?");
+				coords =  backend.getCoordInput();
+				
+				System.out.print("Which direction would you like to place it in? Enter 'N','E','S','W'");
+				direction = backend.interpretDirectionInput();
+			}
+			System.out.print("The ship has been succesfully placed.");
 		}
 	}
 	
