@@ -64,11 +64,11 @@ public class FrontEndSunnyK implements JustinSupporter {
 	}
 	
 	public static void startGame() {
-		playing = true;
 		//Shows empty maps
 		displayBothMaps();
 		//asks coordinates to place ships
 		askCoordsForShips();
+		playing = true;
 		while(playing)
 		{
 				//updates map each time
@@ -109,7 +109,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 	}
 	public static void askCoordsForShips()
 	{
-		//uses backend.getCoordInput
+		//uses backend.getCo;ordInput
 
 		for(int i = 0; i < backend.numberOfShips(); i++)
 		{
@@ -130,9 +130,33 @@ public class FrontEndSunnyK implements JustinSupporter {
 	
 	public static void askCoordsToFire()
 	{
-		System.out.print("Where would you like to fire?");
-		//uses backend.getCoordInput
-		
+		if(backend.isSkipPlayerTurn()) {
+			backend.setSkipPlayerTurn(false);
+			int[] coords = backend.randomShipHit();
+			backend.hit(coords[0], coords[1], backend.getCommanderPlots());
+		}
+		else {
+			System.out.println("Shipmate: Where would you like to fire?");
+			int[] coords = backend.getCoordInput();
+			if(coords[0] < 0 && coords[1] < 0) {
+				int type = coords[0] * -1;
+				if(backend.hasPowerUp(type)) {
+					backend.decrementPowerUp(type);
+					backend.processPowerUp(type);
+				}
+				else {
+					System.out.println("Shipmate: You do not have any more of that power up!");
+					askCoordsToFire();
+				}
+			}
+			else {
+				while(!(backend.hit(coords[0], coords[1], backend.getCommanderPlots()))) {
+					System.out.println("Shipmate: That spot has already been struck or is out of the battlefield!");
+					System.out.println("Shipmate: Where would you like to fire?");
+					coords = backend.getCoordInput();
+				}	
+			}	
+		}
 	}
 	
 	public static boolean isGameOver()
@@ -154,6 +178,10 @@ public class FrontEndSunnyK implements JustinSupporter {
 		isPlayerTurn = false;
 	}
 
+	public boolean isPlaying() {
+		return playing;
+	}
+	
 	public String getCommanderName() {
 		return commanderName;
 	}
@@ -162,4 +190,4 @@ public class FrontEndSunnyK implements JustinSupporter {
 		return commanderLevel;
 	}
 	
-}}
+}

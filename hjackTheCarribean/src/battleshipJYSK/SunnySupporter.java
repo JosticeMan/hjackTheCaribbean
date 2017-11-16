@@ -22,4 +22,18 @@ public interface SunnySupporter {
 	boolean isThereWinner();
 	
 	boolean isPlayerWinner();
+
+	boolean hit(int i, int j, JustinSunnyPlot[][] commanderPlots);
+
+	boolean isSkipPlayerTurn();
+
+	void setSkipPlayerTurn(boolean b);
+
+	int[] randomShipHit();
+
+	boolean hasPowerUp(int i);
+
+	void decrementPowerUp(int type);
+
+	void processPowerUp(int type);
 }

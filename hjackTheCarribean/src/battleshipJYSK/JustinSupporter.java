@@ -7,4 +7,6 @@ public interface JustinSupporter {
 
 	String getCommanderName();
 
+	boolean isPlaying();
+
 }

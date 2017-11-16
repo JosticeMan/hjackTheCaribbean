@@ -504,14 +504,20 @@ public class BackEndJustinY implements SunnySupporter {
 	 */
 	public int[] getCoordInput() {
 		String input = CaveExplorer.in.nextLine();
-		int[] coords = toCoords(input);
-		while(coords == null){
-			CaveExplorer.print("Captain Duran: You must enter cordinates of the form:\n          <row>,<col>"
-					+ "\n<row> and <col> should be integers.");
-			input = CaveExplorer.in.nextLine();
-			coords = toCoords(input);
+		if(determineType(input) != -1 && frontend.isPlaying()) {
+			int[] jtemp = {determineType(input) * -1, determineType(input) * -1};
+			return jtemp;
 		}
-		return coords;
+		else {
+			int[] coords = toCoords(input);
+			while(coords == null){
+				CaveExplorer.print("Captain Duran: You must enter cordinates of the form:\n          <row>,<col>"
+						+ "\n<row> and <col> should be integers.");
+				input = CaveExplorer.in.nextLine();
+				coords = toCoords(input);
+			}
+			return coords;
+		}
 	}
 	
 	/**
