@@ -6,88 +6,200 @@ import oceanExplorer.Ship;
 
 public class FrontEndSunnyK implements JustinSupporter {
 	
-	private static boolean playing;
-	private static SunnySupporter backend;
+	private boolean playing;
+	private SunnySupporter backend;
 	
-	private static String commanderName;
-	private static int commanderLevel; //This is essentially the difficulty level of the commander
-	private static boolean isPlayerTurn; //This tracks whose turn it is
-	private static String userName; //User name of the player
-	private static boolean isWinner;
+	private String commanderName;
+	private int commanderLevel; //This is essentially the difficulty level of the commander
+	private boolean isPlayerTurn; //This tracks whose turn it is
+	private String userName; //User name of the player
+	private boolean isWinner;
+	private Ship[] ships;
 	
-	static JustinSunnyPlot[][] playerPlots = backend.getPlayerPlots();
-    static JustinSunnyPlot[][] commanderPlots = backend.getCommanderPlots();
+	private JustinSunnyPlot[][] playerPlots;
+    private JustinSunnyPlot[][] commanderPlots;
 
+    /*
 	public static final void main(String[] args)
 	{
 		FrontEndSunnyK test = new FrontEndSunnyK();
 		test.play(1, "Sunny", "Commander");
 	}
+	*/
 	
-	public FrontEndSunnyK() {
+	public FrontEndSunnyK(int level, String userName, String name) {
+		this.commanderLevel = level;
 		backend = new BackEndJustinY(this);
+		this.userName = userName;
+		this.commanderName = name;
 	}
 	
-	public static boolean play(int level, String userName, String name) {
-		commanderLevel = level;
+	public boolean play() {
 		isWinner = false;
-		commanderName = name;
+		playerPlots = backend.getPlayerPlots();
+		commanderPlots = backend.getCommanderPlots();
+		ships = CaveExplorer.inventory.getShip();
 		
-		new SunnyIntro().play();
-		CaveExplorer.in.nextLine();
+		new SunnyIntro(commanderName).play();
 		gameMenu();
-		startGame();
 		
 		return isWinner;
 	}
 	
-	public static void gameMenu()
+	public void gameMenu()
 	{
-		System.out.print("If you do not know how to play Battleship, enter 'a' \n If you already know how to play, enter 'd'");
+		System.out.println("Captain Duran: If you do not know how to play Battleship, enter 'a' \n If you already know how to play, enter 'd'");
 		String input = CaveExplorer.in.nextLine();
-		if(input.equals("a"))
+		if(input.equalsIgnoreCase("a"))
 		{
 			System.out.print("In Battleship, you have the player board as well as the opponent's board."
 					+ "\n Each player sets up their board by placing their available ships in different configurations." 
 					+ "\n After the board is set up, each player takes turns and targets one spot on one another's board."
 					+ "\n This 'fires' a shot at that target and will either hit or miss a ship, once all ships are sunk "
-					+ "\n on one person's board, a winner is declared! There are also powerups to assist you.");
+					+ "\n on one person's board, a winner is declared! There are also powerups to assist you. \n");
+			CaveExplorer.pause(2000);
+			startGame();
 		}
-		if(input.equals("d"))
+		if(input.equalsIgnoreCase("d"))
 		{
 			startGame();
 		}
 		else
 		{
-			System.out.print("Sorry, that key is not valid. Please try again.");
+			System.out.println("Captain Duran: What are you saying!? That key is not valid. Only 'd' or 'a'!");
 			gameMenu();
 			
 		}
 	}
 	
-	public static void startGame() {
+	public void startGame() {
 		//Shows empty maps
-		displayBothMaps();
+		//displayBothMaps();
+		backend.printMap(playerPlots);
+		System.out.println();
+		backend.printMap(commanderPlots);
 		//asks coordinates to place ships
 		askCoordsForShips();
+		//commander places his ship
+		backend.commanderPlaceShip(ships);
 		playing = true;
-		while(playing)
-		{
-				//updates map each time
-			displayBothMaps();
-				//asks coordinates to fire on opponent
+		determineFirstTurn();
+		if(isPlayerTurn) {
+			//displayBothMaps();
+			backend.printMap(playerPlots);
+			System.out.println();
+			backend.printMap(commanderPlots);
 			askCoordsToFire();
-				//checks to see if the game is over, if it is then playing = false
 			if(isGameOver())
 			{
 				playing = false;
 			}
+			else {
+				commanderMakesMove();
+				if(isGameOver())
+				{
+					playing = false;
+				}
+				else {
+					backend.printMap(playerPlots);
+					System.out.println();
+					backend.printMap(commanderPlots);
+					while(playing)
+					{
+							//updates map each time
+						//displayBothMaps();
+							//asks coordinates to fire on opponent
+						askCoordsToFire();
+						backend.printMap(playerPlots);
+						System.out.println();
+						backend.printMap(commanderPlots);
+						if(isGameOver())
+						{
+							playing = false;
+						}
+						else {
+								//the Commander makes the first move
+							commanderMakesMove();
+							if(isGameOver())
+							{
+								playing = false;
+							}
+							backend.printMap(playerPlots);
+							System.out.println();
+							backend.printMap(commanderPlots);
+								//checks to see if the game is over, if it is then playing = false
+						}
+					}
+				}
+			}
 		}
-		System.out.print("");
+		else {
+			//displayBothMaps();
+			System.out.println("Captain Duran: " + commanderName + " is making the first move!");
+			commanderMakesMove();
+			if(isGameOver())
+			{
+				playing = false;
+			}
+			else {
+				backend.printMap(playerPlots);
+				System.out.println();
+				backend.printMap(commanderPlots);
+				askCoordsToFire();
+				if(isGameOver())
+				{
+					playing = false;
+				}
+				else {
+					backend.printMap(playerPlots);
+					System.out.println();
+					backend.printMap(commanderPlots);
+					while(playing) 		{
+							//updates map each time
+						//displayBothMaps();
+							//the Commander makes the first move
+						commanderMakesMove();
+						if(isGameOver())
+						{
+							playing = false;
+						}
+						else {
+							backend.printMap(playerPlots);
+							System.out.println();
+							backend.printMap(commanderPlots);
+								//asks coordinates to fire on opponent
+							askCoordsToFire();
+							if(isGameOver())
+							{
+								playing = false;
+							}
+							else {
+								backend.printMap(playerPlots);
+								System.out.println();
+								backend.printMap(commanderPlots);
+							}
+								//checks to see if the game is over, if it is then playing = false
+					    }
+					}
+				}
+			}
+		}
 	}
 	
 	
-	public static void displayBothMaps()
+	public void commanderMakesMove() {
+		int[] coords = backend.commanderMove(commanderLevel);
+		if(coords[0] != -1 && coords[1] != -1) {
+			backend.hit(coords[0], coords[1], playerPlots);
+			String dia = commanderName + " did not manage to hit your ship! Argh!";
+			if(backend.playerHitShip(coords[0], coords[1], playerPlots)) {
+				dia = commanderName + " hit a part of one of your ships!";
+			}
+			System.out.println("Captain Duran: " + commanderName + " has decided to hit " + coords[0] + " , " + coords[1] + "! " + dia);
+		}
+	}
+
+	public void displayBothMaps()
 	{
 		int numRows = backend.boardSize();
 		System.out.print("~ ~ ~ Your Board ~ ~ ~ ~ ~ ~ ~ Opponent Board ~ ~ ~");	
@@ -109,31 +221,30 @@ public class FrontEndSunnyK implements JustinSupporter {
 			
 		}
 	}
-	public static void askCoordsForShips()
+	public void askCoordsForShips()
 	{
 		//uses backend.getCoordInput
-
-		Ship[] ships = CaveExplorer.inventory.getShip();
 		
 		for(int i = 0; i < backend.numberOfShips(); i++)
 		{
-			System.out.print("Where would you like to place ship #"+i+"?");
+			System.out.println("Shipmate: Where would you like to position ship #"+i+"?");
 			int[] coords =  backend.getCoordInput();
 			
-			System.out.print("Which direction would you like to place it in? Enter 'N','E','S','W'");
+			System.out.println("Shipmate: To thou direction would you like to place it in? Enter 'N','E','S','W'");
 			int direction = backend.interpretDirectionInput();
 			
 			int lengthOfCurrentShip = backend.lengthOfShip(ships[i]);
 			
 			while(!backend.tryShipPlacement(coords[0], coords[1], direction, lengthOfCurrentShip, playerPlots))
 			{
-				System.out.print("Where would you like to place ship #"+i+"?");
+				System.out.println("Shipmate: Your input was either already taken or out of the battlefield! Where would you like to place ship #"+i+"?");
 				coords =  backend.getCoordInput();
 				
-				System.out.print("Which direction would you like to place it in? Enter 'N','E','S','W'");
+				System.out.println("Shipmate: To which direction would you like to place it in? Enter 'N','E','S','W'");
 				direction = backend.interpretDirectionInput();
 			}
-			System.out.print("The ship has been succesfully placed.");
+			System.out.println("Shipmate: Ho-ah! The ship has been succesfully placed.");
+			updateMaps();
 		}
 	}
 	
@@ -142,7 +253,12 @@ public class FrontEndSunnyK implements JustinSupporter {
 	//tryShipPlacement(int row, int col, int direction,
 	//int shipLength, JustinSunnyPlot[][] playerBoard) test to see if it can fit
 	
-	public static void askCoordsToFire()
+	public void updateMaps() {
+		playerPlots = backend.getPlayerPlots();
+		commanderPlots = backend.getCommanderPlots();
+	}
+
+	public void askCoordsToFire()
 	{
 		int[] coords = {-10, -10};
 		if(backend.isSkipPlayerTurn()) {
@@ -174,13 +290,14 @@ public class FrontEndSunnyK implements JustinSupporter {
 			}	
 		}
 		String j = "You did not hit a ship.";
-		if(backend.playerHitShip(coords[0], coords[1])) {
+		updateMaps();
+		if(backend.playerHitShip(coords[0], coords[1], commanderPlots)) {
 			j = "You hit a ship!";
 		}
 		System.out.println("Shipmate: Bomb ahoy! You striked " + coords[0] + "," + coords[1] + "! " + j);
 	}
 	
-	public static boolean isGameOver()
+	public boolean isGameOver()
 	{
 		if(backend.isThereWinner())
 		{
@@ -192,7 +309,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 	
 	
 	 // This method flips a coin that determines who makes the first move 
-	public static void determineFirstTurn() {
+	public void determineFirstTurn() {
 		if(Math.random() < .50) {
 			isPlayerTurn = true;
 		}
@@ -204,11 +321,11 @@ public class FrontEndSunnyK implements JustinSupporter {
 	}
 	
 	public String getCommanderName() {
-		return commanderName;
+		return this.commanderName;
 	}
 	
 	public int getCommanderLevel() {
-		return commanderLevel;
+		return this.commanderLevel;
 	}
 	
 }

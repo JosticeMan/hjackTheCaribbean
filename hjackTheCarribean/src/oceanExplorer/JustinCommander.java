@@ -37,7 +37,8 @@ public class JustinCommander extends NPC {
 	 * @param user - UserName of the player that the AI is going to face
 	 */
 	public void fight(String user) {
-		this.winner = FrontEndSunnyK.play(level, user, name); //This starts the battle
+		FrontEndSunnyK game = new FrontEndSunnyK(level, user, name);
+		this.winner = game.play(); //This starts the battle
 	}
 	
 	/**
@@ -55,7 +56,6 @@ public class JustinCommander extends NPC {
 				CaveExplorer.setPlaying(false);
 				CaveExplorer.incrementLevel();
 				CaveExplorer.printVictory();
-				System.out.println(CaveExplorer.getLevel());
 				CaveRoom.setUpCaves(CaveExplorer.getLevel());
 				CaveExplorer.setPlaying(true);
 				CaveExplorer.inventory.updateMap();

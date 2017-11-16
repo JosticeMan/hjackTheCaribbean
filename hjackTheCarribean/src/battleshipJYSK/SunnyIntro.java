@@ -6,7 +6,8 @@ public class SunnyIntro {
 
 	private String commanderName;
 
-	public SunnyIntro() {
+	public SunnyIntro(String cName) {
+		this.commanderName = cName;
 	}
 
 	public void play() {
@@ -15,10 +16,11 @@ public class SunnyIntro {
 	
 	public void showIntroMessage()
 	{
-		System.out.print("The commander, " + commanderName + ", is setting up his battleships! Prepare to battle!");
+		System.out.println("Captain Duran: The commander, " + commanderName + ", is setting up his battleships! Prepare to battle!");
 		CaveExplorer.pause(100);
-		System.out.print("(Prepare for a game of Battleship)");
+		System.out.println("(Prepare for a game of Battleship)");
 		CaveExplorer.pause(500);
-		System.out.print("\n~ ~ Press enter to begin! ~ ~");
+		System.out.println("\n~ ~ Press enter to begin! ~ ~");
+		String input = CaveExplorer.in.nextLine();
 	}
 }

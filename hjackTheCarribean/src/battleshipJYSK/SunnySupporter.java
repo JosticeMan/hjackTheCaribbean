@@ -45,5 +45,11 @@ public interface SunnySupporter {
 
 	void processPowerUp(int type);
 
-	boolean playerHitShip(int i, int j);
+	boolean playerHitShip(int i, int j, JustinSunnyPlot[][] playerPlots);
+
+	void commanderPlaceShip(Ship[] ships);
+
+	void printMap(JustinSunnyPlot[][] playerPlots);
+
+	int[] commanderMove(int commanderLevel);
 }

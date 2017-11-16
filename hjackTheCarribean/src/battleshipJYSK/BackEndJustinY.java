@@ -341,6 +341,9 @@ public class BackEndJustinY implements SunnySupporter {
 	 * @return - Returns whether or not the program was able to place the ship or not
 	 */
 	public boolean tryShipPlacement(int row, int col, int direction, int shipLength, JustinSunnyPlot[][] playerBoard) {
+		if(row >= playerBoard.length || col >= playerBoard[0].length) {
+			return false;
+		}
 		if(direction == NORTH) {
 			if(row - shipLength >= 0) {
 				for(int shipRow = row; shipRow > row - shipLength; shipRow--) {
@@ -432,8 +435,9 @@ public class BackEndJustinY implements SunnySupporter {
 	 */
 	public int interpretDirectionInput() {
 		String input = CaveExplorer.in.nextLine();
-		if(!isValid(input)) {
+		while(!isValid(input)) {
 			printValidEntries();
+			CaveExplorer.print("Shipmate: To thou direction would you like to place it in? Enter 'N','E','S','W'");
 			input = CaveExplorer.in.nextLine();
 		}
 		return determineDirection(input, validEntries());
@@ -444,7 +448,6 @@ public class BackEndJustinY implements SunnySupporter {
 	 */
 	public void printValidEntries() {
 		CaveExplorer.print("Captain Duran: You are only allowed to type 'n' for NORTH, 'e' for EAST, 's' for SOUTH, and 'w' for WEST!");
-		CaveExplorer.print("Captain Duran: You can also type 'radar', 'missile', and 'storm' to activate a powerup!");
 	}
 	
 	/**
@@ -513,6 +516,7 @@ public class BackEndJustinY implements SunnySupporter {
 			while(coords == null){
 				CaveExplorer.print("Captain Duran: You must enter cordinates of the form:\n          <row>,<col>"
 						+ "\n<row> and <col> should be integers.");
+				CaveExplorer.print("Captain Duran: You can also type 'radar', 'missile', and 'storm' to activate a powerup!");
 				input = CaveExplorer.in.nextLine();
 				coords = toCoords(input);
 			}
@@ -638,8 +642,8 @@ public class BackEndJustinY implements SunnySupporter {
 	 * @param col
 	 * @return
 	 */
-	public boolean playerHitShip(int row, int col) {
-		return theOpponentGameBoard[row][col].isHasBeenHit();
+	public boolean playerHitShip(int row, int col, JustinSunnyPlot[][] playerBoard) {
+		return playerBoard[row][col].isShipOccupied();
 	}
 	
 	/**
@@ -658,7 +662,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 */
 	public void printPowerUpDialogue(int type) {
 		String[][] pDialogues = {{"A spiritual voice is heard"}, {"Shipmate: Deploy the missile! We shall hit them in one turn! We need to recharge in the mean time!"}, {"**You summon a storm upon thou enemy!**", "Shipmate: The storm is rendering their weapons useless! They will be unable to shoot temporarily!"}};
-		for(String dia: pDialogues[type]) {
+		for(String dia: pDialogues[type - 1]) {
 			CaveExplorer.print(dia);
 		}
 	}
