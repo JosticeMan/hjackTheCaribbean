@@ -214,7 +214,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * @return
 	 */
 	public int numberOfShips() {
-		return 1; //Should be something like CaveExplorer.inventory.getShips().length;
+		return CaveExplorer.inventory.getShip().length; //Should be something like CaveExplorer.inventory.getShips().length;
 	}
 	
 	/**
@@ -468,7 +468,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * Method returns the board size given the commanderLevel from the frontEnd class
 	 * @return
 	 */
-	public static int boardSize() {
+	public int boardSize() {
 		return 5+(frontend.getCommanderLevel() - 1);
 		//return 5;
 	}

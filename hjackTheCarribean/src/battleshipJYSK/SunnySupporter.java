@@ -13,11 +13,11 @@ public interface SunnySupporter {
 	JustinSunnyPlot[][] getCommanderPlots();
 	
 	
-	BackEndJustinY numberOfShips();
+	int numberOfShips();
 	
-	BackEndJustinY getBoardSize();
+	int boardSize();
 	
-	BackEndJustinY getCoordInputs();
+	int[] getCoordInput();
 
 	boolean isThereWinner();
 	
