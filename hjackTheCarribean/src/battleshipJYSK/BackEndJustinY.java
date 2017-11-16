@@ -243,7 +243,7 @@ public class BackEndJustinY implements SunnySupporter {
 	}
 	
 	/**
-	 * Return the diaglogue associated with skipping the turn
+	 * Return the dialogue associated with skipping the turn
 	 */
 	public static void printCommanderSkipTurn() {
 		CaveExplorer.print(cSkipD[frontend.getCommanderLevel() - 1]);
