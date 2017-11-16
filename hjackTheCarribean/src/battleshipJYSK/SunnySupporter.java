@@ -52,4 +52,6 @@ public interface SunnySupporter {
 	void printMap(JustinSunnyPlot[][] playerPlots);
 
 	int[] commanderMove(int commanderLevel);
+
+	boolean isCommanderSkip();
 }

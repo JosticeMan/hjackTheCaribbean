@@ -29,9 +29,9 @@ public class FrontEndSunnyK implements JustinSupporter {
 	
 	public FrontEndSunnyK(int level, String userName, String name) {
 		this.commanderLevel = level;
-		backend = new BackEndJustinY(this);
-		this.userName = userName;
 		this.commanderName = name;
+		this.userName = userName;
+		backend = new BackEndJustinY(this);
 	}
 	
 	public boolean play() {
@@ -73,6 +73,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 	}
 	
 	public void startGame() {
+		CaveExplorer.pause(500);
 		//Shows empty maps
 		//displayBothMaps();
 		backend.printMap(playerPlots);
@@ -89,18 +90,21 @@ public class FrontEndSunnyK implements JustinSupporter {
 			backend.printMap(playerPlots);
 			System.out.println();
 			backend.printMap(commanderPlots);
+			CaveExplorer.pause(500);
 			askCoordsToFire();
 			if(isGameOver())
 			{
 				playing = false;
 			}
 			else {
+				CaveExplorer.pause(500);
 				commanderMakesMove();
 				if(isGameOver())
 				{
 					playing = false;
 				}
 				else {
+					CaveExplorer.pause(500);
 					backend.printMap(playerPlots);
 					System.out.println();
 					backend.printMap(commanderPlots);
@@ -109,7 +113,9 @@ public class FrontEndSunnyK implements JustinSupporter {
 							//updates map each time
 						//displayBothMaps();
 							//asks coordinates to fire on opponent
+						CaveExplorer.pause(500);
 						askCoordsToFire();
+						CaveExplorer.pause(500);
 						backend.printMap(playerPlots);
 						System.out.println();
 						backend.printMap(commanderPlots);
@@ -119,11 +125,13 @@ public class FrontEndSunnyK implements JustinSupporter {
 						}
 						else {
 								//the Commander makes the first move
+							CaveExplorer.pause(500);
 							commanderMakesMove();
 							if(isGameOver())
 							{
 								playing = false;
 							}
+							CaveExplorer.pause(500);
 							backend.printMap(playerPlots);
 							System.out.println();
 							backend.printMap(commanderPlots);
@@ -135,22 +143,27 @@ public class FrontEndSunnyK implements JustinSupporter {
 		}
 		else {
 			//displayBothMaps();
+			CaveExplorer.pause(500);
 			System.out.println("Captain Duran: " + commanderName + " is making the first move!");
+			CaveExplorer.pause(500);
 			commanderMakesMove();
 			if(isGameOver())
 			{
 				playing = false;
 			}
 			else {
+				CaveExplorer.pause(500);
 				backend.printMap(playerPlots);
 				System.out.println();
 				backend.printMap(commanderPlots);
+				CaveExplorer.pause(500);
 				askCoordsToFire();
 				if(isGameOver())
 				{
 					playing = false;
 				}
 				else {
+					CaveExplorer.pause(500);
 					backend.printMap(playerPlots);
 					System.out.println();
 					backend.printMap(commanderPlots);
@@ -158,22 +171,26 @@ public class FrontEndSunnyK implements JustinSupporter {
 							//updates map each time
 						//displayBothMaps();
 							//the Commander makes the first move
+						CaveExplorer.pause(500);
 						commanderMakesMove();
 						if(isGameOver())
 						{
 							playing = false;
 						}
 						else {
+							CaveExplorer.pause(500);
 							backend.printMap(playerPlots);
 							System.out.println();
 							backend.printMap(commanderPlots);
 								//asks coordinates to fire on opponent
+							CaveExplorer.pause(500);
 							askCoordsToFire();
 							if(isGameOver())
 							{
 								playing = false;
 							}
 							else {
+								CaveExplorer.pause(500);
 								backend.printMap(playerPlots);
 								System.out.println();
 								backend.printMap(commanderPlots);
@@ -260,6 +277,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 
 	public void askCoordsToFire()
 	{
+		boolean usedPowerup = false;
 		int[] coords = {-10, -10};
 		if(backend.isSkipPlayerTurn()) {
 			backend.setSkipPlayerTurn(false);
@@ -274,7 +292,10 @@ public class FrontEndSunnyK implements JustinSupporter {
 				if(backend.hasPowerUp(type)) {
 					backend.decrementPowerUp(type);
 					backend.processPowerUp(type);
-					return;
+					usedPowerup = true;
+					if(backend.isCommanderSkip()) {
+						askCoordsToFire();
+					}
 				}
 				else {
 					System.out.println("Shipmate: You do not have any more of that power up!");
@@ -289,12 +310,14 @@ public class FrontEndSunnyK implements JustinSupporter {
 				}	
 			}	
 		}
-		String j = "You did not hit a ship.";
-		updateMaps();
-		if(backend.playerHitShip(coords[0], coords[1], commanderPlots)) {
-			j = "You hit a ship!";
+		if(!(usedPowerup)) {
+			String j = "You did not hit a ship.";
+			updateMaps();
+			if(backend.playerHitShip(coords[0], coords[1], commanderPlots)) {
+				j = "You hit a ship!";
+			}
+			System.out.println("Shipmate: Bomb ahoy! You striked " + coords[0] + "," + coords[1] + "! " + j);
 		}
-		System.out.println("Shipmate: Bomb ahoy! You striked " + coords[0] + "," + coords[1] + "! " + j);
 	}
 	
 	public boolean isGameOver()

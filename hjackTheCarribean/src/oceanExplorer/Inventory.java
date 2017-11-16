@@ -29,10 +29,10 @@ public class Inventory {
 	public Inventory() {
 		updateMap();
 		desc = "";
-		Ship[] t = {new Ship(10,100,40)};
-		ships = t;
-		int[] bossTemp = {1,1,1};
-		bossPowerUps = bossTemp;
+		//Ship[] t = {new Ship(10,100,40)};
+		//ships = t;
+		//int[] bossTemp = {1,1,1};
+		//bossPowerUps = bossTemp;
 		beginningShip=new Ship(10,100,40);
 	}
 

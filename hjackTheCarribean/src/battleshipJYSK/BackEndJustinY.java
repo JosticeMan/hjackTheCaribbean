@@ -177,6 +177,14 @@ public class BackEndJustinY implements SunnySupporter {
 	}
 	
 	/**
+	 * Returns whether or not the turn of the commander is skipped
+	 * @return
+	 */
+	public boolean isCommanderSkip() {
+		return skipCommanderTurn;
+	}
+	
+	/**
 	 * Returns whether or not the turn of the player is to be skipped
 	 * @return
 	 */
@@ -516,7 +524,9 @@ public class BackEndJustinY implements SunnySupporter {
 			while(coords == null){
 				CaveExplorer.print("Captain Duran: You must enter cordinates of the form:\n          <row>,<col>"
 						+ "\n<row> and <col> should be integers.");
-				CaveExplorer.print("Captain Duran: You can also type 'radar', 'missile', and 'storm' to activate a powerup!");
+				if(frontend.isPlaying()) {
+					CaveExplorer.print("Captain Duran: You can also type 'radar', 'missile', and 'storm' to activate a powerup!");
+				}
 				input = CaveExplorer.in.nextLine();
 				coords = toCoords(input);
 			}
@@ -633,7 +643,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * @return
 	 */
 	public boolean hasPowerUp(int type) {
-		return oceanExplorer.Inventory.getBossPowerUps()[type] > 0;
+		return oceanExplorer.Inventory.getBossPowerUps()[type - 1] > 0;
 	}
 	
 	/**
@@ -652,7 +662,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 */
 	public void decrementPowerUp(int type) {
 		int[] newPowerUpCount = oceanExplorer.Inventory.getBossPowerUps();
-		newPowerUpCount[type]--;
+		newPowerUpCount[type - 1]--;
 		oceanExplorer.Inventory.setBossPowerUps(newPowerUpCount);
 	}
 	
