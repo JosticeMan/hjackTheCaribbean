@@ -195,14 +195,20 @@ public class AndrewBackend implements KevinSupport{
 		
 		if(into == NOTHING) {
 			setPlayerPos(row, col);
+			stepCount--;
 		}else if(into == TREE || into == ROCK) {
 			//return fail to move towards coordinates
 		}else if(into == FORAGE) {
 			setPlayerPos(row, col);
+			stepCount--;
 			map[row][col].setStaticOccupant(0);
 		}else if(into == TREASURE) {
 			//player wins
 		}
+	}
+	
+	public void attemptObserve(int row, int col) {
+		
 	}
 	
 	/**
@@ -215,16 +221,15 @@ public class AndrewBackend implements KevinSupport{
 		return map[row][col].getStaticOccupant();
 	}
 	
-	public void attemptObserve(int row, int col) {
-		
+	public void monkeyMoves() {
 	}
-	
 	/*---- INPUT PROCESSING METHODS ----*/
 	
 	public void processInput(String input) {
 		if(isValidDirection(input)) {
 			String dirKeys = "wdsa";
 			attemptPlayerMove(dirKeys.indexOf(input));
+			monkeyMoves();
 		}else if(isValidCoordinates(input)){
 			int row = Integer.parseInt(input.substring(0,1));
 			int col = Integer.parseInt(input.substring(2,3));
