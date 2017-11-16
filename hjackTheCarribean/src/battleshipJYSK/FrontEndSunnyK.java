@@ -118,6 +118,8 @@ public class FrontEndSunnyK implements JustinSupporter {
 			
 			System.out.print("Which direction would you like to place it in? Enter 'N','E','W','S'");
 			
+			//int direction = ((BackEndJustinY) backend).interpretDirectionInput();
+			
 		}
 	}
 	
@@ -128,15 +130,21 @@ public class FrontEndSunnyK implements JustinSupporter {
 	
 	public static void askCoordsToFire()
 	{
+		System.out.print("Where would you like to fire?");
 		//uses backend.getCoordInput
 		
 	}
-	/*
+	
 	public static boolean isGameOver()
 	{
-		return ;
+		if(backend.isThereWinner())
+		{
+			isWinner = backend.isPlayerWinner();
+			return true;
+		}
+		return false;
 	}
-	*/
+	
 	
 	 // This method flips a coin that determines who makes the first move
 	public static void determineFirstTurn() {

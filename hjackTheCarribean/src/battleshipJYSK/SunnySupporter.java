@@ -12,4 +12,14 @@ public interface SunnySupporter {
 	 */
 	JustinSunnyPlot[][] getCommanderPlots();
 	
+	
+	BackEndJustinY numberOfShips();
+	
+	BackEndJustinY getBoardSize();
+	
+	BackEndJustinY getCoordInputs();
+
+	boolean isThereWinner();
+	
+	boolean isPlayerWinner();
 }
