@@ -22,6 +22,7 @@ public class JustinCommander extends NPC {
 		this.level = level;
 		this.name = name;
 		this.repeatCount = 0;
+		this.winner = false;
 		
 		String[] tempCG = {this.name + ": How dare you step in " + this.name + "'s territory! Prepare yourself!", this.name + ": Who dares challenges me? The Great " + this.name + "!?", this.name + ": You want this land? Come and get some!"};
 		commanderGreetings = tempCG;
@@ -44,11 +45,26 @@ public class JustinCommander extends NPC {
 	 */
 	public void processEndBattle() {
 		if(winner) {
-			CaveExplorer.setPlaying(false);
-			CaveRoom.setUpCaves(CaveExplorer.getLevel());
+			if(CaveExplorer.getLevel() == 3) {
+				CaveExplorer.setPlaying(false);
+				CaveExplorer.incrementLevel();
+				CaveExplorer.printVictory();
+				CaveExplorer.printEnd();
+			}
+			else {
+				CaveExplorer.setPlaying(false);
+				CaveExplorer.incrementLevel();
+				CaveExplorer.printVictory();
+				System.out.println(CaveExplorer.getLevel());
+				CaveRoom.setUpCaves(CaveExplorer.getLevel());
+				CaveExplorer.setPlaying(true);
+				CaveExplorer.inventory.updateMap();
+				CaveExplorer.startExploring();
+			}
 		}
 		else {
-			//Insert loser code here
+			CaveExplorer.setPlaying(false);
+			CaveExplorer.printGameOver();
 		}
 	}
 	

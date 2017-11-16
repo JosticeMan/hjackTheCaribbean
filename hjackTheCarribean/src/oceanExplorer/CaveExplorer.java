@@ -11,14 +11,26 @@ public class CaveExplorer {
 	public static boolean playing = true;
 	public static NPC[] npcs;
 	public static int level;
-	public static final String[] intro = {  "**You are a newly appointed captain following the completion of apprenticeship under Captain Duran, the legendary pirate of the era.**",
-											"Captain Duran: Arghh! You've trained up to your life for this moment. A chance to conquer the seas!", 
-											"Parrot: Ka-awh!", 
-											"Shipmate: Duran! We're reaching the perimeter of the Carribean soon! A dangerous area indeed!",
-											"Captain Duran: I've heard of the 3 nations that control this territory! The fearsome British, Spanish, and the nice French!",
-											"Captain Duran: Ol buddy! It's time to engrave our names in history!", 
-											"Captain Duran: Let's plunder and conquer! I've heard of great treasures in this area that will surely aid us in our ventures!", 
-											"Shipmates: Ahoy!"};
+	public static final String[][] intro ={{
+											 "**You are a newly appointed captain following the completion of apprenticeship under Captain Duran, the legendary pirate of the era.**",
+											 "Captain Duran: Arghh! You've trained up to your life for this moment. A chance to conquer the seas!", 
+											 "Parrot: Ka-awh!", 
+											 "Shipmate: Duran! We're reaching the perimeter of the Carribean soon! A dangerous area indeed!",
+											 "Captain Duran: I've heard of the 3 nations that control this territory! The fearsome British, Spanish, and the nice French!",
+											 "Captain Duran: Ol buddy! It's time to engrave our names in history!", 
+											 "Captain Duran: Let's plunder and conquer! I've heard of great treasures in this area that will surely aid us in our ventures!", 
+											 "Shipmates: Ahoy!"
+											},
+											{
+										     "Captain Duran: Good job beating the french!", 
+										     "Captain Duran: The next commander, the Spanish, won't be as easy!",
+										     "Captain Duran: I heard they have significantly better strategies at tackling your ships. Beware!"
+											}, 
+											{
+											 "Captain Duran: Ahoy! You've passed the intelligent beings!", 
+											 "Captain Duran: Your next challenger, the British, has never lost an naval battle! But I believe in you!"
+											}
+										  };
 	
 	public static final String[] logo = {  
 			" __ __  ____  ____   ____    __  __  _      ______  __ __    ___         __   ____  _____  ____  ____   ____     ___   ____  ____   ",
@@ -29,12 +41,24 @@ public class CaveExplorer {
 			"|  |  | |  | |  ` ||  |  [     ||  .  |      |  |  |  |  ||     |    [     ||  |  ||  .  | |  | |     ||     ||     ||  |  ||  |  |",
 			"|__|__||____|[____||__|__|[____||__|[_|      |__|  |__|__||_____|     [____||__|__||__|[_||____||_____||_____||_____||__|__||__|__|"
 			};
+	
+	
+	public static final String[] victory = {
+
+		   "_ _  _        _                  ",
+		   "| | |<_> ___ _| |_ ___  _ _  _ _ ",
+		   "| ' || |[ | ' | | [ . ]| '_>| | |",
+		   "|__/ |_|[_|_. |_| [___]|_|  `_. |",
+		   "                            <___'",
+	
+	};
+	
 	public static final String[] gameOver1 = {"Shipmate: Capt! Bad news! Something bad is happen--",
 											  "**Your vision suddenly blacks out**", 
 											  "**You are awaken by someone. You make out its Captain Duran**",
 											  "Captain Duran: Pal... I'm sorry but your adventure has come to an end.", 
-											  "Captain Duran: Your ship was sunk after hitting a giant mass and I managed to come in time to save you.", 
-											  "Captain Duran: For your shipmates, they've lost their lives. We're heading back to land."};
+											  "Captain Duran: Your ship was sunk being drifted by a riptide and hitting a large mass. I managed to come in time to save you.", 
+											  "Captain Duran: As for your shipmates, they've lost their lives. We're heading back to land."};
 	public static final String[] gameO = {
 			"  ____                         ___                   _ ",
 			" [ ___| __ _ _ __ ___   ___   [ _ ]__   _____ _ __  | |",
@@ -42,6 +66,12 @@ public class CaveExplorer {
 			"| |_| | (_| | | | | | |  __/ | |_| |[ V ]  __/ |    |_|",
 			" [____|[__,_|_| |_| |_|[___|  [___]  [_] [___|_|    (_)"
 			};
+	
+	public static final String[] endOfGame = {
+												"Captain Duran: Congratulations on creating history! You defeated the undefeated!",
+												"Captain Duran: We must head back to shore quickly! We have a new Pirate King!",
+												"Shipmates: Arrr! Hail the new Pirate King! We will follow you to the end!"
+	};
 				
 	
 	public static void main(String[] args) {
@@ -65,8 +95,12 @@ public class CaveExplorer {
 		CaveExplorer.level = level;
 	}
 
+	public static void incrementLevel() {
+		CaveExplorer.level++;
+	}
+	
 	public static void startExploring() {
-		printIntroduction(); //This will introduce the player to the game world of the Caribbean
+		printIntroduction(level); //This will introduce the player to the game world of the Caribbean
 		while(playing) {
 			//npcActions();
  			print(inventory.getDescription());
@@ -75,6 +109,21 @@ public class CaveExplorer {
  			String input = in.nextLine();
  			currentRoom.interpretInput(input);
  		}
+	}
+	
+	public static void printEnd() {
+		for(String line: endOfGame) {
+			sprint(line);
+			pause(1000);
+		}
+	}
+	
+	public static void printVictory() {
+		pause(250);
+		for(String line: victory) {
+			sprint(line);
+		}
+		pause(500);
 	}
 	
 	public static void printGameOver() {
@@ -89,12 +138,15 @@ public class CaveExplorer {
 		}
 	}
 	
-	public static void printIntroduction() {
-		for(String line: logo) {
-			sprint(line);
+	public static void printIntroduction(int level) {
+		if(level == 1)
+		{
+			for(String line: logo) {
+				sprint(line);
+			}
 		}
 		pause(1000);
-		for(String entry: intro) {
+		for(String entry: intro[level - 1]) {
 			sprint(entry);
 			pause(1000);
 		}
