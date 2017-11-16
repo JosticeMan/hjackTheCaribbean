@@ -1,5 +1,7 @@
 package battleshipJYSK;
 
+import oceanExplorer.Ship;
+
 public interface SunnySupporter {
 
 	/**
@@ -13,7 +15,13 @@ public interface SunnySupporter {
 	JustinSunnyPlot[][] getCommanderPlots();
 	
 	
+	boolean tryShipPlacement(int row, int col, int direction, int shipLength, JustinSunnyPlot[][] playerBoard);
+	
+	int lengthOfShip(Ship e);
+	
 	int numberOfShips();
+	
+	int interpretDirectionInput();
 	
 	int boardSize();
 	
