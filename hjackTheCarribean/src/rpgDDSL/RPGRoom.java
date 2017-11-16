@@ -61,7 +61,7 @@ public class RPGRoom {
 	{
 		if (type == 0)
 		{
-			return "_";
+			return " ";
 		}
 		else
 		{

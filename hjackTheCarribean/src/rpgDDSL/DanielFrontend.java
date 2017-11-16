@@ -53,9 +53,38 @@ public class DanielFrontend implements StevenSupport{
 		
 		for (int i = 0; i < backend.getMap().length; i++)
 		{
+			if (i != 0 || i == backend.getMap().length - 1)
+			{
+				map += "|";
+			}
+			
 			for (int j = 0; j < backend.getMap()[0].length; j++)
 			{
-				map += backend.getMap()[i][j].toString() + " , ";
+				
+				if (j == backend.getMap()[0].length - 1 && i != 0)
+				{
+					map += backend.getMap()[i][j].toString() + "|";
+				}
+				else
+				{
+					
+					if (i == 0 || i == backend.getMap().length - 1)
+					{
+						if (i == backend.getMap().length - 1 && j != backend.getMap()[0].length - 1)
+						{
+							map += backend.getMap()[i][j].toString() + "__";
+						}
+						if (i == 0 && j != backend.getMap()[0].length - 1)
+						{
+							map += backend.getMap()[i][j].toString() + "__";
+						}
+					//	map += backend.getMap()[i][j].toString() + "__";
+					}
+					else
+					{
+						map += backend.getMap()[i][j].toString() + "  ";
+					}
+				}
 			}
 			
 			map += "\n";
