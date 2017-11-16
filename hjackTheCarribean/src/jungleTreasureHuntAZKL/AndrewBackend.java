@@ -26,8 +26,8 @@ package jungleTreasureHuntAZKL;
  * X                         X
  * 
  * X                T  X     X
- *              //only path would be through the F
- * X R  R  R  T  F  T  T  R  X
+ *                              //only path would be through the F
+ * X R  R  R  T  F  T  T  R  X  //Player wont be able to see this outside
  *   x
  * XxLx                      X
  *  x  xx
@@ -57,23 +57,23 @@ package jungleTreasureHuntAZKL;
  *           x                                               
  * X X X X X X X X X X X X X X   X X X X X X X X X X X X X X
  * 
- * X X X X X X X X X X X X X X   X X X X X X X X X X X X X X
+ * X X X X X X X X X X X X X X  
  *           x                                             
- * X        x x              X   X                         X
+ * X        x x              X  
  *         x  x                                              
- * X      x   x              X   X                         X
+ * X      x   x              X  
  *       x     x                                             
- * X    x      Txx           X   X                         X 
- *     x          xx //if an object is blocking the line of sight, then the tiles above and to the right wont be visible to the                                        
- * X  x      P L L Lx        X   X                         X player, this is why a radius of 3 was chosen, because there is only one
- *     x           x                                         scenario where the vision radius will appear different 
- * X    x         x          X   X                         X
+ * X    x      Txx           X  
+ *     x          xx            if an object is blocking the line of sight, then the tiles above and to the right wont be visible to the                                        
+ * X  x      P L L Lx        X  player, this is why a radius of 3 was chosen, because there is only one
+ *     x           x            scenario where the vision radius will appear different 
+ * X    x         x          X 
  *       x       x                                            
- * X      xT    x            X   X                         X
+ * X      xT    x            X
  *         x   x                                              
- * X        x x              X   X                         X
+ * X        x x              X 
  *           x                                               
- * X X X X X X X X X X X X X X   X X X X X X X X X X X X X X
+ * X X X X X X X X X X X X X X
  * 
  * ONE SPACE BETWEEN EACH COLUMN (horizontal aesthetics need modifying)
  * ONE SPACE BETWEEN EACH ROW
