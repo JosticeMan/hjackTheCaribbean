@@ -44,4 +44,6 @@ public interface SunnySupporter {
 	void decrementPowerUp(int type);
 
 	void processPowerUp(int type);
+
+	boolean playerHitShip(int i, int j);
 }
