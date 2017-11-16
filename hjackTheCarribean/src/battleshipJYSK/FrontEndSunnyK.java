@@ -12,6 +12,12 @@ public class FrontEndSunnyK implements JustinSupporter {
 	private static boolean isPlayerTurn; //This tracks whose turn it is
 	private static String userName; //User name of the player
 	private static boolean isWinner;
+
+	public static final void main(String[] args)
+	{
+		FrontEndSunnyK test = new FrontEndSunnyK();
+		test.play(1, "Sunny", "Commander");
+	}
 	
 	public FrontEndSunnyK() {
 		backend = new BackEndJustinY(this);
@@ -19,21 +25,22 @@ public class FrontEndSunnyK implements JustinSupporter {
 	
 	public static boolean play(int level, String userName, String name) {
 		commanderLevel = level;
-		userName = userName;
 		isWinner = false;
 		commanderName = name;
 		
 		new SunnyIntro().play();
 		CaveExplorer.in.nextLine();
 		gameMenu();
+		startGame();
 		
 		return isWinner;
 	}
 	
-	public void gameMenu()
+	public static void gameMenu()
 	{
 		JustinSunnyPlot[][] playerPlots = backend.getPlayerPlots();
 		JustinSunnyPlot[][] commanderPlots = backend.getCommanderPlots();
+		
 		System.out.print("If you do not know how to play Battleship, enter 'a' \n If you already know how to play, enter 'd'");
 		String input = CaveExplorer.in.nextLine();
 		if(input.equals("a"))
@@ -57,12 +64,81 @@ public class FrontEndSunnyK implements JustinSupporter {
 	}
 	
 	public static void startGame() {
-		
+		playing = true;
+		//Shows empty maps
+		displayBothMaps();
+		//asks coordinates to place ships
+		askCoordsForShips();
+		while(playing)
+		{
+				//updates map each time
+			displayBothMaps();
+				//asks coordinates to fire on opponent
+			askCoordsToFire();
+				//checks to see if the game is over, if it is then playing = false
+			if(isGameOver())
+			{
+				playing = false;
+			}
+		}
+		System.out.print("");
 	}
 	
-	/**
-	 * This method flips a coin that determines who makes the first move
-	 */
+	
+	public static void displayBothMaps()
+	{
+		int numRows = ((BackEndJustinY) backend).boardSize();
+		System.out.print("~ ~ ~ Your Board ~ ~ ~ ~ ~ ~ ~ Opponent Board ~ ~ ~");	
+		for(int i = 0; i < numRows+4; i++)
+		{
+			if(i == 0 || i == numRows+2)
+			{
+				String rowString = " ";
+				for(int j = 0; j < (numRows*2)+3;j++)
+				{
+					rowString += "_";
+				}
+			}
+			if(i == numRows+3)
+			{
+				
+			}
+			System.out.print("\n");
+			
+		}
+	}
+	public static void askCoordsForShips()
+	{
+		//uses backend.getCoordInput
+
+		for(int i = 0; i < ((BackEndJustinY) backend).numberOfShips(); i++)
+		{
+			System.out.print("Where would you like to place ship #"+i+"?");
+			int[] coords = ((BackEndJustinY) backend).getCoordInput();
+			
+			System.out.print("Which direction would you like to place it in? Enter 'N','E','W','S'");
+			
+		}
+	}
+	
+	//lengthOfShip(ship e) gets length of ship from backend
+	
+	//tryShipPlacement(int row, int col, int direction,
+	//int shipLength, JustinSunnyPlot[][] playerBoard) test to see if it can fit
+	
+	public static void askCoordsToFire()
+	{
+		//uses backend.getCoordInput
+		
+	}
+	/*
+	public static boolean isGameOver()
+	{
+		return ;
+	}
+	*/
+	
+	 // This method flips a coin that determines who makes the first move
 	public static void determineFirstTurn() {
 		if(Math.random() < .50) {
 			isPlayerTurn = true;
