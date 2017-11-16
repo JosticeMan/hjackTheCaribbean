@@ -87,7 +87,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 	
 	public static void displayBothMaps()
 	{
-		int numRows = ((BackEndJustinY) backend).boardSize();
+		int numRows = backend.boardSize();
 		System.out.print("~ ~ ~ Your Board ~ ~ ~ ~ ~ ~ ~ Opponent Board ~ ~ ~");	
 		for(int i = 0; i < numRows+4; i++)
 		{
@@ -111,14 +111,14 @@ public class FrontEndSunnyK implements JustinSupporter {
 	{
 		//uses backend.getCoordInput
 
-		for(int i = 0; i < ((BackEndJustinY) backend).numberOfShips(); i++)
+		for(int i = 0; i < backend.numberOfShips(); i++)
 		{
 			System.out.print("Where would you like to place ship #"+i+"?");
-			int[] coords = ((BackEndJustinY) backend).getCoordInput();
+			int[] coords =  backend.getCoordInput();
 			
 			System.out.print("Which direction would you like to place it in? Enter 'N','E','W','S'");
 			
-			//int direction = ((BackEndJustinY) backend).interpretDirectionInput();
+			//int direction = backend.interpretDirectionInput();
 			
 		}
 	}
@@ -146,7 +146,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 	}
 	
 	
-	 // This method flips a coin that determines who makes the first move
+	 // This method flips a coin that determines who makes the first move 
 	public static void determineFirstTurn() {
 		if(Math.random() < .50) {
 			isPlayerTurn = true;
@@ -162,4 +162,4 @@ public class FrontEndSunnyK implements JustinSupporter {
 		return commanderLevel;
 	}
 	
-}
+}}
