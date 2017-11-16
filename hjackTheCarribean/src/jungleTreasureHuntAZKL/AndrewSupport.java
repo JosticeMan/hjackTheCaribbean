@@ -13,8 +13,11 @@ public interface AndrewSupport {
 	public void getStepCount();
 	
 	public void revealTreasure();
-	public void getLookCount();
+	
 	public String getUserInput();
 	
+	public boolean isValidDirection();
+	
+	public boolean isValidCoordinates();
 	
 }

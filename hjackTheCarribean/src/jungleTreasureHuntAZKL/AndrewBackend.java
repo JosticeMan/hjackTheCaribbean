@@ -30,12 +30,12 @@ package jungleTreasureHuntAZKL;
  * X R  R  R  T  F  T  T  R  X  //Player wont be able to see this outside
  *   x
  * XxLx                      X
- *  x  xx
- * XxL  Lx                   X
- *  x     xx
- * XxL  L  Lx                X
- *  x        xx
- * XxP  L  L  Lx             X
+ *  x  x
+ * XxL Lx                    X
+ *  x    x
+ * XxL L Lx                  X
+ *  x      x
+ * XxP L L Lx                X
  *  xxxxxxxxxxxx
  * X X X X X X X X X X X X X X
  *  //Below is the full radius of what they'll be able to see and what empty tiles will look like
@@ -106,6 +106,9 @@ public class AndrewBackend implements KevinSupport{
 	private int[] playerPos;
 	private int stepCount;
 	
+	
+	private int[][] treasurePos;
+	
 	/*private int[][] trees;
 	private int[][] rocks;
 	private int[][] forage;*/
@@ -134,24 +137,33 @@ public class AndrewBackend implements KevinSupport{
 	public AndrewBackend(AndrewSupport frontend) {
 		this.frontend = frontend;
 		
-		map = new  AndrewKevinTile[10][10];
+		map = new  AndrewKevinTile[12][12];
 		for(int row = 0; row < map.length; row++) {
 			for(int col = 0; col < map[row].length; col++) {
 				map[row][col] = new AndrewKevinTile(row, col);
 			}
 		}
+			for(int col = 0; col < map[0].length; col++) {
+				map[0][col].setNonStaticOccupant(ROCK);;
+			}
+			for(int col = 0; col < map[map.length-1].length; col++) {
+				map[map.length-1][col].setNonStaticOccupant(ROCK);;
+			}
 		//stepCount is based off the size of the map, for now it'll be 10
 		stepCount = 10;
-		setPlayerPos(map.length, 0); //player position will be randomly generated along the border
-		
+		int[] a = new int[2];
+		playerPos = a;
+		setPlayerPos(map.length-2, 1); //player position will be randomly generated along the border
+
+		System.out.println(playerPos[ROW]);
 		//map = new int[7][12];
 	}
-
+	
 	public void setPlayerPos(int row, int col) {
 		playerPos[ROW] = row;
 		playerPos[COL] = col;
 		
-		map[row][col].setNonStaticOccupant(1);
+		map[row][col].setStaticOccupant(1);
 	}
 	
 	/*---- KEVINSUPPORT METHODS ----*/
@@ -163,7 +175,7 @@ public class AndrewBackend implements KevinSupport{
 	@Override
 	public boolean playing() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
@@ -180,28 +192,30 @@ public class AndrewBackend implements KevinSupport{
 	 * @param direction
 	 */
 	public void attemptPlayerMove(int direction) {
-		int row = playerPos[ROW];
-		int col = playerPos[COL];
-		if(direction == UP) {
-			row--;
-		}else if(direction == RIGHT) {
-			col++;
-		}else if(direction == DOWN) {
-			row++;
-		}else if(direction == LEFT) {
-			col--;
+		int row1 = playerPos[ROW];
+		int col1 = playerPos[COL];
+		if(direction == UP && row1 > 1) {
+			row1--;
+		}else if(direction == RIGHT && col1 < map[row1].length-2) {
+			col1++;
+		}else if(direction == DOWN && row1 < map.length-2) {
+			row1+=1;
+		}else if(direction == LEFT && col1 > 1) {
+			col1-=1;
 		}
-		int into = checkTile(row,col);
 		
+		int into = checkTile(row1,col1);
+		
+		//checks if the tile is valid for moving into
 		if(into == NOTHING) {
-			setPlayerPos(row, col);
+			setPlayerPos(row1, col1);
 			stepCount--;
 		}else if(into == TREE || into == ROCK) {
 			//return fail to move towards coordinates
 		}else if(into == FORAGE) {
-			setPlayerPos(row, col);
+			setPlayerPos(row1, col1);
 			stepCount--;
-			map[row][col].setStaticOccupant(0);
+			map[row1][col1].setStaticOccupant(0);
 		}else if(into == TREASURE) {
 			//player wins
 		}

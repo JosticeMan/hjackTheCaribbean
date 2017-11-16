@@ -1,6 +1,14 @@
 package jungleTreasureHuntAZKL;
 
 public class AndrewKevinTile {
+
+	public static final int PLAYER = 1;
+	public static final int MONKEY = 2;
+	
+	public static final int ROCK = 1;
+	public static final int TREE = 2;
+	public static final int FORAGE = 3;
+	public static final int TREASURE = 7;
 	
 	private int row;
 	private int col;
@@ -37,5 +45,16 @@ public class AndrewKevinTile {
 
 	public void setNonStaticOccupant(int nonStaticOccupant) {
 		this.nonStaticOccupant = nonStaticOccupant;
+	}
+
+	public String getContent() {
+		if(staticOccupant == PLAYER) {
+			return "P";
+		}else if(staticOccupant == MONKEY) {
+			return "M";
+		}else if(nonStaticOccupant == ROCK) {
+			return "R";
+		}
+		return " ";
 	}
 }
