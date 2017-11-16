@@ -112,7 +112,7 @@ public class BackEndJustinY implements SunnySupporter {
 			System.out.println(tryShipPlacement(0,1,EAST,2,thePlayerGameBoard));
 			System.out.println(tryShipPlacement(0,3,NORTH,2,thePlayerGameBoard));
 			printMap(thePlayerGameBoard);
-
+	
 			generateMap();
 			tryShipPlacement(0,1,EAST,2,thePlayerGameBoard);
 			System.out.println(Arrays.toString(allPossibleShipsNotHit(thePlayerGameBoard)[2]));
@@ -151,7 +151,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * This prints out the generic map for testing purposes
 	 * @param arr
 	 */
-	public static void printMap(JustinSunnyPlot[][] arr) {
+	public void printMap(JustinSunnyPlot[][] arr) {
 		for(int i = 0; i< arr.length; i++)
 		{
 		    for(int j = 0; j< arr[i].length; j++)
@@ -188,7 +188,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * Allows the frontend to set the skip to false once it skips the player turn
 	 * @param skipPlayerTurn
 	 */
-	public static void setSkipPlayerTurn(boolean skipPlayerTurn) {
+	public void setSkipPlayerTurn(boolean skipPlayerTurn) {
 		BackEndJustinY.skipPlayerTurn = skipPlayerTurn;
 	}
 
@@ -223,7 +223,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * @param e - The ship that the user wants to place
 	 * @return
 	 */
-	public static int lengthOfShip(Ship e) {
+	public int lengthOfShip(Ship e) {
 		return ((e.getHp() - (e.getHp() % 10)) / 10);
 	}
 
@@ -231,7 +231,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * Method goes through each of the player's ships and places a similar ship on the board so it's fair for both sides
 	 * @param ships - Array of the ships that the player has
 	 */
-	public static void commanderPlaceShip(Ship[] ships) {
+	public void commanderPlaceShip(Ship[] ships) {
 		for(Ship s: ships) {
 			int[] coords = randomCoordinates(theOpponentGameBoard.length);
 			int direction = randomDirection();
@@ -253,7 +253,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * Returns the coordinates of the place the commander wants to hit
 	 * @return
 	 */
-	public static int[] commanderMove(int level) {
+	public int[] commanderMove(int level) {
 		if(skipCommanderTurn) {
 			int[] j = {-1, -1};
 			printCommanderSkipTurn();
@@ -283,7 +283,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * @param coord2
 	 * @return
 	 */
-	public static boolean isNear(int[] coord1, int[] coord2) {
+	public boolean isNear(int[] coord1, int[] coord2) {
 		int yDifference = coord1[0] - coord2[0];
 		int xDifference = coord1[1] - coord2[1];
 		if(coord1[0] == coord2[0]) {
@@ -300,7 +300,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * @param boardSize - Size of the field that the game is being held on
 	 * @return
 	 */
-	public static int[] randomCoordinates(int boardSize) {
+	public int[] randomCoordinates(int boardSize) {
 		int[] nTemp = {(int) (Math.random() * boardSize), (int) (Math.random() * boardSize)};
 		return nTemp;
 	}
@@ -325,7 +325,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * Returns a random direction for a ship to face
 	 * @return 
 	 */
-	public static int randomDirection() {
+	public int randomDirection() {
 		return (int) (Math.random() * WEST);
 	}
 	
@@ -340,7 +340,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * @param playerBoard - The appropriate player board to place the ship on
 	 * @return - Returns whether or not the program was able to place the ship or not
 	 */
-	public static boolean tryShipPlacement(int row, int col, int direction, int shipLength, JustinSunnyPlot[][] playerBoard) {
+	public boolean tryShipPlacement(int row, int col, int direction, int shipLength, JustinSunnyPlot[][] playerBoard) {
 		if(direction == NORTH) {
 			if(row - shipLength >= 0) {
 				for(int shipRow = row; shipRow > row - shipLength; shipRow--) {
@@ -406,7 +406,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * 	@param col - X Coordinate of the Ship
 	 * 	@param playerBoard - The appropriate player board to unset the ship on
 	 */
-	public static void unSetShipAtCoords(int row, int col, JustinSunnyPlot[][] playerBoard) {
+	public void unSetShipAtCoords(int row, int col, JustinSunnyPlot[][] playerBoard) {
 		playerBoard[row][col].setShipOccupied(false);
 	}
 	
@@ -417,7 +417,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * @param playerBoard - The appropriate player board to place the ship on
 	 * @return
 	 */
-	public static boolean attemptShipPlacementAtCoordinate(int row, int col, JustinSunnyPlot[][] playerBoard) {
+	public boolean attemptShipPlacementAtCoordinate(int row, int col, JustinSunnyPlot[][] playerBoard) {
 		if(playerBoard[row][col].isShipOccupied()) {
 			return false;
 		}
@@ -476,7 +476,7 @@ public class BackEndJustinY implements SunnySupporter {
 	/**
 	 * This generates a new 2D array of the appropriate board size; 
 	 */
-	public static void generateMap() {
+	public void generateMap() {
 		int dimension = boardSize();
 		//int dimension = 5;
 		thePlayerGameBoard = new JustinSunnyPlot[dimension][dimension];
@@ -489,7 +489,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * Populate the specified array with plots using 2D arrays and coordinates
 	 * @param arr
 	 */
-	public static void populateBoard(JustinSunnyPlot[][] arr) {
+	public void populateBoard(JustinSunnyPlot[][] arr) {
 		for(int row = 0; row < arr.length; row++) {
 			for(int col = 0; col < arr[row].length; col++) {
 				arr[row][col] = new JustinSunnyPlot(row, col);
@@ -550,7 +550,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * @param playerBoard - Player board that you want to check
 	 * @return
 	 */
-	public static int countOfShipSpotsNotHit(JustinSunnyPlot[][] playerBoard) {
+	public int countOfShipSpotsNotHit(JustinSunnyPlot[][] playerBoard) {
 		int count = 0;
 		for(int row = 0; row < playerBoard.length; row++) {
 			for(int col = 0; col < playerBoard[0].length; col++) {
@@ -568,7 +568,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * @param playerBoard - Player board that you want to check
 	 * @return
 	 */
-	public static int[][] allPossibleShipsNotHit(JustinSunnyPlot[][] playerBoard) {
+	public int[][] allPossibleShipsNotHit(JustinSunnyPlot[][] playerBoard) {
 		int unHitSpots = countOfShipSpotsNotHit(playerBoard);
 		int[][] possibleMoves = new int[unHitSpots][2];
 		int numOfCoordinates = 0;
@@ -588,7 +588,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * Return the number of the power up or -1 if the user did not activate the power up trigger
 	 * @return
 	 */
-	public static int interpretPowerUpInput() {
+	public int interpretPowerUpInput() {
 		String input = CaveExplorer.in.nextLine();
 		return determineType(input);
 	}
@@ -597,7 +597,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * Returns an array with the valid keywords to trigger a certain powerup
 	 * @return
 	 */
-	public static String[] validPowerInputs() {
+	public String[] validPowerInputs() {
 		String[] pTemp = {"radar", "missile", "storm"};
 		return pTemp;
 	}
@@ -607,7 +607,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * @param input
 	 * @return
 	 */
-	public static int determineType(String input) {
+	public int determineType(String input) {
 		String[] validTriggers = validPowerInputs();
 		for(int i = 0; i < validTriggers.length; i++) {
 			if(input.equalsIgnoreCase(validTriggers[i])) {
@@ -640,7 +640,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * Manages the dialogue associated with the powerup activation
 	 * @param type
 	 */
-	public static void printPowerUpDialogue(int type) {
+	public void printPowerUpDialogue(int type) {
 		String[][] pDialogues = {{"A spiritual voice is heard"}, {"Shipmate: Deploy the missile! We shall hit them in one turn! We need to recharge in the mean time!"}, {"**You summon a storm upon thou enemy!**", "Shipmate: The storm is rendering their weapons useless! They will be unable to shoot temporarily!"}};
 		for(String dia: pDialogues[type]) {
 			CaveExplorer.print(dia);
@@ -650,10 +650,19 @@ public class BackEndJustinY implements SunnySupporter {
 	/**
 	 * Prints out a hint of the whereabouts of the commander's ships
 	 */
-	public static void giveThemCoords() {
+	public void giveThemCoords() {
 		int[][] possibleCoords = allPossibleShipsNotHit(theOpponentGameBoard);
 		int[] randomCoord = CaveExplorer.randomInt(possibleCoords);
 		CaveExplorer.print("It whispers to you that it senses a ship around " + Arrays.toString(randomCoord));
+	}
+	
+	/**
+	 * MEANT FOR CRITCILE MISSILE POWER UP
+	 * Returns a random ship coordinate for the player to strike
+	 * @return
+	 */
+	public int[] randomShipHit() {
+		return CaveExplorer.randomInt(allPossibleShipsNotHit(theOpponentGameBoard));
 	}
 	
 	/**
@@ -663,7 +672,7 @@ public class BackEndJustinY implements SunnySupporter {
      * 3 - Stormcaller - The opponent's battleships are surrounded by bad weather and unable to make a player move for one turn. 
 	 * @param type
 	 */
-	public static void processPowerUp(int type) {
+	public void processPowerUp(int type) {
 		printPowerUpDialogue(type);
 		if(type == 1) {
 			giveThemCoords();
