@@ -130,14 +130,15 @@ public class FrontEndSunnyK implements JustinSupporter {
 	
 	public static void askCoordsToFire()
 	{
+		int[] coords = {-10, -10};
 		if(backend.isSkipPlayerTurn()) {
 			backend.setSkipPlayerTurn(false);
-			int[] coords = backend.randomShipHit();
+			coords = backend.randomShipHit();
 			backend.hit(coords[0], coords[1], backend.getCommanderPlots());
 		}
 		else {
 			System.out.println("Shipmate: Where would you like to fire?");
-			int[] coords = backend.getCoordInput();
+			coords = backend.getCoordInput();
 			if(coords[0] < 0 && coords[1] < 0) {
 				int type = coords[0] * -1;
 				if(backend.hasPowerUp(type)) {
@@ -157,6 +158,11 @@ public class FrontEndSunnyK implements JustinSupporter {
 				}	
 			}	
 		}
+		String j = "You did not hit a ship.";
+		if(backend.playerHitShip(coords[0], coords[1])) {
+			j = "You hit a ship!";
+		}
+		System.out.println("Shipmate: Bomb ahoy! You striked " + coords[0] + "," + coords[1] + "! " + j);
 	}
 	
 	public static boolean isGameOver()

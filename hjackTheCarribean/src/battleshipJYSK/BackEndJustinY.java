@@ -633,6 +633,16 @@ public class BackEndJustinY implements SunnySupporter {
 	}
 	
 	/**
+	 * Returns whether or not the coordinates have been hit
+	 * @param row
+	 * @param col
+	 * @return
+	 */
+	public boolean playerHitShip(int row, int col) {
+		return theOpponentGameBoard[row][col].isHasBeenHit();
+	}
+	
+	/**
 	 * Decrements the count of a particular power up
 	 * @param type
 	 */
