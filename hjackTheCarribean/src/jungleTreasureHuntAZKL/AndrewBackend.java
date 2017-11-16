@@ -65,8 +65,8 @@ package jungleTreasureHuntAZKL;
  *       x     x                                             
  * X    x      Txx           X   X                         X 
  *     x          xx //if an object is blocking the line of sight, then the tiles above and to the right wont be visible to the                                        
- * X  x      P L L Lx        X   X                         X player, this is why a radius of 3 was chosen, because there are only two
- *     x           x                                         scenarios with specific vision blocking and both are displayed   
+ * X  x      P L L Lx        X   X                         X player, this is why a radius of 3 was chosen, because there is only one
+ *     x           x                                         scenario where the vision radius will appear different 
  * X    x         x          X   X                         X
  *       x       x                                            
  * X      xT    x            X   X                         X
