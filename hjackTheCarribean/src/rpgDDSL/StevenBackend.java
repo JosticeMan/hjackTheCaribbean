@@ -9,16 +9,19 @@ public class StevenBackend implements DanSupport {
 	private int[] human;
 	private DanielFrontend front;
 	private int[][] enemyPosition;
+	private int num;
 	
 	public static final int NORTH = 0;
 	public static final int EAST = 1;
 	public static final int SOUTH = 2;
 	public static final int WEST = 3;
 	
-	public StevenBackend(DanielFrontend frontend)
+	public StevenBackend(DanielFrontend frontend,int num)
 	{
 		map = new RPGRoom[5][5];
 		human=new int[2];
+		enemyPosition = new int[num][2];
+		this.num=num;
 		makeMap();
 	}
 	
@@ -33,32 +36,45 @@ public class StevenBackend implements DanSupport {
 			}
 		}
 		makeWalls();
-		map[3][3] = new RPGRoom(2);
-		map[1][1] = new RPGRoom(1);
+		map[1][1].setType(1);
 		human[0]=1;
 		human[1]=1;
+		spawnEnemy();
 		
 		
 	}
 	
-	public void spawnEnemy(int num)
+	public void spawnEnemy()
 	{
-		enemyPosition = new int[num][2];
 		int enemyPosX = 0;
 		int enemyPosY = 0;
 		
 		for (int i = 0; i < num; i++)
 		{
-			enemyPosX = (int)Math.random()*map.length;
-			enemyPosY = (int)Math.random()*map[0].length;
+			enemyPosX = (int)(Math.random()*map.length);
+			enemyPosY = (int)(Math.random()*map[0].length);
 			
-			while (enemyPosX != human[0] && enemyPosY != human[1])
+			while ((enemyPosX == human[0] && enemyPosY == human[1])||checkEnemy(enemyPosX,enemyPosY))
 			{
-				
+				System.out.println(enemyPosX);
+				System.out.println(enemyPosY);
+				enemyPosX = (int)(Math.random()*map.length);
+				enemyPosY = (int)(Math.random()*map[0].length);
 			}
+			enemyPosition[i][0]=enemyPosX;
+			enemyPosition[i][1]=enemyPosY;
+			map[enemyPosX][enemyPosY].setType(2);
 		}
 		
 	}
+	
+	public boolean checkEnemy(int row,int col) {
+		for(int[] a:enemyPosition) {
+			if(a[0]==row&&a[1]==col)return true;
+		}
+		return false;
+	}
+	
 	public void makeWalls() {
 		for (int i = 0; i < map.length; i++)
 		{
@@ -118,34 +134,30 @@ public class StevenBackend implements DanSupport {
 		return validEntries.indexOf(input) > - 1 && input.length() == 1;
 	}
 	
-	public boolean checkWalls(String input)
+	public boolean checkWalls(String input,int[] type)
 	{
-	/*	return (((input.equalsIgnoreCase("w")&&!map[human[0]][human[1]].isNorth())&&
-				(input.equalsIgnoreCase("d")&&!map[human[0]][human[1]].isEast())
-				||(input.equalsIgnoreCase("s")&&!map[human[0]][human[1]].isSouth())
-				||(input.equalsIgnoreCase("a")&&!map[human[0]][human[1]].isWest())));
-	*/	
 		
 		
-		if ((input.equalsIgnoreCase("w")&&map[human[0]][human[1]].isNorth()))
+		
+		if ((input.equalsIgnoreCase("w")&&map[type[0]][type[1]].isNorth()))
 		{
 			return false;
 		}
 		else
 		{
-			if ((input.equalsIgnoreCase("d")&&map[human[0]][human[1]].isEast()))
+			if ((input.equalsIgnoreCase("d")&&map[type[0]][type[1]].isEast()))
 			{
 				return false;
 			}
 			else
 			{
-				if ((input.equalsIgnoreCase("s")&&map[human[0]][human[1]].isSouth()))
+				if ((input.equalsIgnoreCase("s")&&map[type[0]][type[1]].isSouth()))
 				{
 					return false;
 				}
 				else
 				{
-					if ((input.equalsIgnoreCase("a")&&map[human[0]][human[1]].isWest())) 
+					if ((input.equalsIgnoreCase("a")&&map[type[0]][type[1]].isWest())) 
 					{
 						return false;
 					}
@@ -176,12 +188,87 @@ public class StevenBackend implements DanSupport {
 				map[human[0]][human[1]-1].setType(1);
 				human[1]-=1;
 			}
+			enemyAction(false);
 		} 
 		else {
 			performAction(direction);
 		}
 	}
 	
+	public void enemyAction(boolean type) {
+		if(type) {
+			
+		}else {
+			int direction=(int)(Math.random()*4);
+			String input="wdsa".substring(direction,direction+1);
+			for(int[] a:enemyPosition) {
+				while(!checkWalls(input,a)||checkHuman(direction,a)||checkEnemyPos(direction)) {
+					System.out.println(!checkWalls(input,a)||checkHuman(direction,a)||checkEnemyPos(direction));
+					direction=(int)(Math.random()*4);
+					input="wdsa".substring(direction,direction+1);
+					System.out.println(input);
+				}
+				map[a[0]][a[1]].setType(0);
+				if(direction==0) {
+					a[0]-=1;
+				}
+				if(direction==1) {
+					a[1]+=1;
+				}
+				if(direction==2) {
+					a[0]+=1;
+				}
+				if(direction==3) {
+					a[1]-=1;
+				}
+				map[a[0]][a[1]].setType(2);
+			}
+		}
+		
+	}
+
+	public boolean checkEnemyPos(int direction) {
+		int x;
+		int y;
+		for(int[] a:enemyPosition) {
+			x=a[0];
+			y=a[1];
+			for(int[] b:enemyPosition) {
+				if(direction==0&&x--==b[0]) {
+					return true;
+				}
+				if(direction==2&&x++==b[0]) {
+					return true;
+				}
+				if(direction==3&&y++==b[1]) {
+					return true;
+				}
+				if(direction==1&&y--==b[1]) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public boolean checkHuman(int direction, int[] a) {
+		int x=a[0];
+		int y=a[1];
+		if(direction==0&&x--==human[0]) {
+			return true;
+		}
+		if(direction==2&&x++==human[0]) {
+			return true;
+		}
+		if(direction==3&&y++==human[1]) {
+			return true;
+		}
+		if(direction==1&&y--==human[1]) {
+			return true;
+		}
+		return false;
+	}
+
 	public void setFrontend(DanielFrontend x)
 	{
 		front = x;
