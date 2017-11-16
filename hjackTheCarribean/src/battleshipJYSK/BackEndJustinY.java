@@ -142,7 +142,9 @@ public class BackEndJustinY implements SunnySupporter {
 			printMap(theOpponentGameBoard);
 			processPowerUp(1);
 		*/
-		System.out.println(interpretPowerUpInput());
+		/*
+		    System.out.println(interpretPowerUpInput());
+		*/
 	}
 	
 	/**
@@ -262,8 +264,11 @@ public class BackEndJustinY implements SunnySupporter {
 		int cLevel = level;
 		int[][] possibleMoves = new int[3][2];
 		int[] randomChoice = randomCoordinates(boardSize());
+		while(thePlayerGameBoard[randomChoice[0]][randomChoice[1]].isHasBeenHit()) {
+			randomChoice = randomCoordinates(boardSize());
+		}
 		possibleMoves[0] = randomChoice;
-		while(isNear(previousMove, randomChoice)) {
+		while(isNear(previousMove, randomChoice) || thePlayerGameBoard[randomChoice[0]][randomChoice[1]].isHasBeenHit()) {
 			randomChoice = randomCoordinates(boardSize());
 		}
 		possibleMoves[1] = randomChoice;
@@ -464,8 +469,8 @@ public class BackEndJustinY implements SunnySupporter {
 	 * @return
 	 */
 	public static int boardSize() {
-		//return 5+(frontend.getCommanderLevel() - 1);
-		return 5;
+		return 5+(frontend.getCommanderLevel() - 1);
+		//return 5;
 	}
 	
 	/**
