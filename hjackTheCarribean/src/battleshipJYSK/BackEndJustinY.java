@@ -180,7 +180,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * Returns whether or not the turn of the player is to be skipped
 	 * @return
 	 */
-	public static boolean isSkipPlayerTurn() {
+	public boolean isSkipPlayerTurn() {
 		return skipPlayerTurn;
 	}
 
