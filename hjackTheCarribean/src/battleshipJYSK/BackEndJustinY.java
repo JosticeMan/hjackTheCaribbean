@@ -91,15 +91,15 @@ public class BackEndJustinY implements SunnySupporter {
 	 ------------------------------------------
 	*/
 	
-	private static JustinSupporter frontend;
+	private JustinSupporter frontend;
 
 	private static JustinSunnyPlot[][] thePlayerGameBoard; //This will monitor the game board of the player
 	private static JustinSunnyPlot[][] theOpponentGameBoard; //This will monitor the game board of the AI
-	private static int[] previousMove;
-	private static boolean skipCommanderTurn;
-	private static boolean skipPlayerTurn;
+	private int[] previousMove;
+	private boolean skipCommanderTurn;
+	private boolean skipPlayerTurn;
 	
-	private static String[] cSkipD;
+	private String[] cSkipD;
 	
 	public static final int NORTH = 0;
 	public static final int EAST = 1;
@@ -189,7 +189,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * @param skipPlayerTurn
 	 */
 	public void setSkipPlayerTurn(boolean skipPlayerTurn) {
-		BackEndJustinY.skipPlayerTurn = skipPlayerTurn;
+		this.skipPlayerTurn = skipPlayerTurn;
 	}
 
 	/**
@@ -245,7 +245,7 @@ public class BackEndJustinY implements SunnySupporter {
 	/**
 	 * Return the dialogue associated with skipping the turn
 	 */
-	public static void printCommanderSkipTurn() {
+	public void printCommanderSkipTurn() {
 		CaveExplorer.print(cSkipD[frontend.getCommanderLevel() - 1]);
 	}
 	
