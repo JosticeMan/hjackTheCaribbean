@@ -82,7 +82,7 @@ public class KevinFrontend implements AndrewSupport {
 	}
 	
 	private void respondToInput(String input) {
-		// TODO Auto-generated method stub
+		backend.processInput(input);
 		
 	}
 	@Override
