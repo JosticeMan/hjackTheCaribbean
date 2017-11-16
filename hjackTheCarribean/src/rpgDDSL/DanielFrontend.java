@@ -50,7 +50,6 @@ public class DanielFrontend implements StevenSupport{
 	
 	public void updateMap() {
 		map = " ";
-		
 		for (int i = 0; i < backend.getMap().length; i++)
 		{
 			if (i != 0 || i == backend.getMap().length - 1)
@@ -72,23 +71,24 @@ public class DanielFrontend implements StevenSupport{
 					{
 						if (i == backend.getMap().length - 1 && j != backend.getMap()[0].length - 1)
 						{
-							map += backend.getMap()[i][j].toString() + "__";
+							map += backend.getMap()[i][j].toString() + "___";
 						}
 						if (i == 0 && j != backend.getMap()[0].length - 1)
 						{
-							map += backend.getMap()[i][j].toString() + "__";
+							map += backend.getMap()[i][j].toString() + "¯¯¯";
 						}
-					//	map += backend.getMap()[i][j].toString() + "__";
 					}
 					else
 					{
-						map += backend.getMap()[i][j].toString() + "  ";
+						map += backend.getMap()[i][j].toString() + "   ";
 					}
 				}
 			}
 			
 			map += "\n";
 		}
+		
+		backend.getMap()[2][2].setEast(true);
 		System.out.println(map);
 	}
 	
