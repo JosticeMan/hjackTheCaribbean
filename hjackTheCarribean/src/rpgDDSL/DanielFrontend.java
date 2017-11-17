@@ -56,7 +56,12 @@ public class DanielFrontend implements StevenSupport{
 		{
 			if (humanY+1 < backend.getMap().length && humanX + 1 < backend.getMap()[0].length)
 			{	
-				
+				/* field of view is 
+				 * 		0		1		
+				 *1     view	view
+				 *2 	PLAYER	view
+				 *3		view	view
+				 */		
 				if (humanX-1 > 0)
 				{
 					backend.getMap()[humanX-1][humanY].setType(3); 
@@ -65,13 +70,34 @@ public class DanielFrontend implements StevenSupport{
 					backend.getMap()[humanX][humanY+1].setType(3);
 					backend.getMap()[humanX-1][humanY+1].setType(3);
 				}
-	
-			/*	
-				backend.getMap()[0][humanY+1].setType(3); 
-				backend.getMap()[0][humanY].setType(3);
-				backend.getMap()[humanX+1][humanY+1].setType(3);
-				backend.getMap()[humanX+1][1].setType(3);
-			*/
+				else
+				{	
+					/* Player on starting square (0,0)
+					* field of view is 
+					* 		0		1		
+					*1      PLAYER	view
+					*2 		view	view
+					*3		NONE	NONE
+					*/						
+					if (humanX == 0)
+					{
+						
+					}
+					else
+					{
+						/* Player on bottom square (x,7)
+						* field of view is 
+						* 		0		1		
+						*5      NONE	NONE
+						*6 		view	view
+						*7		PLAYER	view 
+						*/	
+						if (humanY == backend.getMap().length - 1)
+						{
+							
+						}
+					}
+				}
 			}
 			else
 			{
@@ -79,7 +105,7 @@ public class DanielFrontend implements StevenSupport{
 			}
 		}
 
-		
+		//REMEMBER TO RESTORE X's
 		
 	}
 	public void updateMap() {
