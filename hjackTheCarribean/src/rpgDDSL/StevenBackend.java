@@ -197,50 +197,54 @@ public class StevenBackend implements DanSupport {
 		}else {
 			int direction=(int)(Math.random()*4);
 			String input="wdsa".substring(direction,direction+1);
-			for(int[] a:enemyPosition) {
-				while(!checkWalls(input,a)||checkHuman(direction,a)) {
+			for(int i=0;i<enemyPosition.length;i++) {
+				int breaker=100;
+				while(!checkWalls(input,enemyPosition[i])||checkHuman(direction,enemyPosition[i])||checkEnemyPos(direction,i)) {
 					direction=(int)(Math.random()*4);
 					input="wdsa".substring(direction,direction+1);
 					System.out.println(input);
+					breaker--;
+					if(breaker==0)break;
 				}
 				if(direction==0) {
-					a[0]-=1;
+					enemyPosition[i][0]-=1;
 				}
 				if(direction==1) {
-					a[1]+=1;
+					enemyPosition[i][1]+=1;
 				}
 				if(direction==2) {
-					a[0]+=1;
+					enemyPosition[i][0]+=1;
 				}
 				if(direction==3) {
-					a[1]-=1;
+					enemyPosition[i][1]-=1;
 				}
 			}
 		}
 		
 	}
 
-	public boolean checkEnemyPos(int direction) {
+	public boolean checkEnemyPos(int direction,int idx) {
 		int x;
 		int y;
-		for(int[] a:enemyPosition) {
-			x=a[0];
-			y=a[1];
-			for(int[] b:enemyPosition) {
-				if(direction==0&&x--==b[0]) {
+		for(int i=0;i<enemyPosition.length;i++) {
+			x=enemyPosition[i][0];
+			y=enemyPosition[i][1];
+			if(i!=idx) {
+				if(direction==0&&x--==enemyPosition[i][0]) {
 					return true;
 				}
-				if(direction==2&&x++==b[0]) {
+				if(direction==2&&x++==enemyPosition[i][0]) {
 					return true;
 				}
-				if(direction==3&&y++==b[1]) {
+				if(direction==3&&y++==enemyPosition[i][1]) {
 					return true;
 				}
-				if(direction==1&&y--==b[1]) {
+				if(direction==1&&y--==enemyPosition[i][1]) {
 					return true;
 				}
 			}
 		}
+		
 		return false;
 	}
 
