@@ -198,48 +198,58 @@ public class StevenBackend implements DanSupport {
 			int direction=(int)(Math.random()*4);
 			String input="wdsa".substring(direction,direction+1);
 			for(int i=0;i<enemyPosition.length;i++) {
-				int breaker=100;
+				/*int breaker=100;
 				while(!checkWalls(input,enemyPosition[i])||checkHuman(direction,enemyPosition[i])||checkEnemyPos(direction,i)) {
 					direction=(int)(Math.random()*4);
 					input="wdsa".substring(direction,direction+1);
-					System.out.println(input);
 					breaker--;
-					if(breaker==0)break;
-				}
-				if(direction==0) {
-					enemyPosition[i][0]-=1;
-				}
-				if(direction==1) {
-					enemyPosition[i][1]+=1;
-				}
-				if(direction==2) {
-					enemyPosition[i][0]+=1;
-				}
-				if(direction==3) {
-					enemyPosition[i][1]-=1;
-				}
+					System.out.println(breaker);
+					if(breaker==0) {
+						direction=4;
+						break;
+					}
+				}*/
+				direction=(int)(Math.random()*4);
+				input="wdsa".substring(direction,direction+1);
+				if(checkWalls(input,enemyPosition[i])||!checkHuman(direction,enemyPosition[i])||!checkEnemyPos(direction,i)){
+					if(direction==0) {
+						enemyPosition[i][0]-=1;
+					}
+					if(direction==1) {
+						enemyPosition[i][1]+=1;
+					}
+					if(direction==2) {
+						enemyPosition[i][0]+=1;
+					}
+					if(direction==3) {
+						enemyPosition[i][1]-=1;
+					}
 			}
 		}
-		
+		}
 	}
-
+//
 	public boolean checkEnemyPos(int direction,int idx) {
 		int x;
 		int y;
 		for(int i=0;i<enemyPosition.length;i++) {
 			x=enemyPosition[i][0];
 			y=enemyPosition[i][1];
+			int x1=x--;
+			int x2=x++;
+			int y1=y--;
+			int y2=y++;
 			if(i!=idx) {
-				if(direction==0&&x--==enemyPosition[i][0]) {
+				if(direction==0&&x1==enemyPosition[i][0]) {
 					return true;
 				}
-				if(direction==2&&x++==enemyPosition[i][0]) {
+				if(direction==2&&x2==enemyPosition[i][0]) {
 					return true;
 				}
-				if(direction==3&&y++==enemyPosition[i][1]) {
+				if(direction==3&&y2==enemyPosition[i][1]) {
 					return true;
 				}
-				if(direction==1&&y--==enemyPosition[i][1]) {
+				if(direction==1&&y1==enemyPosition[i][1]) {
 					return true;
 				}
 			}
@@ -251,16 +261,20 @@ public class StevenBackend implements DanSupport {
 	public boolean checkHuman(int direction, int[] a) {
 		int x=a[0];
 		int y=a[1];
-		if(direction==0&&x--==human[0]) {
+		int x1=x--;
+		int x2=x++;
+		int y1=y--;
+		int y2=y++;
+		if(direction==0&&x1==human[0]) {
 			return true;
 		}
-		if(direction==2&&x++==human[0]) {
+		if(direction==2&&x2==human[0]) {
 			return true;
 		}
-		if(direction==3&&y++==human[1]) {
+		if(direction==3&&y2==human[1]) {
 			return true;
 		}
-		if(direction==1&&y--==human[1]) {
+		if(direction==1&&y1==human[1]) {
 			return true;
 		}
 		return false;
