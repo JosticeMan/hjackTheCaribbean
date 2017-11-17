@@ -61,7 +61,7 @@ public class RPGRoom {
 	{
 		if (type == 0)
 		{
-			return " ";
+			return "X";
 		}
 		else
 		{
@@ -71,7 +71,14 @@ public class RPGRoom {
 			}
 			else
 			{
-				return "E";
+				if (type == 2)
+				{
+					return "E";
+				}
+				else
+				{
+					return " ";
+				}
 			}
 		}
 	}
