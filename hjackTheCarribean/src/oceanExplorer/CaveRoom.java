@@ -44,14 +44,18 @@ public class CaveRoom {
 		for(int i = NORTH; i < WEST + 1; i++) {
 			if(doors[i] != null) {
 				doorFound = true;
-				directions += "\n   There is a " + doors[i].getDescription() + " to " + toDirection(i) + ". " + doors[i].getDetails();
+				directions += "\nShipmate: I see the ocean is " + doors[i].getDescription() + " to " + toDirection(i) + ". " + doors[i].getDetails();
 			}
 		}
 		if(!doorFound) {
 			directions = "There are no doors in your room. You're trapped";
 		}
 	}
-
+	
+	public void setDirection(String directions) {
+		this.directions = directions;
+	}
+	
 	/**
 	 * Converts an int to a direction
 	 *    toDirection(0) -> "the North"
@@ -132,12 +136,19 @@ public class CaveRoom {
 				CaveExplorer.currentRoom.enter();
 				CaveExplorer.inventory.updateMap();
 			}
+			else {
+				nothingCanBeDone();
+			}
 		} 
 		else {
 			performAction(direction);
 		}
 	} 
 
+	
+	public void nothingCanBeDone() {
+		
+	}
 	
 	public int manageCurrentRoomShift(int direction) {
 		return direction;
@@ -156,7 +167,7 @@ public class CaveRoom {
 	 * This will be where your group sets up all the caves
 	 * and all the connections
 	 */
-	public static void setUpCaves() {
+	public static void setUpCaves(int level) {
 		//ALL OF THIS CODE CAN BE CHANGED
 		//1. Decide how big your caves should be
 		CaveExplorer.caves = new CaveRoom[5][5];
@@ -166,11 +177,11 @@ public class CaveRoom {
 			for(int col = 0; col < CaveExplorer.caves[row].length; col++) {
 				//create a "default" cave
 				CaveExplorer.caves[row][col] = 
-						new CaveRoom("This cave has coords ("+row+","+col+")");
+						new CaveRoom("Your compass tells you that you are located in coords ("+row+","+col+")");
 			}
 		}
 		//Steven room goes here
-		CaveExplorer.caves[1][2]=new StevenRoom("There is nothing here.");
+		//CaveExplorer.caves[1][2]=new StevenRoom("There is nothing here.");
 		CaveExplorer.caves[0][1].setConnection(EAST,CaveExplorer.caves[0][2],new Door());
 		CaveExplorer.caves[0][2].setConnection(SOUTH,CaveExplorer.caves[1][2],new Door());
 		//end
@@ -199,14 +210,14 @@ public class CaveRoom {
 			
 		//end
 		//Sunny's Room
-		CaveRoom sRoom = new SunnyRoom("This is Sunny's room");
+		CaveRoom sRoom = new SunnyRoom("You have reached the corner edge of the ocean.");
 		CaveExplorer.caves[4][4] = sRoom;
 		CaveExplorer.caves[4][4].setConnection(WEST, CaveExplorer.caves[4][3], new Door());
 		CaveExplorer.caves[4][3].setConnection(NORTH, CaveExplorer.caves[3][3], new Door());
 		CaveExplorer.caves[3][3].setConnection(NORTH, CaveExplorer.caves[2][3], new Door());
 		//end
 		//Justin's Room (This will be the room for boss fights)
-		CaveRoom jRoom = new JustinBossRoom("Announcer: You've entered the territory of a commander! The commander is coming soon. Prepare to play a game of battleship or run!", 1);
+		CaveRoom jRoom = new JustinBossRoom("Captain Duran: You've entered the territory of a commander! The commander is coming soon. Prepare to play a game of battleship or run!", level);
 		CaveExplorer.caves[2][4] = jRoom;
 
 
@@ -217,6 +228,12 @@ public class CaveRoom {
 		CaveExplorer.caves[2][3].setConnection(EAST,CaveExplorer.caves[2][4],new Door());
 
 		//end
+		//Justin's 2nd Room 
+		CaveRoom j2Room = new JustinFogRoom("This area is populated by dense fog. You can barely see.", 1);
+		CaveExplorer.caves[2][0] = j2Room;
+		
+		CaveExplorer.caves[1][0].setConnection(SOUTH, CaveExplorer.caves[2][0], new Door());
+		
 		//4. Set your starting room:
 		CaveExplorer.currentRoom = CaveExplorer.caves[0][1];
 		CaveExplorer.currentRoom.enter();

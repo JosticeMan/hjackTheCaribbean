@@ -2,7 +2,7 @@ package oceanExplorer;
 
 public class JustinBossRoom extends CaveRoom {
 
-	private JustinSunnyCommander currentCommander;
+	private JustinCommander currentCommander;
 	
 	public static final String[] FIRST_START = {"J", "M", "Chr", "T", "Th", "D", "Fr"};
 	public static final String[] FIRST_MIDDLE = {"usti", "ist", "oma", "o", "e", "or", "aphin"};
@@ -12,7 +12,7 @@ public class JustinBossRoom extends CaveRoom {
 	
 	public JustinBossRoom(String description, int level) {
 		super(description); //This manages the description
-		currentCommander = new JustinSunnyCommander(randomFirstName(level), level);
+		currentCommander = new JustinCommander(randomFirstName(level), level);
 	}
 	
 	public static String randomFirstName(int level) {
@@ -42,7 +42,7 @@ public class JustinBossRoom extends CaveRoom {
 		if(direction == 4) {
 		    currentCommander.interact();
 		} else {
-			System.out.println("Random Sailor: Are you really that afraid!? What are you pressing?");
+			System.out.println("Shipmate: Are you really that afraid!? What are you pressing?");
 		}
 	}
 	
