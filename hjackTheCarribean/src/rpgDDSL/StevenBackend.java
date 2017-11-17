@@ -24,7 +24,7 @@ public class StevenBackend implements DanSupport {
 		this.num=num;
 		makeMap();
 	}
-	
+	//
 	public void makeMap()
 	{
 		for (int i = 0; i < map.length; i++)
