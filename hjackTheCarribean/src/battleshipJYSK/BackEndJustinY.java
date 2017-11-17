@@ -545,6 +545,10 @@ public class BackEndJustinY implements SunnySupporter {
 					CaveExplorer.print("Captain Duran: You can also type 'radar', 'missile', and 'storm' to activate a powerup!");
 				}
 				input = CaveExplorer.in.nextLine();
+				if(determineType(input) != -1 && frontend.isPlaying()) {
+					int[] jtemp = {determineType(input) * -1, determineType(input) * -1};
+					return jtemp;
+				}
 				coords = toCoords(input);
 			}
 			return coords;
