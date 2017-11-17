@@ -48,11 +48,11 @@ public class AndrewKevinTile {
 	}
 
 	public String getContent() {
-		if(staticOccupant == PLAYER) {
+		if(nonStaticOccupant == PLAYER) {
 			return "P";
-		}else if(staticOccupant == MONKEY) {
+		}else if(nonStaticOccupant == MONKEY) {
 			return "M";
-		}else if(nonStaticOccupant == ROCK) {
+		}else if(staticOccupant == ROCK) {
 			return "R";
 		}
 		return " ";

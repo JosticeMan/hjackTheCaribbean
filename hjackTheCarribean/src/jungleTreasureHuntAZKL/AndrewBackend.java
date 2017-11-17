@@ -164,7 +164,7 @@ public class AndrewBackend implements KevinSupport{
 		playerPos[ROW] = row;
 		playerPos[COL] = col;
 		
-		map[row][col].setStaticOccupant(1);
+		map[row][col].setNonStaticOccupant(1);
 	}
 	
 	/*---- KEVINSUPPORT METHODS ----*/
@@ -226,8 +226,6 @@ public class AndrewBackend implements KevinSupport{
 	 * @param direction
 	 */
 	public void attemptPlayerMove(int direction) {
-		//checks if tile is within the map borders(which are made of rocks)
-		
 		int[] attemptedTile = getDirectedCoordinates(direction);
 		int into = checkTile(attemptedTile[0],attemptedTile[1]);
 		
@@ -244,7 +242,7 @@ public class AndrewBackend implements KevinSupport{
 			if(into == FORAGE) { //walks into forage and forage gets removed
 			setPlayerPos(attemptedTile[0], attemptedTile[1]);
 			stepCount--;
-			map[attemptedTile[0]][attemptedTile[1]].setStaticOccupant(0);
+			map[attemptedTile[0]][attemptedTile[1]].setNonStaticOccupant(0);
 		}else 
 			if(into == TREASURE) {
 			//player wins
@@ -260,6 +258,7 @@ public class AndrewBackend implements KevinSupport{
 	}
 	/**
 	 * Gets coordinates in a direction from player
+	 * Processes the 
 	 */
 	public int[] getDirectedCoordinates(int direction) {
 		int[] returnInt = new int[2];
@@ -274,8 +273,10 @@ public class AndrewBackend implements KevinSupport{
 		}else if(direction == LEFT && col > 0) {
 			col-=1;
 		}
-		returnInt[0] = row;
-		returnInt[1] = col;
+		if(withinMap(row,col)) {
+			returnInt[0] = row;
+			returnInt[1] = col;
+		}
 		return returnInt;
 	}
 	/**
