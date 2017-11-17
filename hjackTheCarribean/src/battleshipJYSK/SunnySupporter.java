@@ -14,8 +14,6 @@ public interface SunnySupporter {
 	 */
 	JustinSunnyPlot[][] getCommanderPlots();
 	
-	boolean isShipOccupied();
-	
 	boolean tryShipPlacement(int row, int col, int direction, int shipLength, JustinSunnyPlot[][] playerBoard);
 	
 	int lengthOfShip(Ship e);
