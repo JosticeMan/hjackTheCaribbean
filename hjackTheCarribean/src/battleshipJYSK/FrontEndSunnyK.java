@@ -18,6 +18,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 	
 	private JustinSunnyPlot[][] playerPlots;
     private JustinSunnyPlot[][] commanderPlots;
+    private String[][] quotes = {{"French Quote 1", "French Quote 2"},{"Spanish Quote 1", "Spanish Quote 2"},{"British Quote 1", "British Quote 2"}};
 
     /*
 	public static final void main(String[] args)
@@ -72,7 +73,8 @@ public class FrontEndSunnyK implements JustinSupporter {
 		}
 	}
 	
-	public void startGame() {
+	public void startGame() 
+	{
 		CaveExplorer.pause(500);
 		//Shows empty maps
 		//displayBothMaps();
@@ -86,7 +88,8 @@ public class FrontEndSunnyK implements JustinSupporter {
 		backend.commanderPlaceShip(ships);
 		playing = true;
 		determineFirstTurn();
-		if(isPlayerTurn) {
+		if(isPlayerTurn) 
+		{
 			//displayBothMaps();
 			backend.printMap(playerPlots);
 			System.out.println();
@@ -97,14 +100,16 @@ public class FrontEndSunnyK implements JustinSupporter {
 			{
 				playing = false;
 			}
-			else {
+			else 
+			{
 				CaveExplorer.pause(500);
 				commanderMakesMove();
 				if(isGameOver())
 				{
 					playing = false;
 				}
-				else {
+				else 
+				{
 					CaveExplorer.pause(500);
 					backend.printMap(playerPlots);
 					System.out.println();
@@ -124,7 +129,8 @@ public class FrontEndSunnyK implements JustinSupporter {
 						{
 							playing = false;
 						}
-						else {
+						else 
+						{
 								//the Commander makes the first move
 							CaveExplorer.pause(500);
 							commanderMakesMove();
@@ -142,7 +148,8 @@ public class FrontEndSunnyK implements JustinSupporter {
 				}
 			}
 		}
-		else {
+		else 
+		{
 			//displayBothMaps();
 			CaveExplorer.pause(500);
 			System.out.println("Captain Duran: " + commanderName + " is making the first move!");
@@ -152,7 +159,8 @@ public class FrontEndSunnyK implements JustinSupporter {
 			{
 				playing = false;
 			}
-			else {
+			else 
+			{
 				CaveExplorer.pause(500);
 				backend.printMap(playerPlots);
 				System.out.println();
@@ -163,12 +171,14 @@ public class FrontEndSunnyK implements JustinSupporter {
 				{
 					playing = false;
 				}
-				else {
+				else 
+				{
 					CaveExplorer.pause(500);
 					backend.printMap(playerPlots);
 					System.out.println();
 					backend.printMap(commanderPlots);
-					while(playing) 		{
+					while(playing)
+					{
 							//updates map each time
 						//displayBothMaps();
 							//the Commander makes the first move
@@ -178,7 +188,8 @@ public class FrontEndSunnyK implements JustinSupporter {
 						{
 							playing = false;
 						}
-						else {
+						else 
+						{
 							CaveExplorer.pause(500);
 							backend.printMap(playerPlots);
 							System.out.println();
@@ -190,7 +201,8 @@ public class FrontEndSunnyK implements JustinSupporter {
 							{
 								playing = false;
 							}
-							else {
+							else 
+							{
 								CaveExplorer.pause(500);
 								backend.printMap(playerPlots);
 								System.out.println();
@@ -207,10 +219,12 @@ public class FrontEndSunnyK implements JustinSupporter {
 	
 	public void commanderMakesMove() {
 		int[] coords = backend.commanderMove(commanderLevel);
-		if(coords[0] != -1 && coords[1] != -1) {
+		if(coords[0] != -1 && coords[1] != -1) 
+		{
 			backend.hit(coords[0], coords[1], playerPlots);
 			String dia = commanderName + " did not manage to hit your ship! Argh!";
-			if(backend.playerHitShip(coords[0], coords[1], playerPlots)) {
+			if(backend.playerHitShip(coords[0], coords[1], playerPlots)) 
+			{
 				dia = commanderName + " hit a part of one of your ships!";
 			}
 			System.out.println("Captain Duran: " + commanderName + " has decided to hit " + coords[0] + " , " + coords[1] + "! " + dia);
@@ -226,7 +240,10 @@ public class FrontEndSunnyK implements JustinSupporter {
 	public void displayBoard(JustinSunnyPlot[][] plots)
 	{
 		int numRows = backend.boardSize();
-		System.out.print("~ ~ Your Board ~ ~\n");
+		if(plots == playerPlots)
+			System.out.print("~ ~ Your Board ~ ~\n");
+		if(plots == commanderPlots)
+			System.out.print("~ Commander Board ~\n");
 		for(int row = 0; row < numRows; row++)
 		{
 			System.out.print(row + " ");
@@ -243,6 +260,12 @@ public class FrontEndSunnyK implements JustinSupporter {
 		}
 		System.out.print("\n");
 	}
+	
+	public void printHitMessage()
+	{
+		CaveExplorer.print(CaveExplorer.randomString(quotes[commanderLevel]));
+	}
+	
 	
 	public void askCoordsForShips()
 	{	
@@ -285,7 +308,8 @@ public class FrontEndSunnyK implements JustinSupporter {
 	{
 		boolean usedPowerup = false;
 		int[] coords = {-10, -10};
-		if(backend.isSkipPlayerTurn()) {
+		if(backend.isSkipPlayerTurn()) 
+		{
 			backend.setSkipPlayerTurn(false);
 			coords = backend.randomShipHit();
 			backend.hit(coords[0], coords[1], backend.getCommanderPlots());
@@ -293,33 +317,41 @@ public class FrontEndSunnyK implements JustinSupporter {
 		else {
 			System.out.println("Shipmate: Where would you like to fire?");
 			coords = backend.getCoordInput();
-			if(coords[0] < 0 && coords[1] < 0) {
+			if(coords[0] < 0 && coords[1] < 0) 
+			{
 				int type = coords[0] * -1;
-				if(backend.hasPowerUp(type)) {
+				if(backend.hasPowerUp(type)) 
+				{
 					backend.decrementPowerUp(type);
 					backend.processPowerUp(type);
 					usedPowerup = true;
-					if(backend.isCommanderSkip()) {
+					if(backend.isCommanderSkip()) 
+					{
 						askCoordsToFire();
 					}
 				}
-				else {
+				else 
+				{
 					System.out.println("Shipmate: You do not have any more of that power up!");
 					askCoordsToFire();
 				}
 			}
-			else {
-				while(!(backend.hit(coords[0], coords[1], backend.getCommanderPlots()))) {
+			else 
+			{
+				while(!(backend.hit(coords[0], coords[1], backend.getCommanderPlots()))) 
+				{
 					System.out.println("Shipmate: That spot has already been struck or is out of the battlefield!");
 					System.out.println("Shipmate: Where would you like to fire?");
 					coords = backend.getCoordInput();
 				}	
 			}	
 		}
-		if(!(usedPowerup)) {
+		if(!(usedPowerup)) 
+		{
 			String j = "You did not hit a ship.";
 			updateMaps();
-			if(backend.playerHitShip(coords[0], coords[1], commanderPlots)) {
+			if(backend.playerHitShip(coords[0], coords[1], commanderPlots)) 
+			{
 				j = "You hit a ship!";
 			}
 			System.out.println("Shipmate: Bomb ahoy! You striked " + coords[0] + "," + coords[1] + "! " + j);
