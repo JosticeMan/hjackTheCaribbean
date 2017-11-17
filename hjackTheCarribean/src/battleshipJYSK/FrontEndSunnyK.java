@@ -42,7 +42,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 						   {"Spain will sink your ship before you sink ours! Too bad for you, " + userName + ".", "Not one of my ships! I will get you for this!"},
 						   {"Oh " + userName + ", One ship hit is no big deal to the great british!", "The men aboard that ship have died gloriously."}};
 		quotes = temp;
-		String[][] temp1 = {{"It seems like you are struggling brother, " + userName + ". Better for me!", "I suggest that you surrender before I have to sink you," + userName + "."},
+		String[][] temp1 = {{"It seems like you are struggling brother, " + userName + ". Better for me!", "I suggest that you surrender before I have to sink you, " + userName + "."},
 							{"Is that, " + userName + ", struggling to hit our boats! Bueno!", "What a great day at the sea! A bad day for you, " + userName + "!"},
 							{"I am confident in our ability to sink your ships. Give up, " + userName + ".", "It appears god is on our side and not yours, " + userName + "."}};
 		quotes1 = temp1;
