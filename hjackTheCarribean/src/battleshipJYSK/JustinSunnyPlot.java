@@ -15,6 +15,9 @@ public class JustinSunnyPlot {
 	}
 
 	public String toString() {
+		if(hasBeenHit && shipOccupied) {
+			return "[G]";
+		}
 		if(hasBeenHit) {
 			return "[H]";
 		}
