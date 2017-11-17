@@ -36,7 +36,6 @@ public class StevenBackend implements DanSupport {
 			}
 		}
 		makeWalls();
-		map[0][0].setType(1);
 		human[0]=0;
 		human[1]=0;
 		
@@ -173,21 +172,16 @@ public class StevenBackend implements DanSupport {
 		//First, protect against null pointer exception
 		//(user cannot go through a non existent door)
 		if(direction < 4) {
-			map[human[0]][human[1]].setType(3);
 			if(direction==0) {
-				map[human[0]-1][human[1]].setType(1);
 				human[0]-=1;
 			}
 			if(direction==1) {
-				map[human[0]][human[1]+1].setType(1);
 				human[1]+=1;
 			}
 			if(direction==2) {
-				map[human[0]+1][human[1]].setType(1);
 				human[0]+=1;
 			}
 			if(direction==3) {
-				map[human[0]][human[1]-1].setType(1);
 				human[1]-=1;
 			}
 			enemyAction(false);
