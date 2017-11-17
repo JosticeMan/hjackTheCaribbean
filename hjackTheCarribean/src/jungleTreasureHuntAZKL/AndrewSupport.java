@@ -10,7 +10,6 @@ public interface AndrewSupport {
 	/**
 	 * 
 	 */
-	public void getStepCount();
 	
 	public void revealTreasure();
 	

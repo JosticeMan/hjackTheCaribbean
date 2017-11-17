@@ -10,5 +10,6 @@ public interface KevinSupport {
 	
 	AndrewKevinTile[][] getMap();
 
+	int getStepCount();
 
 }

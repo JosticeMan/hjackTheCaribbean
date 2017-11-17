@@ -160,13 +160,6 @@ public class AndrewBackend implements KevinSupport{
 		monkeys = new int[5][2]; //first numbers is how many monkeys, 2nd is for their coords
 	}
 	
-	public void setPlayerPos(int row, int col) {
-		playerPos[ROW] = row;
-		playerPos[COL] = col;
-		
-		map[row][col].setNonStaticOccupant(1);
-	}
-	
 	/*---- KEVINSUPPORT METHODS ----*/
 	
 	public AndrewKevinTile[][] getMap(){
@@ -215,11 +208,27 @@ public class AndrewBackend implements KevinSupport{
 			if(into == TREE || into == NOTHING) {
 				monkeys[idx][ROW] = attemptedTile[0];
 				monkeys[idx][COL] = attemptedTile[1];
+				if
 			}
 	}
-	
+	/**
+	 * Monkey attacks player if they are in the same tile
+	 * @param idx
+	 */
+	public void monkeyAttack(int idx) {
+		if(playerPos[ROW] == monkeys[idx][ROW] && playerPos[COL] == monkeys[idx][COL]) {
+			stepCount--; //monkey
+			monkey
+		}
+	}
 	/*---- PLAYER CONTROL METHODS----*/
 	
+	public void setPlayerPos(int row, int col) {
+		playerPos[ROW] = row;
+		playerPos[COL] = col;
+		
+		map[row][col].setNonStaticOccupant(1);
+	}
 	/**
 	 * Checks the tile the player is attempting to move into
 	 * and moves player into tile if there is NOTHING/TREASURE
@@ -232,20 +241,23 @@ public class AndrewBackend implements KevinSupport{
 		//!!! NEED ONE TO CHECK FOR MONKEY AND FIGURE OUT WHAT HAPPENS THEN!!!
 		
 		//checks if the tile is valid for moving into
+		//This is where events will trigger
 		if(into == NOTHING) {
 			setPlayerPos(attemptedTile[0], attemptedTile[1]);
 			stepCount--;
-		}else 
-			if(into == TREE || into == ROCK) { //cannot walk into these
-			//return fail to move towards coordinates
-		}else 
-			if(into == FORAGE) { //walks into forage and forage gets removed
-			setPlayerPos(attemptedTile[0], attemptedTile[1]);
-			stepCount--;
-			map[attemptedTile[0]][attemptedTile[1]].setNonStaticOccupant(0);
-		}else 
-			if(into == TREASURE) {
-			//player wins
+		}else {
+				monkeyMove();
+					if(into == TREE || into == ROCK) { //cannot walk into these
+						//return fail to move towards coordinates
+					}else 
+						if(into == FORAGE) { //walks into forage and forage gets removed
+						setPlayerPos(attemptedTile[0], attemptedTile[1]);
+						stepCount--;
+						map[attemptedTile[0]][attemptedTile[1]].setNonStaticOccupant(0);
+					}else 
+						if(into == TREASURE) {
+						//player wins
+					}
 		}
 	}
 	
