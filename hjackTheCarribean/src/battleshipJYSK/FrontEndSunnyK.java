@@ -281,7 +281,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 		{
 			int lengthOfCurrentShip = backend.lengthOfShip(ships[i]);
 			
-			System.out.println("Shipmate: Where would you like to position ship #"+i+" of length " + lengthOfCurrentShip +"?");
+			System.out.println("Shipmate: Where would you like to position ship #"+(i+1)+" of length " + lengthOfCurrentShip +"?");
 			int[] coords =  backend.getCoordInput();
 			
 			System.out.println("Shipmate: To thou direction would you like to place it in? Enter 'N','E','S','W'");
