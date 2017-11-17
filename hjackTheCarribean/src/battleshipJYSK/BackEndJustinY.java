@@ -353,7 +353,7 @@ public class BackEndJustinY implements SunnySupporter {
 			return false;
 		}
 		if(direction == NORTH) {
-			if(row - shipLength >= 0) {
+			if(row - (shipLength - 1) >= 0) {
 				for(int shipRow = row; shipRow > row - shipLength; shipRow--) {
 					if(!(attemptShipPlacementAtCoordinate(shipRow, col, playerBoard))) {
 						for(int sRow = row; sRow > shipRow; sRow--) {
@@ -367,7 +367,7 @@ public class BackEndJustinY implements SunnySupporter {
 			return false;
 		}
 		else if(direction == EAST) {
-			if(col + shipLength < playerBoard[0].length) {
+			if(col + (shipLength - 1) < playerBoard[0].length) {
 				for(int shipCol = col; shipCol < col + shipLength; shipCol++) {
 					if(!(attemptShipPlacementAtCoordinate(row, shipCol, playerBoard))) {
 						for(int sCol = col; sCol < shipCol; sCol++) {
@@ -381,7 +381,7 @@ public class BackEndJustinY implements SunnySupporter {
 			return false;
 		}
 		else if(direction == SOUTH) {
-			if(row + shipLength < playerBoard.length) {
+			if(row + (shipLength - 1) < playerBoard.length) {
 				for(int shipRow = row; shipRow < row + shipLength; shipRow++) {
 					if(!(attemptShipPlacementAtCoordinate(shipRow, col, playerBoard))) {
 						for(int sRow = row; sRow < shipRow; sRow++) {
@@ -395,7 +395,7 @@ public class BackEndJustinY implements SunnySupporter {
 			return false;
 		}
 		else if(direction == WEST) {
-			if(col - shipLength >= 0) {
+			if(col - (shipLength - 1) >= 0) {
 				for(int shipCol = col; shipCol > col - shipLength; shipCol--) {
 					if(!(attemptShipPlacementAtCoordinate(row, shipCol, playerBoard))) {
 						for(int sCol = col; sCol > shipCol; sCol--) {

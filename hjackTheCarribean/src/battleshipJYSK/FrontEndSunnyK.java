@@ -244,17 +244,17 @@ public class FrontEndSunnyK implements JustinSupporter {
 		
 		for(int i = 0; i < backend.numberOfShips(); i++)
 		{
-			System.out.println("Shipmate: Where would you like to position ship #"+i+"?");
+			int lengthOfCurrentShip = backend.lengthOfShip(ships[i]);
+			
+			System.out.println("Shipmate: Where would you like to position ship #"+i+" of length " + lengthOfCurrentShip +"?");
 			int[] coords =  backend.getCoordInput();
 			
 			System.out.println("Shipmate: To thou direction would you like to place it in? Enter 'N','E','S','W'");
 			int direction = backend.interpretDirectionInput();
 			
-			int lengthOfCurrentShip = backend.lengthOfShip(ships[i]);
-			
 			while(!backend.tryShipPlacement(coords[0], coords[1], direction, lengthOfCurrentShip, playerPlots))
 			{
-				System.out.println("Shipmate: Your input was either already taken or out of the battlefield! Where would you like to place ship #"+i+"?");
+				System.out.println("Shipmate: Your input was either already taken by another ship or out of the battlefield! Where would you like to place ship #"+i+"?");
 				coords =  backend.getCoordInput();
 				
 				System.out.println("Shipmate: To which direction would you like to place it in? Enter 'N','E','S','W'");
@@ -262,6 +262,8 @@ public class FrontEndSunnyK implements JustinSupporter {
 			}
 			System.out.println("Shipmate: Ho-ah! The ship has been succesfully placed.");
 			updateMaps();
+			backend.printMap(playerPlots);
+			System.out.println();
 		}
 	}
 	
