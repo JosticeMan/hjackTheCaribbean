@@ -231,6 +231,7 @@ public class AndrewBackend implements KevinSupport{
 			}
 		}
 	}
+	
 	/*---- PLAYER CONTROL METHODS----*/
 	
 	public void setPlayerPos(int row, int col) {
@@ -256,7 +257,7 @@ public class AndrewBackend implements KevinSupport{
 			setPlayerPos(attemptedTile[0], attemptedTile[1]);
 			stepCount--;
 		}else {
-				monkeyMove();
+				allMonkeyMove();
 					if(into == TREE || into == ROCK) { //cannot walk into these
 						//return fail to move towards coordinates
 					}else 
@@ -320,9 +321,6 @@ public class AndrewBackend implements KevinSupport{
 		return map[row][col].getStaticOccupant();
 	}
 	
-	public void monkeyMoves() {
-	}
-	
 	/*---- INPUT PROCESSING METHODS ----*/
 	
 	/**
@@ -376,5 +374,15 @@ public class AndrewBackend implements KevinSupport{
 		return false;
 	}
 	
+	/*---- EVENT METHODS ----*/
+	//monkey takes player steps
+	//player gets to treasure
+	//player gets into a new tile with nothing happening
+	
+	/*---- GENERATE MAP METHODS ----*/
+	
+	public void createMapRockBorder() {
+		
+	}
 	
 }
