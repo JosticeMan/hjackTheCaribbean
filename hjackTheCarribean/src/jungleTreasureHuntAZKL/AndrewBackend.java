@@ -98,20 +98,15 @@ public class AndrewBackend implements KevinSupport{
 	
 	private AndrewKevinTile[][] map;
 	
-	//private int[][] map;
-	
 	//all objects in the game only need the position or 
 	//everything is created through the class AndrewKevinTile
 	//ROW, COL
 	private int[] playerPos;
 	private int stepCount;
 	
+	private int[][] monkeys;
 	
-	private int[][] treasurePos;
-	
-	/*private int[][] trees;
-	private int[][] rocks;
-	private int[][] forage;*/
+	private int[] treasurePos;
 	
 	/*------CONSTANTS--------*/
 	public static final int ROW = 0;
@@ -137,26 +132,32 @@ public class AndrewBackend implements KevinSupport{
 	public AndrewBackend(AndrewSupport frontend) {
 		this.frontend = frontend;
 		
+		//creates map and populates with a bunch of tiles
 		map = new  AndrewKevinTile[12][12];
 		for(int row = 0; row < map.length; row++) {
 			for(int col = 0; col < map[row].length; col++) {
 				map[row][col] = new AndrewKevinTile(row, col);
 			}
 		}
+		
+		//creates the boundary of rocks to keep player within map **Will leave on slot open if player just wants to leave**
 			for(int col = 0; col < map[0].length; col++) {
 				map[0][col].setNonStaticOccupant(ROCK);;
 			}
 			for(int col = 0; col < map[map.length-1].length; col++) {
 				map[map.length-1][col].setNonStaticOccupant(ROCK);;
 			}
+			
 		//stepCount is based off the size of the map, for now it'll be 10
 		stepCount = 10;
+		
+		//creates and sets player starting position
 		int[] a = new int[2];
 		playerPos = a;
 		setPlayerPos(map.length-2, 1); //player position will be randomly generated along the border
 
-		System.out.println(playerPos[ROW]);
-		//map = new int[7][12];
+		//creates and sets monkeys and their positions
+		monkeys = new int[5][2]; //first numbers is how many monkeys, 2nd is for their coords
 	}
 	
 	public void setPlayerPos(int row, int col) {
@@ -184,6 +185,39 @@ public class AndrewBackend implements KevinSupport{
 		return null;
 	}
 
+	/*---- MONKEY METHODS ----*/
+	
+	public void setSpecificMonkeyPos(int idx, int row, int col) {
+		monkeys[idx][ROW] = row;
+		monkeys[idx][COL] = col;
+		map[row][col].setNonStaticOccupant(2); 
+	}
+	
+	public int[] getSpecificMonkeyPos(int idx) {
+		return monkeys[idx];
+	}
+	/**
+	 * All monkeys move in a random direction
+	 */
+	public void monkeyMove() {
+		for(int i = 0; i < monkeys.length; i++) {
+			int randomDir = (int)(Math.random()*4);
+			attemptMonkeyMove(i, randomDir);
+		}
+	}
+	
+	public void attemptMonkeyMove(int idx, int dir) {
+		int[] attemptedTile = getDirectedCoordinates(dir);
+		int into = checkTile(attemptedTile[0],attemptedTile[1]);
+		if(into == ROCK) {
+			
+		}else
+			if(into == TREE || into == NOTHING) {
+				monkeys[idx][ROW] = attemptedTile[0];
+				monkeys[idx][COL] = attemptedTile[1];
+			}
+	}
+	
 	/*---- PLAYER CONTROL METHODS----*/
 	
 	/**
@@ -192,41 +226,69 @@ public class AndrewBackend implements KevinSupport{
 	 * @param direction
 	 */
 	public void attemptPlayerMove(int direction) {
-		int row1 = playerPos[ROW];
-		int col1 = playerPos[COL];
-		if(direction == UP && row1 > 1) {
-			row1--;
-		}else if(direction == RIGHT && col1 < map[row1].length-2) {
-			col1++;
-		}else if(direction == DOWN && row1 < map.length-2) {
-			row1+=1;
-		}else if(direction == LEFT && col1 > 1) {
-			col1-=1;
-		}
+		//checks if tile is within the map borders(which are made of rocks)
 		
-		int into = checkTile(row1,col1);
+		int[] attemptedTile = getDirectedCoordinates(direction);
+		int into = checkTile(attemptedTile[0],attemptedTile[1]);
+		
+		//!!! NEED ONE TO CHECK FOR MONKEY AND FIGURE OUT WHAT HAPPENS THEN!!!
 		
 		//checks if the tile is valid for moving into
 		if(into == NOTHING) {
-			setPlayerPos(row1, col1);
+			setPlayerPos(attemptedTile[0], attemptedTile[1]);
 			stepCount--;
-		}else if(into == TREE || into == ROCK) {
+		}else 
+			if(into == TREE || into == ROCK) { //cannot walk into these
 			//return fail to move towards coordinates
-		}else if(into == FORAGE) {
-			setPlayerPos(row1, col1);
+		}else 
+			if(into == FORAGE) { //walks into forage and forage gets removed
+			setPlayerPos(attemptedTile[0], attemptedTile[1]);
 			stepCount--;
-			map[row1][col1].setStaticOccupant(0);
-		}else if(into == TREASURE) {
+			map[attemptedTile[0]][attemptedTile[1]].setStaticOccupant(0);
+		}else 
+			if(into == TREASURE) {
 			//player wins
 		}
 	}
 	
 	public void attemptObserve(int row, int col) {
-		
+		//checks if coordinates are within vision range
+			//checks if within map bounds
+		if(withinMap(row, col)) {
+
+		}
 	}
-	
 	/**
-	 * Returns what the tile is (its staticOccupant)
+	 * Gets coordinates in a direction from player
+	 */
+	public int[] getDirectedCoordinates(int direction) {
+		int[] returnInt = new int[2];
+		int row = playerPos[ROW];
+		int col = playerPos[COL];
+		if(direction == UP && row > 0) {
+			row--;
+		}else if(direction == RIGHT && col < map[row].length-1) {
+			col++;
+		}else if(direction == DOWN && row < map.length-1) {
+			row+=1;
+		}else if(direction == LEFT && col > 0) {
+			col-=1;
+		}
+		returnInt[0] = row;
+		returnInt[1] = col;
+		return returnInt;
+	}
+	/**
+	 * Checks if coords are within map bounds
+	 * @param row
+	 * @param col
+	 * @return
+	 */
+	public boolean withinMap(int row, int col) {
+		return (row < map.length && row > -1 && col < map[row].length && col > -1);
+	}
+	/**
+	 * Returns what the tile is (for its staticOccupant)
 	 * @param row
 	 * @param col
 	 * @return
@@ -237,8 +299,15 @@ public class AndrewBackend implements KevinSupport{
 	
 	public void monkeyMoves() {
 	}
+	
 	/*---- INPUT PROCESSING METHODS ----*/
 	
+	/**
+	 * Takes input from KevinFrontend and processes it
+	 * first checks if the user wants to move in a direction
+	 * then checks if user wants to look at a coordinate
+	 * otherwise nothing will happen within the backend
+	 */
 	public void processInput(String input) {
 		if(isValidDirection(input)) {
 			String dirKeys = "wdsa";
@@ -250,7 +319,11 @@ public class AndrewBackend implements KevinSupport{
 			attemptObserve(row, col);
 		}
 	}
-	
+	/**
+	 * Checks if user inputs a valid direction (similar to isValid)
+	 * @param input
+	 * @return
+	 */
 	public boolean isValidDirection(String input) {
 		String dirKeys = "wdsa";
 		if(dirKeys.indexOf(input) > -1) {
@@ -258,7 +331,11 @@ public class AndrewBackend implements KevinSupport{
 		}
 		return false;
 	}
-	
+	/**
+	 * Checks if user inputs a valid coordinate (formatted like row,col)
+	 * @param input
+	 * @return
+	 */
 	public boolean isValidCoordinates(String input) {
 		if(input.length() == 3) {
 			if(Character.isDigit(input.charAt(0)) && Character.isDigit(input.charAt(2)) && input.substring(1,2) == ",") {
@@ -275,4 +352,6 @@ public class AndrewBackend implements KevinSupport{
 		}
 		return false;
 	}
+	
+	
 }
