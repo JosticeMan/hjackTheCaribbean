@@ -162,6 +162,10 @@ public class AndrewBackend implements KevinSupport{
 	
 	/*---- KEVINSUPPORT METHODS ----*/
 	
+	public int getStepCount() {
+		return stepCount;
+	}
+	
 	public AndrewKevinTile[][] getMap(){
 		return this.map;
 	}
@@ -192,11 +196,16 @@ public class AndrewBackend implements KevinSupport{
 	/**
 	 * All monkeys move in a random direction
 	 */
-	public void monkeyMove() {
+	public void allMonkeyMove() {
 		for(int i = 0; i < monkeys.length; i++) {
-			int randomDir = (int)(Math.random()*4);
-			attemptMonkeyMove(i, randomDir);
+			monkeyMove(i);
+			monkeyAttack(i);
 		}
+	}
+	
+	public void monkeyMove(int idx) {
+		int randomDir = (int)(Math.random()*4);
+		attemptMonkeyMove(idx, randomDir);
 	}
 	
 	public void attemptMonkeyMove(int idx, int dir) {
@@ -208,7 +217,6 @@ public class AndrewBackend implements KevinSupport{
 			if(into == TREE || into == NOTHING) {
 				monkeys[idx][ROW] = attemptedTile[0];
 				monkeys[idx][COL] = attemptedTile[1];
-				if
 			}
 	}
 	/**
@@ -217,8 +225,10 @@ public class AndrewBackend implements KevinSupport{
 	 */
 	public void monkeyAttack(int idx) {
 		if(playerPos[ROW] == monkeys[idx][ROW] && playerPos[COL] == monkeys[idx][COL]) {
-			stepCount--; //monkey
-			monkey
+			stepCount--; //monkey removes the player steps
+			for(int i = 0; i < 7; i++) { //monkey runs away
+				monkeyMove(idx);
+			}
 		}
 	}
 	/*---- PLAYER CONTROL METHODS----*/
