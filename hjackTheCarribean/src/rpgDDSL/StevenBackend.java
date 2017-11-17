@@ -18,7 +18,7 @@ public class StevenBackend implements DanSupport {
 	
 	public StevenBackend(DanielFrontend frontend,int num)
 	{
-		map = new RPGRoom[5][5];
+		map = new RPGRoom[7][7];
 		human=new int[2];
 		enemyPosition = new int[num][2];
 		this.num=num;
@@ -36,9 +36,12 @@ public class StevenBackend implements DanSupport {
 			}
 		}
 		makeWalls();
-		map[1][1].setType(1);
-		human[0]=1;
-		human[1]=1;
+		map[0][0].setType(1);
+		human[0]=0;
+		human[1]=0;
+		
+//		map[3][3].setType(2);
+		
 		spawnEnemy();
 		
 		
