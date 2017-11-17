@@ -18,7 +18,9 @@ public class FrontEndSunnyK implements JustinSupporter {
 	
 	private JustinSunnyPlot[][] playerPlots;
     private JustinSunnyPlot[][] commanderPlots;
-    private String[][] quotes = {{"French Quote 1", "French Quote 2"},{"Spanish Quote 1", "Spanish Quote 2"},{"British Quote 1", "British Quote 2"}};
+    private String[][] quotes;
+    
+    private String[][] quotes1;
 
     /*
 	public static final void main(String[] args)
@@ -33,7 +35,18 @@ public class FrontEndSunnyK implements JustinSupporter {
 		this.commanderName = name;
 		this.userName = userName;
 		backend = new BackEndJustinY(this);
-	}
+		if(this.userName.equals("")) {
+			this.userName = "Mysterious Person";
+		}
+		String[][] temp = {{"Oju! How dare you, " + userName + ", hit one of my ships!", "Some of my companions were on that boat! You need some counseling!"},
+						   {"Spain will sink your ship before you sink ours! Too bad for you, " + userName + ".", "Not one of my ships! I will get you for this!"},
+						   {"Oh " + userName + ", One ship hit is no big deal to the great british!", "The men aboard that ship have died gloriously."}};
+		quotes = temp;
+		String[][] temp1 = {{"It seems like you are struggling brother, " + userName + ". Better for me!", "I suggest that you surrender before I have to sink you," + userName + "."},
+							{"Is that, " + userName + ", struggling to hit our boats! Bueno!", "What a great day at the sea! A bad day for you, " + userName + "!"},
+							{"I am confident in our ability to sink your ships. Give up, " + userName + ".", "It appears god is on our side and not yours, " + userName + "."}};
+		quotes1 = temp1;
+	}	
 	
 	public boolean play() {
 		isWinner = false;
@@ -81,7 +94,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 		//backend.printMap(playerPlots);
 		//System.out.println();
 		//backend.printMap(commanderPlots);
-		updateBothMaps();
+		displayBoard(playerPlots);
 		//asks coordinates to place ships
 		askCoordsForShips();
 		//commander places his ship
@@ -91,9 +104,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 		if(isPlayerTurn) 
 		{
 			//displayBothMaps();
-			backend.printMap(playerPlots);
-			System.out.println();
-			backend.printMap(commanderPlots);
+			updateBothMaps();
 			CaveExplorer.pause(500);
 			askCoordsToFire();
 			if(isGameOver())
@@ -111,9 +122,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 				else 
 				{
 					CaveExplorer.pause(500);
-					backend.printMap(playerPlots);
-					System.out.println();
-					backend.printMap(commanderPlots);
+					updateBothMaps();
 					while(playing)
 					{
 							//updates map each time
@@ -122,9 +131,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 						CaveExplorer.pause(500);
 						askCoordsToFire();
 						CaveExplorer.pause(500);
-						backend.printMap(playerPlots);
-						System.out.println();
-						backend.printMap(commanderPlots);
+						updateBothMaps();
 						if(isGameOver())
 						{
 							playing = false;
@@ -139,9 +146,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 								playing = false;
 							}
 							CaveExplorer.pause(500);
-							backend.printMap(playerPlots);
-							System.out.println();
-							backend.printMap(commanderPlots);
+							updateBothMaps();
 								//checks to see if the game is over, if it is then playing = false
 						}
 					}
@@ -162,9 +167,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 			else 
 			{
 				CaveExplorer.pause(500);
-				backend.printMap(playerPlots);
-				System.out.println();
-				backend.printMap(commanderPlots);
+				updateBothMaps();
 				CaveExplorer.pause(500);
 				askCoordsToFire();
 				if(isGameOver())
@@ -174,9 +177,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 				else 
 				{
 					CaveExplorer.pause(500);
-					backend.printMap(playerPlots);
-					System.out.println();
-					backend.printMap(commanderPlots);
+					updateBothMaps();
 					while(playing)
 					{
 							//updates map each time
@@ -191,9 +192,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 						else 
 						{
 							CaveExplorer.pause(500);
-							backend.printMap(playerPlots);
-							System.out.println();
-							backend.printMap(commanderPlots);
+							updateBothMaps();
 								//asks coordinates to fire on opponent
 							CaveExplorer.pause(500);
 							askCoordsToFire();
@@ -204,9 +203,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 							else 
 							{
 								CaveExplorer.pause(500);
-								backend.printMap(playerPlots);
-								System.out.println();
-								backend.printMap(commanderPlots);
+								updateBothMaps();
 							}
 								//checks to see if the game is over, if it is then playing = false
 					    }
@@ -228,13 +225,14 @@ public class FrontEndSunnyK implements JustinSupporter {
 				dia = commanderName + " hit a part of one of your ships!";
 			}
 			System.out.println("Captain Duran: " + commanderName + " has decided to hit " + coords[0] + " , " + coords[1] + "! " + dia);
+			CaveExplorer.pause(1500);
 		}
 	}
 
 	public void updateBothMaps()
 	{
 		displayBoard(playerPlots);
-		//displayBoard(commanderPlots); 
+		displayBoard(commanderPlots); 
 	}
 	
 	public void displayBoard(JustinSunnyPlot[][] plots)
@@ -249,7 +247,12 @@ public class FrontEndSunnyK implements JustinSupporter {
 			System.out.print(row + " ");
 			for(int col = 0; col < numRows; col++)
 			{
-				System.out.print(plots[row][col]);
+				if(plots == commanderPlots) {
+					System.out.print(plots[row][col].toCommanderString());
+				}
+				else {
+					System.out.print(plots[row][col]);
+				}
 			}
 			System.out.print("\n");
 		}
@@ -261,9 +264,14 @@ public class FrontEndSunnyK implements JustinSupporter {
 		System.out.print("\n");
 	}
 	
-	public void printHitMessage()
+	public String addHitMessage()
 	{
-		CaveExplorer.print(CaveExplorer.randomString(quotes[commanderLevel]));
+		return commanderName + ": " + CaveExplorer.randomString(quotes[commanderLevel - 1]);
+	}
+	
+	public String addHitNoMessage()
+	{
+		return commanderName + ": " + CaveExplorer.randomString(quotes1[commanderLevel - 1]);
 	}
 	
 	
@@ -289,8 +297,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 			}
 			System.out.println("Shipmate: Ho-ah! The ship has been succesfully position captain!");
 			updateMaps();
-			backend.printMap(playerPlots);
-			System.out.println();
+			displayBoard(playerPlots);
 		}
 	}
 	
@@ -348,13 +355,16 @@ public class FrontEndSunnyK implements JustinSupporter {
 		}
 		if(!(usedPowerup)) 
 		{
-			String j = "You did not hit a ship.";
+			String j = "You did not hit a ship. \n";
+			j += addHitNoMessage();
 			updateMaps();
 			if(backend.playerHitShip(coords[0], coords[1], commanderPlots)) 
 			{
-				j = "You hit a ship!";
+				j = "You hit a ship! \n";
+				j += addHitMessage();
 			}
 			System.out.println("Shipmate: Bomb ahoy! You striked " + coords[0] + "," + coords[1] + "! " + j);
+			CaveExplorer.pause(1500);
 		}
 	}
 	

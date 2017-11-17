@@ -27,6 +27,16 @@ public class JustinSunnyPlot {
 		return "[ ]";
 	}
 	
+	public String toCommanderString() {
+		if(hasBeenHit && shipOccupied) {
+			return "[G]";
+		}
+		if(hasBeenHit) {
+			return "[H]";
+		}
+		return "[ ]";
+	}
+	
 	public boolean isShipOccupied() {
 		return shipOccupied;
 	}
