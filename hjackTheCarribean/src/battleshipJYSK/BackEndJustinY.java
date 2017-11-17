@@ -321,11 +321,14 @@ public class BackEndJustinY implements SunnySupporter {
 	 * @return
 	 */
 	public boolean hit(int row, int col, JustinSunnyPlot[][] playerBoard) {
-		if(playerBoard[row][col].isHasBeenHit()) {
-			return false;
+		if(isWithinBorder(row, col, playerBoard)) {
+			if(playerBoard[row][col].isHasBeenHit()) {
+				return false;
+			}
+			playerBoard[row][col].setHasBeenHit(true);
+			return true;
 		}
-		playerBoard[row][col].setHasBeenHit(true);
-		return true;
+		return false;
 	}
 	
 	/**
@@ -346,11 +349,29 @@ public class BackEndJustinY implements SunnySupporter {
 	 * @param playerBoard - The appropriate player board to place the ship on
 	 * @return
 	 */
-	public boolean isWithinBorder(int row, int col, int shipLength, int direction, JustinSunnyPlot[][] playerBoard) {
+	public boolean isWithinBorder(int row, int col, JustinSunnyPlot[][] playerBoard) {
+		for(int i = NORTH; i <= WEST; i++) {
+			if(!(isWithinBorderAtDirection(row, col, 1, i, playerBoard))) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Returns whether or not the coordinates is within the border at a given direction
+	 * @param row - Y coordinate of the Ship
+	 * @param col - X coordinate of the Ship
+	 * @param direction - Direction the user wants the ship to face
+	 * @param shipLength - Length of the Ship to be placed
+	 * @param playerBoard - The appropriate player board to place the ship on
+	 * @return
+	 */
+	public boolean isWithinBorderAtDirection(int row, int col, int shipLength, int direction, JustinSunnyPlot[][] playerBoard) {
 		boolean[] dimensions = {row - (shipLength - 1) >= 0, 
-				 				col + (shipLength - 1) < playerBoard[0].length, 
-				 				row + (shipLength - 1) < playerBoard.length,
-				 				col - (shipLength - 1) >= 0};
+ 				col + (shipLength - 1) < playerBoard[0].length, 
+ 				row + (shipLength - 1) < playerBoard.length,
+ 				col - (shipLength - 1) >= 0};
 		return dimensions[direction];
 	}
 	
