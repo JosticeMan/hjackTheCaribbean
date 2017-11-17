@@ -45,7 +45,7 @@ public class DanielFrontend implements StevenSupport{
 	}
 	public DanielFrontend()
 	{
-		backend = new StevenBackend(this, 2);
+		backend = new StevenBackend(this, 0);
 		won = false;
 	}
 	public void fogOfWar()
@@ -62,7 +62,7 @@ public class DanielFrontend implements StevenSupport{
 				 *2 	PLAYER	view
 				 *3		view	view
 				 */		
-				if (humanX-1 > 0)
+				if (humanX-1 > 0 && humanX+1 < backend.getMap().length)
 				{
 					backend.getMap()[humanX-1][humanY].setType(3); 
 					backend.getMap()[humanX+1][humanY+1].setType(3);
@@ -72,16 +72,47 @@ public class DanielFrontend implements StevenSupport{
 				}
 				else
 				{	
-					/* Player on starting square (0,0)
+					if (humanX == 0)
+					{
+						backend.getMap()[humanX][humanY+1].setType(3); 
+						backend.getMap()[humanX+1][humanY+1].setType(3);
+					//	backend.getMap()[humanX+1][humanY].setType(3);
+					}
+				}
+			}
+			else
+			{
+				if (humanX == 0)
+				{
+					backend.getMap()[humanX-1][humanY].setType(3); 
+					backend.getMap()[humanX][humanY+1].setType(3);
+					backend.getMap()[humanX-1][humanY+1].setType(3);
+				}
+				else
+				{
+					if (humanX == backend.getMap().length - 2)
+					{
+						backend.getMap()[humanX-1][humanY].setType(3); 
+						backend.getMap()[humanX][humanY+1].setType(3);
+						backend.getMap()[humanX-1][humanY+1].setType(3);
+					}
+				}
+			}
+		}
+
+		/*
+		 Player on starting square (0,0)
 					* field of view is 
 					* 		0		1		
 					*1      PLAYER	view
 					*2 		view	view
 					*3		NONE	NONE
-					*/						
+											
 					if (humanX == 0)
 					{
-						
+						backend.getMap()[humanX-1][humanY].setType(3); 
+						backend.getMap()[humanX][humanY+1].setType(3);
+						backend.getMap()[humanX-1][humanY+1].setType(3);
 					}
 					else
 					{
@@ -91,22 +122,16 @@ public class DanielFrontend implements StevenSupport{
 						*5      NONE	NONE
 						*6 		view	view
 						*7		PLAYER	view 
-						*/	
-						if (humanX == backend.getMap().length - 1)
+							
+						if (humanX == backend.getMap().length - 2)
 						{
 							backend.getMap()[humanX-1][humanY].setType(3); 
 							backend.getMap()[humanX][humanY+1].setType(3);
 							backend.getMap()[humanX-1][humanY+1].setType(3);
 						}
 					}
-				}
-			}
-			else
-			{
-
-			}
-		}
-
+			*/
+		 
 		
 	}
 	public void updateMap() {
