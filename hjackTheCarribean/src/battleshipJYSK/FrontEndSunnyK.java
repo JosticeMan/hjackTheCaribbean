@@ -226,28 +226,13 @@ public class FrontEndSunnyK implements JustinSupporter {
 	public void displayBoard(JustinSunnyPlot[][] plots)
 	{
 		int numRows = backend.boardSize();
+		System.out.print("~ ~ ~ Your Board ~ ~ ~\n");
 		for(int row = 0; row < numRows; row++)
 		{
-			System.out.print("~ ~ ~ Your Board ~ ~ ~\n");
 			for(int col = 0; col < numRows; col++)
 			{
-				System.out.print(numRows + " ");
-				if(backend.hit(row, col, plots) && plots[row][col].isShipOccupied())
-				{
-					System.out.print("[H]");
-				}
-				else if(backend.hit(row, col, plots))
-				{
-					System.out.print("[X]");
-				}
-				else if(plots[row][col].isShipOccupied() && plots == playerPlots)
-				{
-					System.out.print("[S]");
-				}
-				else
-				{
-					System.out.print("[ ]");
-				}
+				System.out.print(row + " ");
+				System.out.print(plots[row][col]);
 				System.out.print("\n");
 			}
 		}
