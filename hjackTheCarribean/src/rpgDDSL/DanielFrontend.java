@@ -146,6 +146,13 @@ public class DanielFrontend implements StevenSupport{
 	}
 	public void updateMap() {
 		map = " ";
+		for (RPGRoom[] a: backend.getMap())
+		{
+			for (RPGRoom b: a)
+			{
+				b.setType(3);
+			}
+		}
 		setType();
 		fogOfWar();
 		for (int i = 0; i < backend.getMap().length; i++)
