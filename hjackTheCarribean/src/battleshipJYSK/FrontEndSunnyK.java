@@ -220,7 +220,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 	public void updateBothMaps()
 	{
 		displayBoard(playerPlots);
-		//displayBoard(commanderPlots);
+		//displayBoard(commanderPlots); 
 	}
 	
 	public void displayBoard(JustinSunnyPlot[][] plots)
