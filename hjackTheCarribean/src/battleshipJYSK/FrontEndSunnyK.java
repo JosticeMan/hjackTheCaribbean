@@ -76,10 +76,10 @@ public class FrontEndSunnyK implements JustinSupporter {
 		CaveExplorer.pause(500);
 		//Shows empty maps
 		//displayBothMaps();
-		backend.printMap(playerPlots);
-		System.out.println();
-		backend.printMap(commanderPlots);
-		//updateBothMaps();
+		//backend.printMap(playerPlots);
+		//System.out.println();
+		//backend.printMap(commanderPlots);
+		updateBothMaps();
 		//asks coordinates to place ships
 		askCoordsForShips();
 		//commander places his ship
@@ -226,7 +226,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 	public void displayBoard(JustinSunnyPlot[][] plots)
 	{
 		int numRows = backend.boardSize();
-		System.out.print("~ ~ ~ Your Board ~ ~ ~\n");
+		System.out.print("~ ~ Your Board ~ ~\n");
 		for(int row = 0; row < numRows; row++)
 		{
 			System.out.print(row + " ");
@@ -236,9 +236,10 @@ public class FrontEndSunnyK implements JustinSupporter {
 			}
 			System.out.print("\n");
 		}
+		System.out.print(" ");
 		for(int numCol = 0; numCol < numRows; numCol++)
 		{
-			System.out.print(" " + numCol);
+			System.out.print("  " + numCol);
 		}
 		System.out.print("\n");
 	}
