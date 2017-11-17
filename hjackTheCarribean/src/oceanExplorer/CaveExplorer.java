@@ -187,6 +187,15 @@ public class CaveExplorer {
 	}
 	
 	/**
+	 * Variation of the above method but for 2D arrays
+	 * @param arr
+	 * @return
+	 */
+	public static String[] randomString(String[][] arr) {
+		return arr[(int) (Math.random() * arr.length)];
+	}
+	
+	/**
 	 * Chooses & prints a random phrase from a String Array
 	 * @param arr - String Array that contains random phrases
 	 */
