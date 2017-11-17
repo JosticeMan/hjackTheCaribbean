@@ -260,7 +260,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 				System.out.println("Shipmate: To which direction would you like to place it in? Enter 'N','E','S','W'");
 				direction = backend.interpretDirectionInput();
 			}
-			System.out.println("Shipmate: Ho-ah! The ship has been succesfully placed.");
+			System.out.println("Shipmate: Ho-ah! The ship has been succesfully position captain!");
 			updateMaps();
 			backend.printMap(playerPlots);
 			System.out.println();
