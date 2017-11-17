@@ -46,16 +46,42 @@ public class DanielFrontend implements StevenSupport{
 	}
 	public DanielFrontend()
 	{
-		backend = new StevenBackend(this, 3);
+		backend = new StevenBackend(this, 0);
 		won = false;
 	}
 	public void fogOfWar()
 	{
 		fogCoords = new int[20][20]; 
+		
 		int humanX = backend.getHuman()[0];
 		int humanY = backend.getHuman()[1];
+		
+		//SETS FOG
+		for (int i = 0; i < backend.getMap().length; i++)
+		{
+			for (int j = 0; j < backend.getMap()[0].length; j++)
+			{
+				backend.getMap()[i][j].setType(0);
+			}
+		}
+		//SETS HUMAN
+		backend.getMap()[humanX][humanY].setType(1);
+		
+		//SETS FLASHLIGHT VISION FOR HUMAN 
+		
+		
+		//STARTING POSITION VISION
+		if (humanX + 1 < backend.getMap().length)
+		{
+			backend.getMap()[humanX][humanY+1].setType(3); 
+			backend.getMap()[humanX+1][humanY].setType(3);
+			backend.getMap()[humanX+1][humanY+1].setType(3);
+		}
+		
 		if (backend.getHuman()[0] != 0 && backend.getHuman()[0] != backend.getMap().length)
 		{
+			
+			
 			if (humanY+1 < backend.getMap().length && humanX + 1 < backend.getMap()[0].length)
 			{	
 				/* field of view is 
@@ -81,7 +107,7 @@ public class DanielFrontend implements StevenSupport{
 			}
 			else
 			{
-				if (humanX == 0)
+				if (humanX == 1)
 				{
 					backend.getMap()[humanX-1][humanY].setType(3); 
 					backend.getMap()[humanX][humanY+1].setType(3);
@@ -146,6 +172,8 @@ public class DanielFrontend implements StevenSupport{
 	}
 	public void updateMap() {
 		map = " ";
+		
+		//CLEAR 2D ARRAY
 		for (RPGRoom[] a: backend.getMap())
 		{
 			for (RPGRoom b: a)
@@ -153,8 +181,18 @@ public class DanielFrontend implements StevenSupport{
 				b.setType(3);
 			}
 		}
+		
+		//SETS TYPES 
 		setType();
+		
+		//CREATES FOG + HUMAN
 		fogOfWar();
+		
+		//SPAWN AND DISPLAY ENEMIES
+		
+		//MAP CREATION
+		
+		
 		for (int i = 0; i < backend.getMap().length; i++)
 		{
 			if (i != 0 || i == backend.getMap().length - 1)
@@ -234,7 +272,7 @@ public class DanielFrontend implements StevenSupport{
 			
 			map += "\n";
 		}
-	/*	
+		
 		for (int row = 0; row < backend.getMap().length; row++)
 		{
 			for (int col = 0; col < backend.getMap()[0].length; col++)
@@ -246,7 +284,7 @@ public class DanielFrontend implements StevenSupport{
 			}
 		}
 		
-	*/	
+		
 		System.out.println(map);
 	}
 	public void setType()
