@@ -229,12 +229,12 @@ public class FrontEndSunnyK implements JustinSupporter {
 		System.out.print("~ ~ ~ Your Board ~ ~ ~\n");
 		for(int row = 0; row < numRows; row++)
 		{
+			System.out.print(row + " ");
 			for(int col = 0; col < numRows; col++)
 			{
-				System.out.print(row + " ");
 				System.out.print(plots[row][col]);
-				System.out.print("\n");
 			}
+			System.out.print("\n");
 		}
 		for(int numCol = 0; numCol < numRows; numCol++)
 		{
