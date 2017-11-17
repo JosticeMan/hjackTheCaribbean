@@ -39,7 +39,7 @@ public class SunnyNPC extends NPC {
 	public void interact() {
 		CaveExplorer.print("Argghh! Did you know there are multiple power ups? Would you like to hear some?");
 		String response = CaveExplorer.in.nextLine();
-		if(response.equalsIgnoreCase("yes") || response.equalsIgnoreCase("sure") || response.equalsIgnoreCase("okay"))
+		if(response.equalsIgnoreCase("yes") || response.equalsIgnoreCase("sure") || response.equalsIgnoreCase("okay") || response.equalsIgnoreCase("okay"))
 		{
 			while(!response.equalsIgnoreCase("bye")) 
 			{
