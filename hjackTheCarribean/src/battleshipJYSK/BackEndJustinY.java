@@ -337,6 +337,23 @@ public class BackEndJustinY implements SunnySupporter {
 		return (int) (Math.random() * WEST);
 	}
 	
+	/**
+	 * Returns whether or not the coordinates are in border or not
+	 * @param row - Y coordinate of the Ship
+	 * @param col - X coordinate of the Ship
+	 * @param direction - Direction the user wants the ship to face
+	 * @param shipLength - Length of the Ship to be placed
+	 * @param playerBoard - The appropriate player board to place the ship on
+	 * @return
+	 */
+	public boolean isWithinBorder(int row, int col, int shipLength, int direction, JustinSunnyPlot[][] playerBoard) {
+		boolean[] dimensions = {row - (shipLength - 1) >= 0, 
+				 				col + (shipLength - 1) < playerBoard[0].length, 
+				 				row + (shipLength - 1) < playerBoard.length,
+				 				col - (shipLength - 1) >= 0};
+		return dimensions[direction];
+	}
+	
 	//Might be possible to make more helper methods out of this
 	/**
 	 * Attempts to place the ship at the given coordinate facing the direction
