@@ -218,12 +218,11 @@ public class FrontEndSunnyK implements JustinSupporter {
 
 	public void updateBothMaps()
 	{
-		displayPlayerBoard();
-		displayCommanderBoard();
-		
+		displayBoard(playerPlots);
+		displayBoard(commanderPlots);
 	}
 	
-	public void displayPlayerBoard()
+	public void displayBoard(JustinSunnyPlot[][] plots)
 	{
 		int numRows = backend.boardSize();
 		for(int row = 0; row < numRows; row++)
@@ -232,15 +231,15 @@ public class FrontEndSunnyK implements JustinSupporter {
 			for(int col = 0; col < numRows; col++)
 			{
 				System.out.print(numRows + " ");
-				if(backend.hit(row, col, playerPlots) && playerPlots[row][col].isShipOccupied())
+				if(backend.hit(row, col, plots) && plots[row][col].isShipOccupied())
 				{
 					System.out.print("[H]");
 				}
-				else if(backend.hit(row, col, playerPlots))
+				else if(backend.hit(row, col, plots))
 				{
 					System.out.print("[X]");
 				}
-				else if(playerPlots[row][col].isShipOccupied())
+				else if(plots[row][col].isShipOccupied() && plots == playerPlots)
 				{
 					System.out.print("[S]");
 				}
@@ -256,11 +255,6 @@ public class FrontEndSunnyK implements JustinSupporter {
 			System.out.print(" " + numCol);
 		}
 		System.out.print("\n");
-	}
-	
-	public void displayCommanderBoard()
-	{
-		int numRows = backend.boardSize();
 	}
 	
 	public void askCoordsForShips()
