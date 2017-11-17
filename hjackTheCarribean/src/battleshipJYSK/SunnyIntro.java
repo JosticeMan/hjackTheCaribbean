@@ -21,6 +21,5 @@ public class SunnyIntro {
 		System.out.println("(Prepare for a game of Battleship)");
 		CaveExplorer.pause(500);
 		System.out.println("\n~ ~ Press enter to begin! ~ ~");
-		String input = CaveExplorer.in.nextLine();
 	}
 }

@@ -216,32 +216,55 @@ public class FrontEndSunnyK implements JustinSupporter {
 		}
 	}
 
-	public void displayBothMaps()
+	public void updateBothMaps()
+	{
+		displayPlayerBoard();
+		displayCommanderBoard();
+		
+	}
+	
+	public void displayPlayerBoard()
 	{
 		int numRows = backend.boardSize();
-		System.out.print("~ ~ ~ Your Board ~ ~ ~ ~ ~ ~ ~ Opponent Board ~ ~ ~");	
-		for(int i = 0; i < numRows+4; i++)
+		for(int row = 0; row < numRows; row++)
 		{
-			if(i == 0 || i == numRows+2)
+			System.out.print("~ ~ ~ Your Board ~ ~ ~\n");
+			for(int col = 0; col < numRows; col++)
 			{
-				String rowString = " ";
-				for(int j = 0; j < (numRows*2)+3;j++)
+				System.out.print(numRows + " ");
+				if(backend.hit(row, col, playerPlots) && playerPlots[row][col].isShipOccupied())
 				{
-					rowString += "_";
+					System.out.print("[H]");
 				}
+				else if(backend.hit(row, col, playerPlots))
+				{
+					System.out.print("[X]");
+				}
+				else if(playerPlots[row][col].isShipOccupied())
+				{
+					System.out.print("[S]");
+				}
+				else
+				{
+					System.out.print("[ ]");
+				}
+				System.out.print("\n");
 			}
-			if(i == numRows+3)
-			{
-				
-			}
-			System.out.print("\n");
-			
 		}
+		for(int numCol = 0; numCol < numRows; numCol++)
+		{
+			System.out.print(" " + numCol);
+		}
+		System.out.print("\n");
 	}
-	public void askCoordsForShips()
+	
+	public void displayCommanderBoard()
 	{
-		//uses backend.getCoordInput
-		
+		int numRows = backend.boardSize();
+	}
+	
+	public void askCoordsForShips()
+	{	
 		for(int i = 0; i < backend.numberOfShips(); i++)
 		{
 			int lengthOfCurrentShip = backend.lengthOfShip(ships[i]);
