@@ -66,7 +66,6 @@ public class StevenBackend implements DanSupport {
 			}
 			enemyPosition[i][0]=enemyPosX;
 			enemyPosition[i][1]=enemyPosY;
-			map[enemyPosX][enemyPosY].setType(2);
 		}
 		
 	}
@@ -102,8 +101,8 @@ public class StevenBackend implements DanSupport {
 		return human;
 	}
 
-	public void setHuman(int[] human) {
-		this.human = human;
+	public int[][] getEnemyPosition() {
+		return enemyPosition;
 	}
 
 	public RPGRoom[][] getMap() {
@@ -205,13 +204,11 @@ public class StevenBackend implements DanSupport {
 			int direction=(int)(Math.random()*4);
 			String input="wdsa".substring(direction,direction+1);
 			for(int[] a:enemyPosition) {
-				while(!checkWalls(input,a)||checkHuman(direction,a)||checkEnemyPos(direction)) {
-					System.out.println(!checkWalls(input,a)||checkHuman(direction,a)||checkEnemyPos(direction));
+				while(!checkWalls(input,a)||checkHuman(direction,a)) {
 					direction=(int)(Math.random()*4);
 					input="wdsa".substring(direction,direction+1);
 					System.out.println(input);
 				}
-				map[a[0]][a[1]].setType(3);
 				if(direction==0) {
 					a[0]-=1;
 				}
@@ -224,7 +221,6 @@ public class StevenBackend implements DanSupport {
 				if(direction==3) {
 					a[1]-=1;
 				}
-				map[a[0]][a[1]].setType(2);
 			}
 		}
 		
