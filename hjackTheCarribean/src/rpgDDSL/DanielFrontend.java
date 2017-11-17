@@ -24,11 +24,12 @@ public class DanielFrontend implements StevenSupport{
 		backend.setFrontend(this);
 		String input;
 		while(!won) {
+			fogOfWar();
 			updateMap();
 			input=CaveExplorer.in.nextLine();
-			while (!backend.isValid(input) || !backend.checkWalls(input))
+			while (!backend.isValid(input) || !backend.checkWalls(input, backend.getHuman()))
 			{
-				if (!backend.checkWalls(input))
+				if (!backend.checkWalls(input, backend.getHuman()))
 				{
 					System.out.println("There is a wall. Please enter a valid direction.");
 				}
@@ -44,18 +45,53 @@ public class DanielFrontend implements StevenSupport{
 	}
 	public DanielFrontend()
 	{
-		backend= new StevenBackend(this);
-		won=false;
+		backend = new StevenBackend(this, 0);
+		won = false;
 	}
+	public void fogOfWar()
+	{
+		int humanX = backend.getHuman()[0];
+		int humanY = backend.getHuman()[1];
+		if (backend.getHuman()[0] != 0 && backend.getHuman()[0] != backend.getMap().length)
+		{
+			if (humanY+1 < backend.getMap().length && humanX + 1 < backend.getMap()[0].length)
+			{	
+				
+				if (humanX-1 > 0)
+				{
+					backend.getMap()[humanX-1][humanY].setType(3); 
+					backend.getMap()[humanX+1][humanY+1].setType(3);
+					backend.getMap()[humanX+1][humanY].setType(3);
+					backend.getMap()[humanX][humanY+1].setType(3);
+					backend.getMap()[humanX-1][humanY+1].setType(3);
+				}
 	
+			/*	
+				backend.getMap()[0][humanY+1].setType(3); 
+				backend.getMap()[0][humanY].setType(3);
+				backend.getMap()[humanX+1][humanY+1].setType(3);
+				backend.getMap()[humanX+1][1].setType(3);
+			*/
+			}
+			else
+			{
+
+			}
+		}
+
+		
+		
+	}
 	public void updateMap() {
 		map = " ";
+		fogOfWar();
 		for (int i = 0; i < backend.getMap().length; i++)
 		{
 			if (i != 0 || i == backend.getMap().length - 1)
 			{
 				map += "|";
 			}
+			
 			
 			for (int j = 0; j < backend.getMap()[0].length; j++)
 			{
@@ -75,12 +111,53 @@ public class DanielFrontend implements StevenSupport{
 						}
 						if (i == 0 && j != backend.getMap()[0].length - 1)
 						{
-							map += backend.getMap()[i][j].toString() + "¯¯¯";
+							map += backend.getMap()[i][j].toString() + "¯ ¯";
+						}
+						if (j == backend.getMap()[0].length - 1)
+						{
+							map += backend.getMap()[i][j].toString() + "¯  ";
 						}
 					}
 					else
 					{
-						map += backend.getMap()[i][j].toString() + "   ";
+						if (i == 2 && j == 1)
+						{
+							map += backend.getMap()[2][1] + " | ";
+							backend.getMap()[2][1].setEast(true);
+							backend.getMap()[2][2].setWest(true);							
+						}
+						else
+						{
+							if (i == 2 && j == 4)
+							{
+								map += backend.getMap()[2][4] + " | ";
+								backend.getMap()[2][4].setEast(true);
+								backend.getMap()[2][5].setWest(true);	
+							}
+							else
+							{
+								if (i == 4 && j == 1)
+								{
+									map += backend.getMap()[4][1] + " | ";
+									backend.getMap()[4][1].setEast(true);
+									backend.getMap()[4][2].setWest(true);	
+								}
+								else
+								{
+									if (i == 4 && j == 4)
+									{
+										map += backend.getMap()[4][4] + " | ";
+										backend.getMap()[4][4].setEast(true);
+										backend.getMap()[4][5].setWest(true);	
+									}
+									else
+									{
+										map += backend.getMap()[i][j].toString() + "   ";
+									}
+								}
+								
+							}
+						}
 					}
 				}
 			}
@@ -88,10 +165,10 @@ public class DanielFrontend implements StevenSupport{
 			map += "\n";
 		}
 		
-		backend.getMap()[2][2].setEast(true);
+		
+		
 		System.out.println(map);
 	}
-	
 	public DanielFrontend getFront()
 	{
 		return this;
