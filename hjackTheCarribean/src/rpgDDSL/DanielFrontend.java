@@ -10,6 +10,7 @@ public class DanielFrontend implements StevenSupport{
 	private RPGRoom[][] room;
 	private StevenBackend backend;
 	private boolean won;
+	private int[][] fogCoords;
 	
 	public static final void main(String[] args)
 	{
@@ -45,11 +46,12 @@ public class DanielFrontend implements StevenSupport{
 	}
 	public DanielFrontend()
 	{
-		backend = new StevenBackend(this, 0);
+		backend = new StevenBackend(this, 3);
 		won = false;
 	}
 	public void fogOfWar()
 	{
+		fogCoords = new int[20][20]; 
 		int humanX = backend.getHuman()[0];
 		int humanY = backend.getHuman()[1];
 		if (backend.getHuman()[0] != 0 && backend.getHuman()[0] != backend.getMap().length)
@@ -71,13 +73,10 @@ public class DanielFrontend implements StevenSupport{
 					backend.getMap()[humanX-1][humanY+1].setType(3);
 				}
 				else
-				{	
-					if (humanX == 0)
-					{
+				{		
 						backend.getMap()[humanX][humanY+1].setType(3); 
 						backend.getMap()[humanX+1][humanY+1].setType(3);
-					//	backend.getMap()[humanX+1][humanY].setType(3);
-					}
+					
 				}
 			}
 			else
@@ -100,6 +99,17 @@ public class DanielFrontend implements StevenSupport{
 			}
 		}
 
+		for (int row = 0; row < backend.getMap().length; row++)
+		{
+			for (int col = 0; col < backend.getMap()[0].length; col++)
+			{
+				if (backend.getMap()[row][col].getType() == 3)
+				{
+					fogCoords[row][col] = 0;
+				}
+			}
+		}
+		
 		/*
 		 Player on starting square (0,0)
 					* field of view is 
@@ -136,6 +146,7 @@ public class DanielFrontend implements StevenSupport{
 	}
 	public void updateMap() {
 		map = " ";
+		setType();
 		fogOfWar();
 		for (int i = 0; i < backend.getMap().length; i++)
 		{
@@ -216,10 +227,29 @@ public class DanielFrontend implements StevenSupport{
 			
 			map += "\n";
 		}
+	/*	
+		for (int row = 0; row < backend.getMap().length; row++)
+		{
+			for (int col = 0; col < backend.getMap()[0].length; col++)
+			{
+				if (fogCoords[row][col] == 0)
+				{
+					backend.getMap()[fogCoords[0][col]][col].setType(3);
+				}
+			}
+		}
 		
-		
-		
+	*/	
 		System.out.println(map);
+	}
+	public void setType()
+	{		
+		backend.getMap()[backend.getHuman()[0]][backend.getHuman()[1]].setType(1);
+		
+		for (int[] a : backend.getEnemyPosition())
+		{
+			backend.getMap()[a[0]][a[1]].setType(2);
+		}
 	}
 	public DanielFrontend getFront()
 	{
