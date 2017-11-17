@@ -105,7 +105,6 @@ public class DanielFrontend implements StevenSupport{
 			}
 		}
 
-		//REMEMBER TO RESTORE X's
 		
 	}
 	public void updateMap() {

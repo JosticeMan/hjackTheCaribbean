@@ -18,7 +18,7 @@ public class StevenBackend implements DanSupport {
 	
 	public StevenBackend(DanielFrontend frontend,int num)
 	{
-		map = new RPGRoom[7][7];
+		map = new RPGRoom[20][20];
 		human=new int[2];
 		enemyPosition = new int[num][2];
 		this.num=num;
@@ -211,7 +211,7 @@ public class StevenBackend implements DanSupport {
 					input="wdsa".substring(direction,direction+1);
 					System.out.println(input);
 				}
-				map[a[0]][a[1]].setType(0);
+				map[a[0]][a[1]].setType(3);
 				if(direction==0) {
 					a[0]-=1;
 				}
