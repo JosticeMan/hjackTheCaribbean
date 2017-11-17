@@ -375,6 +375,51 @@ public class BackEndJustinY implements SunnySupporter {
 		return dimensions[direction];
 	}
 	
+	/**
+	 * Attempts to place the ship coord by coord and returns whether or not the all of ship placements were successful 
+	 * @param change - row/col that changes
+	 * @param nochange - row/col that doesn't change
+	 * @param direction - Direction of the user wants the ship face
+	 * @param shipLength - Length of the ship to be placed
+	 * @param playerBoard - The appropriate player board to place the ship on
+	 * @return
+	 */
+	public boolean testShipPlacement(int change, int nochange, int direction, int shipLength, JustinSunnyPlot[][] playerBoard) {
+		/*	
+		public static final int NORTH = 0;
+		public static final int EAST = 1;
+		public static final int SOUTH = 2;
+		public static final int WEST = 3;
+		*/
+		if(direction == NORTH || direction == WEST) {
+			for(int ship = change; ship > change - shipLength; ship--) {
+				int[][] coords = {{ship, nochange}, {nochange, ship}, {ship, nochange}, {nochange, ship}};
+				if(!(attemptShipPlacementAtCoordinate(coords[direction][0], coords[direction][1], playerBoard))) {
+					for(int s = change; s > ship; s--) {
+						int[][] coords1 = {{s, nochange}, {nochange, s}, {s, nochange}, {nochange, s}};
+						unSetShipAtCoords(coords1[direction][0], coords1[direction][1], playerBoard);
+					}
+					return false;
+				}
+			}
+			return true;
+		}
+		if(direction == EAST || direction == SOUTH) {
+			for(int ship = change; ship < change + shipLength; ship++) {
+				int[][] coords = {{ship, nochange}, {nochange, ship}, {ship, nochange}, {nochange, ship}};
+				if(!(attemptShipPlacementAtCoordinate(coords[direction][0], coords[direction][1], playerBoard))) {
+					for(int s = change; s < ship; s++) {
+						int[][] coords1 = {{s, nochange}, {nochange, s}, {s, nochange}, {nochange, s}};
+						unSetShipAtCoords(coords1[direction][0], coords1[direction][1], playerBoard);
+					}
+					return false;
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+	
 	//Might be possible to make more helper methods out of this
 	/**
 	 * Attempts to place the ship at the given coordinate facing the direction
@@ -390,7 +435,13 @@ public class BackEndJustinY implements SunnySupporter {
 		if(row >= playerBoard.length || col >= playerBoard[0].length) {
 			return false;
 		}
-		if(direction == NORTH) {
+		if(isWithinBorderAtDirection(row, col, shipLength, direction, playerBoard)) {
+			int[][] coords = {{row, col}, {col, row}, {row, col}, {col, row}};
+		  	return testShipPlacement(coords[direction][0], coords[direction][1], direction, shipLength, playerBoard);
+		}	
+		return false;
+		/*
+		 if(direction == NORTH) {
 			if(row - (shipLength - 1) >= 0) {
 				for(int shipRow = row; shipRow > row - shipLength; shipRow--) {
 					if(!(attemptShipPlacementAtCoordinate(shipRow, col, playerBoard))) {
@@ -447,6 +498,7 @@ public class BackEndJustinY implements SunnySupporter {
 			return false;
 		}
 		return false;
+		*/
 	}
 	
 	/**
