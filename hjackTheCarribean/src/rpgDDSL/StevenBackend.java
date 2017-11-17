@@ -174,7 +174,7 @@ public class StevenBackend implements DanSupport {
 		//First, protect against null pointer exception
 		//(user cannot go through a non existent door)
 		if(direction < 4) {
-			map[human[0]][human[1]].setType(0);
+			map[human[0]][human[1]].setType(3);
 			if(direction==0) {
 				map[human[0]-1][human[1]].setType(1);
 				human[0]-=1;

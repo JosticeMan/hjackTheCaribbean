@@ -45,7 +45,7 @@ public class DanielFrontend implements StevenSupport{
 	}
 	public DanielFrontend()
 	{
-		backend = new StevenBackend(this, 0);
+		backend = new StevenBackend(this, 2);
 		won = false;
 	}
 	public void fogOfWar()
@@ -92,9 +92,11 @@ public class DanielFrontend implements StevenSupport{
 						*6 		view	view
 						*7		PLAYER	view 
 						*/	
-						if (humanY == backend.getMap().length - 1)
+						if (humanX == backend.getMap().length - 1)
 						{
-							
+							backend.getMap()[humanX-1][humanY].setType(3); 
+							backend.getMap()[humanX][humanY+1].setType(3);
+							backend.getMap()[humanX-1][humanY+1].setType(3);
 						}
 					}
 				}
