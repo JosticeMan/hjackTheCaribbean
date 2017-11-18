@@ -386,6 +386,8 @@ public class AndrewBackend implements KevinSupport{
 			map[row][0].setStaticOccupant(ROCK);
 			map[row][map[row].length-1].setStaticOccupant(ROCK);
 		}
+		
+		populateTiles();
 	}
 	
 	/**
@@ -394,20 +396,131 @@ public class AndrewBackend implements KevinSupport{
 	 * 4:0, 3:1, 2:2, 1:3, 0:4
 	 * Will generate from 1,1(top left within rock borders) to map.length-2,map[row].length-2(bottom right within rock borders)
 	 */
-	public void populateMap() {
-		
+	public void populateTiles() {
+		for(int condenseRow = 1; condenseRow < map.length-2/2; condenseRow += 2) { //goes through every 2x2 tile on map, will be mostly 4:0 open tiles
+			for(int condenseCol = 1; condenseCol < map[0].length-2/2; condenseCol += 2) {
+				int[][] theTwoByTwo = new int[2][2];
+				if(Math.random() < 0.33) {
+					if(Math.random()<0.66) {
+						theTwoByTwo = ratioFourToZero(true);
+					}else {
+						theTwoByTwo = ratioFourToZero(false);
+					}
+				}else if(Math.random() < 0.66) {
+					if(Math.random()<0.66) {
+						theTwoByTwo = ratioThreeToOne(true);
+					}else {
+						theTwoByTwo = ratioThreeToOne(true);
+					}
+				}else if(Math.random() < 1) {
+					if(Math.random()<0.66) {
+						theTwoByTwo = ratioTwoToTwo();
+					}else {
+						theTwoByTwo = ratioTwoToTwo();
+					}
+				}
+				
+				applyTwoByTwoTiles(condenseRow, condenseCol, theTwoByTwo);
+			}
+		}
 	}
 	
-	public void ratioFourToZero(boolean open) {
+	public void applyTwoByTwoTiles(int topLeftCoordsRow, int topLeftCoordsCol, int[][] twoByTwo) {
 		
+		for(int i = 0; i < 2; i++) {
+			for(int j = 0; j < 2 ; j++) {
+				map[topLeftCoordsRow + i][topLeftCoordsCol + j].setStaticOccupant(twoByTwo[i][j]);
+			}
+		}
 	}
 	
-	public void ratioThreeToOne(boolean open) {
-		
+	public int[][] ratioFourToZero(boolean open) {
+		int[][] returnIntArr = new int[2][2];
+		for(int row = 0; row < 2; row++) {
+			for(int col = 0; col < 2; col++) {
+				returnIntArr[row][col] = randomTile(open);
+			}
+		}
+		return returnIntArr;
 	}
 	
-	public void ratioTwoToTwo() {
-		
+	public int[][] ratioThreeToOne(boolean open) {
+		int[][] returnIntArr = new int[2][2];
+		int openCount = 1;
+		if(open) {
+			openCount = 3;
+		}
+		int closedCount = 4 - openCount;
+		for(int row = 0; row < 2; row++) {
+			for(int col = 0; col < 2; col++) {
+				boolean foundTile = false;
+				while(!foundTile) {
+					if(Math.random() > 0.5) {
+						if(openCount > 0) {
+							returnIntArr[row][col] = randomTile(true);
+							openCount --;
+							foundTile = true;
+						}
+					}else {
+						if(closedCount > 0) {
+							returnIntArr[row][col] = randomTile(false);
+							closedCount --;
+							foundTile = true;
+						}
+					}
+				}
+			}
+		}
+		return returnIntArr;
+	}
+	
+	public int[][] ratioTwoToTwo() {
+		int[][] returnIntArr = new int[2][2];
+		int openCount = 2;
+		int closedCount = 2;
+		for(int row = 0; row < 2; row++) {
+			for(int col = 0; col < 2; col++) {
+				boolean foundTile = false;
+				while(!foundTile) {
+					if(Math.random() > 0.5) {
+						if(openCount > 0) {
+							returnIntArr[row][col] = randomTile(true);
+							openCount --;
+							foundTile = true;
+						}
+					}else {
+						if(closedCount > 0) {
+							returnIntArr[row][col] = randomTile(false);
+							closedCount --;
+							foundTile = true;
+						}	
+					}
+				}
+			}
+		}
+		return returnIntArr;
+	}
+	/**
+	 * Gives a random tile type based off open/closed
+	 * Closed types: ROCK, TREE
+	 * Open types: FORAGE, NOTHING
+	 * @param open
+	 * @return
+	 */
+	public int randomTile(boolean open) {
+		if(open) {
+			if(Math.random() > 0.25){
+				return NOTHING;
+			}else {
+				return FORAGE;
+			}
+		}else {
+			if(Math.random() > 0.4){
+				return TREE;
+			}else {
+				return ROCK;
+			}
+		}
 	}
 	
 }
