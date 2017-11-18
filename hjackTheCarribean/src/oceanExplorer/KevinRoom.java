@@ -1,5 +1,5 @@
 package oceanExplorer;
-//discord
+
 public class KevinRoom extends CaveRoom {
 
 	public KevinRoom(String description) {
