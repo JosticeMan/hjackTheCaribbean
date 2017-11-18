@@ -1,6 +1,8 @@
 package rpgDDSL;
 
 import oceanExplorer.CaveExplorer;
+import oceanExplorer.Ship;
+
 import java.util.Scanner;
 
 
@@ -46,7 +48,7 @@ public class DanielFrontend implements StevenSupport{
 	}
 	public DanielFrontend()
 	{
-		backend = new StevenBackend(this, 0);
+		backend = new StevenBackend(this, 3);
 		won = false;
 	}
 	public void visionIfRow2()
@@ -111,7 +113,7 @@ public class DanielFrontend implements StevenSupport{
 		}
 	}
 	
-	public boolean isEnemy(int x, int y)
+	public void isEnemy(int x, int y)
 	{
 		int[][] temp;
 		temp = new int[backend.getEnemyPosition().length][backend.getEnemyPosition()[0].length];
@@ -123,12 +125,10 @@ public class DanielFrontend implements StevenSupport{
 				if (backend.getEnemyPosition()[i][j] == temp[x][y])
 				{
 					backend.getMap()[x][y].setType(2);
-					return true;
+					
 				}
 			}
 		}
-		
-		return false;
 	}
 	public void fogOfWar()
 	{
@@ -287,5 +287,11 @@ public class DanielFrontend implements StevenSupport{
 	public DanielFrontend getFront()
 	{
 		return this;
+	}
+	@Override
+	public Ship getShip() 
+	{
+		Ship a = new Ship(30,10,1);
+		return a;
 	}
 }
