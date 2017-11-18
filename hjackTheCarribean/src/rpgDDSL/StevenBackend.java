@@ -13,6 +13,7 @@ public class StevenBackend implements DanSupport {
 	private int num;
 	private Ship ship;
 	private int[][] enemyValue;
+	private int[][] vision;
 	
 	public static final int NORTH = 0;
 	public static final int EAST = 1;
@@ -25,6 +26,7 @@ public class StevenBackend implements DanSupport {
 		human=new int[2];
 		enemyPosition = new int[num][2];
 		enemyValue = new int[num][2];
+		vision = new int[400][2];
 		ship=frontend.getShip();
 		this.num=num;
 		setValues();
@@ -299,10 +301,60 @@ public Ship getShip() {
 		}
 		return false;
 	}
+	
+	public void attack(int type,int row,int col, int x, int y) {
+		if(type==1) {
+			for(int i=0;i<enemyPosition.length;i++) {
+				
+			}
+		}
+	}
 
 	public void setFrontend(DanielFrontend x)
 	{
 		front = x;
 	}
+	/*public void makeFog() {
+		int[] coord=new int[2];
+		coord[0]=human[0]--;
+		coord[1]=human[1]--;
+		if(coord[0]>-1&&coord[1]>-1) {
+			addVision(coord);
+		}
+		coord[0]=human[0];
+		if(coord[0]>-1&&coord[1]>-1) {
+			addVision(coord);
+		}
+		coord[1]=human[0];
+		if(coord[0]>-1&&coord[1]>-1) {
+			addVision(coord);
+		}
+		coord[1]=human[0]++;
+		if(coord[0]>-1&&coord[1]<map[0].length-1) {
+			addVision(coord);
+		}
+		
+		
+	}
+	public void addVision(int[] coord) {
+		if(!checkDupe(vision,coord)) {
+			for(int i=0;i<vision.length;i++) {
+				if(vision[i][0]==0&&vision[i][1]==0) {
+					vision[i]=coord;
+				}
+			}
+		}
+	}
+	public boolean checkDupe(int[][] a,int[] t) {
+		if(t.length>2) {
+			return false;
+		}
+		for(int[] b:a) {
+			if(b[0]==t[0]&&b[1]==t[1]) {
+				return true;
+			}
+		}
+		return false;
+	}*/
 	
 }
