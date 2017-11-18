@@ -250,7 +250,23 @@ public Ship getShip() {
 	public int[][] getEnemyValue() {
 		return enemyValue;
 	}
-	//
+	public void movement() {
+		String input;
+		input=CaveExplorer.in.nextLine();
+		while (!isValid(input) || !checkWalls(input, getHuman())||checkEnemyPos(determineDirection(input, validKeys()),-1))
+		{
+			if (!checkWalls(input, getHuman()))
+			{
+				System.out.println("There is a wall. Please enter a valid direction.");
+			}
+			else
+			{
+				System.out.println("Enter a valid key.");
+			}
+			input = CaveExplorer.in.nextLine();
+		}
+		interpretInput(input);
+	}
 	public boolean checkEnemyPos(int direction,int idx) {
 		int x;
 		int y;
