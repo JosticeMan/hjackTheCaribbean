@@ -12,6 +12,7 @@ public class StevenBackend implements DanSupport {
 	private int[][] enemyPosition;
 	private int num;
 	private Ship ship;
+	private int[][] enemyValue;
 	
 	public static final int NORTH = 0;
 	public static final int EAST = 1;
@@ -23,8 +24,17 @@ public class StevenBackend implements DanSupport {
 		map = new RPGRoom[20][20];
 		human=new int[2];
 		enemyPosition = new int[num][2];
+		enemyValue = new int[num][2];
+		ship=frontend.getShip();
 		this.num=num;
+		setValues();
 		makeMap();
+	}
+	public void setValues() {
+		for(int i=0;i<enemyValue.length;i++) {
+			enemyValue[i][0]=(int)(ship.getHp()/2);
+			enemyValue[i][1]=(int)(ship.getAttack()/2);
+		}
 	}
 	public void makeMap()
 	{
@@ -231,7 +241,13 @@ public class StevenBackend implements DanSupport {
 		}
 		}
 	}
-//
+public Ship getShip() {
+		return ship;
+	}
+	public int[][] getEnemyValue() {
+		return enemyValue;
+	}
+	//
 	public boolean checkEnemyPos(int direction,int idx) {
 		int x;
 		int y;
