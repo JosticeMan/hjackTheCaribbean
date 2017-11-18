@@ -119,6 +119,7 @@ public class AndrewBackend implements KevinSupport{
 	public static final int TREE = 2;
 	public static final int FORAGE = 3;
 	public static final int TREASURE = 7;
+	public static final int LEAVETILE = 6;
 	//non-static occupant ints
 	public static final int PLAYER = 1;
 	public static final int MONKEY = 2;
@@ -141,12 +142,7 @@ public class AndrewBackend implements KevinSupport{
 		}
 		
 		//creates the boundary of rocks to keep player within map **Will leave on slot open if player just wants to leave**
-			for(int col = 0; col < map[0].length; col++) {
-				map[0][col].setNonStaticOccupant(ROCK);;
-			}
-			for(int col = 0; col < map[map.length-1].length; col++) {
-				map[map.length-1][col].setNonStaticOccupant(ROCK);;
-			}
+		createMapRockBorder();
 			
 		//stepCount is based off the size of the map, for now it'll be 10
 		stepCount = 10;
@@ -238,7 +234,7 @@ public class AndrewBackend implements KevinSupport{
 		playerPos[ROW] = row;
 		playerPos[COL] = col;
 		
-		map[row][col].setNonStaticOccupant(1);
+		map[row][col].setNonStaticOccupant(PLAYER);
 	}
 	/**
 	 * Checks the tile the player is attempting to move into
@@ -264,7 +260,7 @@ public class AndrewBackend implements KevinSupport{
 						if(into == FORAGE) { //walks into forage and forage gets removed
 						setPlayerPos(attemptedTile[0], attemptedTile[1]);
 						stepCount--;
-						map[attemptedTile[0]][attemptedTile[1]].setNonStaticOccupant(0);
+						map[attemptedTile[0]][attemptedTile[1]].setNonStaticOccupant(NOTHING);
 					}else 
 						if(into == TREASURE) {
 						//player wins
@@ -382,6 +378,35 @@ public class AndrewBackend implements KevinSupport{
 	/*---- GENERATE MAP METHODS ----*/
 	
 	public void createMapRockBorder() {
+		for(int col = 0; col < map[0].length; col++) {
+			map[0][col].setStaticOccupant(ROCK);
+			map[map.length-1][col].setStaticOccupant(ROCK);
+		}
+		for(int row = 0; row < map.length; row++) {
+			map[row][0].setStaticOccupant(ROCK);
+			map[row][map[row].length-1].setStaticOccupant(ROCK);
+		}
+	}
+	
+	/**
+	 * Generation of a random map will require cells of 2x2 tiles
+	 * These cells will have variations of OPEN(FORAGE & NOTHING):CLOSED(ROCK & TREE)
+	 * 4:0, 3:1, 2:2, 1:3, 0:4
+	 * Will generate from 1,1(top left within rock borders) to map.length-2,map[row].length-2(bottom right within rock borders)
+	 */
+	public void populateMap() {
+		
+	}
+	
+	public void ratioFourToZero(boolean open) {
+		
+	}
+	
+	public void ratioThreeToOne(boolean open) {
+		
+	}
+	
+	public void ratioTwoToTwo() {
 		
 	}
 	
