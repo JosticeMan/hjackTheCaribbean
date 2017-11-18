@@ -12,7 +12,7 @@ public class DanielFrontend implements StevenSupport{
 	private RPGRoom[][] room;
 	private StevenBackend backend;
 	private boolean won;
-	private int[][] fogCoords;
+	private int num;
 	
 	public static final void main(String[] args)
 	{
@@ -48,7 +48,8 @@ public class DanielFrontend implements StevenSupport{
 	}
 	public DanielFrontend()
 	{
-		backend = new StevenBackend(this, 3);
+		num = 5;
+		backend = new StevenBackend(this, num);
 		won = false;
 	}
 	public void visionIfRow2()
@@ -58,14 +59,19 @@ public class DanielFrontend implements StevenSupport{
 		
 		if (humanX - 1 > 0)
 		{
-			backend.getMap()[humanX-1][humanY].setType(3); 
+			backend.getMap()[humanX-1][humanY].setType(3);
+			isEnemy(humanX-1, humanY);
 			backend.getMap()[humanX+1][humanY].setType(3);
+			isEnemy(humanX+1, humanY);
 			backend.getMap()[humanX][humanY+1].setType(3);
+			isEnemy(humanX, humanY+1);
 		}
 		else
 		{
 			backend.getMap()[humanX+1][humanY].setType(3);
-			backend.getMap()[humanX][humanY+1].setType(3);						
+			isEnemy(humanX+1, humanY);
+			backend.getMap()[humanX][humanY+1].setType(3);		
+			isEnemy(humanX, humanY+1);
 		}
 	}
 	public void visionRegular()
@@ -74,14 +80,28 @@ public class DanielFrontend implements StevenSupport{
 		int humanY = backend.getHuman()[1];
 		
 		backend.getMap()[humanX-1][humanY].setType(3); 
-		backend.getMap()[humanX+1][humanY+1].setType(3);
-		backend.getMap()[humanX+1][humanY].setType(3);
-		backend.getMap()[humanX][humanY+1].setType(3);
-		backend.getMap()[humanX-1][humanY+1].setType(3);
+		isEnemy(humanX-1, humanY); 
 		
+		backend.getMap()[humanX+1][humanY+1].setType(3);
+		isEnemy(humanX+1, humanY+1);
+		
+		backend.getMap()[humanX+1][humanY].setType(3);
+		isEnemy(humanX+1, humanY);
+		
+		backend.getMap()[humanX][humanY+1].setType(3);
+		isEnemy(humanX, humanY+1);
+		
+		backend.getMap()[humanX-1][humanY+1].setType(3);
+		isEnemy(humanX-1, humanY+1);
+				
 		backend.getMap()[humanX][humanY-1].setType(3);
+		isEnemy(humanX, humanY-1);
+		
 		backend.getMap()[humanX+1][humanY-1].setType(3);
+		isEnemy(humanX+1, humanY-1);
+			
 		backend.getMap()[humanX-1][humanY-1].setType(3);
+		isEnemy(humanX-1, humanY-1);
 	}
 	
 	public void visionBottom()
@@ -90,8 +110,14 @@ public class DanielFrontend implements StevenSupport{
 		int humanY = backend.getHuman()[1];
 		
 		backend.getMap()[humanX][humanY+1].setType(3); 
+		isEnemy(humanX, humanY+1);
+		
 		backend.getMap()[humanX-1][humanY+1].setType(3);
+		isEnemy(humanX-1, humanY+1);
+				
 		backend.getMap()[humanX-1][humanY].setType(3);
+		isEnemy(humanX-1, humanY);
+		
 	}
 	
 	public void visionRightWall()
@@ -102,37 +128,39 @@ public class DanielFrontend implements StevenSupport{
 		if (humanX + 1 < backend.getMap().length)
 		{
 			backend.getMap()[humanX][humanY-1].setType(3); 
+			isEnemy(humanX, humanY-1);
+			
 			backend.getMap()[humanX+1][humanY].setType(3);
+			isEnemy(humanX+1, humanY);
+			
 			backend.getMap()[humanX+1][humanY-1].setType(3);
+			isEnemy(humanX+1, humanY-1);
 		}
 		else
 		{
 			backend.getMap()[humanX][humanY-1].setType(3); 
+			isEnemy(humanX, humanY-1);
+			
 			backend.getMap()[humanX-1][humanY].setType(3);
+			isEnemy(humanX-1, humanY);
+			
 			backend.getMap()[humanX-1][humanY-1].setType(3);
+			isEnemy(humanX-1, humanY-1);
 		}
 	}
 	
 	public void isEnemy(int x, int y)
 	{
-		int[][] temp;
-		temp = new int[backend.getEnemyPosition().length][backend.getEnemyPosition()[0].length];
-		
-		for (int i = 0; i < backend.getEnemyPosition().length; i++)
+		for (int i = 0; i < num; i++)
 		{
-			for (int j = 0; j < backend.getEnemyPosition()[0].length; j++)
+			if (x == backend.getEnemyPosition()[i][0] && y == backend.getEnemyPosition()[i][1])
 			{
-				if (backend.getEnemyPosition()[i][j] == temp[x][y])
-				{
-					backend.getMap()[x][y].setType(2);
-					
-				}
+				backend.getMap()[x][y].setType(2);
 			}
 		}
 	}
 	public void fogOfWar()
-	{
-		fogCoords = new int[20][20]; 
+	{ 
 		
 		int humanX = backend.getHuman()[0];
 		int humanY = backend.getHuman()[1];
@@ -145,6 +173,7 @@ public class DanielFrontend implements StevenSupport{
 				backend.getMap()[i][j].setType(0);
 			}
 		}
+		
 		//SETS HUMAN
 		backend.getMap()[humanX][humanY].setType(1);
 		
@@ -155,8 +184,14 @@ public class DanielFrontend implements StevenSupport{
 		if (humanX + 1 < backend.getMap().length && humanY + 1 < backend.getMap()[0].length)
 		{
 			backend.getMap()[humanX][humanY+1].setType(3); 
+			isEnemy(humanX, humanY+1);
+			
 			backend.getMap()[humanX+1][humanY].setType(3);
+			isEnemy(humanX+1, humanY);
+			
 			backend.getMap()[humanX+1][humanY+1].setType(3);
+			isEnemy(humanX+1, humanY+1);
+			
 		}
 		
 		if (humanX != 0 && humanY != backend.getMap().length)
@@ -205,7 +240,7 @@ public class DanielFrontend implements StevenSupport{
 		}
 		
 		//SETS TYPES 
-	//	setType();
+		setType();
 		
 		//CREATES FOG + HUMAN
 		fogOfWar();
@@ -273,7 +308,7 @@ public class DanielFrontend implements StevenSupport{
 		
 		System.out.println(map);
 	}
-	/*
+	
 	public void setType()
 	{		
 		backend.getMap()[backend.getHuman()[0]][backend.getHuman()[1]].setType(1);
@@ -283,7 +318,7 @@ public class DanielFrontend implements StevenSupport{
 			backend.getMap()[a[0]][a[1]].setType(2);
 		}
 	}
-	*/
+	
 	public DanielFrontend getFront()
 	{
 		return this;
