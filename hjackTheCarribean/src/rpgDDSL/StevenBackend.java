@@ -168,6 +168,8 @@ public class StevenBackend implements DanSupport {
 
 		return true;
 	}
+	
+	
 	public void respondToKey(int direction) {
 		//First, protect against null pointer exception
 		//(user cannot go through a non existent door)
@@ -211,7 +213,7 @@ public class StevenBackend implements DanSupport {
 				}*/
 				direction=(int)(Math.random()*4);
 				input="wdsa".substring(direction,direction+1);
-				if(checkWalls(input,enemyPosition[i])||!checkHuman(direction,enemyPosition[i])||!checkEnemyPos(direction,i)){
+				if(checkWalls(input,enemyPosition[i])&&!checkHuman(direction,enemyPosition[i])&&!checkEnemyPos(direction,i)){
 					if(direction==0) {
 						enemyPosition[i][0]-=1;
 					}
