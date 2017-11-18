@@ -1,6 +1,7 @@
 package rpgDDSL;
 
 import oceanExplorer.CaveExplorer;
+import oceanExplorer.Ship;
 
 public class StevenBackend implements DanSupport {
 	
@@ -10,6 +11,7 @@ public class StevenBackend implements DanSupport {
 	private DanielFrontend front;
 	private int[][] enemyPosition;
 	private int num;
+	private Ship ship;
 	
 	public static final int NORTH = 0;
 	public static final int EAST = 1;
@@ -24,7 +26,6 @@ public class StevenBackend implements DanSupport {
 		this.num=num;
 		makeMap();
 	}
-	//
 	public void makeMap()
 	{
 		for (int i = 0; i < map.length; i++)

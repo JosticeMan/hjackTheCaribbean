@@ -1,5 +1,7 @@
 package rpgDDSL;
 
-public interface StevenSupport {
+import oceanExplorer.Ship;
 
+public interface StevenSupport {
+	public Ship getShip();
 }
