@@ -333,7 +333,7 @@ public class AndrewBackend implements KevinSupport{
 		if(isValidDirection(input)) {
 			String dirKeys = "wdsa";
 			attemptPlayerMove(dirKeys.indexOf(input));
-			monkeyMoves();
+			allMonkeyMove();
 		}else if(isValidCoordinates(input)){
 			int row = Integer.parseInt(input.substring(0,1));
 			int col = Integer.parseInt(input.substring(2,3));
