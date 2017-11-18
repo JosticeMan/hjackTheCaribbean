@@ -49,6 +49,87 @@ public class DanielFrontend implements StevenSupport{
 		backend = new StevenBackend(this, 0);
 		won = false;
 	}
+	public void visionIfRow2()
+	{
+		int humanX = backend.getHuman()[0];
+		int humanY = backend.getHuman()[1];
+		
+		if (humanX - 1 > 0)
+		{
+			backend.getMap()[humanX-1][humanY].setType(3); 
+			backend.getMap()[humanX+1][humanY].setType(3);
+			backend.getMap()[humanX][humanY+1].setType(3);
+		}
+		else
+		{
+			backend.getMap()[humanX+1][humanY].setType(3);
+			backend.getMap()[humanX][humanY+1].setType(3);						
+		}
+	}
+	public void visionRegular()
+	{
+		int humanX = backend.getHuman()[0];
+		int humanY = backend.getHuman()[1];
+		
+		backend.getMap()[humanX-1][humanY].setType(3); 
+		backend.getMap()[humanX+1][humanY+1].setType(3);
+		backend.getMap()[humanX+1][humanY].setType(3);
+		backend.getMap()[humanX][humanY+1].setType(3);
+		backend.getMap()[humanX-1][humanY+1].setType(3);
+		
+		backend.getMap()[humanX][humanY-1].setType(3);
+		backend.getMap()[humanX+1][humanY-1].setType(3);
+		backend.getMap()[humanX-1][humanY-1].setType(3);
+	}
+	
+	public void visionBottom()
+	{
+		int humanX = backend.getHuman()[0];
+		int humanY = backend.getHuman()[1];
+		
+		backend.getMap()[humanX][humanY+1].setType(3); 
+		backend.getMap()[humanX-1][humanY+1].setType(3);
+		backend.getMap()[humanX-1][humanY].setType(3);
+	}
+	
+	public void visionRightWall()
+	{
+		int humanX = backend.getHuman()[0];
+		int humanY = backend.getHuman()[1];
+		
+		if (humanX + 1 < backend.getMap().length)
+		{
+			backend.getMap()[humanX][humanY-1].setType(3); 
+			backend.getMap()[humanX+1][humanY].setType(3);
+			backend.getMap()[humanX+1][humanY-1].setType(3);
+		}
+		else
+		{
+			backend.getMap()[humanX][humanY-1].setType(3); 
+			backend.getMap()[humanX-1][humanY].setType(3);
+			backend.getMap()[humanX-1][humanY-1].setType(3);
+		}
+	}
+	
+	public boolean isEnemy(int x, int y)
+	{
+		int[][] temp;
+		temp = new int[backend.getEnemyPosition().length][backend.getEnemyPosition()[0].length];
+		
+		for (int i = 0; i < backend.getEnemyPosition().length; i++)
+		{
+			for (int j = 0; j < backend.getEnemyPosition()[0].length; j++)
+			{
+				if (backend.getEnemyPosition()[i][j] == temp[x][y])
+				{
+					backend.getMap()[x][y].setType(2);
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
 	public void fogOfWar()
 	{
 		fogCoords = new int[20][20]; 
@@ -67,106 +148,47 @@ public class DanielFrontend implements StevenSupport{
 		//SETS HUMAN
 		backend.getMap()[humanX][humanY].setType(1);
 		
-		//SETS FLASHLIGHT VISION FOR HUMAN 
+		//SETS FLASHLIGHT VISION FOR PLAYER 
 		
 		
 		//STARTING POSITION VISION
-		if (humanX + 1 < backend.getMap().length)
+		if (humanX + 1 < backend.getMap().length && humanY + 1 < backend.getMap()[0].length)
 		{
 			backend.getMap()[humanX][humanY+1].setType(3); 
 			backend.getMap()[humanX+1][humanY].setType(3);
 			backend.getMap()[humanX+1][humanY+1].setType(3);
 		}
 		
-		if (backend.getHuman()[0] != 0 && backend.getHuman()[0] != backend.getMap().length)
+		if (humanX != 0 && humanY != backend.getMap().length)
 		{
-			
-			
+		
 			if (humanY+1 < backend.getMap().length && humanX + 1 < backend.getMap()[0].length)
 			{	
 				/* field of view is 
-				 * 		0		1		
-				 *1     view	view
-				 *2 	PLAYER	view
-				 *3		view	view
+				 * 		0		1		2		
+				 *1     view	view	view
+				 *2 	view	PLAYER	view
+				 *3		view	view	view
 				 */		
-				if (humanX-1 > 0 && humanX+1 < backend.getMap().length)
+				if (humanX-1 > 0 && humanX+1 < backend.getMap().length && humanY - 1 > 0 && humanY+1 < backend.getMap().length - 1)
 				{
-					backend.getMap()[humanX-1][humanY].setType(3); 
-					backend.getMap()[humanX+1][humanY+1].setType(3);
-					backend.getMap()[humanX+1][humanY].setType(3);
-					backend.getMap()[humanX][humanY+1].setType(3);
-					backend.getMap()[humanX-1][humanY+1].setType(3);
+					visionRegular();
 				}
 				else
 				{		
-						backend.getMap()[humanX][humanY+1].setType(3); 
-						backend.getMap()[humanX+1][humanY+1].setType(3);
-					
+					visionIfRow2();
 				}
 			}
-			else
-			{
-				if (humanX == 1)
-				{
-					backend.getMap()[humanX-1][humanY].setType(3); 
-					backend.getMap()[humanX][humanY+1].setType(3);
-					backend.getMap()[humanX-1][humanY+1].setType(3);
-				}
-				else
-				{
-					if (humanX == backend.getMap().length - 2)
-					{
-						backend.getMap()[humanX-1][humanY].setType(3); 
-						backend.getMap()[humanX][humanY+1].setType(3);
-						backend.getMap()[humanX-1][humanY+1].setType(3);
-					}
-				}
-			}
+		}
+		if(humanX == backend.getMap().length - 1 && humanY + 1 < backend.getMap().length)
+		{
+			visionBottom();
+		}
+		if (humanY == backend.getMap()[0].length - 1)
+		{
+			visionRightWall();
 		}
 
-		for (int row = 0; row < backend.getMap().length; row++)
-		{
-			for (int col = 0; col < backend.getMap()[0].length; col++)
-			{
-				if (backend.getMap()[row][col].getType() == 3)
-				{
-					fogCoords[row][col] = 0;
-				}
-			}
-		}
-		
-		/*
-		 Player on starting square (0,0)
-					* field of view is 
-					* 		0		1		
-					*1      PLAYER	view
-					*2 		view	view
-					*3		NONE	NONE
-											
-					if (humanX == 0)
-					{
-						backend.getMap()[humanX-1][humanY].setType(3); 
-						backend.getMap()[humanX][humanY+1].setType(3);
-						backend.getMap()[humanX-1][humanY+1].setType(3);
-					}
-					else
-					{
-						/* Player on bottom square (x,7)
-						* field of view is 
-						* 		0		1		
-						*5      NONE	NONE
-						*6 		view	view
-						*7		PLAYER	view 
-							
-						if (humanX == backend.getMap().length - 2)
-						{
-							backend.getMap()[humanX-1][humanY].setType(3); 
-							backend.getMap()[humanX][humanY+1].setType(3);
-							backend.getMap()[humanX-1][humanY+1].setType(3);
-						}
-					}
-			*/
 		 
 		
 	}
@@ -183,13 +205,12 @@ public class DanielFrontend implements StevenSupport{
 		}
 		
 		//SETS TYPES 
-		setType();
+	//	setType();
 		
 		//CREATES FOG + HUMAN
 		fogOfWar();
 		
-		//SPAWN AND DISPLAY ENEMIES
-		
+
 		//MAP CREATION
 		
 		
@@ -228,51 +249,16 @@ public class DanielFrontend implements StevenSupport{
 					}
 					else
 					{
-						if (i == 2 && j == 1)
-						{
-							map += backend.getMap()[2][1] + " | ";
-							backend.getMap()[2][1].setEast(true);
-							backend.getMap()[2][2].setWest(true);							
-						}
-						else
-						{
-							if (i == 2 && j == 4)
-							{
-								map += backend.getMap()[2][4] + " | ";
-								backend.getMap()[2][4].setEast(true);
-								backend.getMap()[2][5].setWest(true);	
-							}
-							else
-							{
-								if (i == 4 && j == 1)
-								{
-									map += backend.getMap()[4][1] + " | ";
-									backend.getMap()[4][1].setEast(true);
-									backend.getMap()[4][2].setWest(true);	
-								}
-								else
-								{
-									if (i == 4 && j == 4)
-									{
-										map += backend.getMap()[4][4] + " | ";
-										backend.getMap()[4][4].setEast(true);
-										backend.getMap()[4][5].setWest(true);	
-									}
-									else
-									{
-										map += backend.getMap()[i][j].toString() + "   ";
-									}
-								}
-								
-							}
-						}
+						map += backend.getMap()[i][j].toString() + "   ";
 					}
 				}
 			}
-			
 			map += "\n";
 		}
 		
+		
+			
+		/*
 		for (int row = 0; row < backend.getMap().length; row++)
 		{
 			for (int col = 0; col < backend.getMap()[0].length; col++)
@@ -283,10 +269,11 @@ public class DanielFrontend implements StevenSupport{
 				}
 			}
 		}
-		
+		*/
 		
 		System.out.println(map);
 	}
+	/*
 	public void setType()
 	{		
 		backend.getMap()[backend.getHuman()[0]][backend.getHuman()[1]].setType(1);
@@ -296,6 +283,7 @@ public class DanielFrontend implements StevenSupport{
 			backend.getMap()[a[0]][a[1]].setType(2);
 		}
 	}
+	*/
 	public DanielFrontend getFront()
 	{
 		return this;
