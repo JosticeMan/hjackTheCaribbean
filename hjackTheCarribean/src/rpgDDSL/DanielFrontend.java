@@ -13,17 +13,13 @@ public class DanielFrontend implements StevenSupport{
 	private StevenBackend backend;
 	private boolean won;
 	private int num;
-	private boolean rules;
-	private boolean play;
 	private boolean viewed;
 	
 	public static final void main(String[] args)
 	{
 		DanielFrontend demo = new DanielFrontend();
 		CaveExplorer.in=new Scanner(System.in);
-		demo.intro();
-		
-		
+		demo.intro();		
 	}
 	public void intro()
 	{	
@@ -33,7 +29,7 @@ public class DanielFrontend implements StevenSupport{
 		}
 		else
 		{
-			System.out.println("Enter 'p' to play the game, or reread the instructions by entering 'i'.");
+			System.out.println("\nEnter 'p' to play the game, or reread the instructions by entering 'i'.");
 		}
 		String input = CaveExplorer.in.nextLine();
 	
@@ -46,9 +42,14 @@ public class DanielFrontend implements StevenSupport{
 				if (input.equals("i"))
 				{
 					System.out.println("Your goal is to beat up all the pirates that invaded your ship.\n"
-							+ "You are represented by 'H' while enemies are represented by 'E.'\nYour field of view is locked because of all the fog around you, making it hard to see."
-							+ "\nLocate the pirates and then engage in battle with them by inputting 'r' once you are next to them to defeat them.");
+							+ "You are represented by 'H' while enemies are represented by 'E.'\nYour field of view is locked because of all the fog around you, represented by X."
+							+ "\nLocate the pirates and then engage in battle with them by inputting 'r' once you are next to them to attack them."
+							+ "\nDepending on your speed, you can move a certain amount of times. Pay attention to your stats!");
 					viewed = true;
+					intro();
+				}
+				else
+				{
 					intro();
 				}
 			}
@@ -62,19 +63,27 @@ public class DanielFrontend implements StevenSupport{
 				fogOfWar();
 				updateMap();
 				input=CaveExplorer.in.nextLine();
-				while (!backend.isValid(input) || !backend.checkWalls(input, backend.getHuman()))
+				if (!input.equals("cheat"))
 				{
-					if (!backend.checkWalls(input, backend.getHuman()))
+					while (!backend.isValid(input) || !backend.checkWalls(input, backend.getHuman()))
 					{
-						System.out.println("There is a wall. Please enter a valid direction.");
+						if (!backend.checkWalls(input, backend.getHuman()))
+						{
+							System.out.println("There is a wall. Please enter a valid direction.");
+						}
+						else
+						{
+							System.out.println("Enter a valid key.");
+						}
+						input = CaveExplorer.in.nextLine();
 					}
-					else
-					{
-						System.out.println("Enter a valid key.");
-					}
-					input = CaveExplorer.in.nextLine();
+					backend.interpretInput(input);
 				}
-				backend.interpretInput(input);
+				else
+				{
+					System.out.println("You won! (kinda)");
+					won = true;
+				}
 			}
 	}
 	public DanielFrontend()
@@ -82,8 +91,6 @@ public class DanielFrontend implements StevenSupport{
 		num = 5;
 		backend = new StevenBackend(this, num);
 		won = false;
-		play = false;
-		rules = false;
 	}
 	public void visionIfRow2()
 	{
