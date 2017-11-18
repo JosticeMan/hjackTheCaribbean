@@ -30,7 +30,7 @@ public class StevenBackend implements DanSupport {
 		setValues();
 		makeMap();
 	}
-	//
+	
 	public void setValues() {
 		for(int i=0;i<enemyValue.length;i++) {
 			enemyValue[i][0]=(int)(ship.getHp()/2);
