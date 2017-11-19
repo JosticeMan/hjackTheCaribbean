@@ -155,7 +155,7 @@ public class AndrewBackend implements KevinSupport{
 		playerSpawn(); //player position will be randomly generated along the border
 
 		//creates and sets monkeys and their positions
-		monkeys = new int[5][2]; //first numbers is how many monkeys, 2nd is for their coords
+		monkeys = new int[1][2]; //first numbers is how many monkeys, 2nd is for their coords
 		
 		monkeySpawn();
 		
@@ -191,7 +191,7 @@ public class AndrewBackend implements KevinSupport{
 	public void setSpecificMonkeyPos(int idx, int row, int col) {
 		monkeys[idx][ROW] = row;
 		monkeys[idx][COL] = col;
-		map[row][col].setNonStaticOccupant(2); 
+		map[row][col].setNonStaticOccupant(MONKEY); 
 	}
 	
 	public int[] getSpecificMonkeyPos(int idx) {
@@ -238,21 +238,21 @@ public class AndrewBackend implements KevinSupport{
 
 	public void monkeySpawn() {
 		int monkeyCount = monkeys.length-1;
-		while(monkeyCount > -1) {
 			for(int i = 0; i < map.length-2; i++) {
 				for(int j = 0; j < map[i].length; j++) {
+					if(monkeyCount == -1) {
+						break;
+					}
 					if(Math.random() < 0.5) {
 						if(checkTile(i,j) == ROCK && checkTile(i,j) == TREASURE) {
 							
 						}else {
-							if(monkeyCount == -1) monkeyCount = 0;
 							setSpecificMonkeyPos(monkeyCount, i, j);
 							monkeyCount--;
 						}
 					}
 				}
 			}
-		}
 	}
 	
 	
