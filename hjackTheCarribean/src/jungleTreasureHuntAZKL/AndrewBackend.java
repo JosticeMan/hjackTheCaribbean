@@ -108,6 +108,7 @@ public class AndrewBackend implements KevinSupport{
 	
 	private int[] treasurePos;
 	
+	private boolean playing;
 	/*------CONSTANTS--------*/
 	public static final int ROW = 0;
 	public static final int COL = 1;
@@ -129,6 +130,7 @@ public class AndrewBackend implements KevinSupport{
 	public static final int RIGHT = 1;
 	public static final int DOWN = 2;
 	public static final int LEFT = 3;
+	
 	
 	public AndrewBackend(AndrewSupport frontend) {
 		this.frontend = frontend;
@@ -245,7 +247,7 @@ public class AndrewBackend implements KevinSupport{
 		int[] attemptedTile = getDirectedCoordinates(direction);
 		int into = checkTile(attemptedTile[0],attemptedTile[1]);
 		
-		//!!! NEED ONE TO CHECK FOR MONKEY AND FIGURE OUT WHAT HAPPENS THEN!!!
+		//!!! Needs one to check if monkey attacked and send information about the attack to front end
 		
 		//checks if the tile is valid for moving into
 		//This is where events will trigger
@@ -334,6 +336,10 @@ public class AndrewBackend implements KevinSupport{
 			int row = Integer.parseInt(input.substring(0,1));
 			int col = Integer.parseInt(input.substring(2,3));
 			attemptObserve(row, col);
+		}else if(input.length()==1) {
+			if(input.substring(0,1).equalsIgnoreCase("r")) {
+				
+			}
 		}
 	}
 	/**
@@ -400,30 +406,25 @@ public class AndrewBackend implements KevinSupport{
 		for(int condenseRow = 1; condenseRow < map.length-2/2; condenseRow += 2) { //goes through every 2x2 tile on map, will be mostly 4:0 open tiles
 			for(int condenseCol = 1; condenseCol < map[0].length-2/2; condenseCol += 2) {
 				int[][] theTwoByTwo = new int[2][2];
-				if(Math.random() < 0.33) {
-					if(Math.random()<0.66) {
+				if(Math.random() < 0.20) { // 20% chance of a four to zero formation
+					if(Math.random()<0.80) { // 80% chance of it to be all open
 						theTwoByTwo = ratioFourToZero(true);
-					}else {
+					}else { // 20% chance of it to be all closed
 						theTwoByTwo = ratioFourToZero(false);
 					}
-				}else if(Math.random() < 0.66) {
-					if(Math.random()<0.66) {
+				}else if(Math.random() < 0.5) { // 30% chance of a three to one formation
+					if(Math.random()<0.66) { // 66% chance of it to be mostly open
 						theTwoByTwo = ratioThreeToOne(true);
-					}else {
+					}else { // 66% chance of it to be mostly closed
 						theTwoByTwo = ratioThreeToOne(true);
 					}
-				}else if(Math.random() < 1) {
-					if(Math.random()<0.66) {
+				}else if(Math.random() < 1) { // 50% chance of a two to two formation
 						theTwoByTwo = ratioTwoToTwo();
-					}else {
-						theTwoByTwo = ratioTwoToTwo();
-					}
 				}
-				
 				applyTwoByTwoTiles(condenseRow, condenseCol, theTwoByTwo);
+				}
 			}
 		}
-	}
 	/**
 	 * Method to replace apply2x2Tiles in order to allow for greater variations in tile generation
 	 * Able to add specific formations such as a path that can only be moved in from
@@ -529,7 +530,7 @@ public class AndrewBackend implements KevinSupport{
 			if(Math.random() > 0.4){
 				return TREE;
 			}else {
-				return ROCK;
+				return ROCK;//
 			}
 		}
 	}
