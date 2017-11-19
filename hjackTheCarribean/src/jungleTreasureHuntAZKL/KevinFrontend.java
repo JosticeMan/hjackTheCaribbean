@@ -62,11 +62,27 @@ public class KevinFrontend implements AndrewSupport {
 		String numCol = "";
 		for(int row = 0; row<tMap.length; row++) {
 			for(int col = 0; col < tMap[row].length; col++) {				
-				if(tMap[row][col].getNonStaticOccupant() == ROCK) {
+				if(tMap[row][col].getNonStaticOccupant() == PLAYER) {
 					System.out.print("P");
+					
+				}
+				else if(tMap[row][col].getStaticOccupant() == ROCK) {
+					System.out.print("R");
+				}
+				else if(tMap[row][col].getStaticOccupant() == TREE) {
+					System.out.print("T");
+				}
+				else if(tMap[row][col].getStaticOccupant() == FORAGE) {
+					System.out.print("F");
+				}
+				else if(tMap[row][col].getStaticOccupant() == TREASURE) {
+					System.out.print("X");
+				}
+				else if(tMap[row][col].getNonStaticOccupant() == MONKEY) {
+					System.out.print("M");
 				}
 				else{
-					System.out.print("X");
+					System.out.print(" ");
 				}
 			}
 			System.out.println(" "+row);

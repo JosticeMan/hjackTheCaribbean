@@ -47,14 +47,4 @@ public class AndrewKevinTile {
 		this.nonStaticOccupant = nonStaticOccupant;
 	}
 
-	public String getContent() {
-		if(staticOccupant == ROCK) {
-			return "R";
-		}else if(nonStaticOccupant == MONKEY) {
-			return "M";
-		}else if(nonStaticOccupant == ROCK) {
-			return "P";
-		}
-		return " ";
-	}
 }
