@@ -73,7 +73,7 @@ public class DanielFrontend implements StevenSupport{
 					won = true;
 				}
 			}
-	}
+	}//
 	public DanielFrontend()
 	{
 		num = 5;
