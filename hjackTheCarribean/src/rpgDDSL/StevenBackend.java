@@ -307,6 +307,7 @@ public class StevenBackend implements DanSupport {
 			front.fogOfWar();
 			front.updateMap();
 			input = CaveExplorer.in.nextLine();
+			
 		}
 		
 	}
