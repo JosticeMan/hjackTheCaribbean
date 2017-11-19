@@ -11,5 +11,7 @@ public interface KevinSupport {
 	AndrewKevinTile[][] getMap();
 
 	int getStepCount();
+	
+	int[] getPlayerPos();
 
 }

@@ -167,6 +167,10 @@ public class AndrewBackend implements KevinSupport{
 	
 	/*---- KEVINSUPPORT METHODS ----*/
 	
+	public int[] getPlayerPos() {
+		return playerPos;
+	}
+	
 	public int getStepCount() {
 		return stepCount;
 	}
@@ -592,5 +596,25 @@ public class AndrewBackend implements KevinSupport{
 		treasurePos[ROW] = randomRow;
 		treasurePos[COL] = randomCol;
 		map[randomRow][randomCol].setStaticOccupant(TREASURE);
+	}
+	/**
+	 * Checks to see if the player has a path of OPEN tiles to get to the treasure
+	 * and if not, make one
+	 * Checks from top -> right -> left -> down for an open tile 
+	 * If there are none then the method will open a random tile
+	 * Method will have to try to work its way to the bottom left of the map
+	 * 	In order for the path to be random the method will choose between
+	 * 		either making the currentRow of the path go to map.length-2
+	 * 			or the currentCol of the path go to 1
+	 */
+	public void checkPathToTreasure() {
+		int currentRow = treasurePos[ROW];
+		int currentCol = treasurePos[COL];
+		int cameFrom = -1;
+		boolean fullPath = false;
+		while(!fullPath){
+			
+		}
+		
 	}
 }
