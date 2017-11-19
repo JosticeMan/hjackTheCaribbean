@@ -14,6 +14,7 @@ public class DanielFrontend implements StevenSupport{
 	private boolean won;
 	private int num;
 	private boolean viewed;
+	private Ship a;
 	
 	public static final void main(String[] args)
 	{
@@ -65,19 +66,7 @@ public class DanielFrontend implements StevenSupport{
 				input=CaveExplorer.in.nextLine();
 				if (!input.equals("cheat"))
 				{
-					while (!backend.isValid(input) || !backend.checkWalls(input, backend.getHuman()))
-					{
-						if (!backend.checkWalls(input, backend.getHuman()))
-						{
-							System.out.println("There is a wall. Please enter a valid direction.");
-						}
-						else
-						{
-							System.out.println("Enter a valid key.");
-						}
-						input = CaveExplorer.in.nextLine();
-					}
-					backend.interpretInput(input);
+					backend.movement(input);
 				}
 				else
 				{
@@ -89,6 +78,7 @@ public class DanielFrontend implements StevenSupport{
 	public DanielFrontend()
 	{
 		num = 5;
+		a = new Ship(30,10,3);
 		backend = new StevenBackend(this, num);
 		won = false;
 	}
@@ -366,7 +356,7 @@ public class DanielFrontend implements StevenSupport{
 	@Override
 	public Ship getShip() 
 	{
-		Ship a = new Ship(30,10,1);
+		
 		return a;
 	}
 }

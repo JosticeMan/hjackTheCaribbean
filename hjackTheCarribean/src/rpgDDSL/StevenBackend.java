@@ -280,19 +280,17 @@ public class StevenBackend implements DanSupport {
 			makeWalls();
 		}
 	}
-public Ship getShip() {
+	public Ship getShip() {
 		return ship;
 	}
 	public int[][] getEnemyValue() {
 		return enemyValue;
 	}
-	public void movement() {
-		String input;
+	public void movement(String input) {
 		int times=ship.getSpeed();
 		while(times>0) {
-			input=CaveExplorer.in.nextLine();
 			System.out.println("You can move "+times+" more times.");
-			while (!isValid(input) || !checkWalls(input, getHuman())||checkEnemyPos(determineDirection(input, validKeys()),-1))
+			while (!isValid(input) || !checkWalls(input, getHuman()))
 			{
 				if (!checkWalls(input, getHuman()))
 				{
@@ -306,7 +304,11 @@ public Ship getShip() {
 			}
 			interpretInput(input);
 			times--;
+			front.fogOfWar();
+			front.updateMap();
+			input = CaveExplorer.in.nextLine();
 		}
+		
 	}
 	public boolean checkEnemyPos(int direction,int idx) {
 		int x;
