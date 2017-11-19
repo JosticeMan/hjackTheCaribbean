@@ -308,7 +308,7 @@ public class StevenBackend implements DanSupport {
 			input = CaveExplorer.in.nextLine();
 			System.out.println("You can move "+times+" more times.");
 		}
-		enemyAction(false);//
+		enemyAction(false);
 	}
 	public boolean checkEnemyPos(int direction,int idx) {
 		int x;
