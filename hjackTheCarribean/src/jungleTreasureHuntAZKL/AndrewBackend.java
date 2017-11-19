@@ -252,6 +252,7 @@ public class AndrewBackend implements KevinSupport{
 		//checks if the tile is valid for moving into
 		//This is where events will trigger
 		if(into == NOTHING) {
+			map[playerPos[ROW]][playerPos[COL]].setNonStaticOccupant(NOTHING);
 			setPlayerPos(attemptedTile[0], attemptedTile[1]);
 			stepCount--;
 		}else {
@@ -261,10 +262,9 @@ public class AndrewBackend implements KevinSupport{
 					}else 
 						if(into == FORAGE) { //walks into forage and forage gets removed
 						map[playerPos[ROW]][playerPos[COL]].setNonStaticOccupant(NOTHING);
-							
 						setPlayerPos(attemptedTile[0], attemptedTile[1]);
 						stepCount--;
-						//map[attemptedTile[0]][attemptedTile[1]].setNonStaticOccupant(NOTHING);
+						map[attemptedTile[0]][attemptedTile[1]].setStaticOccupant(NOTHING);
 					}else 
 						if(into == TREASURE) {
 						//player wins
