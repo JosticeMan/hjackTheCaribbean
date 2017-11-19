@@ -359,11 +359,13 @@ public class DanielFrontend implements StevenSupport{
 		return a;
 	}
 	
-	public Object[][] getCoords()
+	public int[][] getCoords()
 	{
-		Object[][] enemyCoords;
-		enemyCoords = new Object[num][2];
+		Object[][] holder;
+		holder = new Object[num][2];
 		
+		int[][] enemyCoords;
+		int ctr = 0;
 		int humanX = backend.getHuman()[0];
 		int humanY = backend.getHuman()[1];
 		
@@ -373,13 +375,13 @@ public class DanielFrontend implements StevenSupport{
 			{
 				if (humanX + 1 == backend.getEnemyPosition()[i][0] || humanX - 1 == backend.getEnemyPosition()[i][0] || humanY + 1 == backend.getEnemyPosition()[i][1] || humanY - 1 == backend.getEnemyPosition()[i][1])
 				{
-					enemyCoords[i][0] = backend.getEnemyPosition()[i][0];
-					enemyCoords[i][1] = backend.getEnemyPosition()[i][1];					
+					holder[i][0] = backend.getEnemyPosition()[i][0];
+					holder[i][1] = backend.getEnemyPosition()[i][1];					
 				}
 				else
 				{
-					enemyCoords[i][0] = null;
-					enemyCoords[i][1] = null;
+					holder[i][0] = null;
+					holder[i][1] = null;
 				}
 			}
 			else
@@ -388,17 +390,33 @@ public class DanielFrontend implements StevenSupport{
 				{
 					if (humanY == backend.getEnemyPosition()[i][1] || humanX+1 == backend.getEnemyPosition()[i][0] || humanX-1 == backend.getEnemyPosition()[i][0])
 					{
-						enemyCoords[i][0] = backend.getEnemyPosition()[i][0];
-						enemyCoords[i][1] = backend.getEnemyPosition()[i][1];	
+						holder[i][0] = backend.getEnemyPosition()[i][0];
+						holder[i][1] = backend.getEnemyPosition()[i][1];	
 					}
 					else
 					{
-						enemyCoords[i][0] = null;
-						enemyCoords[i][1] = null;
+						holder[i][0] = null;
+						holder[i][1] = null;
 					}
 				}
 			}
 		}
+		
+		for (int j = 0; j < holder.length; j++)
+		{
+			if (holder[j][0] != null)
+			ctr++;
+		}
+		
+		enemyCoords = new int[ctr][2];
+		
+		for (int k = 0; k < ctr; k++)
+		{
+			if (holder[k][0] != null)
+			enemyCoords[k][0] = (int) holder[k][0];
+			enemyCoords[k][1] = (int) holder[k][1];
+		}
+		
 		return enemyCoords;		
 	}
 }
