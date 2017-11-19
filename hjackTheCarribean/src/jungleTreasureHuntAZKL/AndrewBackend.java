@@ -150,12 +150,18 @@ public class AndrewBackend implements KevinSupport{
 		stepCount = 10;
 		
 		//creates and sets player starting position
-		int[] a = new int[2];
-		playerPos = a;
-		setPlayerPos(map.length-2, 1); //player position will be randomly generated along the border
+		playerPos = new int[2];
+		
+		playerSpawn(); //player position will be randomly generated along the border
 
 		//creates and sets monkeys and their positions
 		monkeys = new int[5][2]; //first numbers is how many monkeys, 2nd is for their coords
+		
+		monkeySpawn();
+		
+		treasurePos = new int[2];
+		
+		treasureSpawn();
 	}
 	
 	/*---- KEVINSUPPORT METHODS ----*/
@@ -229,6 +235,26 @@ public class AndrewBackend implements KevinSupport{
 			}
 		}
 	}
+
+	public void monkeySpawn() {
+		int monkeyCount = monkeys.length-1;
+		while(monkeyCount > -1) {
+			for(int i = 0; i < map.length-2; i++) {
+				for(int j = 0; j < map[i].length; j++) {
+					if(Math.random() < 0.5) {
+						if(checkTile(i,j) == ROCK && checkTile(i,j) == TREASURE) {
+							
+						}else {
+							if(monkeyCount == -1) monkeyCount = 0;
+							setSpecificMonkeyPos(monkeyCount, i, j);
+							monkeyCount--;
+						}
+					}
+				}
+			}
+		}
+	}
+	
 	
 	/*---- PLAYER CONTROL METHODS----*/
 	
@@ -537,4 +563,21 @@ public class AndrewBackend implements KevinSupport{
 		}
 	}
 	
+	public void playerSpawn() {
+		map[map.length-2][1].setStaticOccupant(NOTHING);
+		setPlayerPos(map.length-2, 1);
+	}
+	/**
+	 * For now it'll just be along the left and top sides
+	 */
+	public void treasureSpawn() {
+		int randomRow = (int)(Math.random()*map.length-2)+1;
+		int randomCol = (int)(Math.random()*map[0].length-2)+1;
+		if(randomRow != 1) { //
+			randomCol = map[randomRow].length-2;
+		}
+		treasurePos[ROW] = randomRow;
+		treasurePos[COL] = randomCol;
+		map[randomRow][randomCol].setStaticOccupant(TREASURE);
+	}
 }
