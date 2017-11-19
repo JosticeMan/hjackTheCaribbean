@@ -213,7 +213,6 @@ public class StevenBackend implements DanSupport {
 			if(direction==3) {
 				human[1]-=1;
 			}
-			enemyAction(false);
 		} 
 		else {
 			performAction(direction);
@@ -306,10 +305,8 @@ public class StevenBackend implements DanSupport {
 			times--;
 			front.fogOfWar();
 			front.updateMap();
-			input = CaveExplorer.in.nextLine();
-			
 		}
-		
+		enemyAction(false);
 	}
 	public boolean checkEnemyPos(int direction,int idx) {
 		int x;

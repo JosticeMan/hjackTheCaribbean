@@ -273,7 +273,7 @@ public class DanielFrontend implements StevenSupport{
 		setType();
 		
 		//CREATES FOG + HUMAN
-		fogOfWar();
+		//fogOfWar();
 		
 
 		//MAP CREATION
