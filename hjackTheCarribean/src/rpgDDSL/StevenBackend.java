@@ -287,8 +287,8 @@ public class StevenBackend implements DanSupport {
 	}
 	public void movement(String input) {
 		int times=ship.getSpeed();
+		System.out.println("You can move "+times+" more times.");
 		while(times>0) {
-			System.out.println("You can move "+times+" more times.");
 			while (!isValid(input) || !checkWalls(input, getHuman()))
 			{
 				if (!checkWalls(input, getHuman()))
@@ -305,6 +305,7 @@ public class StevenBackend implements DanSupport {
 			times--;
 			front.fogOfWar();
 			front.updateMap();
+			System.out.println("You can move "+times+" more times.");
 		}
 		enemyAction(false);
 	}
