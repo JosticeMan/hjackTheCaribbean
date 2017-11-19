@@ -362,7 +362,7 @@ public class DanielFrontend implements StevenSupport{
 	public int[][] getCoords()
 	{
 		int[][] enemyCoords;
-		enemyCoords = new int[num][num];
+		enemyCoords = new int[num][2];
 		
 		int humanX = backend.getHuman()[0];
 		int humanY = backend.getHuman()[1];
@@ -374,8 +374,18 @@ public class DanielFrontend implements StevenSupport{
 				if (humanX + 1 == backend.getEnemyPosition()[i][0] || humanX - 1 == backend.getEnemyPosition()[i][0] || humanY + 1 == backend.getEnemyPosition()[i][1] || humanY - 1 == backend.getEnemyPosition()[i][1])
 				{
 					enemyCoords[i][0] = backend.getEnemyPosition()[i][0];
-					enemyCoords[i][1] = backend.getEnemyPosition()[i][1];
-					
+					enemyCoords[i][1] = backend.getEnemyPosition()[i][1];					
+				}
+			}
+			else
+			{
+				if (humanY == 0 || humanY == backend.getMap()[0].length && (humanX != 0 || humanX != backend.getMap().length))
+				{
+					if (humanY == backend.getEnemyPosition()[i][1] || humanX+1 == backend.getEnemyPosition()[i][0] || humanX-1 == backend.getEnemyPosition()[i][0])
+					{
+						enemyCoords[i][0] = backend.getEnemyPosition()[i][0];
+						enemyCoords[i][1] = backend.getEnemyPosition()[i][1];	
+					}
 				}
 			}
 		}
