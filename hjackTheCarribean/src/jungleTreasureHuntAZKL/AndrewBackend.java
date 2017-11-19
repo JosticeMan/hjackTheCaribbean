@@ -119,6 +119,7 @@ public class AndrewBackend implements KevinSupport{
 	public static final int ROCK = 1;
 	public static final int TREE = 2;
 	public static final int FORAGE = 3;
+	public static final int TRAP = 4;
 	public static final int TREASURE = 7;
 	public static final int LEAVETILE = 6;
 	//non-static occupant ints
@@ -155,7 +156,7 @@ public class AndrewBackend implements KevinSupport{
 		playerSpawn(); //player position will be randomly generated along the border
 
 		//creates and sets monkeys and their positions
-		monkeys = new int[1][2]; //first numbers is how many monkeys, 2nd is for their coords
+		monkeys = new int[3][2]; //first numbers is how many monkeys, 2nd is for their coords
 		
 		monkeySpawn();
 		
@@ -189,9 +190,10 @@ public class AndrewBackend implements KevinSupport{
 	/*---- MONKEY METHODS ----*/
 	
 	public void setSpecificMonkeyPos(int idx, int row, int col) {
+		if(map[monkeys[idx][ROW]][monkeys[idx][COL]].getNonStaticOccupant() != PLAYER)
+			map[monkeys[idx][ROW]][monkeys[idx][COL]].setNonStaticOccupant(NOTHING);
 		monkeys[idx][ROW] = row;
 		monkeys[idx][COL] = col;
-		map[row][col].setNonStaticOccupant(MONKEY); 
 	}
 	
 	public int[] getSpecificMonkeyPos(int idx) {
@@ -203,8 +205,11 @@ public class AndrewBackend implements KevinSupport{
 	public void allMonkeyMove() {
 		for(int i = 0; i < monkeys.length; i++) {
 			monkeyMove(i);
-			monkeyAttack(i);
+			if(monkeyAndPlayerPosSame(i)) {
+				monkeyAttack(i);
+			}
 		}
+		confirmMonkeysOnMap();
 	}
 	
 	public void monkeyMove(int idx) {
@@ -213,14 +218,13 @@ public class AndrewBackend implements KevinSupport{
 	}
 	
 	public void attemptMonkeyMove(int idx, int dir) {
-		int[] attemptedTile = getDirectedCoordinates(dir);
+		int[] attemptedTile = getDirectedCoordinates(dir, getSpecificMonkeyPos(idx)[ROW],getSpecificMonkeyPos(idx)[COL]);
 		int into = checkTile(attemptedTile[0],attemptedTile[1]);
 		if(into == ROCK) {
 			
 		}else
 			if(into == TREE || into == NOTHING) {
-				monkeys[idx][ROW] = attemptedTile[0];
-				monkeys[idx][COL] = attemptedTile[1];
+				setSpecificMonkeyPos(idx, attemptedTile[ROW], attemptedTile[COL]);
 			}
 	}
 	/**
@@ -228,22 +232,32 @@ public class AndrewBackend implements KevinSupport{
 	 * @param idx
 	 */
 	public void monkeyAttack(int idx) {
-		if(playerPos[ROW] == monkeys[idx][ROW] && playerPos[COL] == monkeys[idx][COL]) {
 			stepCount--; //monkey removes the player steps
+		while(!monkeyAndPlayerPosSame(idx)) {
 			for(int i = 0; i < 7; i++) { //monkey runs away
 				monkeyMove(idx);
 			}
 		}
 	}
+	
+	public boolean monkeyAndPlayerPosSame(int monkeyIdx) {
+		return playerPos[ROW] == monkeys[monkeyIdx][ROW] && playerPos[COL] == monkeys[monkeyIdx][COL];
+	}
 
+	public void confirmMonkeysOnMap() {
+		for(int i = 0; i < monkeys.length; i++) {
+			map[monkeys[i][ROW]][monkeys[i][COL]].setNonStaticOccupant(MONKEY);
+		}
+	}
+	
 	public void monkeySpawn() {
 		int monkeyCount = monkeys.length-1;
-			for(int i = 0; i < map.length-2; i++) {
-				for(int j = 0; j < map[i].length; j++) {
+			for(int i = 1; i < map.length-2; i++) {
+				for(int j = 1; j < map[i].length; j++) {
 					if(monkeyCount == -1) {
 						break;
 					}
-					if(Math.random() < 0.5) {
+					if(Math.random() < 0.2) {
 						if(checkTile(i,j) == ROCK && checkTile(i,j) == TREASURE) {
 							
 						}else {
@@ -253,6 +267,7 @@ public class AndrewBackend implements KevinSupport{
 					}
 				}
 			}
+		confirmMonkeysOnMap();
 	}
 	
 	
@@ -270,7 +285,7 @@ public class AndrewBackend implements KevinSupport{
 	 * @param direction
 	 */
 	public void attemptPlayerMove(int direction) {
-		int[] attemptedTile = getDirectedCoordinates(direction);
+		int[] attemptedTile = getDirectedCoordinates(direction, playerPos[ROW], playerPos[COL]);
 		int into = checkTile(attemptedTile[0],attemptedTile[1]);
 		
 		//!!! Needs one to check if monkey attacked and send information about the attack to front end
@@ -309,10 +324,8 @@ public class AndrewBackend implements KevinSupport{
 	 * Gets coordinates in a direction from player
 	 * Processes the 
 	 */
-	public int[] getDirectedCoordinates(int direction) {
+	public int[] getDirectedCoordinates(int direction, int row, int col) {
 		int[] returnInt = new int[2];
-		int row = playerPos[ROW];
-		int col = playerPos[COL];
 		if(direction == UP && row > 0) {
 			row--;
 		}else if(direction == RIGHT && col < map[row].length-1) {
