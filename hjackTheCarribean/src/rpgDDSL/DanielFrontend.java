@@ -59,10 +59,9 @@ public class DanielFrontend implements StevenSupport{
 	{
 		backend.setFrontend(this);
 		String input;
-
+		fogOfWar();
+		updateMap();
 			while(!won) {
-				fogOfWar();
-				updateMap();
 				input=CaveExplorer.in.nextLine();
 				if (!input.equals("cheat"))
 				{

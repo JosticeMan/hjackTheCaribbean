@@ -305,6 +305,7 @@ public class StevenBackend implements DanSupport {
 			times--;
 			front.fogOfWar();
 			front.updateMap();
+			input = CaveExplorer.in.nextLine();
 			System.out.println("You can move "+times+" more times.");
 		}
 		enemyAction(false);
