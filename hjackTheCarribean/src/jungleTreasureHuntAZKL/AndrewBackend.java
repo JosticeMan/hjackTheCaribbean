@@ -424,9 +424,20 @@ public class AndrewBackend implements KevinSupport{
 			}
 		}
 	}
+	/**
+	 * Method to replace apply2x2Tiles in order to allow for greater variations in tile generation
+	 * Able to add specific formations such as a path that can only be moved in from
+	 * @param dimensions
+	 */
+	public void applyTiles(int dimensions, int topLeftRow, int topLeftCol, int[][] tiles){
+		for(int i = 0; i < dimensions; i++) {
+			for(int j = 0; j < dimensions ; j++) {
+				map[topLeftRow + i][topLeftCol + j].setStaticOccupant(tiles[i][j]);
+			}
+		}
+	}
 	
 	public void applyTwoByTwoTiles(int topLeftCoordsRow, int topLeftCoordsCol, int[][] twoByTwo) {
-		
 		for(int i = 0; i < 2; i++) {
 			for(int j = 0; j < 2 ; j++) {
 				map[topLeftCoordsRow + i][topLeftCoordsCol + j].setStaticOccupant(twoByTwo[i][j]);
