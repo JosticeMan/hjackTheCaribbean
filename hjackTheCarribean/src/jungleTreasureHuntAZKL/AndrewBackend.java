@@ -245,7 +245,7 @@ public class AndrewBackend implements KevinSupport{
 		int[] attemptedTile = getDirectedCoordinates(direction);
 		int into = checkTile(attemptedTile[0],attemptedTile[1]);
 		
-		//!!! NEED ONE TO CHECK FOR MONKEY AND FIGURE OUT WHAT HAPPENS THEN!!!
+		//!!! Needs one to check if monkey attacked and send information about the attack to front end
 		
 		//checks if the tile is valid for moving into
 		//This is where events will trigger
