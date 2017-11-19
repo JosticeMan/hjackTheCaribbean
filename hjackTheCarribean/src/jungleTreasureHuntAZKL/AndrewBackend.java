@@ -260,9 +260,11 @@ public class AndrewBackend implements KevinSupport{
 						//return fail to move towards coordinates
 					}else 
 						if(into == FORAGE) { //walks into forage and forage gets removed
+						map[playerPos[ROW]][playerPos[COL]].setNonStaticOccupant(NOTHING);
+							
 						setPlayerPos(attemptedTile[0], attemptedTile[1]);
 						stepCount--;
-						map[attemptedTile[0]][attemptedTile[1]].setNonStaticOccupant(NOTHING);
+						//map[attemptedTile[0]][attemptedTile[1]].setNonStaticOccupant(NOTHING);
 					}else 
 						if(into == TREASURE) {
 						//player wins
