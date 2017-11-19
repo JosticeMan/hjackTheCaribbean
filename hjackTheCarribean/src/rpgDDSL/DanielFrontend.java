@@ -369,29 +369,37 @@ public class DanielFrontend implements StevenSupport{
 		int humanX = backend.getHuman()[0];
 		int humanY = backend.getHuman()[1];
 		
-		boolean isAtZero = false;
-	
+		
 		for (int i = 0; i < num; i++)
 		{
 			if (humanX+1 < backend.getMap().length && humanX-1 > 0 && humanY-1 > 0 && humanY+1 < backend.getMap()[0].length)
 			{
-				if (humanX + 1 == backend.getEnemyPosition()[i][0] || humanX - 1 == backend.getEnemyPosition()[i][0] || humanY + 1 == backend.getEnemyPosition()[i][1] || humanY - 1 == backend.getEnemyPosition()[i][1])
+				if ((humanX - 1 == backend.getEnemyPosition()[i][0] && humanY - 1 == backend.getEnemyPosition()[i][1])
+					|| (humanX - 1 == backend.getEnemyPosition()[i][0] && humanY == backend.getEnemyPosition()[i][1])
+					||  (humanX - 1 == backend.getEnemyPosition()[i][0] && humanY+1 == backend.getEnemyPosition()[i][1])
+					||  (humanX == backend.getEnemyPosition()[i][0] && humanY-1 == backend.getEnemyPosition()[i][1]) 
+					||  (humanX == backend.getEnemyPosition()[i][0] && humanY+1 == backend.getEnemyPosition()[i][1])
+					||  (humanX+1 == backend.getEnemyPosition()[i][0] && humanY-1 == backend.getEnemyPosition()[i][1])
+					||  (humanX+1 == backend.getEnemyPosition()[i][0] && humanY == backend.getEnemyPosition()[i][1])
+					|| 	(humanX+1 == backend.getEnemyPosition()[i][0] && humanY+1 == backend.getEnemyPosition()[i][1]))
 				{
 					holder[i][0] = backend.getEnemyPosition()[i][0];
 					holder[i][1] = backend.getEnemyPosition()[i][1];					
 				}
-			}
+			}	
+			/*
 			else
 			{
 				if (humanY == 0 || humanY == backend.getMap()[0].length && (humanX != 0 || humanX != backend.getMap().length))
 				{
-					if (humanY == backend.getEnemyPosition()[i][1] || humanX+1 == backend.getEnemyPosition()[i][0] || humanX-1 == backend.getEnemyPosition()[i][0])
+					if (backend.getEnemyPosition()[i][0] - humanX < 3 && backend.getEnemyPosition()[i][1] - humanY < 3)
 					{
 						holder[i][0] = backend.getEnemyPosition()[i][0];
 						holder[i][1] = backend.getEnemyPosition()[i][1];	
 					}
 				}
 			}
+			*/
 		}
 		
 		for (int j = 0; j < holder.length; j++)
@@ -399,36 +407,20 @@ public class DanielFrontend implements StevenSupport{
 			if (holder[j][0] != 0 && holder[j][1] != 0)
 			ctr++;
 		}
-		// check if it actually is at 0,0
-		for (int atZero = 0; atZero < num; atZero++)
-		{
-			if (backend.getEnemyPosition()[atZero][0] == humanX + 1 && backend.getEnemyPosition()[atZero][1] == humanY - 1)
-			{
-				isAtZero = true;
-				ctr++;
-			}
-		}
 		enemyCoords = new int[ctr][2];
 		
 		int counter = 0;
 		for (int k = 0; k < holder.length; k++)
 		{
-			if(isAtZero)
-			{
-				enemyCoords[k][0] = 0;
-				enemyCoords[k][1] = 0;
-			}
-			else
-			{
-				if (holder[k][0] != 0 && holder[k][1] != 0)
+			if (holder[k][0] != 0 && holder[k][1] != 0)
 				{
 					enemyCoords[counter][0] = holder[k][0];
 					enemyCoords[counter][1] = holder[k][1];
 					counter++;
 				}
-			}
+			
 		}
-		
+
 		return enemyCoords;
 			
 	}
