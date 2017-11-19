@@ -310,9 +310,19 @@ public class StevenBackend implements DanSupport {
 				System.out.println("You can move "+times+" more times.");
 			}else {
 				System.out.println("You may now attack");
-			}//
+			}
 			
 		}
+		String coord = "";
+		int[][] a=front.getCoords();
+		for(int[] b:a) {
+			for(int c:b) {
+				coord+=c+",";
+			}
+			coord+="\n";
+		}
+		
+		System.out.println(coord);
 		enemyAction(false);
 	}
 	public boolean checkEnemyPos(int direction,int idx) {
