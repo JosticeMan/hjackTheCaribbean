@@ -361,14 +361,16 @@ public class DanielFrontend implements StevenSupport{
 	
 	public int[][] getCoords()
 	{
-		Object[][] holder;
-		holder = new Object[num][2];
+		int[][] holder;
+		holder = new int[num][2];
 		
 		int[][] enemyCoords;
 		int ctr = 0;
 		int humanX = backend.getHuman()[0];
 		int humanY = backend.getHuman()[1];
 		
+		boolean isAtZero = false;
+	
 		for (int i = 0; i < num; i++)
 		{
 			if (humanX+1 < backend.getMap().length && humanX-1 > 0 && humanY-1 > 0 && humanY+1 < backend.getMap()[0].length)
@@ -377,11 +379,6 @@ public class DanielFrontend implements StevenSupport{
 				{
 					holder[i][0] = backend.getEnemyPosition()[i][0];
 					holder[i][1] = backend.getEnemyPosition()[i][1];					
-				}
-				else
-				{
-					holder[i][0] = null;
-					holder[i][1] = null;
 				}
 			}
 			else
@@ -393,30 +390,46 @@ public class DanielFrontend implements StevenSupport{
 						holder[i][0] = backend.getEnemyPosition()[i][0];
 						holder[i][1] = backend.getEnemyPosition()[i][1];	
 					}
-					else
-					{
-						holder[i][0] = null;
-						holder[i][1] = null;
-					}
 				}
 			}
 		}
 		
 		for (int j = 0; j < holder.length; j++)
 		{
-			if (holder[j][0] != null)
+			if (holder[j][0] != 0 && holder[j][1] != 0)
 			ctr++;
 		}
-		
+		// check if it actually is at 0,0
+		for (int atZero = 0; atZero < num; atZero++)
+		{
+			if (backend.getEnemyPosition()[atZero][0] == humanX + 1 && backend.getEnemyPosition()[atZero][1] == humanY - 1)
+			{
+				isAtZero = true;
+				ctr++;
+			}
+		}
 		enemyCoords = new int[ctr][2];
 		
-		for (int k = 0; k < ctr; k++)
+		int counter = 0;
+		for (int k = 0; k < holder.length; k++)
 		{
-			if (holder[k][0] != null)
-			enemyCoords[k][0] = (int) holder[k][0];
-			enemyCoords[k][1] = (int) holder[k][1];
+			if(isAtZero)
+			{
+				enemyCoords[k][0] = 0;
+				enemyCoords[k][1] = 0;
+			}
+			else
+			{
+				if (holder[k][0] != 0 && holder[k][1] != 0)
+				{
+					enemyCoords[counter][0] = holder[k][0];
+					enemyCoords[counter][1] = holder[k][1];
+					counter++;
+				}
+			}
 		}
 		
-		return enemyCoords;		
+		return enemyCoords;
+			
 	}
 }
