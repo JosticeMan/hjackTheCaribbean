@@ -310,7 +310,7 @@ public class StevenBackend implements DanSupport {
 				System.out.println("You can move "+times+" more times.");
 			}else {
 				System.out.println("You may now attack");
-			}
+			}//
 			
 		}
 		enemyAction(false);
