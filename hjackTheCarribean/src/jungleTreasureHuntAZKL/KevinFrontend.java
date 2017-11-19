@@ -38,20 +38,16 @@ public class KevinFrontend implements AndrewSupport {
 
 	public void play() {
 		startGameMessage();
-		updateMap();
-		
-		
 		  while(backend.playing()) {
-			getMapInfo(); //get location of stuffs such as trees
-			getStepCount(); // number of steps taken before limit
+			updateMap(map);
+			backend.getStepCount(); // number of steps taken before limit
 			backend.processInput(getInput());
-			updateMap(); //basically update line of vision+ old vision
 		}
 		printEndGame(backend.end());
 	}
 
 	private void startGameMessage() {
-		String s = "Welcome to the Treasure Hunter Game!! To see the rules type 'r' and to play press 'enter'";
+		String s = "Welcome to the Treasure Hunter Game!! To see the rules type 'r' and to play press 'wdsa'";
 		 System.out.println(s);
 		
 	}
@@ -61,31 +57,25 @@ public class KevinFrontend implements AndrewSupport {
 		
 	}
 
-	public void updateMap() {
-		String displayMap = "";
-		for(int col = 0; col < map[0].length; col++) {
-			displayMap+="X";
-		}
-		displayMap += "XX\n";
-		
-		for(int row = 0; row < map.length; row++) {
-			String text = "X";
-			for(AndrewKevinTile col: map[row]) {
-				text += col.getContent(); // Will be modified based off contents of the Tile
+	public void updateMap(AndrewKevinTile[][] tMap) {
+		int i = 0;
+		String numCol = "";
+		for(int row = 0; row<tMap.length; row++) {
+			for(int col = 0; col < tMap[row].length; col++) {				
+				if(tMap[row][col].getNonStaticOccupant() == ROCK) {
+					System.out.print("P");
+				}
+				else{
+					System.out.print("X");
+				}
 			}
-			text += "X";
-			displayMap += text + "\n";
-			
+			System.out.println(" "+row);
 		}
-		
-		String text = "";
-		for(int col = 0;col < map[map.length-1].length; col++) {
-			text += "X";
+		while(i < tMap[0].length) {
+			numCol += i;
+			i++;
 		}
-		text += "XX";
-		displayMap += text + "\n";
-		
-		System.out.println(displayMap);
+		System.out.println(numCol);
 	}
 	
 	private boolean respondToInput(String input) {
@@ -99,30 +89,11 @@ public class KevinFrontend implements AndrewSupport {
 		}
 		
 	}
-	@Override
-	public AndrewKevinTile[][] getMapInfo() {
-		return backend.getMap();
-		
-	}
-
-	@Override
-	public void getStepCount() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void revealTreasure() {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 	@Override
 	public String getUserInput() {
-		return in.nextLine();
+		return inputSource.nextLine();
 	}
-
 	@Override
 	public boolean isValidDirection() {
 		// TODO Auto-generated method stub
@@ -134,4 +105,7 @@ public class KevinFrontend implements AndrewSupport {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	//for(AndrewKevinTile col: map[row]) {
+	//	text += col.getContent(); // Will be modified based off contents of the Tile
+	//}
 }

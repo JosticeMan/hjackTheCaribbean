@@ -134,7 +134,7 @@ public class AndrewBackend implements KevinSupport{
 		this.frontend = frontend;
 		
 		//creates map and populates with a bunch of tiles
-		map = new  AndrewKevinTile[12][12];
+		map = new  AndrewKevinTile[10][10];
 		for(int row = 0; row < map.length; row++) {
 			for(int col = 0; col < map[row].length; col++) {
 				map[row][col] = new AndrewKevinTile(row, col);
