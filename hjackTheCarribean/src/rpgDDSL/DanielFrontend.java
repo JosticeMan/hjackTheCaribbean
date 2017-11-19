@@ -359,4 +359,24 @@ public class DanielFrontend implements StevenSupport{
 		
 		return a;
 	}
+	
+	public int[][] getCoords()
+	{
+		int[][] enemyCoords;
+		enemyCoords = new int[num][num];
+		
+		int humanX = backend.getHuman()[0];
+		int humanY = backend.getHuman()[1];
+		
+		for (int i = 0; i < num; i++)
+		{
+			if (humanX + 1 == backend.getEnemyPosition()[i][0] || humanX - 1 == backend.getEnemyPosition()[i][0] || humanY + 1 == backend.getEnemyPosition()[i][1] || humanY - 1 == backend.getEnemyPosition()[i][1])
+			{
+				enemyCoords[i][0] = backend.getEnemyPosition()[i][0];
+				enemyCoords[i][1] = backend.getEnemyPosition()[i][1];
+				
+			}
+		}
+		return enemyCoords;		
+	}
 }
