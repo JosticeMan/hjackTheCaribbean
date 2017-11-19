@@ -359,10 +359,10 @@ public class DanielFrontend implements StevenSupport{
 		return a;
 	}
 	
-	public int[][] getCoords()
+	public Object[][] getCoords()
 	{
-		int[][] enemyCoords;
-		enemyCoords = new int[num][2];
+		Object[][] enemyCoords;
+		enemyCoords = new Object[num][2];
 		
 		int humanX = backend.getHuman()[0];
 		int humanY = backend.getHuman()[1];
@@ -376,6 +376,11 @@ public class DanielFrontend implements StevenSupport{
 					enemyCoords[i][0] = backend.getEnemyPosition()[i][0];
 					enemyCoords[i][1] = backend.getEnemyPosition()[i][1];					
 				}
+				else
+				{
+					enemyCoords[i][0] = null;
+					enemyCoords[i][1] = null;
+				}
 			}
 			else
 			{
@@ -385,6 +390,11 @@ public class DanielFrontend implements StevenSupport{
 					{
 						enemyCoords[i][0] = backend.getEnemyPosition()[i][0];
 						enemyCoords[i][1] = backend.getEnemyPosition()[i][1];	
+					}
+					else
+					{
+						enemyCoords[i][0] = null;
+						enemyCoords[i][1] = null;
 					}
 				}
 			}
