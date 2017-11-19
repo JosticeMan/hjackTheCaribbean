@@ -306,9 +306,14 @@ public class StevenBackend implements DanSupport {
 			front.fogOfWar();
 			front.updateMap();
 			input = CaveExplorer.in.nextLine();
-			System.out.println("You can move "+times+" more times.");
+			if(times>0) {
+				System.out.println("You can move "+times+" more times.");
+			}else {
+				System.out.println("You may now attack");
+			}
+			
 		}
-		enemyAction(false);//
+		enemyAction(false);
 	}
 	public boolean checkEnemyPos(int direction,int idx) {
 		int x;
