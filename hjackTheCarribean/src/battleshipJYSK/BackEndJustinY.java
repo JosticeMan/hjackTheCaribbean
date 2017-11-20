@@ -258,15 +258,40 @@ public class BackEndJustinY implements SunnySupporter {
 	}
 	
 	/**
+	 * Handles the skipping of the commander's turn
+	 * @return
+	 */
+	public int[] handleCommanderSkip() {
+		int[] j = {-1, -1};
+		printCommanderSkipTurn();
+		skipCommanderTurn = false;
+		return j;
+	}
+	
+	/**
+	 * Handles the determination of what coordinate next to the previousHit spot would be
+	 * @return
+	 */
+	public int[] handleAdjacentHit() {
+		int[] move = nearPreviousMove();
+		while(!isWithinBorder(move[0], move[1], thePlayerGameBoard) || thePlayerGameBoard[move[0]][move[1]].isHasBeenHit()) {
+			move = nearPreviousMove();
+		}
+		previousMove = move;
+		return previousMove;
+	}
+	
+	/**
 	 * Returns the coordinates of the place the commander wants to hit
 	 * @return
 	 */
 	public int[] commanderMove(int level) {
 		if(skipCommanderTurn) {
-			int[] j = {-1, -1};
-			printCommanderSkipTurn();
-			skipCommanderTurn = false;
-			return j;
+			return handleCommanderSkip();
+		}
+		if(previousMove[0] >= 0 && previousMove[1] >= 0 && !(allAdjacentSpotsHit(previousMove[0], previousMove[1])) && thePlayerGameBoard[previousMove[0]][previousMove[1]].isShipOccupied()) {
+			System.out.println(true);
+			return handleAdjacentHit();
 		}
 		//int cLevel = frontend.getCommanderLevel();
 		int cLevel = level;
@@ -283,6 +308,32 @@ public class BackEndJustinY implements SunnySupporter {
 		possibleMoves[2] = CaveExplorer.randomInt(allPossibleShipsNotHit(thePlayerGameBoard));
 		previousMove = possibleMoves[cLevel - 1];
 		return previousMove;
+	}
+	
+	/**
+	 * Returns whether or not all the adjacent spots of a coordinate have been hit
+	 * @param row
+	 * @param col
+	 * @return
+	 */
+	public boolean allAdjacentSpotsHit(int row, int col) {
+		int[][] moves = {{row - 1, col}, {row + 1, col}, {row, col - 1}, {row, col + 1}};
+		for(int i = 0; i < moves.length; i++) {
+			if(isWithinBorder(moves[i][0], moves[i][1], thePlayerGameBoard) && !(thePlayerGameBoard[moves[i][0]][moves[i][1]].isHasBeenHit())) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Returns a integer array of a coordinate around the previous move's coordinate
+	 * NOT GUARANTEED TO BE IN BOUNDS
+	 * @return
+	 */
+	public int[] nearPreviousMove() {
+		int[][] moves = {{previousMove[0] - 1, previousMove[1]}, {previousMove[0] + 1, previousMove[1]}, {previousMove[0], previousMove[1] - 1}, {previousMove[0], previousMove[1] + 1}};
+		return CaveExplorer.randomInt(moves);
 	}
 	
 	/**
