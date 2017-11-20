@@ -14,8 +14,20 @@ public class KevinFrontend implements AndrewSupport {
 	public static final int PLAYER = 1;
 	public static final int MONKEY = 2;
 	
+	public static final int ROW = 0;
+	public static final int COL = 1;
+	
 	private KevinSupport backend;
 	public static Scanner inputSource;
+	
+	public int pRow;
+	public int pCol;
+	public int tRow;
+	public int tCol;
+	
+	public boolean near;
+	public boolean tClose;
+	public boolean tRightInFront;
 	
 	private AndrewKevinTile[][] map;
 
@@ -34,24 +46,54 @@ public class KevinFrontend implements AndrewSupport {
 	public KevinFrontend() {
 		backend = new AndrewBackend(this);
 		this.map = backend.getMap();
+		tRow = backend.getTreasurePos()[ROW];
+		tCol = backend.getTreasurePos()[COL];
+		near = false;
+		tClose = false;
+		tRightInFront = false;
 	}
 
 	public void play() {
 		startGameMessage();
 		  while(backend.playing()) {
+			backend.processInput(getUserInput());
 			updateMap(map);
+			displayTreasureHint();
 			backend.getStepCount(); // number of steps taken before limit
-			backend.processInput(getInput());
 		}
 		printEndGame(backend.end());
 	}
+	private int amountVicinityRow(int row) {
+		return Math.abs(row - pRow);
+	}
+	private int amountVicinityCol(int col) {
+		return Math.abs(col - pCol);
+	}
+	private void howtCloseTreasure() {
+		if(amountVicinityRow(tRow) < 2 && amountVicinityCol(tRow)<2) {
+			tClose = false;
+			tRightInFront = true;
 
+		}
+		else if(amountVicinityRow(tRow) < 3 && amountVicinityCol(tRow)<3) {
+			tClose = true;
+		}
+	}
+	private void displayTreasureHint() {
+		howtCloseTreasure();
+		if(tRightInFront == true) {
+			System.out.print("You notice something at ground reallll close to you!!");
+		}
+		else if(tClose == true) {
+			System.out.print("You notice something strange in the ground near you!");
+		}
+	}
 	private void startGameMessage() {
 		String s = "Welcome to the Treasure Hunter Game!! To see the rules type 'r' and to play press 'wdsa'";
 		 System.out.println(s);
 		
 	}
-
+	
 	private void printEndGame(Object end) {
 		// TODO Auto-generated method stub
 		
@@ -60,6 +102,9 @@ public class KevinFrontend implements AndrewSupport {
 	public void updateMap(AndrewKevinTile[][] tMap) {
 		int i = 0;
 		String numCol = "";
+		pRow = backend.getPlayerPos()[ROW];
+		pCol = backend.getPlayerPos()[COL];
+		System.out.print(tClose);
 		for(int row = 0; row<tMap.length; row++) {
 			for(int col = 0; col < tMap[row].length; col++) {				
 				if(tMap[row][col].getNonStaticOccupant() == PLAYER) {
