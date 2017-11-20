@@ -186,20 +186,20 @@ public class CaveRoom {
 		LEVEL 2:
 		
 		 ___________________ 
-		|                   |
-		| K   x             |
-		|            ___    |
-		|   |       |   |   |
-		|   |       |   |   |
-		|   |___    |___|___|
+		|   |               |
+		| x |               |
+		|   |        ___    |
+		|           |   |   |
+		|           |   |   |
+		|    ___    |___|   |
 		|   |   |           |
 		|   |   |         B |
-		|___|___|___     ___|
-		|   |   |   |   |   |
-		|   |   |   |   |   |
-		|___|___|___|   |___|
+		|   |___|___     ___|
+		|               |   |
+		|               |   |
+		|___     ___    |___|
 		|   |   |   |       |
-		|   |   |   |     P |
+		|   |   |   |       |
 		|___|___|___|___ ___|
 		
 		LEVEL 3: 
@@ -221,6 +221,17 @@ public class CaveRoom {
 		|   |   |   |     P |
 		|___|___|___|___ ___|
 	*/
+	
+	public static void setUpLevel2() {
+
+		//4. Set your starting room:
+		CaveExplorer.currentRoom = CaveExplorer.caves[0][1];
+		CaveExplorer.currentRoom.enter();
+		//5. Set up doors
+		CaveRoom[][] c = CaveExplorer.caves;
+		c[0][1].setConnection(SOUTH, c[1][1], new Door());
+	}
+	
 	/**
 	 * This will be where your group sets up all the caves
 	 * and all the connections
