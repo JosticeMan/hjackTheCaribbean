@@ -64,6 +64,8 @@ public class KevinFrontend implements AndrewSupport {
 
 	public void play() {
 		startGameMessage();
+		backend.processInput(getUserInput());
+		startgame();
 		  while(backend.playing()) {
 			backend.processInput(getUserInput());
 			updateMap(map);
@@ -72,6 +74,11 @@ public class KevinFrontend implements AndrewSupport {
 		}
 		printEndGame(backend.end());
 	}
+	private void startgame() {
+		if
+		
+	}
+
 	private int amountVicinityRow(int row) {
 		return Math.abs(row - pRow);
 	}
@@ -123,32 +130,32 @@ public class KevinFrontend implements AndrewSupport {
 		for(int row = 0; row<tMap.length; row++) {
 			for(int col = 0; col < tMap[row].length; col++) {				
 				if(tMap[row][col].getNonStaticOccupant() == PLAYER) {
-					System.out.print("P");
+					System.out.print("P ");
 					
 				}
 				else if(tMap[row][col].getStaticOccupant() == ROCK) {
-					System.out.print("R");
+					System.out.print("R ");
 				}
 				else if(tMap[row][col].getStaticOccupant() == TREE) {
-					System.out.print("T");
+					System.out.print("T ");
 				}
 				else if(tMap[row][col].getStaticOccupant() == FORAGE) {
-					System.out.print("F");
+					System.out.print("F ");
 				}
 				else if(tMap[row][col].getStaticOccupant() == TREASURE) {
-					System.out.print("X");
+					System.out.print("X ");
 				}
 				else if(tMap[row][col].getNonStaticOccupant() == MONKEY) {
-					System.out.print("M");
+					System.out.print("M ");
 				}
 				else{
-					System.out.print(" ");
+					System.out.print("  ");
 				}
 			}
 			System.out.println(" "+row);
 		}
 		while(i < tMap[0].length) {
-			numCol += i;
+			numCol += i + " ";
 			i++;
 		}
 		System.out.println(numCol);

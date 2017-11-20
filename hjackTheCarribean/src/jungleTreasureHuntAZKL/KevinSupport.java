@@ -19,4 +19,7 @@ public interface KevinSupport {
 	int[][] getMonkeys();
 	
 	int[] getTreasurePos();
+	public boolean isValidDirection();
+	
+	public boolean isValidCoordinates();
 }
