@@ -96,6 +96,8 @@ public class AndrewBackend implements KevinSupport{
 
 	private AndrewSupport frontend;
 	
+	private boolean playing;
+	
 	private AndrewKevinTile[][] map;
 	
 	//all objects in the game only need the position or 
@@ -110,7 +112,7 @@ public class AndrewBackend implements KevinSupport{
 	
 	private int[][] visibleRadius;
 	
-	private boolean playing;
+	private boolean play;
 	/*------CONSTANTS--------*/
 	public static final int ROW = 0;
 	public static final int COL = 1;
@@ -184,6 +186,14 @@ public class AndrewBackend implements KevinSupport{
 	
 	/*---- KEVINSUPPORT METHODS ----*/
 	
+	public boolean playing() {
+		return play;
+	}
+	
+	public void setPlay(boolean a) {
+		play = a;
+	}
+	
 	public int[] getPlayerPos() {
 		return playerPos;
 	}
@@ -194,12 +204,6 @@ public class AndrewBackend implements KevinSupport{
 	
 	public AndrewKevinTile[][] getMap(){
 		return this.map;
-	}
-	
-	@Override
-	public boolean playing() {
-		// TODO Auto-generated method stub
-		return true;
 	}
 
 	@Override
