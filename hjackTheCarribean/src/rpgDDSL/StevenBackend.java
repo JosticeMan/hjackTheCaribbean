@@ -378,6 +378,8 @@ public class StevenBackend implements DanSupport {
 				}
 				interpretInput(input);
 				times--;
+				front.displayHumanStats();
+				front.displayEnemyStats();
 				if(times>0) {
 					input = CaveExplorer.in.nextLine();
 					System.out.println("You can move "+times+" more times.");
@@ -435,8 +437,13 @@ public class StevenBackend implements DanSupport {
 				temp1[i][1]=enemyValue[val][1];
 				val++;
 			}
+			enemyPosition=new int[enemyPosition.length-1][2];
+			enemyPosition=temp2;
+			enemyValue=new int[enemyValue.length-1][2];
+			enemyValue=temp1;
+			
 		}
-		System.out.println("You have attacked enemy "+input+"."); 
+		System.out.println("You have attacked enemy "+input+".");
 	}
 
 	public boolean checkInput(String input) {
