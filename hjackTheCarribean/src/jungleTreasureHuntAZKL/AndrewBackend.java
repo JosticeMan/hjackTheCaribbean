@@ -132,6 +132,9 @@ public class AndrewBackend implements KevinSupport{
 	public static final int DOWN = 2;
 	public static final int LEFT = 3;
 	
+	public static boolean OPEN = true;
+	public static boolean CLOSED = false;
+	
 	
 	public AndrewBackend(AndrewSupport frontend) {
 		this.frontend = frontend;
@@ -153,7 +156,8 @@ public class AndrewBackend implements KevinSupport{
 		//creates and sets player starting position
 		playerPos = new int[2];
 		
-		playerSpawn(); //player position will be randomly generated along the border
+		playerSpawn();
+		map[playerPos[ROW]][playerPos[COL]].setStaticOccupant(NOTHING);
 
 		//creates and sets monkeys and their positions
 		monkeys = new int[3][2]; //first numbers is how many monkeys, 2nd is for their coords
@@ -163,6 +167,8 @@ public class AndrewBackend implements KevinSupport{
 		treasurePos = new int[2];
 		
 		treasureSpawn();
+		
+		checkPathToTreasure();
 	}
 	
 	/*---- KEVINSUPPORT METHODS ----*/
@@ -600,21 +606,54 @@ public class AndrewBackend implements KevinSupport{
 	/**
 	 * Checks to see if the player has a path of OPEN tiles to get to the treasure
 	 * and if not, make one
-	 * Checks from top -> right -> left -> down for an open tile 
-	 * If there are none then the method will open a random tile
+	 * Checks from left -> down -> right -> top for an open tile 
+	 * If there are none then the method will open a random tile towards bottom left of the map (left or down)
 	 * Method will have to try to work its way to the bottom left of the map
 	 * 	In order for the path to be random the method will choose between
 	 * 		either making the currentRow of the path go to map.length-2
 	 * 			or the currentCol of the path go to 1
+	 * 
+	 * getDirectedCoordinates()
+	 * checkTile()
+	 * randomTile(boolean open)
 	 */
 	public void checkPathToTreasure() {
 		int currentRow = treasurePos[ROW];
 		int currentCol = treasurePos[COL];
-		int cameFrom = -1;
-		boolean fullPath = false;
-		while(!fullPath){
-			
-		}
 		
+		boolean openPath = false;
+		boolean adjacentOpen = false;
+		
+		while(!openPath) {
+			for(int dir = 3; dir > -1; dir--) {
+				adjacentOpen = false;
+				int tileType = checkTile(getDirectedCoordinates(dir, currentRow, currentCol)[ROW],getDirectedCoordinates(dir, currentRow, currentCol)[COL]);
+				if(tileType == FORAGE || tileType == NOTHING) {
+					currentRow = getDirectedCoordinates(dir, currentRow, currentCol)[ROW];
+					currentCol = getDirectedCoordinates(dir, currentRow, currentCol)[COL];
+					if(currentRow == playerPos[ROW] && currentCol == playerPos[COL])
+							openPath = true;
+					adjacentOpen = true;
+					break;
+				}
+			}
+			if(!adjacentOpen) {
+					if(currentRow == playerPos[ROW]) {
+						map[currentRow][currentCol-1].setStaticOccupant(randomTile(OPEN));
+						currentCol--; break;
+					}
+					if(currentCol == playerPos[COL]) {
+						map[currentRow+1][currentCol-1].setStaticOccupant(randomTile(OPEN));
+						currentRow++; break;
+					}
+					if(Math.random() < 0.5) {
+						map[currentRow][currentCol-1].setStaticOccupant(randomTile(OPEN));
+						currentCol--; break;
+					}else {
+						map[currentRow+1][currentCol-1].setStaticOccupant(randomTile(OPEN));
+						currentRow++; break;
+					}
+			}
+		}
 	}
 }
