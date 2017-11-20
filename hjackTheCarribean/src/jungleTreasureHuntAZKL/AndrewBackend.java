@@ -212,6 +212,13 @@ public class AndrewBackend implements KevinSupport{
 		return visibleRadius;
 	}
 	
+	public int[][] getMonkeys(){
+		return monkeys;
+	}
+	
+	public int[] getTreasurePos() {
+		return treasurePos;
+	}
 	/*---- MONKEY METHODS ----*/
 	
 	public void setSpecificMonkeyPos(int idx, int row, int col) {
@@ -830,6 +837,7 @@ public class AndrewBackend implements KevinSupport{
 					visibleRadius[3][6] = NOTVISIBLE; //from RADIUS 2
 				}
 		}
+		printVision();
 	}
 	
 	public boolean isClosed(int type) {
@@ -838,5 +846,23 @@ public class AndrewBackend implements KevinSupport{
 				return true;
 		}
 		return false;
+	}
+	
+	public void printVision() {
+		String printTxt = "";
+		for(int i = 0; i < 7; i++) {
+			for(int j = 0; j < 7; j++) {
+				int type = visibleRadius[i][j];
+						if(type == VISIBLE) {
+							printTxt += "O ";
+						}else if(type == NOTVISIBLE) {
+							printTxt += "X ";
+						}else if(type == OUTSIDEMAP) {
+							printTxt += "- ";
+						}
+			}
+			printTxt += "\n";
+		}
+		System.out.println(printTxt);
 	}
 }

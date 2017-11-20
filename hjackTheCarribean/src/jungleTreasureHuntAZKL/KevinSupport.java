@@ -16,4 +16,7 @@ public interface KevinSupport {
 	
 	int[][] getVisibleRadius();
 
+	int[][] getMonkeys();
+	
+	int[] getTreasurePos();
 }
