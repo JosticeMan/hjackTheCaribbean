@@ -172,7 +172,7 @@ public class BackEndJustinY implements SunnySupporter {
 		String[] cSkipTemp = {frontend.getCommanderName() + ": Bongo! Why can't we fire!?", frontend.getCommanderName() + ": This is truly embarassing. We can't even fire for a bit!", frontend.getCommanderName() + ": Britain shall not falter with this delay!"};
 		cSkipD = cSkipTemp;
 		
-		int[] mtemp = {0, 0};
+		int[] mtemp = {-1000, -1000};
 		previousMove = mtemp;
 	}
 	
