@@ -289,7 +289,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 			
 			while(!backend.tryShipPlacement(coords[0], coords[1], direction, lengthOfCurrentShip, playerPlots))
 			{
-				System.out.println("Shipmate: Your input was already taken by another ship! Where would you like to place ship #"+i+"?");
+				System.out.println("Shipmate: Your input was already taken by another ship! Where would you like to place ship #"+(i+1)+"?");
 				coords =  backend.getCoordInput();
 				
 				System.out.println("Shipmate: To which direction would you like to place it in? Enter 'N','E','S','W'");
