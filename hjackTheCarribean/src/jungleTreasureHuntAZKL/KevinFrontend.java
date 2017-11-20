@@ -108,7 +108,7 @@ public class KevinFrontend implements AndrewSupport {
 		pCol = backend.getPlayerPos()[COL];
 	}
 	private void startGameMessage() {
-		String s = "Welcome to the Treasure Hunter Game!! In this game, you need to found the treasure, to move type 'wdsa'." +"\n"+ "There will be hints when you are close to the treasure beware of the wild monkeys." +"\n"+ "If caught, game over! So listen closely for the rustling sounds! To get started type 'wdsa'!";
+		String s = "Welcome to the Treasure Hunter Game!! In this game, you need to found the treasure, to move type 'wdsa'." +"\n"+ "There will be hints when you are close to the treasure beware of the wild monkeys." +"\n"+ "If caught, game over! So listen closely for the rustling sounds! To get started type 'p'!";
 		 System.out.println(s);
 		
 	}
@@ -127,24 +127,10 @@ public class KevinFrontend implements AndrewSupport {
 				if(tMap[row][col].getNonStaticOccupant() == PLAYER) {
 					System.out.print("P ");
 					
-				}
-				else if(tMap[row][col].getStaticOccupant() == ROCK) {
-					System.out.print("R ");
-				}
-				else if(tMap[row][col].getStaticOccupant() == TREE) {
-					System.out.print("T ");
-				}
-				else if(tMap[row][col].getStaticOccupant() == FORAGE) {
-					System.out.print("F ");
-				}
-				else if(tMap[row][col].getStaticOccupant() == TREASURE) {
+				}else if(backend.getVisibleRadius()[row][col] == 1) {
+					showContent(tMap, row, col);
+				}else if(backend.getVisibleRadius()[row][col] == 0){
 					System.out.print("X ");
-				}
-				else if(tMap[row][col].getNonStaticOccupant() == MONKEY) {
-					System.out.print("M ");
-				}
-				else{
-					System.out.print("  ");
 				}
 			}
 			System.out.println(" "+row);
@@ -156,14 +142,31 @@ public class KevinFrontend implements AndrewSupport {
 		System.out.println(numCol);
 	}
 	
-	private void respondToInput(String input) {
-		if(backend.isValidDirection(input)) {
-			backend.setPlay(true);
-		}else if(backend.isValidCoordinates(input)) {
-			
-		}else {
-			System.out.println("That is not valid input");
+	private void showContent(AndrewKevinTile[][] tMap,int row, int col) {
+		if(tMap[row][col].getStaticOccupant() == ROCK) {
+			System.out.print("R ");
 		}
+		else if(tMap[row][col].getStaticOccupant() == TREE) {
+			System.out.print("T ");
+		}
+		else if(tMap[row][col].getStaticOccupant() == FORAGE) {
+			System.out.print("F ");
+		}
+		else if(tMap[row][col].getStaticOccupant() == TREASURE) {
+			System.out.print("X ");
+		}
+		else if(tMap[row][col].getNonStaticOccupant() == MONKEY) {
+			System.out.print("M ");
+		}
+	}
+	private void respondToInput(String input) {
+		if(input.equalsIgnoreCase("p")) {
+			backend.setPlay(true);
+		}//else if(backend.isValidCoordinates(input)) {
+		//	
+		//}else {
+		//	System.out.println("That is not valid input");
+		//}
 		
 	}
 
