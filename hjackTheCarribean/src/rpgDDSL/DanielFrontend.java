@@ -64,7 +64,7 @@ public class DanielFrontend implements StevenSupport{
 				backend.movement();
 			}
 			if(won) {
-				System.out.println("You won! (kinda)");
+				System.out.println("You won!");
 				System.exit(0);
 			}
 	}
@@ -452,12 +452,6 @@ public class DanielFrontend implements StevenSupport{
 			
 		}
 
-		System.out.println(humanX+", "+humanY);
-		for (int l = 0; l < backend.getEnemyPosition().length; l++)
-		{
-			System.out.println(backend.getEnemyPosition()[l][0]+", "+backend.getEnemyPosition()[l][1]+"\n");
-			
-		}
 		return enemyCoords;			
 	}
 	
@@ -472,6 +466,18 @@ public class DanielFrontend implements StevenSupport{
 		for (int i = 0; i < backend.getEnemyPosition().length; i++)
 		{
 			System.out.println( "Enemy "+(i+1)+"'s health is "+backend.getEnemyValue()[i][0]+"\nTheir attack is equal to "+backend.getEnemyValue()[i][1]+" points.");
+		}
+	}
+	
+	public void enemyCount()
+	{
+		if (backend.getEnemyPosition().length == 0)
+		{
+			won = true;
+		}
+		else
+		{
+			won = false;
 		}
 	}
 }
