@@ -630,7 +630,7 @@ public class AndrewBackend implements KevinSupport{
 	 * For now it'll just be along the left and top sides
 	 */
 	public void treasureSpawn() {
-		int randomRow = (int)(Math.random()*map.length-2)+1;
+		int randomRow = (int)(Math.random()*map.length-2)+2;
 		int randomCol = (int)(Math.random()*map[0].length-2)+1;
 		if(randomRow != 1) { //
 			randomCol = map[randomRow].length-2;
@@ -663,14 +663,18 @@ public class AndrewBackend implements KevinSupport{
 		boolean adjacentOpen = false;
 		
 		while(!openPath) {
+			//if there are 4 adjacent open paths it will loop
 			for(int dir = 3; dir > -1; dir--) {
 				adjacentOpen = false;
 				int tileType = checkTile(getDirectedCoordinates(dir, currentRow, currentCol)[ROW],getDirectedCoordinates(dir, currentRow, currentCol)[COL]);
 				if(tileType == FORAGE || tileType == NOTHING) {
 					currentRow = getDirectedCoordinates(dir, currentRow, currentCol)[ROW];
 					currentCol = getDirectedCoordinates(dir, currentRow, currentCol)[COL];
-					if(currentRow == playerPos[ROW] && currentCol == playerPos[COL])
+					if(currentRow == playerPos[ROW] && currentCol == playerPos[COL]) {
+							adjacentOpen = true;
 							openPath = true;
+							break;
+					}
 					adjacentOpen = true;
 					break;
 				}
@@ -678,18 +682,18 @@ public class AndrewBackend implements KevinSupport{
 			if(!adjacentOpen) {
 					if(currentRow == playerPos[ROW]) {
 						map[currentRow][currentCol-1].setStaticOccupant(randomTile(OPEN));
-						currentCol--; break;
-					}
+						currentCol--;
+					}else
 					if(currentCol == playerPos[COL]) {
 						map[currentRow+1][currentCol-1].setStaticOccupant(randomTile(OPEN));
-						currentRow++; break;
-					}
+						currentRow++;
+					}else
 					if(Math.random() < 0.5) {
 						map[currentRow][currentCol-1].setStaticOccupant(randomTile(OPEN));
-						currentCol--; break;
+						currentCol--;
 					}else {
 						map[currentRow+1][currentCol-1].setStaticOccupant(randomTile(OPEN));
-						currentRow++; break;
+						currentRow++;
 					}
 			}
 		}
