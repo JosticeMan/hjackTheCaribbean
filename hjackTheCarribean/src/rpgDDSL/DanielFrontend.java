@@ -180,7 +180,7 @@ public class DanielFrontend implements StevenSupport{
 	
 	public void isEnemy(int x, int y)
 	{
-		for (int i = 0; i < num; i++)
+		for (int i = 0; i < backend.getEnemyPosition().length; i++)
 		{
 			if (x == backend.getEnemyPosition()[i][0] && y == backend.getEnemyPosition()[i][1])
 			{
@@ -362,44 +362,75 @@ public class DanielFrontend implements StevenSupport{
 	public int[][] getCoords()
 	{
 		int[][] holder;
-		holder = new int[num][2];
+		holder = new int[backend.getEnemyPosition().length][2];
 		
 		int[][] enemyCoords;
 		int ctr = 0;
 		int humanX = backend.getHuman()[0];
 		int humanY = backend.getHuman()[1];
 		
+		int humanXSub1 = humanX-1;
+		int humanYSub1 = humanY-1;
+		int humanXSub2 = humanX-2;
+		int humanYSub2 = humanY-2;
 		
-		for (int i = 0; i < num; i++)
+		int humanXAdd1 = humanX+1;
+		int humanYAdd1 = humanY+1;
+		int humanXAdd2 = humanX+2;
+		int humanYAdd2 = humanY+2;
+		
+		for (int i = 0; i < backend.getEnemyPosition().length; i++)
 		{
-			if (humanX+1 < backend.getMap().length && humanX-1 > 0 && humanY-1 > 0 && humanY+1 < backend.getMap()[0].length)
+			if (humanX+2 < backend.getMap().length && humanX-2 > 0 && humanY-2 > 0 && humanY+2 < backend.getMap()[0].length)
 			{
-				if ((humanX - 1 == backend.getEnemyPosition()[i][0] && humanY - 1 == backend.getEnemyPosition()[i][1])
-					|| (humanX - 1 == backend.getEnemyPosition()[i][0] && humanY == backend.getEnemyPosition()[i][1])
-					||  (humanX - 1 == backend.getEnemyPosition()[i][0] && humanY+1 == backend.getEnemyPosition()[i][1])
-					||  (humanX == backend.getEnemyPosition()[i][0] && humanY-1 == backend.getEnemyPosition()[i][1]) 
-					||  (humanX == backend.getEnemyPosition()[i][0] && humanY+1 == backend.getEnemyPosition()[i][1])
-					||  (humanX+1 == backend.getEnemyPosition()[i][0] && humanY-1 == backend.getEnemyPosition()[i][1])
-					||  (humanX+1 == backend.getEnemyPosition()[i][0] && humanY == backend.getEnemyPosition()[i][1])
-					|| 	(humanX+1 == backend.getEnemyPosition()[i][0] && humanY+1 == backend.getEnemyPosition()[i][1]))
+				if ((humanXSub2 == backend.getEnemyPosition()[i][0] && humanYSub2 == backend.getEnemyPosition()[i][1])
+					||  (humanXSub2 == backend.getEnemyPosition()[i][0] && humanY == backend.getEnemyPosition()[i][1])
+					||  (humanXSub2 == backend.getEnemyPosition()[i][0] && humanYAdd2 == backend.getEnemyPosition()[i][1])
+					||  (humanX == backend.getEnemyPosition()[i][0] && humanYSub2 == backend.getEnemyPosition()[i][1]) 
+					||  (humanX == backend.getEnemyPosition()[i][0] && humanYAdd2 == backend.getEnemyPosition()[i][1])
+					||  (humanXAdd2 == backend.getEnemyPosition()[i][0] && humanYSub2 == backend.getEnemyPosition()[i][1])
+					||  (humanXAdd2 == backend.getEnemyPosition()[i][0] && humanY == backend.getEnemyPosition()[i][1])
+					|| 	(humanXAdd2 == backend.getEnemyPosition()[i][0] && humanYAdd2 == backend.getEnemyPosition()[i][1])
+					||	(humanXSub1 == backend.getEnemyPosition()[i][0] && humanYSub1 == backend.getEnemyPosition()[i][1])
+					||  (humanXSub1 == backend.getEnemyPosition()[i][0] && humanY == backend.getEnemyPosition()[i][1])
+					||  (humanXSub1 == backend.getEnemyPosition()[i][0] && humanYAdd1 == backend.getEnemyPosition()[i][1])
+					||  (humanX == backend.getEnemyPosition()[i][0] && humanYSub1 == backend.getEnemyPosition()[i][1]) 
+					||  (humanX == backend.getEnemyPosition()[i][0] && humanYAdd1 == backend.getEnemyPosition()[i][1])
+					||  (humanXAdd1 == backend.getEnemyPosition()[i][0] && humanYSub1 == backend.getEnemyPosition()[i][1])
+					||  (humanXAdd1 == backend.getEnemyPosition()[i][0] && humanY == backend.getEnemyPosition()[i][1])
+					|| 	(humanXAdd1 == backend.getEnemyPosition()[i][0] && humanYAdd1 == backend.getEnemyPosition()[i][1])
+					||  (humanXSub1 == backend.getEnemyPosition()[i][0] && humanYSub2 == backend.getEnemyPosition()[i][1])
+					||  (humanXAdd1 == backend.getEnemyPosition()[i][0] && humanYSub2 == backend.getEnemyPosition()[i][1])
+					||	(humanXAdd2 == backend.getEnemyPosition()[i][0] && humanYSub1 == backend.getEnemyPosition()[i][1])
+					||  (humanXAdd2 == backend.getEnemyPosition()[i][0] && humanYAdd1 == backend.getEnemyPosition()[i][1])
+					||  (humanXAdd1 == backend.getEnemyPosition()[i][0] && humanYAdd2 == backend.getEnemyPosition()[i][1])
+					||  (humanXSub1 == backend.getEnemyPosition()[i][0] && humanYAdd2 == backend.getEnemyPosition()[i][1])
+					||  (humanXSub2 == backend.getEnemyPosition()[i][0] && humanYAdd1 == backend.getEnemyPosition()[i][1])
+					||  (humanXSub2 == backend.getEnemyPosition()[i][0] && humanYSub1 == backend.getEnemyPosition()[i][1]))
 				{
 					holder[i][0] = backend.getEnemyPosition()[i][0];
 					holder[i][1] = backend.getEnemyPosition()[i][1];					
 				}
-			}	
-			/*
+			}
 			else
 			{
-				if (humanY == 0 || humanY == backend.getMap()[0].length && (humanX != 0 || humanX != backend.getMap().length))
+				if (humanX+1 < backend.getMap().length && humanX-1 > 0 && humanY-1 > 0 && humanY+1 < backend.getMap()[0].length)
 				{
-					if (backend.getEnemyPosition()[i][0] - humanX < 3 && backend.getEnemyPosition()[i][1] - humanY < 3)
+					if ((humanXSub1 == backend.getEnemyPosition()[i][0] && humanYSub1 == backend.getEnemyPosition()[i][1])
+							||  (humanXSub1 == backend.getEnemyPosition()[i][0] && humanY == backend.getEnemyPosition()[i][1])
+							||  (humanXSub1 == backend.getEnemyPosition()[i][0] && humanYAdd1 == backend.getEnemyPosition()[i][1])
+							||  (humanX == backend.getEnemyPosition()[i][0] && humanYSub1 == backend.getEnemyPosition()[i][1]) 
+							||  (humanX == backend.getEnemyPosition()[i][0] && humanYAdd1 == backend.getEnemyPosition()[i][1])
+							||  (humanXAdd1 == backend.getEnemyPosition()[i][0] && humanYSub1 == backend.getEnemyPosition()[i][1])
+							||  (humanXAdd1 == backend.getEnemyPosition()[i][0] && humanY == backend.getEnemyPosition()[i][1])
+							|| 	(humanXAdd1 == backend.getEnemyPosition()[i][0] && humanYAdd1 == backend.getEnemyPosition()[i][1]))
 					{
 						holder[i][0] = backend.getEnemyPosition()[i][0];
 						holder[i][1] = backend.getEnemyPosition()[i][1];	
 					}
 				}
 			}
-			*/
+			
 		}
 		
 		for (int j = 0; j < holder.length; j++)
@@ -421,7 +452,26 @@ public class DanielFrontend implements StevenSupport{
 			
 		}
 
-		return enemyCoords;
+		System.out.println(humanX+", "+humanY);
+		for (int l = 0; l < backend.getEnemyPosition().length; l++)
+		{
+			System.out.println(backend.getEnemyPosition()[l][0]+", "+backend.getEnemyPosition()[l][1]+"\n");
 			
+		}
+		return enemyCoords;			
+	}
+	
+	public void displayHumanStats()
+	{
+		System.out.println("You currently have "+
+			a.getHp()+ " HP out of 30.\nYour attack is "+a.getAttack()+ "points.\n"+"Your speed is "+a.getSpeed()+" points."	
+				);
+	}
+	public void displayEnemyStats()
+	{
+		for (int i = 0; i < backend.getEnemyPosition().length; i++)
+		{
+			System.out.println( "Enemy "+(i+1)+"'s health is "+backend.getEnemyValue()[i][0]+"\nTheir attack is equal to "+backend.getEnemyValue()[i][1]+" points.");
+		}
 	}
 }
