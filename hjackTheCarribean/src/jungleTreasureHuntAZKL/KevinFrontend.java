@@ -25,7 +25,14 @@ public class KevinFrontend implements AndrewSupport {
 	public int tRow;
 	public int tCol;
 	
-	public boolean near;
+	//Positions of the the monkeys
+	public int m1Row;
+	public int m1Col;
+	public int m2Row;
+	public int m2Col;
+	
+	public boolean mNear;
+	public boolean mClose;
 	public boolean tClose;
 	public boolean tRightInFront;
 	
@@ -48,7 +55,9 @@ public class KevinFrontend implements AndrewSupport {
 		this.map = backend.getMap();
 		tRow = backend.getTreasurePos()[ROW];
 		tCol = backend.getTreasurePos()[COL];
-		near = false;
+		getNonStaticPosition();
+		mNear = false;
+		mClose = false;
 		tClose = false;
 		tRightInFront = false;
 	}
@@ -88,6 +97,14 @@ public class KevinFrontend implements AndrewSupport {
 			System.out.print("You notice something strange in the ground near you!");
 		}
 	}
+	private void getNonStaticPosition() {
+		m1Row = backend.getMonkeys()[0][ROW];
+		m1Col = backend.getMonkeys()[0][COL];
+		m2Row = backend.getMonkeys()[1][ROW];
+		m2Col = backend.getMonkeys()[1][COL];
+		pRow = backend.getPlayerPos()[ROW];
+		pCol = backend.getPlayerPos()[COL];
+	}
 	private void startGameMessage() {
 		String s = "Welcome to the Treasure Hunter Game!! In this game, you need to found the treasure, to move type 'wdsa'." +"\n"+ "There will be hints when you are close to the treasure beware of the wild monkeys." +"\n"+ "If caught, game over! So listen closely for the rustling sounds! To get started type 'wdsa'!";
 		 System.out.println(s);
@@ -102,8 +119,7 @@ public class KevinFrontend implements AndrewSupport {
 	public void updateMap(AndrewKevinTile[][] tMap) {
 		int i = 0;
 		String numCol = "";
-		pRow = backend.getPlayerPos()[ROW];
-		pCol = backend.getPlayerPos()[COL];
+		getNonStaticPosition();
 		for(int row = 0; row<tMap.length; row++) {
 			for(int col = 0; col < tMap[row].length; col++) {				
 				if(tMap[row][col].getNonStaticOccupant() == PLAYER) {
