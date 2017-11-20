@@ -19,4 +19,6 @@ public interface KevinSupport {
 	int[][] getMonkeys();
 	
 	int[] getTreasurePos();
+	
+	boolean withinVisibleRange(int rowCords, int colCords);
 }

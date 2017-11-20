@@ -484,10 +484,13 @@ public class AndrewBackend implements KevinSupport{
 	}
 	
 	/**
-	 * Generation of a random map will require cells of 2x2 tiles
+	 * Generation of a random map will require cells of 2x2 tiles (designed if different/specific tile placement is wanted it can be created)
 	 * These cells will have variations of OPEN(FORAGE & NOTHING):CLOSED(ROCK & TREE)
-	 * 4:0, 3:1, 2:2, 1:3, 0:4
+	 * Ratios of above variations 4:0, 3:1, 2:2, 1:3, 0:4
 	 * Will generate from 1,1(top left within rock borders) to map.length-2,map[row].length-2(bottom right within rock borders)
+	 * 
+	 * if conditions are to control chances of specific tile types
+	 * **THIS WILL PROBABLY CONTROL GAME DIFFICULTY THE MOST**
 	 */
 	public void populateTiles() {
 		for(int condenseRow = 1; condenseRow < map.length-2/2; condenseRow += 2) { //goes through every 2x2 tile on map, will be mostly 4:0 open tiles
@@ -508,13 +511,13 @@ public class AndrewBackend implements KevinSupport{
 				}else if(Math.random() < 1) { // 50% chance of a two to two formation
 						theTwoByTwo = ratioTwoToTwo();
 				}
-				applyTwoByTwoTiles(condenseRow, condenseCol, theTwoByTwo);
+				applyTiles(2, condenseRow, condenseCol, theTwoByTwo);
 				}
 			}
 		}
 	/**
 	 * Method to replace apply2x2Tiles in order to allow for greater variations in tile generation
-	 * Able to add specific formations such as a path that can only be moved in from
+	 * Can be used for larger tile dimensions
 	 * @param dimensions
 	 */
 	public void applyTiles(int dimensions, int topLeftRow, int topLeftCol, int[][] tiles){
@@ -524,15 +527,7 @@ public class AndrewBackend implements KevinSupport{
 			}
 		}
 	}
-	
-	public void applyTwoByTwoTiles(int topLeftCoordsRow, int topLeftCoordsCol, int[][] twoByTwo) {
-		for(int i = 0; i < 2; i++) {
-			for(int j = 0; j < 2 ; j++) {
-				map[topLeftCoordsRow + i][topLeftCoordsCol + j].setStaticOccupant(twoByTwo[i][j]);
-			}
-		}
-	}
-	
+	//---Random tile type generation
 	public int[][] ratioFourToZero(boolean open) {
 		int[][] returnIntArr = new int[2][2];
 		for(int row = 0; row < 2; row++) {
@@ -542,7 +537,6 @@ public class AndrewBackend implements KevinSupport{
 		}
 		return returnIntArr;
 	}
-	
 	public int[][] ratioThreeToOne(boolean open) {
 		int[][] returnIntArr = new int[2][2];
 		int openCount = 1;
@@ -572,7 +566,6 @@ public class AndrewBackend implements KevinSupport{
 		}
 		return returnIntArr;
 	}
-	
 	public int[][] ratioTwoToTwo() {
 		int[][] returnIntArr = new int[2][2];
 		int openCount = 2;
@@ -627,7 +620,7 @@ public class AndrewBackend implements KevinSupport{
 		setPlayerPos(map.length-2, 1);
 	}
 	/**
-	 * For now it'll just be along the left and top sides
+	 * For now it'll just be along the left and top sides of the map
 	 */
 	public void treasureSpawn() {
 		int randomRow = (int)(Math.random()*map.length-2)+1;
@@ -643,13 +636,17 @@ public class AndrewBackend implements KevinSupport{
 	}
 	/**
 	 * Checks to see if the player has a path of OPEN tiles to get to the treasure
-	 * and if not, make one
-	 * Checks from left -> down -> right -> top for an open tile 
-	 * If there are none then the method will open a random tile towards bottom left of the map (left or down)
-	 * Method will have to try to work its way to the bottom left of the map
+	 * And if not, make one
+	 * 
+	 * 1.start from treasurePos
+	 * 2.check for adjacent open type tiles
+	 * 3.if none it will create one in a random dir TOWARDS playerSpawn
+	 * 4.continue until the row and col matches player spawn
+	 * 
+	 * Method will have to try to work its way to the bottom left of the map (to match player spawn) <-- can be modified for a unique player spawn
 	 * 	In order for the path to be random the method will choose between
-	 * 		either making the currentRow of the path go to map.length-2
-	 * 			or the currentCol of the path go to 1
+	 * 		Either making the currentRow of the path go to playerPos[ROW]
+	 * 			Or the currentCol of the path go to playerPos[COL]
 	 * 
 	 * getDirectedCoordinates()
 	 * checkTile()
@@ -661,10 +658,13 @@ public class AndrewBackend implements KevinSupport{
 		
 		boolean openPath = false;
 		boolean adjacentOpen = false;
-		
 		while(!openPath) {
+			//there is a looping issue if it encounters 4 open tiles in a square (going in a circle constantly) 
+			//fix by just ignoring the direction to the right(1)
 			for(int dir = 3; dir > -1; dir--) {
 				adjacentOpen = false;
+				if(dir == 1)
+						break;
 				int tileType = checkTile(getDirectedCoordinates(dir, currentRow, currentCol)[ROW],getDirectedCoordinates(dir, currentRow, currentCol)[COL]);
 				if(tileType == FORAGE || tileType == NOTHING) {
 					currentRow = getDirectedCoordinates(dir, currentRow, currentCol)[ROW];
@@ -707,16 +707,21 @@ public class AndrewBackend implements KevinSupport{
 	 * 0 3 [[T][T][T][P][T][T][T]]
 	 * 1 4 [[F][T][T][T][T][T][F]]
 	 * 2 5 [[F][F][T][T][T][F][F]]
-	 * 3 6 [[F][F][F][T][F][F][F]]
+	 * 3 6 [[F][F][F][T][F][F][F]] 
+	 * //What they see with absolutely no obstructions and all within map bounds
 	 * 
-	 * 3,3 is playerPos[ROW],playerPos[COL], origin
+	 * 3,3 is playerPos[ROW],playerPos[COL] relative to the map
 	 * 
 	 * checkTile()
 	 * withinMap()
 	 * 
-	 * go row by row and check if tile is visible,
-	 * after the 0th row there will be special rules based off
-	 * which tile isn't visible within that row
+	 *1.find out which tiles will be outside the map
+	 *2.fill out the normal view (see diagram)
+	 *3.figure out the special cases of when an object is obstructing
+	 * 
+	 * The outside numbers are positions relative to the player
+	 * ****This is important for implementing the visible radius
+	 * 		With the map because it needs player position
 	 */
 	public void updateVisibleRadius() {
 		int originX = playerPos[COL];
@@ -758,7 +763,7 @@ public class AndrewBackend implements KevinSupport{
 			}
 		}
 		
-		//special case of where vision is blocked
+		//Special case of where vision is blocked, all can probably be optimized due to how similar all the conditions are
 		//FOR RADIUS of 2 from PLAYER
 			//vertical line of sight
 		if(withinMap(originY + -2, originX))
@@ -850,7 +855,7 @@ public class AndrewBackend implements KevinSupport{
 					visibleRadius[3][6] = NOTVISIBLE; //from RADIUS 2
 				}
 		}
-		//repopulates where there is out of bounds
+		//re-populates where there is out of bounds because above rules don't take in account out of bounds
 		for(int fromOriginY = -3; fromOriginY < 4; fromOriginY++) {
 			for(int fromOriginX = -3; fromOriginX < 4; fromOriginX++) {
 				if(withinMap(originY + fromOriginY, originX + fromOriginX)) {
@@ -859,7 +864,7 @@ public class AndrewBackend implements KevinSupport{
 				}
 			}
 		}
-		printVision();
+		//printVision();
 	}
 	
 	public boolean isClosed(int type) {
@@ -869,7 +874,7 @@ public class AndrewBackend implements KevinSupport{
 		}
 		return false;
 	}
-	
+	//testing code
 	public void printVision() {
 		String printTxt = "";
 		for(int i = 0; i < 7; i++) {
@@ -892,6 +897,14 @@ public class AndrewBackend implements KevinSupport{
 	 * based off the map
 	 * 
 	 * Player position is needed, will be similar to the beginning of updateVisibleRange()
+	 * **Can potentially be used for frontend to check if the frontend will print out the appropriate symbol
+	 * ex.
+	 * 	for(cycle through rows of FULL map){
+	 * 		for(cycle through col of FULL map){
+	 * 			if(withinVisibleRange(rowCords,colCords)
+	 * 				**add the occupant of said coords to the printout of the map
+	 * 			else
+	 * 				**add whatever represents no vision
 	 * @param rowCords
 	 * @param colCords
 	 * @return
@@ -899,7 +912,8 @@ public class AndrewBackend implements KevinSupport{
 	public boolean withinVisibleRange(int rowCords, int colCords) {
 		int originX = playerPos[COL];
 		int originY = playerPos[ROW];
-		/*need to translate the coords in reference to the visibleRadius
+		/*Need to translate the coords in reference to the visibleRadius\
+		 * 	Then vice versa for the frontend
 		 *      -3 -2 -1  0  1  2  3   
 		 *       0  1  2  3  4  5  6
 		 *-3 0 [[F][F][F][T][F][F][F]]
@@ -912,7 +926,8 @@ public class AndrewBackend implements KevinSupport{
 		//will already be checked for out of map
 		int fromOriginY = rowCords - originY;
 		int fromOriginX = colCords - originX;
-		//check if within a radius of 3 from player
+		//check if within a radius of 3 from player so
+		//there won't be an outOfBounds when using visibleRange
 		if(fromOriginY > -4 && fromOriginY < 4) {
 			if(fromOriginX > -4 && fromOriginX < 4) {
 				if(visibleRadius[fromOriginY+3][fromOriginX+3] == VISIBLE)
