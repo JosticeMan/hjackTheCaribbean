@@ -447,7 +447,7 @@ public class StevenBackend implements DanSupport {
 				enemyValue[i][0]=temp1[i][0];
 				enemyValue[i][1]=temp1[i][1];
 			}
-			
+			//
 		}
 		System.out.println("You have attacked enemy "+input+".");
 	}
