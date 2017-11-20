@@ -162,7 +162,7 @@ public class KevinFrontend implements AndrewSupport {
 	}
 	
 	private boolean respondToInput(String input) {
-		if(isValidCoordinates()) {
+		if(backend.isValidCoordinates()) {
 			return true;
 		}else if(isValidDirection()) {
 			return true;
@@ -176,18 +176,7 @@ public class KevinFrontend implements AndrewSupport {
 	@Override
 	public String getUserInput() {
 		return inputSource.nextLine();
-	}
-	@Override
-	public boolean isValidDirection() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
-	@Override
-	public boolean isValidCoordinates() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	//for(AndrewKevinTile col: map[row]) {
 	//	text += col.getContent(); // Will be modified based off contents of the Tile
 	//}
