@@ -460,7 +460,7 @@ public class DanielFrontend implements StevenSupport{
 	public void displayHumanStats()
 	{
 		System.out.println("You currently have "+
-			a.getHp()+ " HP out of 30.\nYour attack is "+a.getAttack()+ "points.\n"+"Your speed is "+a.getSpeed()+" points."	
+			a.getHp()+ " HP out of 30.\nYour attack is "+a.getAttack()+ " points.\n"+"Your speed is "+a.getSpeed()+" points."	
 				);
 	}
 	public void displayEnemyStats()
