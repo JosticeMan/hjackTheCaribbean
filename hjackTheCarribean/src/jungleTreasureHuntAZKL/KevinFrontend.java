@@ -89,7 +89,7 @@ public class KevinFrontend implements AndrewSupport {
 		}
 	}
 	private void startGameMessage() {
-		String s = "Welcome to the Treasure Hunter Game!! To see the rules type 'r' and to play press 'wdsa'";
+		String s = "Welcome to the Treasure Hunter Game!! In this game, you need to found the treasure, to move type 'wdsa'." +"\n"+ "There will be hints when you are close to the treasure beware of the wild monkeys." +"\n"+ "If caught, game over! So listen closely for the rustling sounds! To get started type 'wdsa'!";
 		 System.out.println(s);
 		
 	}
@@ -104,7 +104,6 @@ public class KevinFrontend implements AndrewSupport {
 		String numCol = "";
 		pRow = backend.getPlayerPos()[ROW];
 		pCol = backend.getPlayerPos()[COL];
-		System.out.print(tClose);
 		for(int row = 0; row<tMap.length; row++) {
 			for(int col = 0; col < tMap[row].length; col++) {				
 				if(tMap[row][col].getNonStaticOccupant() == PLAYER) {
