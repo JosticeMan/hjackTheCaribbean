@@ -837,6 +837,15 @@ public class AndrewBackend implements KevinSupport{
 					visibleRadius[3][6] = NOTVISIBLE; //from RADIUS 2
 				}
 		}
+		//repopulates where there is out of bounds
+		for(int fromOriginY = -3; fromOriginY < 4; fromOriginY++) {
+			for(int fromOriginX = -3; fromOriginX < 4; fromOriginX++) {
+				if(withinMap(originY + fromOriginY, originX + fromOriginX)) {
+				}else {
+					visibleRadius[fromOriginY + 3][fromOriginX + 3] = OUTSIDEMAP;
+				}
+			}
+		}
 		printVision();
 	}
 	
