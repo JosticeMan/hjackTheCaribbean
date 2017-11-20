@@ -383,6 +383,7 @@ public class DanielFrontend implements StevenSupport{
 		{
 			if (humanX+2 < backend.getMap().length && humanX-2 > 0 && humanY-2 > 0 && humanY+2 < backend.getMap()[0].length)
 			{
+				// Check directions around human in a 2 by 2 grid
 				if ((humanXSub2 == backend.getEnemyPosition()[i][0] && humanYSub2 == backend.getEnemyPosition()[i][1])
 					||  (humanXSub2 == backend.getEnemyPosition()[i][0] && humanY == backend.getEnemyPosition()[i][1])
 					||  (humanXSub2 == backend.getEnemyPosition()[i][0] && humanYAdd2 == backend.getEnemyPosition()[i][1])
@@ -416,6 +417,7 @@ public class DanielFrontend implements StevenSupport{
 			{
 				if (humanX+1 < backend.getMap().length && humanX-1 > 0 && humanY-1 > 0 && humanY+1 < backend.getMap()[0].length)
 				{
+					// checks 8 cardinal directions
 					if ((humanXSub1 == backend.getEnemyPosition()[i][0] && humanYSub1 == backend.getEnemyPosition()[i][1])
 							||  (humanXSub1 == backend.getEnemyPosition()[i][0] && humanY == backend.getEnemyPosition()[i][1])
 							||  (humanXSub1 == backend.getEnemyPosition()[i][0] && humanYAdd1 == backend.getEnemyPosition()[i][1])
