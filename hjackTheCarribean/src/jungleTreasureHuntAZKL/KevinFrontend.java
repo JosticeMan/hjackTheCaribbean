@@ -64,8 +64,7 @@ public class KevinFrontend implements AndrewSupport {
 
 	public void play() {
 		startGameMessage();
-		backend.processInput(getUserInput());
-		startgame();
+		respondToInput(getUserInput());
 		  while(backend.playing()) {
 			backend.processInput(getUserInput());
 			updateMap(map);
@@ -73,10 +72,6 @@ public class KevinFrontend implements AndrewSupport {
 			backend.getStepCount(); // number of steps taken before limit
 		}
 		printEndGame(backend.end());
-	}
-	private void startgame() {
-		if
-		
 	}
 
 	private int amountVicinityRow(int row) {
@@ -161,14 +156,13 @@ public class KevinFrontend implements AndrewSupport {
 		System.out.println(numCol);
 	}
 	
-	private boolean respondToInput(String input) {
-		if(backend.isValidCoordinates()) {
-			return true;
-		}else if(isValidDirection()) {
-			return true;
+	private void respondToInput(String input) {
+		if(backend.isValidDirection(input)) {
+			backend.setPlay(true);
+		}else if(backend.isValidCoordinates(input)) {
+			
 		}else {
-			System.out.println("That is not valid");
-			return false;
+			System.out.println("That is not valid input");
 		}
 		
 	}
@@ -177,7 +171,8 @@ public class KevinFrontend implements AndrewSupport {
 	public String getUserInput() {
 		return inputSource.nextLine();
 
-	//for(AndrewKevinTile col: map[row]) {
+	}
+		//for(AndrewKevinTile col: map[row]) {
 	//	text += col.getContent(); // Will be modified based off contents of the Tile
 	//}
 }

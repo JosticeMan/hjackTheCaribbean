@@ -3,6 +3,7 @@ package jungleTreasureHuntAZKL;
 public interface KevinSupport {
 
 	boolean playing();
+	void setPlay(boolean a);
 
 	Object end();
 
@@ -19,7 +20,8 @@ public interface KevinSupport {
 	int[][] getMonkeys();
 	
 	int[] getTreasurePos();
-	public boolean isValidDirection(String input);
 	
-	public boolean isValidCoordinates(String input);
+	boolean isValidDirection(String input);
+	
+	boolean isValidCoordinates(String input);
 }
