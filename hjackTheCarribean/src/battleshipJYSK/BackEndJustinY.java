@@ -613,7 +613,7 @@ public class BackEndJustinY implements SunnySupporter {
 			int[] coords = toCoords(input);
 			while(coords == null){
 				CaveExplorer.print("Captain Duran: You must enter cordinates of the form:\n          <row>,<col>"
-						+ "\n<row> and <col> should be integers.");
+						+ "\n<row> and <col> should be integers greater than or equal to 0.");
 				if(frontend.isPlaying()) {
 					CaveExplorer.print("Captain Duran: You can also type 'radar', 'missile', and 'storm' to activate a powerup!");
 				}
