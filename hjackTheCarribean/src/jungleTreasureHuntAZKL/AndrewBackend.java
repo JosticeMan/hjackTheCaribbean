@@ -108,7 +108,7 @@ public class AndrewBackend implements KevinSupport{
 	
 	private int[] treasurePos;
 	
-	private boolean[][] visibleRadius;
+	private int[][] visibleRadius;
 	
 	private boolean playing;
 	/*------CONSTANTS--------*/
@@ -121,6 +121,8 @@ public class AndrewBackend implements KevinSupport{
 	public static final int ROCK = 1;
 	public static final int TREE = 2;
 	public static final int FORAGE = 3;
+	public static final int[] closedTiles = {1,2,3};
+	
 	public static final int TRAP = 4;
 	public static final int TREASURE = 7;
 	public static final int LEAVETILE = 6;
@@ -134,8 +136,12 @@ public class AndrewBackend implements KevinSupport{
 	public static final int DOWN = 2;
 	public static final int LEFT = 3;
 	
-	public static boolean OPEN = true;
-	public static boolean CLOSED = false;
+	public static final int VISIBLE = 1;
+	public static final int NOTVISIBLE = 0;
+	public static final int OUTSIDEMAP = -1;
+	
+	public static final boolean OPEN = true;
+	public static final boolean CLOSED = false;
 	
 	
 	public AndrewBackend(AndrewSupport frontend) {
@@ -170,9 +176,10 @@ public class AndrewBackend implements KevinSupport{
 		
 		treasureSpawn();
 		
-		checkPathToTreasure();
+		//checkPathToTreasure();
 		
-		visibleRadius = new boolean[7][7];
+		visibleRadius = new int[7][7];
+		updateVisibleRadius();
 	}
 	
 	/*---- KEVINSUPPORT METHODS ----*/
@@ -201,6 +208,10 @@ public class AndrewBackend implements KevinSupport{
 		return null;
 	}
 
+	public int[][]getVisibleRadius(){
+		return visibleRadius;
+	}
+	
 	/*---- MONKEY METHODS ----*/
 	
 	public void setSpecificMonkeyPos(int idx, int row, int col) {
@@ -310,6 +321,7 @@ public class AndrewBackend implements KevinSupport{
 			map[playerPos[ROW]][playerPos[COL]].setNonStaticOccupant(NOTHING);
 			setPlayerPos(attemptedTile[0], attemptedTile[1]);
 			stepCount--;
+			updateVisibleRadius();
 		}else {
 				allMonkeyMove();
 					if(into == TREE || into == ROCK) { //cannot walk into these
@@ -320,6 +332,8 @@ public class AndrewBackend implements KevinSupport{
 						setPlayerPos(attemptedTile[0], attemptedTile[1]);
 						stepCount--;
 						map[attemptedTile[0]][attemptedTile[1]].setStaticOccupant(NOTHING);
+						
+						updateVisibleRadius();
 					}else 
 						if(into == TREASURE) {
 						//player wins
@@ -687,74 +701,142 @@ public class AndrewBackend implements KevinSupport{
 	public void updateVisibleRadius() {
 		int originX = playerPos[COL];
 		int originY = playerPos[ROW];
+		
+		//populate with NULLS where out of bounds
+		for(int fromOriginY = -3; fromOriginY < 4; fromOriginY++) {
+			for(int fromOriginX = -3; fromOriginX < 4; fromOriginX++) {
+				if(withinMap(originY + fromOriginY, originX + fromOriginX)) {
+					visibleRadius[fromOriginY + 3][fromOriginX + 3] = NOTVISIBLE;
+				}else {
+					visibleRadius[fromOriginY + 3][fromOriginX + 3] = OUTSIDEMAP;
+				}
+			}
+		}
+		//populate the appropriate visible radius where its not OUTSIDEMAP
+		for(int i = 0; i < visibleRadius.length; i++) {
+			if(i == 0 || i == 6) {
+				if(visibleRadius[i][3] != OUTSIDEMAP)
+					visibleRadius[i][3] = VISIBLE;
+			}
+			if(i == 1 || i == 5) {
+				for(int j = 2; j < 5; j++) {
+					if(visibleRadius[i][j] != OUTSIDEMAP)
+						visibleRadius[i][j] = VISIBLE;
+				}
+			}
+			if(i == 2 || i == 4) {
+				for(int j = 1; j < 6; j++) {
+					if(visibleRadius[i][j] != OUTSIDEMAP)
+						visibleRadius[i][j] = VISIBLE;
+				}
+			}
+			if(i == 3){
+				for(int j = 0; j < 7; j++) {
+					if(visibleRadius[i][j] != OUTSIDEMAP)
+						visibleRadius[i][j] = VISIBLE;
+				}
+			}
+		}
+		
+		//special case of where vision is blocked
 		//FOR RADIUS of 2 from PLAYER
 			//vertical line of sight
-			if(checkTile(originY + -2, originX) == ROCK) {
-				visibleRadius[0][3] = false;
+		if(withinMap(originY + -2, originX))
+			if(isClosed(checkTile(originY + -2, originX))) {
+				visibleRadius[0][3] = NOTVISIBLE;
 			}
-			if(checkTile(originY + 2, originX) == ROCK) {
-				visibleRadius[6][3] = false;
+		if(withinMap(originY + 2, originX)) {
+			if(isClosed(checkTile(originY + 2, originX))) {
+				visibleRadius[6][3] = NOTVISIBLE;
 			}
+		}
 			//horizontal line of sight
-			if(checkTile(originY, originX + -2) == ROCK) {
-				visibleRadius[3][0] = false;
+		if(withinMap(originY, originX + -2)) {
+			if(isClosed(checkTile(originY, originX + -2))) {
+				visibleRadius[3][0] = NOTVISIBLE;
 			}
-			if(checkTile(originY, originX + 2) == ROCK) {
-				visibleRadius[3][6] = false;
+		}
+		if(withinMap(originY, originX + 2)) {
+			if(isClosed(checkTile(originY, originX + 2))) {
+				visibleRadius[3][6] = NOTVISIBLE;
 			}
-			
+		}
 		//FOR RADIUS of 1 from PLAYER
 			//corner
 				//top left
-				if(checkTile(originY + -1, originX + -1) == ROCK) {
-					visibleRadius[1][2] = false;
-					visibleRadius[2][1] = false;
+		if(withinMap(originY + -1, originX + -1)) {
+				if(isClosed(checkTile(originY + -1, originX + -1))) {
+					visibleRadius[1][2] = NOTVISIBLE;
+					visibleRadius[2][1] = NOTVISIBLE;
 				}
+		}
 				//top right
-				if(checkTile(originY + -1, originX + 1) == ROCK) {
-					visibleRadius[1][4] = false;
-					visibleRadius[2][5] = false;
+		if(withinMap(originY + -1, originX + 1)) {
+				if(isClosed(checkTile(originY + -1, originX + 1))) {
+					visibleRadius[1][4] = NOTVISIBLE;
+					visibleRadius[2][5] = NOTVISIBLE;
 				}
+		}
 				//bottom left
-				if(checkTile(originY + 1, originX + -1) == ROCK) {
-					visibleRadius[4][1] = false;
-					visibleRadius[5][2] = false;
+		if(withinMap(originY + 1, originX + -1)) {
+				if(isClosed(checkTile(originY + 1, originX + -1))) {
+					visibleRadius[4][1] = NOTVISIBLE;
+					visibleRadius[5][2] = NOTVISIBLE;
 				}
+		}
 				//bottom right
-				if(checkTile(originY + 1, originX + 1) == ROCK) {
-					visibleRadius[5][4] = false;
-					visibleRadius[4][5] = false;
+		if(withinMap(originY + 1, originX + 1)) {
+				if(isClosed(checkTile(originY + 1, originX + 1))) {
+					visibleRadius[5][4] = NOTVISIBLE;
+					visibleRadius[4][5] = NOTVISIBLE;
 				}
+		}
 			//cross
 				//vertical line of sight
 				//top
-				if(checkTile(originY + -1, originX) == ROCK) {
-					visibleRadius[1][2] = false;
-					visibleRadius[1][3] = false;
-					visibleRadius[1][4] = false;
-					visibleRadius[0][3] = false; //from RADIUS 2
+		if(withinMap(originY + -1, originX)) {
+				if(isClosed(checkTile(originY + -1, originX))) {
+					visibleRadius[1][2] = NOTVISIBLE;
+					visibleRadius[1][3] = NOTVISIBLE;
+					visibleRadius[1][4] = NOTVISIBLE;
+					visibleRadius[0][3] = NOTVISIBLE; //from RADIUS 2
 				}
+		}
 				//bottom
-				if(checkTile(originY + 1, originX) == ROCK) {
-					visibleRadius[5][2] = false;
-					visibleRadius[5][3] = false;
-					visibleRadius[5][4] = false;
-					visibleRadius[6][3] = false; //from RADIUS 2
+		if(withinMap(originY + 1, originX)) {
+				if(isClosed(checkTile(originY + 1, originX))) {
+					visibleRadius[5][2] = NOTVISIBLE;
+					visibleRadius[5][3] = NOTVISIBLE;
+					visibleRadius[5][4] = NOTVISIBLE;
+					visibleRadius[6][3] = NOTVISIBLE; //from RADIUS 2
 				}
+		}
 				//horizontal line of sight
 				//left
-				if(checkTile(originY, originX + -1) == ROCK) {
-					visibleRadius[2][1] = false;
-					visibleRadius[3][1] = false;
-					visibleRadius[4][1] = false;
-					visibleRadius[3][0] = false; //from RADIUS 2
+		if(withinMap(originY, originX + -1)) {
+				if(isClosed(checkTile(originY, originX + -1))) {
+					visibleRadius[2][1] = NOTVISIBLE;
+					visibleRadius[3][1] = NOTVISIBLE;
+					visibleRadius[4][1] = NOTVISIBLE;
+					visibleRadius[3][0] = NOTVISIBLE; //from RADIUS 2
 				}
+		}
 				//right
-				if(checkTile(originY, originX + 1) == ROCK) {
-					visibleRadius[2][5] = false;
-					visibleRadius[3][5] = false;
-					visibleRadius[4][5] = false;
-					visibleRadius[3][6] = false; //from RADIUS 2
+		if(withinMap(originY, originX + 1)) {
+				if(isClosed(checkTile(originY, originX + 1))) {
+					visibleRadius[2][5] = NOTVISIBLE;
+					visibleRadius[3][5] = NOTVISIBLE;
+					visibleRadius[4][5] = NOTVISIBLE;
+					visibleRadius[3][6] = NOTVISIBLE; //from RADIUS 2
 				}
+		}
+	}
+	
+	public boolean isClosed(int type) {
+		for(int i = 0; i < closedTiles.length; i++) {
+			if(closedTiles[i] == type)
+				return true;
+		}
+		return false;
 	}
 }

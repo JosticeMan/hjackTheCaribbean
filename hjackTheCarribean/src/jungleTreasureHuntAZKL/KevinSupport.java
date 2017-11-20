@@ -13,5 +13,7 @@ public interface KevinSupport {
 	int getStepCount();
 	
 	int[] getPlayerPos();
+	
+	int[][] getVisibleRadius();
 
 }
