@@ -290,7 +290,7 @@ public class BackEndJustinY implements SunnySupporter {
 			return handleCommanderSkip();
 		}
 		if(previousMove[0] >= 0 && previousMove[1] >= 0 && !(allAdjacentSpotsHit(previousMove[0], previousMove[1])) && thePlayerGameBoard[previousMove[0]][previousMove[1]].isShipOccupied()) {
-			System.out.println(true);
+			//System.out.println(true);
 			return handleAdjacentHit();
 		}
 		//int cLevel = frontend.getCommanderLevel();
