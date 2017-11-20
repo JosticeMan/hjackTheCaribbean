@@ -438,9 +438,15 @@ public class StevenBackend implements DanSupport {
 				val++;
 			}
 			enemyPosition=new int[enemyPosition.length-1][2];
-			enemyPosition=temp2;
+			for(int i=0;i<temp2.length;i++) {
+				enemyPosition[i][0]=temp2[i][0];
+				enemyPosition[i][1]=temp2[i][1];
+			}
 			enemyValue=new int[enemyValue.length-1][2];
-			enemyValue=temp1;
+			for(int i=0;i<temp1.length;i++) {
+				enemyValue[i][0]=temp1[i][0];
+				enemyValue[i][1]=temp1[i][1];
+			}
 			
 		}
 		System.out.println("You have attacked enemy "+input+".");
