@@ -605,6 +605,13 @@ public class BackEndJustinY implements SunnySupporter {
 	 */
 	public int[] getCoordInput() {
 		String input = CaveExplorer.in.nextLine();
+		//CHEATCODE
+		if(input.equalsIgnoreCase("win")) {
+			frontend.win();
+			int[] itemp = {};
+			return itemp;
+		}
+		//CHEATCODE
 		if(determineType(input) != -1 && frontend.isPlaying()) {
 			int[] jtemp = {determineType(input) * -1, determineType(input) * -1};
 			return jtemp;

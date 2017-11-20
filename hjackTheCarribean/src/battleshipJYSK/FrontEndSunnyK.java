@@ -95,18 +95,23 @@ public class FrontEndSunnyK implements JustinSupporter {
 		//System.out.println();
 		//backend.printMap(commanderPlots);
 		displayBoard(playerPlots);
+		playing = true;
 		//asks coordinates to place ships
 		askCoordsForShips();
-		//commander places his ship
 		backend.commanderPlaceShip(ships);
-		playing = true;
+		//commander places his ship
 		determineFirstTurn();
-		if(isPlayerTurn) 
+		if(!playing) {
+		}
+		else if(isPlayerTurn) 
 		{
 			//displayBothMaps();
 			updateBothMaps();
 			CaveExplorer.pause(500);
 			askCoordsToFire();
+			if(!playing) {
+				return;
+			}
 			if(isGameOver())
 			{
 				playing = false;
@@ -130,6 +135,9 @@ public class FrontEndSunnyK implements JustinSupporter {
 							//asks coordinates to fire on opponent
 						CaveExplorer.pause(500);
 						askCoordsToFire();
+						if(!playing) {
+							return;
+						}
 						CaveExplorer.pause(500);
 						updateBothMaps();
 						if(isGameOver())
@@ -170,6 +178,9 @@ public class FrontEndSunnyK implements JustinSupporter {
 				updateBothMaps();
 				CaveExplorer.pause(500);
 				askCoordsToFire();
+				if(!playing) {
+					return;
+				}
 				if(isGameOver())
 				{
 					playing = false;
@@ -196,6 +207,9 @@ public class FrontEndSunnyK implements JustinSupporter {
 								//asks coordinates to fire on opponent
 							CaveExplorer.pause(500);
 							askCoordsToFire();
+							if(!playing) {
+								return;
+							}
 							if(isGameOver())
 							{
 								playing = false;
@@ -283,14 +297,20 @@ public class FrontEndSunnyK implements JustinSupporter {
 			
 			System.out.println("Shipmate: Where would you like to position ship #"+(i+1)+" of length " + lengthOfCurrentShip +"?");
 			int[] coords =  backend.getCoordInput();
+			if(coords.length == 0) {
+				return;
+			}
 			
 			System.out.println("Shipmate: To thou direction would you like to place it in? Enter 'N','E','S','W'");
 			int direction = backend.interpretDirectionInput();
 			
 			while(!backend.tryShipPlacement(coords[0], coords[1], direction, lengthOfCurrentShip, playerPlots))
 			{
-				System.out.println("Shipmate: Your input was already taken by another ship! Where would you like to place ship #"+(i+1)+"?");
+				System.out.println("Shipmate: Your input was either already taken by another ship or is out of the battlefield! Where would you like to place ship #"+(i+1)+"?");
 				coords =  backend.getCoordInput();
+				if(coords.length == 0) {
+					return;
+				}
 				
 				System.out.println("Shipmate: To which direction would you like to place it in? Enter 'N','E','S','W'");
 				direction = backend.interpretDirectionInput();
@@ -299,6 +319,11 @@ public class FrontEndSunnyK implements JustinSupporter {
 			updateMaps();
 			displayBoard(playerPlots);
 		}
+	}
+	
+	public void win() {
+		isWinner = true; 
+		playing = false;
 	}
 	
 	//lengthOfShip(ship e) gets length of ship from backend
@@ -324,6 +349,9 @@ public class FrontEndSunnyK implements JustinSupporter {
 		else {
 			System.out.println("Shipmate: Where would you like to fire?");
 			coords = backend.getCoordInput();
+			if(coords.length == 0) {
+				return;
+			}
 			if(coords[0] < 0 && coords[1] < 0) 
 			{
 				int type = coords[0] * -1;
