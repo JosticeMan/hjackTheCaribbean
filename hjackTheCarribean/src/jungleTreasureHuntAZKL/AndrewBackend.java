@@ -108,6 +108,8 @@ public class AndrewBackend implements KevinSupport{
 	
 	private int[] treasurePos;
 	
+	private boolean[][] visibleRadius;
+	
 	private boolean playing;
 	/*------CONSTANTS--------*/
 	public static final int ROW = 0;
@@ -169,6 +171,8 @@ public class AndrewBackend implements KevinSupport{
 		treasureSpawn();
 		
 		checkPathToTreasure();
+		
+		visibleRadius = new boolean[7][7];
 	}
 	
 	/*---- KEVINSUPPORT METHODS ----*/
@@ -655,5 +659,102 @@ public class AndrewBackend implements KevinSupport{
 					}
 			}
 		}
+	}
+	/**
+	 * Updates the tiles that are visible in the sight radius
+	 * P - player position
+	 * T - true/ visible to player
+	 * F = false/ not visible to player\
+	 *      -3 -2 -1  0  1  2  3   
+	 *       0  1  2  3  4  5  6
+	 *-3 0 [[F][F][F][T][F][F][F]]
+	 *-2 1 [[F][F][T][T][T][F][F]]
+	 *-1 2 [[F][T][T][T][T][T][F]]
+	 * 0 3 [[T][T][T][P][T][T][T]]
+	 * 1 4 [[F][T][T][T][T][T][F]]
+	 * 2 5 [[F][F][T][T][T][F][F]]
+	 * 3 6 [[F][F][F][T][F][F][F]]
+	 * 
+	 * 3,3 is playerPos[ROW],playerPos[COL], origin
+	 * 
+	 * checkTile()
+	 * withinMap()
+	 * 
+	 * go row by row and check if tile is visible,
+	 * after the 0th row there will be special rules based off
+	 * which tile isn't visible within that row
+	 */
+	public void updateVisibleRadius() {
+		int originX = playerPos[COL];
+		int originY = playerPos[ROW];
+		//FOR RADIUS of 2 from PLAYER
+			//vertical line of sight
+			if(checkTile(originY + -2, originX) == ROCK) {
+				visibleRadius[0][3] = false;
+			}
+			if(checkTile(originY + 2, originX) == ROCK) {
+				visibleRadius[6][3] = false;
+			}
+			//horizontal line of sight
+			if(checkTile(originY, originX + -2) == ROCK) {
+				visibleRadius[3][0] = false;
+			}
+			if(checkTile(originY, originX + 2) == ROCK) {
+				visibleRadius[3][6] = false;
+			}
+			
+		//FOR RADIUS of 1 from PLAYER
+			//corner
+				//top left
+				if(checkTile(originY + -1, originX + -1) == ROCK) {
+					visibleRadius[1][2] = false;
+					visibleRadius[2][1] = false;
+				}
+				//top right
+				if(checkTile(originY + -1, originX + 1) == ROCK) {
+					visibleRadius[1][4] = false;
+					visibleRadius[2][5] = false;
+				}
+				//bottom left
+				if(checkTile(originY + 1, originX + -1) == ROCK) {
+					visibleRadius[4][1] = false;
+					visibleRadius[5][2] = false;
+				}
+				//bottom right
+				if(checkTile(originY + 1, originX + 1) == ROCK) {
+					visibleRadius[5][4] = false;
+					visibleRadius[4][5] = false;
+				}
+			//cross
+				//vertical line of sight
+				//top
+				if(checkTile(originY + -1, originX) == ROCK) {
+					visibleRadius[1][2] = false;
+					visibleRadius[1][3] = false;
+					visibleRadius[1][4] = false;
+					visibleRadius[0][3] = false; //from RADIUS 2
+				}
+				//bottom
+				if(checkTile(originY + 1, originX) == ROCK) {
+					visibleRadius[5][2] = false;
+					visibleRadius[5][3] = false;
+					visibleRadius[5][4] = false;
+					visibleRadius[6][3] = false; //from RADIUS 2
+				}
+				//horizontal line of sight
+				//left
+				if(checkTile(originY, originX + -1) == ROCK) {
+					visibleRadius[2][1] = false;
+					visibleRadius[3][1] = false;
+					visibleRadius[4][1] = false;
+					visibleRadius[3][0] = false; //from RADIUS 2
+				}
+				//right
+				if(checkTile(originY, originX + 1) == ROCK) {
+					visibleRadius[2][5] = false;
+					visibleRadius[3][5] = false;
+					visibleRadius[4][5] = false;
+					visibleRadius[3][6] = false; //from RADIUS 2
+				}
 	}
 }
