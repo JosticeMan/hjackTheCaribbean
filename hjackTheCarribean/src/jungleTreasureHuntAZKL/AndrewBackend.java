@@ -352,7 +352,14 @@ public class AndrewBackend implements KevinSupport{
 		//checks if coordinates are within vision range
 			//checks if within map bounds
 		if(withinMap(row, col)) {
-
+			if(withinVisibleRange(row, col)) {
+				//give hint
+				System.out.println("You did good coordinates");
+			}else {
+				System.out.println("You can't see there");
+			}
+		}else {
+			System.out.println("Outside map");
 		}
 	}
 	/**
@@ -709,7 +716,7 @@ public class AndrewBackend implements KevinSupport{
 		int originX = playerPos[COL];
 		int originY = playerPos[ROW];
 		
-		//populate with NULLS where out of bounds
+		//populate with OUTSIDEMAP where out of bounds and NOTVISIBLES elsewhere
 		for(int fromOriginY = -3; fromOriginY < 4; fromOriginY++) {
 			for(int fromOriginX = -3; fromOriginX < 4; fromOriginX++) {
 				if(withinMap(originY + fromOriginY, originX + fromOriginX)) {
@@ -873,5 +880,39 @@ public class AndrewBackend implements KevinSupport{
 			printTxt += "\n";
 		}
 		System.out.println(printTxt);
+	}
+	/**
+	 * Will check if the coords player wants to observe are within the visibleRadius of the player
+	 * based off the map
+	 * 
+	 * Player position is needed, will be similar to the beginning of updateVisibleRange()
+	 * @param rowCords
+	 * @param colCords
+	 * @return
+	 */
+	public boolean withinVisibleRange(int rowCords, int colCords) {
+		int originX = playerPos[COL];
+		int originY = playerPos[ROW];
+		/*need to translate the coords in reference to the visibleRadius
+		 *      -3 -2 -1  0  1  2  3   
+		 *       0  1  2  3  4  5  6
+		 *-3 0 [[F][F][F][T][F][F][F]]
+		 *-2 1 [[F][F][T][T][T][F][F]]
+		 *-1 2 [[F][T][T][T][T][T][F]]
+		 * 0 3 [[T][T][T][P][T][T][T]]
+		 * 1 4 [[F][T][T][T][T][T][F]]
+		 * 2 5 [[F][F][T][T][T][F][F]]
+		 * 3 6 [[F][F][F][T][F][F][F]]*/
+		//will already be checked for out of map
+		int fromOriginY = rowCords - originY;
+		int fromOriginX = colCords - originX;
+		//check if within a radius of 3 from player
+		if(fromOriginY > -4 && fromOriginY < 4) {
+			if(fromOriginX > -4 && fromOriginX < 4) {
+				if(visibleRadius[fromOriginY+3][fromOriginX+3] == VISIBLE)
+					return true;
+			}
+		}
+		return false;
 	}
 }
