@@ -58,21 +58,21 @@ public class DanielFrontend implements StevenSupport{
 	public void play() 
 	{
 		backend.setFrontend(this);
-		String input;
-		fogOfWar();
 		updateMap();
 			while(!won) {
-				input=CaveExplorer.in.nextLine();
-				if (!input.equals("cheat"))
-				{
-					backend.movement(input);
-				}
-				else
-				{
-					System.out.println("You won! (kinda)");
-					won = true;
-				}
+				
+				backend.movement();
 			}
+			if(won) {
+				System.out.println("You won! (kinda)");
+				System.exit(0);
+			}
+	}
+	public boolean isWon() {
+		return won;
+	}
+	public void setWon(boolean won) {
+		this.won = won;
 	}
 	public DanielFrontend()
 	{

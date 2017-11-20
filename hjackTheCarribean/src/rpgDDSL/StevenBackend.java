@@ -277,54 +277,195 @@ public class StevenBackend implements DanSupport {
 				}
 			}
 			makeWalls();
+			enemyAttack();
 		}
 	}
+	public void enemyAttack() {
+		int x;
+		int y;
+		for(int i=0;i<enemyPosition.length;i++) {
+			x=enemyPosition[i][0];
+			y=enemyPosition[i][1];
+			x--;
+			if(x>0) {
+				if(human[0]==x&&human[1]==y) {
+					ship.setHp(ship.getHp()-enemyValue[i][1]);
+					System.out.println("You have taken "+enemyValue[i][1]+" damage from enemy "+(i+1)+" who is located at ("+enemyPosition[i][0]+","+enemyPosition[i][1]+").");
+				}
+			}
+			y--;
+			if(y>0&&x>0) {
+				if(human[0]==x&&human[1]==y) {
+					ship.setHp(ship.getHp()-enemyValue[i][1]);
+					System.out.println("You have taken "+enemyValue[i][1]+" damage from enemy "+(i+1)+" who is located at ("+enemyPosition[i][0]+","+enemyPosition[i][1]+").");
+				}
+			}
+			y+=2;
+			if(y<map[0].length&&x>0) {
+				if(human[0]==x&&human[1]==y) {
+					ship.setHp(ship.getHp()-enemyValue[i][1]);
+					System.out.println("You have taken "+enemyValue[i][1]+" damage from enemy "+(i+1)+" who is located at ("+enemyPosition[i][0]+","+enemyPosition[i][1]+").");
+				}
+			}
+			x++;
+			if(y<map[0].length) {
+				if(human[0]==x&&human[1]==y) {
+					ship.setHp(ship.getHp()-enemyValue[i][1]);
+					System.out.println("You have taken "+enemyValue[i][1]+" damage from enemy "+(i+1)+" who is located at ("+enemyPosition[i][0]+","+enemyPosition[i][1]+").");
+				}
+			}
+			x++;
+			if(y<map[0].length&&x<map.length) {
+				if(human[0]==x&&human[1]==y) {
+					ship.setHp(ship.getHp()-enemyValue[i][1]);
+					System.out.println("You have taken "+enemyValue[i][1]+" damage from enemy "+(i+1)+" who is located at ("+enemyPosition[i][0]+","+enemyPosition[i][1]+").");
+				}
+			}
+			y--;
+			if(x<map.length) {
+				if(human[0]==x&&human[1]==y) {
+					ship.setHp(ship.getHp()-enemyValue[i][1]);
+					System.out.println("You have taken "+enemyValue[i][1]+" damage from enemy "+(i+1)+" who is located at ("+enemyPosition[i][0]+","+enemyPosition[i][1]+").");
+				}
+			}
+			y--;
+			if(y>0&&x<map.length) {
+				if(human[0]==x&&human[1]==y) {
+					ship.setHp(ship.getHp()-enemyValue[i][1]);
+					System.out.println("You have taken "+enemyValue[i][1]+" damage from enemy "+(i+1)+" who is located at ("+enemyPosition[i][0]+","+enemyPosition[i][1]+").");
+				}
+			}
+			x--;
+			if(y>0) {
+				if(human[0]==x&&human[1]==y) {
+					ship.setHp(ship.getHp()-enemyValue[i][1]);
+					System.out.println("You have taken "+enemyValue[i][1]+" damage from enemy "+(i+1)+" who is located at ("+enemyPosition[i][0]+","+enemyPosition[i][1]+").");
+				}
+			}
+			
+		}
+		
+	}
+
 	public Ship getShip() {
 		return ship;
 	}
 	public int[][] getEnemyValue() {
 		return enemyValue;
 	}
-	public void movement(String input) {
+	public void movement() {
 		int times=ship.getSpeed();
+		String input;
 		System.out.println("You can move "+times+" more times.");
-		while(times>0) {
-			while (!isValid(input) || !checkWalls(input, getHuman()))
-			{
-				if (!checkWalls(input, getHuman()))
+		input = CaveExplorer.in.nextLine();
+		front.updateMap();
+		if(input.equals("cheat")) {
+			front.setWon(true);
+			front.play();
+		}else {
+			while(times>0) {
+				while (!isValid(input) || !checkWalls(input, getHuman()))
 				{
-					System.out.println("There is a wall. Please enter a valid direction.");
+					if (!checkWalls(input, getHuman()))
+					{
+						System.out.println("There is a wall. Please enter a valid direction.");
+					}
+					else
+					{
+						System.out.println("Enter a valid key.");
+					}
+					input = CaveExplorer.in.nextLine();
 				}
-				else
-				{
-					System.out.println("Enter a valid key.");
+				interpretInput(input);
+				times--;
+				if(times>0) {
+					input = CaveExplorer.in.nextLine();
+					System.out.println("You can move "+times+" more times.");
+				}else {
+					if(front.getCoords().length>0) {
+						System.out.println("You may now attack");
+						humanAttack();
+					}
+					else {
+						System.out.println("There is no one to attack. It is now the enemies turn");
+					}
 				}
-				input = CaveExplorer.in.nextLine();
+				front.updateMap();
 			}
-			interpretInput(input);
-			times--;
-			front.fogOfWar();
+			enemyAction(false);
 			front.updateMap();
-			input = CaveExplorer.in.nextLine();
-			if(times>0) {
-				System.out.println("You can move "+times+" more times.");
-			}else {
-				System.out.println("You may now attack");
-			}
-			
 		}
-		String coord = "";
-		int[][] a=front.getCoords();
-		for(int[] b:a) {
-			for(int c:b) {
-				coord+=c+",";
-			}
-			coord+="\n";
-		}
-		
-		System.out.println(coord);
-		enemyAction(false);
 	}
+	public void humanAttack() {
+		int[][] coord=front.getCoords();
+		String input;
+		String output="You may attack the follow enemies:\n";
+		for(int[] a:coord) {
+			for(int i=0;i<enemyPosition.length;i++) {
+				if(enemyPosition[i][0]==a[0]&&enemyPosition[i][1]==a[1]) {
+					output+="Enemy "+(i+1)+" at coord "+"("+a[0]+","+a[1]+")\n";
+				}
+			}
+		}
+		System.out.println(output);
+		input = CaveExplorer.in.nextLine();
+		while(!checkInput(input)&&!input.equals("0")) {
+			System.out.println("Enter a valid key. Please select the enemy you want to attack.");
+			input = CaveExplorer.in.nextLine();
+		}
+		enemyValue[Integer.parseInt(input)-1][0]-=ship.getAttack();
+		if(enemyValue[Integer.parseInt(input)-1][0]<=0) {
+			int[][] temp1=new int[enemyValue.length-1][2];
+			int[][] temp2=new int[enemyPosition.length-1][2];
+			for(int i=0;i<temp2.length;i++) {
+				int val=0;
+				if(val==(Integer.parseInt(input)-1)) {
+					val++;
+				}
+				temp2[i][0]=enemyPosition[val][0];
+				temp2[i][1]=enemyPosition[val][1];
+				val++;
+			}
+			for(int i=0;i<temp1.length;i++) {
+				int val=0;
+				if(val==(Integer.parseInt(input)-1)) {
+					val++;
+				}
+				temp1[i][0]=enemyValue[val][0];
+				temp1[i][1]=enemyValue[val][1];
+				val++;
+			}
+		}
+		System.out.println("You have attacked enemy "+input+"."); 
+	}
+
+	public boolean checkInput(String input) {
+		int[][] coord=front.getCoords();
+		int[] list = new int[enemyPosition.length];
+		for(int[] a:coord) {
+			for(int i=0;i<enemyPosition.length;i++) {
+				if(enemyPosition[i][0]==a[0]&&enemyPosition[i][1]==a[1]) {
+					for(int j=0;j<list.length;j++) {
+						if(list[j]==0) {
+							list[j]=i+1;
+							break;
+						}
+					}
+				}
+			}
+		}
+		for(int j=0;j<list.length;j++) {
+			try {
+				if(list[j]==Integer.parseInt(input)) {
+					return true;
+				}
+			}catch(NumberFormatException e) {
+				return false;
+			}
+		}
+		return false;
+	}
+
 	public boolean checkEnemyPos(int direction,int idx) {
 		int x;
 		int y;
