@@ -613,7 +613,7 @@ public class BackEndJustinY implements SunnySupporter {
 			int[] coords = toCoords(input);
 			while(coords == null){
 				CaveExplorer.print("Captain Duran: You must enter cordinates of the form:\n          <row>,<col>"
-						+ "\n<row> and <col> should be integers greater than or equal to 0.");
+						+ "\n<row> and <col> should be integers greater than or equal to 0 and less than " + boardSize() +".");
 				if(frontend.isPlaying()) {
 					CaveExplorer.print("Captain Duran: You can also type 'radar', 'missile', and 'storm' to activate a powerup!");
 				}
@@ -638,6 +638,9 @@ public class BackEndJustinY implements SunnySupporter {
 		try{
 			int a = Integer.parseInt(input.substring(0,1));
 			int b = Integer.parseInt(input.substring(2,3));
+			if(a >= boardSize() || b >= boardSize()) {
+				return null;
+			}
 			if(input.substring(1,2).equals(",") && input.length() ==3){
 				int[] coords = {a,b};
 				return coords;
