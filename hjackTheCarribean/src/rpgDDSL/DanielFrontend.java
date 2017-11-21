@@ -182,9 +182,12 @@ public class DanielFrontend implements StevenSupport{
 	{
 		for (int i = 0; i < backend.getEnemyPosition().length; i++)
 		{
-			if (x == backend.getEnemyPosition()[i][0] && y == backend.getEnemyPosition()[i][1])
+			if (backend.getEnemyValue()[i][0] != 0)
 			{
-				backend.getMap()[x][y].setType(2);
+				if (x == backend.getEnemyPosition()[i][0] && y == backend.getEnemyPosition()[i][1])
+				{
+					backend.getMap()[x][y].setType(2);
+				}
 			}
 		}
 	}
@@ -467,6 +470,7 @@ public class DanielFrontend implements StevenSupport{
 	{
 		for (int i = 0; i < backend.getEnemyPosition().length; i++)
 		{
+			if (backend.getEnemyValue()[i][0] != 0)
 			System.out.println( "Enemy "+(i+1)+"'s health is "+backend.getEnemyValue()[i][0]+"\nTheir attack is equal to "+backend.getEnemyValue()[i][1]+" points.");
 		}
 	}
