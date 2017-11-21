@@ -522,6 +522,7 @@ public class StevenBackend implements DanSupport {
 			}
 		}
 	}
+	//
 	/*public void makeFog() {
 		int[] coord=new int[2];
 		coord[0]=human[0]--;
