@@ -109,11 +109,13 @@ public class StevenBackend implements DanSupport {
 				}
 			}
 		}
-		for(int[] a:enemyPosition) {
-			map[a[0]][a[1]].setEast(true);
-			map[a[0]][a[1]].setWest(true);
-			map[a[0]][a[1]].setNorth(true);
-			map[a[0]][a[1]].setSouth(true);
+		for(int i=0;i<enemyPosition.length;i++) {
+			if(enemyValue[i][0]>0) {
+				map[enemyPosition[i][0]][enemyPosition[i][1]].setEast(true);
+				map[enemyPosition[i][0]][enemyPosition[i][1]].setWest(true);
+				map[enemyPosition[i][0]][enemyPosition[i][1]].setNorth(true);
+				map[enemyPosition[i][0]][enemyPosition[i][1]].setSouth(true);
+			}
 		}
 		
 	}
@@ -226,58 +228,60 @@ public class StevenBackend implements DanSupport {
 			int direction=(int)(Math.random()*4);
 			String input="wdsa".substring(direction,direction+1);
 			for(int i=0;i<enemyPosition.length;i++) {
-				direction=(int)(Math.random()*4);
-				input="wdsa".substring(direction,direction+1);
-				map[enemyPosition[i][0]][enemyPosition[i][1]].setEast(false);
-				map[enemyPosition[i][0]][enemyPosition[i][1]].setNorth(false);
-				map[enemyPosition[i][0]][enemyPosition[i][1]].setSouth(false);
-				map[enemyPosition[i][0]][enemyPosition[i][1]].setWest(false);
-				for(int j=0;j<enemyPosition.length;j++) {
-					if(j!=i) {
-						map[enemyPosition[j][0]][enemyPosition[j][1]].setEast(true);
-						map[enemyPosition[j][0]][enemyPosition[j][1]].setNorth(true);
-						map[enemyPosition[j][0]][enemyPosition[j][1]].setSouth(true);
-						map[enemyPosition[j][0]][enemyPosition[j][1]].setWest(true);
+				if(enemyValue[i][0]>0) {
+					direction=(int)(Math.random()*4);
+					input="wdsa".substring(direction,direction+1);
+					map[enemyPosition[i][0]][enemyPosition[i][1]].setEast(false);
+					map[enemyPosition[i][0]][enemyPosition[i][1]].setNorth(false);
+					map[enemyPosition[i][0]][enemyPosition[i][1]].setSouth(false);
+					map[enemyPosition[i][0]][enemyPosition[i][1]].setWest(false);
+					for(int j=0;j<enemyPosition.length;j++) {
+						if(j!=i) {
+							map[enemyPosition[j][0]][enemyPosition[j][1]].setEast(true);
+							map[enemyPosition[j][0]][enemyPosition[j][1]].setNorth(true);
+							map[enemyPosition[j][0]][enemyPosition[j][1]].setSouth(true);
+							map[enemyPosition[j][0]][enemyPosition[j][1]].setWest(true);
+						}
+					}
+					for (int k = 0; k < map.length; k++)
+					{
+						for (int j = 0; j < map[0].length; j++) {
+							if(k==0) {
+								map[k][j].setNorth(true);
+							}
+							if(k==map.length-1) {
+								map[k][j].setSouth(true);
+							}
+							if(j==0) {
+								map[k][j].setWest(true);
+							}
+							if(j==map[0].length-1) {
+								map[k][j].setEast(true);
+							}
+						}
+					}
+					map[human[0]][human[1]].setEast(true);
+					map[human[0]][human[1]].setNorth(true);
+					map[human[0]][human[1]].setSouth(true);
+					map[human[0]][human[1]].setWest(true);
+					if(checkWalls(input,enemyPosition[i])){
+						if(direction==0) {
+							enemyPosition[i][0]-=1;
+						}
+						if(direction==1) {
+							enemyPosition[i][1]+=1;
+						}
+						if(direction==2) {
+							enemyPosition[i][0]+=1;
+						}
+						if(direction==3) {
+							enemyPosition[i][1]-=1;
+						}
 					}
 				}
-				for (int k = 0; k < map.length; k++)
-				{
-					for (int j = 0; j < map[0].length; j++) {
-						if(k==0) {
-							map[k][j].setNorth(true);
-						}
-						if(k==map.length-1) {
-							map[k][j].setSouth(true);
-						}
-						if(j==0) {
-							map[k][j].setWest(true);
-						}
-						if(j==map[0].length-1) {
-							map[k][j].setEast(true);
-						}
-					}
-				}
-				map[human[0]][human[1]].setEast(true);
-				map[human[0]][human[1]].setNorth(true);
-				map[human[0]][human[1]].setSouth(true);
-				map[human[0]][human[1]].setWest(true);
-				if(checkWalls(input,enemyPosition[i])){
-					if(direction==0) {
-						enemyPosition[i][0]-=1;
-					}
-					if(direction==1) {
-						enemyPosition[i][1]+=1;
-					}
-					if(direction==2) {
-						enemyPosition[i][0]+=1;
-					}
-					if(direction==3) {
-						enemyPosition[i][1]-=1;
-					}
-				}
+				makeWalls();
+				enemyAttack();
 			}
-			makeWalls();
-			enemyAttack();
 		}
 	}
 	public void enemyAttack() {
