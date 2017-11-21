@@ -155,7 +155,35 @@ public class DanielFrontend implements StevenSupport{
 		*/
 		
 		
-		setRegularVision();
+		
+		
+		
+		
+		
+		
+		backend.getMap()[humanX-1][humanY].setType(3); 
+		isEnemy(humanX-1, humanY); 
+		
+		backend.getMap()[humanX+1][humanY+1].setType(3);
+		isEnemy(humanX+1, humanY+1);
+		
+		backend.getMap()[humanX+1][humanY].setType(3);
+		isEnemy(humanX+1, humanY);
+		
+		backend.getMap()[humanX][humanY+1].setType(3);
+		isEnemy(humanX, humanY+1);
+		
+		backend.getMap()[humanX-1][humanY+1].setType(3);
+		isEnemy(humanX-1, humanY+1);
+				
+		backend.getMap()[humanX][humanY-1].setType(3);
+		isEnemy(humanX, humanY-1);
+		
+		backend.getMap()[humanX+1][humanY-1].setType(3);
+		isEnemy(humanX+1, humanY-1);
+			
+		backend.getMap()[humanX-1][humanY-1].setType(3);
+		isEnemy(humanX-1, humanY-1);
 	}
 	
 	public void setRegularVision()
