@@ -89,14 +89,8 @@ public class FrontEndSunnyK implements JustinSupporter {
 	public void startGame() 
 	{
 		CaveExplorer.pause(500);
-		//Shows empty maps
-		//displayBothMaps();
-		//backend.printMap(playerPlots);
-		//System.out.println();
-		//backend.printMap(commanderPlots);
 		displayBoard(playerPlots);
 		playing = true;
-		//asks coordinates to place ships
 		askCoordsForShips();
 		backend.commanderPlaceShip(ships);
 		determineFirstTurn();
@@ -117,7 +111,8 @@ public class FrontEndSunnyK implements JustinSupporter {
 		updateBothMaps();
 		CaveExplorer.pause(500);
 		askCoordsToFire();
-		if(!playing) {
+		if(!playing) 
+		{
 			return;
 		}
 		if(isGameOver())
@@ -126,7 +121,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 		}
 		else 
 		{
-			CaveExplorer.pause(500);
+												CaveExplorer.pause(500);
 			commanderMakesMove();
 			if(isGameOver())
 			{
@@ -134,45 +129,15 @@ public class FrontEndSunnyK implements JustinSupporter {
 			}
 			else 
 			{
-				CaveExplorer.pause(500);
+												CaveExplorer.pause(500);
 				updateBothMaps();
-				while(playing)
-				{
-						//updates map each time
-					//displayBothMaps();
-						//asks coordinates to fire on opponent
-					CaveExplorer.pause(500);
-					askCoordsToFire();
-					if(!playing) {
-						return;
-					}
-					CaveExplorer.pause(500);
-					updateBothMaps();
-					if(isGameOver())
-					{
-						playing = false;
-					}
-					else 
-					{
-							//the Commander makes the first move
-						CaveExplorer.pause(500);
-						commanderMakesMove();
-						if(isGameOver())
-						{
-							playing = false;
-						}
-						CaveExplorer.pause(500);
-						updateBothMaps();
-							//checks to see if the game is over, if it is then playing = false
-					}
-				}
+				rotateTurns();
 			}
 		}
 	}
 	
 	public void commanderGoesFirst()
 	{
-		//displayBothMaps();
 		CaveExplorer.pause(500);
 		System.out.println("Captain Duran: " + commanderName + " is making the first move!");
 		CaveExplorer.pause(500);
@@ -187,7 +152,8 @@ public class FrontEndSunnyK implements JustinSupporter {
 			updateBothMaps();
 			CaveExplorer.pause(500);
 			askCoordsToFire();
-			if(!playing) {
+			if(!playing) 
+			{
 				return;
 			}
 			if(isGameOver())
@@ -196,41 +162,48 @@ public class FrontEndSunnyK implements JustinSupporter {
 			}
 			else 
 			{
-				CaveExplorer.pause(500);
-				updateBothMaps();
-				while(playing)
+													CaveExplorer.pause(500);
+				commanderMakesMove();
+				if(isGameOver())
 				{
-						//updates map each time
-					//displayBothMaps();
-						//the Commander makes the first move
-					CaveExplorer.pause(500);
-					commanderMakesMove();
-					if(isGameOver())
-					{
-						playing = false;
-					}
-					else 
-					{
-						CaveExplorer.pause(500);
-						updateBothMaps();
-							//asks coordinates to fire on opponent
-						CaveExplorer.pause(500);
-						askCoordsToFire();
-						if(!playing) {
-							return;
-						}
-						if(isGameOver())
-						{
-							playing = false;
-						}
-						else 
-						{
-							CaveExplorer.pause(500);
-							updateBothMaps();
-						}
-							//checks to see if the game is over, if it is then playing = false
-				    }
+					playing = false;
 				}
+				else 
+				{
+													CaveExplorer.pause(500);
+					updateBothMaps();
+					rotateTurns();
+				}
+			}
+		}
+	}
+	
+	public void rotateTurns()
+	{
+		while(playing)
+		{
+										CaveExplorer.pause(500);
+			askCoordsToFire();
+			if(!playing) 
+			{
+				return;
+			}
+										CaveExplorer.pause(500);
+			updateBothMaps();
+			if(isGameOver())
+			{
+				playing = false;
+			}
+			else 
+			{
+										CaveExplorer.pause(500);
+				commanderMakesMove();
+				if(isGameOver())
+				{
+					playing = false;
+				}
+										CaveExplorer.pause(500);
+				updateBothMaps();
 			}
 		}
 	}
