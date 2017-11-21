@@ -157,7 +157,8 @@ public class AndrewBackend implements KevinSupport{
 				map[row][col] = new AndrewKevinTile(row, col);
 			}
 		}
-		
+		//populates map
+		populateTiles();
 		//creates the boundary of rocks to keep player within map **Will leave on slot open if player just wants to leave**
 		createMapRockBorder();
 			
@@ -485,8 +486,6 @@ public class AndrewBackend implements KevinSupport{
 			map[row][0].setStaticOccupant(ROCK);
 			map[row][map[row].length-1].setStaticOccupant(ROCK);
 		}
-		
-		populateTiles();
 	}
 	
 	/**
@@ -638,7 +637,7 @@ public class AndrewBackend implements KevinSupport{
 		treasurePos[COL] = randomCol;
 		map[randomRow][randomCol].setStaticOccupant(TREASURE);
 		
-		//checkPathToTreasure();
+		checkPathToTreasure();
 	}
 	/**
 	 * Checks to see if the player has a path of OPEN tiles to get to the treasure
@@ -665,14 +664,19 @@ public class AndrewBackend implements KevinSupport{
 		int[][] beenTo = new int[(map.length-2)*(map.length-2)][2];
 		int cordCount = 0;
 		
-		System.out.println(beenTo[20][1]);
-		
 		boolean openPath = false;
 		boolean adjacentOpen = false;
+		
 		while(!openPath) {
 			//there is a looping issue if it encounters 4 open tiles in a square (going in a circle constantly) 
+
+			if(cordCount == 64)
+				openPath 
+				= true;
 			for(int dir = 3; dir > -1; dir--) {
-				//won't go back to the same 
+				//won't go back to the same
+				if(cordCount == 64)
+					break;
 				beenTo[cordCount][ROW] = currentRow;
 				beenTo[cordCount][COL] = currentCol;
 				cordCount++;
@@ -685,8 +689,8 @@ public class AndrewBackend implements KevinSupport{
 				int tileType = checkTile(goingTo[ROW],goingTo[COL]);
 				
 				if((tileType == FORAGE || tileType == NOTHING) && !inArray(goingTo, beenTo)) {
-					currentRow = getDirectedCoordinates(dir, currentRow, currentCol)[ROW];
-					currentCol = getDirectedCoordinates(dir, currentRow, currentCol)[COL];
+					currentRow = goingTo[ROW];
+					currentCol = goingTo[COL];
 					if(currentRow == playerPos[ROW] && currentCol == playerPos[COL]) {
 							adjacentOpen = true;
 							openPath = true;
@@ -704,20 +708,22 @@ public class AndrewBackend implements KevinSupport{
 					if(currentCol == playerPos[COL]) {
 						map[currentRow+1][currentCol-1].setStaticOccupant(randomTile(OPEN));
 						currentRow++;
-					}else
+					}
+					if(currentRow != playerPos[ROW] && currentCol != playerPos[COL]) {
 					if(Math.random() < 0.5) {
+						System.out.println(currentRow);System.out.println(currentCol);
 						map[currentRow][currentCol-1].setStaticOccupant(randomTile(OPEN));
 						currentCol--;
 					}else {
 						map[currentRow+1][currentCol].setStaticOccupant(randomTile(OPEN));
 						currentRow++;
-					}
+					}}
 			}
 		}
 	}
 	public boolean inArray(int[] arr, int[][] bigArr) {
 		for(int i = 0; i < bigArr.length; i++) {
-			if(bigArr[i] == null)
+			if(bigArr[i][ROW] == 0 && bigArr[i][COL] == 0)
 				return false;
 			if(bigArr[i][ROW] == arr[ROW] && bigArr[i][COL] == arr[COL]) {
 				return true;
