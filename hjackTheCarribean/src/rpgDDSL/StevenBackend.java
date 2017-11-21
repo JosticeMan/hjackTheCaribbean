@@ -519,7 +519,10 @@ public class StevenBackend implements DanSupport {
 		for(int i=0;i<enemyValue.length;i++) {
 			if(enemyValue[i][0]<1) {
 				map[enemyPosition[i][0]][enemyPosition[i][1]].setType(2);
+			}else {
+				map[enemyPosition[i][0]][enemyPosition[i][1]].setType(3);
 			}
+				
 		}
 	}
 	//
