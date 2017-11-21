@@ -65,7 +65,7 @@ public class KevinFrontend implements AndrewSupport {
 			updateMap(map);
 			displayTreasureHint();
 			displayMonkeyHints();
-			backend.getStepCount(); // number of steps taken before limit
+			displayNumSteps();
 		}
 		printEndGame(backend.end());
 	}
