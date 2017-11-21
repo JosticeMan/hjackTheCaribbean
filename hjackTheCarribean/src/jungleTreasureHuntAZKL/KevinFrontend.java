@@ -64,6 +64,7 @@ public class KevinFrontend implements AndrewSupport {
 
 	public void play() {
 		startGameMessage();
+		respondToInput(getUserInput());
 		  while(backend.playing()) {
 			backend.processInput(getUserInput());
 			updateMap(map);
@@ -72,6 +73,7 @@ public class KevinFrontend implements AndrewSupport {
 		}
 		printEndGame(backend.end());
 	}
+
 	private int amountVicinityRow(int row) {
 		return Math.abs(row - pRow);
 	}
@@ -106,7 +108,7 @@ public class KevinFrontend implements AndrewSupport {
 		pCol = backend.getPlayerPos()[COL];
 	}
 	private void startGameMessage() {
-		String s = "Welcome to the Treasure Hunter Game!! In this game, you need to found the treasure, to move type 'wdsa'." +"\n"+ "There will be hints when you are close to the treasure beware of the wild monkeys." +"\n"+ "If caught, game over! So listen closely for the rustling sounds! To get started type 'wdsa'!";
+		String s = "Welcome to the Treasure Hunter Game!! In this game, you need to found the treasure, to move type 'wdsa'." +"\n"+ "There will be hints when you are close to the treasure beware of the wild monkeys." +"\n"+ "If caught, game over! So listen closely for the rustling sounds! To get started type 'p'!";
 		 System.out.println(s);
 		
 	}
@@ -123,65 +125,57 @@ public class KevinFrontend implements AndrewSupport {
 		for(int row = 0; row<tMap.length; row++) {
 			for(int col = 0; col < tMap[row].length; col++) {				
 				if(tMap[row][col].getNonStaticOccupant() == PLAYER) {
-					System.out.print("P");
+					System.out.print("P ");
 					
-				}
-				else if(tMap[row][col].getStaticOccupant() == ROCK) {
-					System.out.print("R");
-				}
-				else if(tMap[row][col].getStaticOccupant() == TREE) {
-					System.out.print("T");
-				}
-				else if(tMap[row][col].getStaticOccupant() == FORAGE) {
-					System.out.print("F");
-				}
-				else if(tMap[row][col].getStaticOccupant() == TREASURE) {
-					System.out.print("X");
-				}
-				else if(tMap[row][col].getNonStaticOccupant() == MONKEY) {
-					System.out.print("M");
-				}
-				else{
-					System.out.print(" ");
+				}else if(backend.getVisibleRadius()[row][col] == 1) {
+					showContent(tMap, row, col);
+				}else if(backend.getVisibleRadius()[row][col] == 0){
+					System.out.print("X ");
 				}
 			}
 			System.out.println(" "+row);
 		}
 		while(i < tMap[0].length) {
-			numCol += i;
+			numCol += i + " ";
 			i++;
 		}
 		System.out.println(numCol);
 	}
 	
-	private boolean respondToInput(String input) {
-		if(isValidCoordinates()) {
-			return true;
-		}else if(isValidDirection()) {
-			return true;
-		}else {
-			System.out.println("That is not valid");
-			return false;
+	private void showContent(AndrewKevinTile[][] tMap,int row, int col) {
+		if(tMap[row][col].getStaticOccupant() == ROCK) {
+			System.out.print("R ");
 		}
+		else if(tMap[row][col].getStaticOccupant() == TREE) {
+			System.out.print("T ");
+		}
+		else if(tMap[row][col].getStaticOccupant() == FORAGE) {
+			System.out.print("F ");
+		}
+		else if(tMap[row][col].getStaticOccupant() == TREASURE) {
+			System.out.print("X ");
+		}
+		else if(tMap[row][col].getNonStaticOccupant() == MONKEY) {
+			System.out.print("M ");
+		}
+	}
+	private void respondToInput(String input) {
+		if(input.equalsIgnoreCase("p")) {
+			backend.setPlay(true);
+		}//else if(backend.isValidCoordinates(input)) {
+		//	
+		//}else {
+		//	System.out.println("That is not valid input");
+		//}
 		
 	}
 
 	@Override
 	public String getUserInput() {
 		return inputSource.nextLine();
-	}
-	@Override
-	public boolean isValidDirection() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
-	@Override
-	public boolean isValidCoordinates() {
-		// TODO Auto-generated method stub
-		return false;
 	}
-	//for(AndrewKevinTile col: map[row]) {
+		//for(AndrewKevinTile col: map[row]) {
 	//	text += col.getContent(); // Will be modified based off contents of the Tile
 	//}
 }
