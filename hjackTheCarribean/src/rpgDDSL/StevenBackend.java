@@ -360,9 +360,9 @@ public class StevenBackend implements DanSupport {
 	public void movement() {
 		int times=ship.getSpeed();
 		String input;
+		front.updateMap();
 		System.out.println("You can move "+times+" more times.");
 		input = CaveExplorer.in.nextLine();
-		front.updateMap();
 		if(input.equals("cheat")) {
 			front.setWon(true);
 			front.play();
