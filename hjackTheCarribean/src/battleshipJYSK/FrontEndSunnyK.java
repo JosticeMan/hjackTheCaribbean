@@ -376,6 +376,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 				{
 					System.out.println("Shipmate: You do not have any more of that power up!");
 					askCoordsToFire();
+					return;
 				}
 			}
 			else 
