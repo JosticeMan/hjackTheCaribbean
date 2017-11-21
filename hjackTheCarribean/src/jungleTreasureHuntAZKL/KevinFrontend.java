@@ -66,7 +66,8 @@ public class KevinFrontend implements AndrewSupport {
 		}
 		  while(backend.playing()) {
 			updateMap(map);
-			respondToInput(backend.processInput(getUserInput()));
+			String input = inputSource.nextLine();
+			respondToInput(backend.processInput(input));
 			displayTreasureHint();
 			displayMonkeyHints();
 			displayNumSteps();
@@ -206,8 +207,7 @@ public class KevinFrontend implements AndrewSupport {
 		
 	}
 
-	@Override
-	public String getUserInput() {
+	public static String getUserInput() {
 		return inputSource.nextLine();
 
 	}

@@ -2,6 +2,6 @@ package jungleTreasureHuntAZKL;
 
 public interface AndrewSupport {
 
-	public String getUserInput();
+	static String getUserInput();
 	
 }

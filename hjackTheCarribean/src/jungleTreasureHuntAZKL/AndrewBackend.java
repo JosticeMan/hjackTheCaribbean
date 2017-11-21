@@ -638,7 +638,7 @@ public class AndrewBackend implements KevinSupport{
 		treasurePos[COL] = randomCol;
 		map[randomRow][randomCol].setStaticOccupant(TREASURE);
 		
-		checkPathToTreasure();
+		//checkPathToTreasure();
 	}
 	/**
 	 * Checks to see if the player has a path of OPEN tiles to get to the treasure
@@ -672,6 +672,7 @@ public class AndrewBackend implements KevinSupport{
 		while(!openPath) {
 			//there is a looping issue if it encounters 4 open tiles in a square (going in a circle constantly) 
 			for(int dir = 3; dir > -1; dir--) {
+				//won't go back to the same 
 				beenTo[cordCount][ROW] = currentRow;
 				beenTo[cordCount][COL] = currentCol;
 				cordCount++;
