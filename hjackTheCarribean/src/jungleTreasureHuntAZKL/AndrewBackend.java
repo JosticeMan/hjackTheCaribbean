@@ -324,10 +324,7 @@ public class AndrewBackend implements KevinSupport{
 		int[] attemptedTile = getDirectedCoordinates(direction, playerPos[ROW], playerPos[COL]);
 		int into = checkTile(attemptedTile[0],attemptedTile[1]);
 		
-		//!!! Needs one to check if monkey attacked and send information about the attack to front end
-		
 		//checks if the tile is valid for moving into
-		//This is where events will trigger
 		if(into == NOTHING) {
 			map[playerPos[ROW]][playerPos[COL]].setNonStaticOccupant(NOTHING);
 			setPlayerPos(attemptedTile[0], attemptedTile[1]);
@@ -656,17 +653,26 @@ public class AndrewBackend implements KevinSupport{
 		int currentRow = treasurePos[ROW];
 		int currentCol = treasurePos[COL];
 		
+		int[][] beenTo = new int[(map.length-2)*(map.length-2)][2];
+		int cordCount = 0;
+		
 		boolean openPath = false;
 		boolean adjacentOpen = false;
 		while(!openPath) {
 			//there is a looping issue if it encounters 4 open tiles in a square (going in a circle constantly) 
-			//fix by just ignoring the direction to the right(1)
 			for(int dir = 3; dir > -1; dir--) {
+				beenTo[cordCount][ROW] = currentRow;
+				beenTo[cordCount][COL] = currentCol;
+				cordCount++;
+				
 				adjacentOpen = false;
-				if(dir == 1)
-						break;
-				int tileType = checkTile(getDirectedCoordinates(dir, currentRow, currentCol)[ROW],getDirectedCoordinates(dir, currentRow, currentCol)[COL]);
-				if(tileType == FORAGE || tileType == NOTHING) {
+				int[] goingTo = new int[2];
+				goingTo[ROW] = getDirectedCoordinates(dir, currentRow, currentCol)[ROW];
+				goingTo[COL] = getDirectedCoordinates(dir, currentRow, currentCol)[COL];
+				
+				int tileType = checkTile(goingTo[ROW],goingTo[COL]);
+				
+				if((tileType == FORAGE || tileType == NOTHING) && !inArray(goingTo, beenTo)) {
 					currentRow = getDirectedCoordinates(dir, currentRow, currentCol)[ROW];
 					currentCol = getDirectedCoordinates(dir, currentRow, currentCol)[COL];
 					if(currentRow == playerPos[ROW] && currentCol == playerPos[COL]) {
@@ -696,6 +702,16 @@ public class AndrewBackend implements KevinSupport{
 					}
 			}
 		}
+	}
+	public boolean inArray(int[] arr, int[][] bigArr) {
+		for(int i = 0; i < bigArr.length; i++) {
+			if(bigArr[i] == null)
+				return false;
+			if(bigArr[i][ROW] == arr[ROW] && bigArr[i][COL] == arr[COL]) {
+				return true;
+			}
+		}
+		return false;
 	}
 	/**
 	 * Updates the tiles that are visible in the sight radius
