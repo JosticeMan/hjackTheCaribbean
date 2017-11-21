@@ -116,6 +116,51 @@ public class DanielFrontend implements StevenSupport{
 		int humanX = backend.getHuman()[0];
 		int humanY = backend.getHuman()[1];
 		
+		int humanXSub1 = humanX-1;
+		int humanYSub1 = humanY-1;
+		int humanXSub2 = humanX-2;
+		int humanYSub2 = humanY-2;
+		
+		int humanXAdd1 = humanX+1;
+		int humanYAdd1 = humanY+1;
+		int humanXAdd2 = humanX+2;
+		int humanYAdd2 = humanY+2;
+		
+		
+		/*
+		humanXSub2 humanYSub2 
+		humanXSub2 humanY 
+		humanXSub2 humanYAdd2 
+		humanX humanYSub2
+		humanX humanYAdd2 
+		humanXAdd2 humanYSub2
+		humanXAdd2 humanY
+		humanXAdd2 humanYAdd2
+		humanXSub1 humanYSub1
+		humanXSub1 humanY 
+		humanXSub1 humanYAdd1
+		humanX humanYSub1
+		humanX humanYAdd1
+		humanXAdd1 humanYSub1
+		humanXAdd1 humanY
+		humanXAdd1 humanYAdd1 
+		humanXSub1 humanYSub2 
+		humanXAdd1 humanYSub2
+		humanXAdd2 humanYSub1
+		humanXAdd2 humanYAdd1
+		humanXAdd1 humanYAdd2
+		humanXSub1 humanYAdd2
+		humanXSub2 humanYAdd1
+		humanXSub2 humanYSub1 		
+		*/
+		
+		
+		
+		
+		
+		
+		
+		
 		backend.getMap()[humanX-1][humanY].setType(3); 
 		isEnemy(humanX-1, humanY); 
 		
@@ -288,9 +333,9 @@ public class DanielFrontend implements StevenSupport{
 		
 		//SETS TYPES 
 		setType();
-		
+		backend.setTypeEnemy();
 		//CREATES FOG + HUMAN
-		//fogOfWar();
+		fogOfWar();
 		
 
 		//MAP CREATION
@@ -450,7 +495,6 @@ public class DanielFrontend implements StevenSupport{
 					}
 				}
 			}
-			
 		}
 		
 		for (int j = 0; j < holder.length; j++)
