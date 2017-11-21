@@ -9,4 +9,6 @@ public interface JustinSupporter {
 
 	boolean isPlaying();
 
+	void win();
+
 }

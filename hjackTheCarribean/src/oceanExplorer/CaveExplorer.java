@@ -24,11 +24,13 @@ public class CaveExplorer {
 											{
 										     "Captain Duran: Good job beating the french!", 
 										     "Captain Duran: The next commander, the Spanish, won't be as easy!",
-										     "Captain Duran: I heard they have significantly better strategies at tackling your ships. Beware!"
+										     "Captain Duran: I heard they have significantly better strategies at tackling your ships. Beware!", 
+										     "Captain Duran: You are now entering the territory of the Spanish!"
 											}, 
 											{
 											 "Captain Duran: Ahoy! You've passed the intelligent beings!", 
-											 "Captain Duran: Your next challenger, the British, has never lost an naval battle! But I believe in you!"
+											 "Captain Duran: Your next challenger, the British, has never lost an naval battle! But I believe in you!", 
+											 "Captain Duran: You are now entering the territory of the British!"
 											}
 										  };
 	
@@ -45,7 +47,7 @@ public class CaveExplorer {
 	
 	public static final String[] victory = {
 
-		   "_ _  _        _                  ",
+		   " _ _  _        _                  ",
 		   "| | |<_> ___ _| |_ ___  _ _  _ _ ",
 		   "| ' || |[ | ' | | [ . ]| '_>| | |",
 		   "|__/ |_|[_|_. |_| [___]|_|  `_. |",

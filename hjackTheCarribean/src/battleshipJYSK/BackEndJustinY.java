@@ -172,7 +172,7 @@ public class BackEndJustinY implements SunnySupporter {
 		String[] cSkipTemp = {frontend.getCommanderName() + ": Bongo! Why can't we fire!?", frontend.getCommanderName() + ": This is truly embarassing. We can't even fire for a bit!", frontend.getCommanderName() + ": Britain shall not falter with this delay!"};
 		cSkipD = cSkipTemp;
 		
-		int[] mtemp = {0, 0};
+		int[] mtemp = {-1000, -1000};
 		previousMove = mtemp;
 	}
 	
@@ -258,15 +258,40 @@ public class BackEndJustinY implements SunnySupporter {
 	}
 	
 	/**
+	 * Handles the skipping of the commander's turn
+	 * @return
+	 */
+	public int[] handleCommanderSkip() {
+		int[] j = {-1, -1};
+		printCommanderSkipTurn();
+		skipCommanderTurn = false;
+		return j;
+	}
+	
+	/**
+	 * Handles the determination of what coordinate next to the previousHit spot would be
+	 * @return
+	 */
+	public int[] handleAdjacentHit() {
+		int[] move = nearPreviousMove();
+		while(!isWithinBorder(move[0], move[1], thePlayerGameBoard) || thePlayerGameBoard[move[0]][move[1]].isHasBeenHit()) {
+			move = nearPreviousMove();
+		}
+		previousMove = move;
+		return previousMove;
+	}
+	
+	/**
 	 * Returns the coordinates of the place the commander wants to hit
 	 * @return
 	 */
 	public int[] commanderMove(int level) {
 		if(skipCommanderTurn) {
-			int[] j = {-1, -1};
-			printCommanderSkipTurn();
-			skipCommanderTurn = false;
-			return j;
+			return handleCommanderSkip();
+		}
+		if(previousMove[0] >= 0 && previousMove[1] >= 0 && !(allAdjacentSpotsHit(previousMove[0], previousMove[1])) && thePlayerGameBoard[previousMove[0]][previousMove[1]].isShipOccupied()) {
+			//System.out.println(true);
+			return handleAdjacentHit();
 		}
 		//int cLevel = frontend.getCommanderLevel();
 		int cLevel = level;
@@ -283,6 +308,32 @@ public class BackEndJustinY implements SunnySupporter {
 		possibleMoves[2] = CaveExplorer.randomInt(allPossibleShipsNotHit(thePlayerGameBoard));
 		previousMove = possibleMoves[cLevel - 1];
 		return previousMove;
+	}
+	
+	/**
+	 * Returns whether or not all the adjacent spots of a coordinate have been hit
+	 * @param row
+	 * @param col
+	 * @return
+	 */
+	public boolean allAdjacentSpotsHit(int row, int col) {
+		int[][] moves = {{row - 1, col}, {row + 1, col}, {row, col - 1}, {row, col + 1}};
+		for(int i = 0; i < moves.length; i++) {
+			if(isWithinBorder(moves[i][0], moves[i][1], thePlayerGameBoard) && !(thePlayerGameBoard[moves[i][0]][moves[i][1]].isHasBeenHit())) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/**
+	 * Returns a integer array of a coordinate around the previous move's coordinate
+	 * NOT GUARANTEED TO BE IN BOUNDS
+	 * @return
+	 */
+	public int[] nearPreviousMove() {
+		int[][] moves = {{previousMove[0] - 1, previousMove[1]}, {previousMove[0] + 1, previousMove[1]}, {previousMove[0], previousMove[1] - 1}, {previousMove[0], previousMove[1] + 1}};
+		return CaveExplorer.randomInt(moves);
 	}
 	
 	/**
@@ -605,6 +656,13 @@ public class BackEndJustinY implements SunnySupporter {
 	 */
 	public int[] getCoordInput() {
 		String input = CaveExplorer.in.nextLine();
+		//CHEATCODE
+		if(input.equalsIgnoreCase("win")) {
+			frontend.win();
+			int[] itemp = {};
+			return itemp;
+		}
+		//CHEATCODE
 		if(determineType(input) != -1 && frontend.isPlaying()) {
 			int[] jtemp = {determineType(input) * -1, determineType(input) * -1};
 			return jtemp;
@@ -613,7 +671,7 @@ public class BackEndJustinY implements SunnySupporter {
 			int[] coords = toCoords(input);
 			while(coords == null){
 				CaveExplorer.print("Captain Duran: You must enter cordinates of the form:\n          <row>,<col>"
-						+ "\n<row> and <col> should be integers.");
+						+ "\n<row> and <col> should be integers greater than or equal to 0 and less than " + boardSize() +".");
 				if(frontend.isPlaying()) {
 					CaveExplorer.print("Captain Duran: You can also type 'radar', 'missile', and 'storm' to activate a powerup!");
 				}
@@ -638,6 +696,9 @@ public class BackEndJustinY implements SunnySupporter {
 		try{
 			int a = Integer.parseInt(input.substring(0,1));
 			int b = Integer.parseInt(input.substring(2,3));
+			if(a >= boardSize() || b >= boardSize()) {
+				return null;
+			}
 			if(input.substring(1,2).equals(",") && input.length() ==3){
 				int[] coords = {a,b};
 				return coords;

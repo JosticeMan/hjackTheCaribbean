@@ -89,76 +89,39 @@ public class FrontEndSunnyK implements JustinSupporter {
 	public void startGame() 
 	{
 		CaveExplorer.pause(500);
-		//Shows empty maps
-		//displayBothMaps();
-		//backend.printMap(playerPlots);
-		//System.out.println();
-		//backend.printMap(commanderPlots);
 		displayBoard(playerPlots);
-		//asks coordinates to place ships
-		askCoordsForShips();
-		//commander places his ship
-		backend.commanderPlaceShip(ships);
 		playing = true;
+		askCoordsForShips();
+		backend.commanderPlaceShip(ships);
 		determineFirstTurn();
-		if(isPlayerTurn) 
+		if(!playing) {
+		}
+		else if(isPlayerTurn) 
 		{
-			//displayBothMaps();
-			updateBothMaps();
-			CaveExplorer.pause(500);
-			askCoordsToFire();
-			if(isGameOver())
-			{
-				playing = false;
-			}
-			else 
-			{
-				CaveExplorer.pause(500);
-				commanderMakesMove();
-				if(isGameOver())
-				{
-					playing = false;
-				}
-				else 
-				{
-					CaveExplorer.pause(500);
-					updateBothMaps();
-					while(playing)
-					{
-							//updates map each time
-						//displayBothMaps();
-							//asks coordinates to fire on opponent
-						CaveExplorer.pause(500);
-						askCoordsToFire();
-						CaveExplorer.pause(500);
-						updateBothMaps();
-						if(isGameOver())
-						{
-							playing = false;
-						}
-						else 
-						{
-								//the Commander makes the first move
-							CaveExplorer.pause(500);
-							commanderMakesMove();
-							if(isGameOver())
-							{
-								playing = false;
-							}
-							CaveExplorer.pause(500);
-							updateBothMaps();
-								//checks to see if the game is over, if it is then playing = false
-						}
-					}
-				}
-			}
+			playerGoesFirst();
 		}
 		else 
 		{
-			//displayBothMaps();
-			CaveExplorer.pause(500);
-			System.out.println("Captain Duran: " + commanderName + " is making the first move!");
-			CaveExplorer.pause(500);
+			commanderGoesFirst();
+		}
+	}
+	
+	public void playerGoesFirst()
+	{
+		updateBothMaps();
+		CaveExplorer.pause(500);
+		askCoordsToFire();
+		if(!playing) 
+		{
+			return;
+		}
+		if(isGameOver())
+		{
+			playing = false;
+		}
+		else 
+		{
+												CaveExplorer.pause(500);
 			commanderMakesMove();
 			if(isGameOver())
 			{
@@ -166,53 +129,84 @@ public class FrontEndSunnyK implements JustinSupporter {
 			}
 			else 
 			{
-				CaveExplorer.pause(500);
+												CaveExplorer.pause(500);
 				updateBothMaps();
-				CaveExplorer.pause(500);
-				askCoordsToFire();
+				rotateTurns();
+			}
+		}
+	}
+	
+	public void commanderGoesFirst()
+	{
+		CaveExplorer.pause(500);
+		System.out.println("Captain Duran: " + commanderName + " is making the first move!");
+		CaveExplorer.pause(500);
+		commanderMakesMove();
+		if(isGameOver())
+		{
+			playing = false;
+		}
+		else 
+		{
+			CaveExplorer.pause(500);
+			updateBothMaps();
+			CaveExplorer.pause(500);
+			askCoordsToFire();
+			if(!playing) 
+			{
+				return;
+			}
+			if(isGameOver())
+			{
+				playing = false;
+			}
+			else 
+			{
+													CaveExplorer.pause(500);
+				commanderMakesMove();
 				if(isGameOver())
 				{
 					playing = false;
 				}
 				else 
 				{
-					CaveExplorer.pause(500);
+													CaveExplorer.pause(500);
 					updateBothMaps();
-					while(playing)
-					{
-							//updates map each time
-						//displayBothMaps();
-							//the Commander makes the first move
-						CaveExplorer.pause(500);
-						commanderMakesMove();
-						if(isGameOver())
-						{
-							playing = false;
-						}
-						else 
-						{
-							CaveExplorer.pause(500);
-							updateBothMaps();
-								//asks coordinates to fire on opponent
-							CaveExplorer.pause(500);
-							askCoordsToFire();
-							if(isGameOver())
-							{
-								playing = false;
-							}
-							else 
-							{
-								CaveExplorer.pause(500);
-								updateBothMaps();
-							}
-								//checks to see if the game is over, if it is then playing = false
-					    }
-					}
+					rotateTurns();
 				}
 			}
 		}
 	}
 	
+	public void rotateTurns()
+	{
+		while(playing)
+		{
+										CaveExplorer.pause(500);
+			askCoordsToFire();
+			if(!playing) 
+			{
+				return;
+			}
+										CaveExplorer.pause(500);
+			updateBothMaps();
+			if(isGameOver())
+			{
+				playing = false;
+			}
+			else 
+			{
+										CaveExplorer.pause(500);
+				commanderMakesMove();
+				if(isGameOver())
+				{
+					playing = false;
+				}
+										CaveExplorer.pause(500);
+				updateBothMaps();
+			}
+		}
+	}
 	
 	public void commanderMakesMove() {
 		int[] coords = backend.commanderMove(commanderLevel);
@@ -283,14 +277,20 @@ public class FrontEndSunnyK implements JustinSupporter {
 			
 			System.out.println("Shipmate: Where would you like to position ship #"+(i+1)+" of length " + lengthOfCurrentShip +"?");
 			int[] coords =  backend.getCoordInput();
+			if(coords.length == 0) {
+				return;
+			}
 			
 			System.out.println("Shipmate: To thou direction would you like to place it in? Enter 'N','E','S','W'");
 			int direction = backend.interpretDirectionInput();
 			
 			while(!backend.tryShipPlacement(coords[0], coords[1], direction, lengthOfCurrentShip, playerPlots))
 			{
-				System.out.println("Shipmate: Your input was either already taken by another ship or out of the battlefield! Where would you like to place ship #"+i+"?");
+				System.out.println("Shipmate: Your input was either already taken by another ship or is out of the battlefield! Where would you like to place ship #"+(i+1)+"?");
 				coords =  backend.getCoordInput();
+				if(coords.length == 0) {
+					return;
+				}
 				
 				System.out.println("Shipmate: To which direction would you like to place it in? Enter 'N','E','S','W'");
 				direction = backend.interpretDirectionInput();
@@ -299,6 +299,11 @@ public class FrontEndSunnyK implements JustinSupporter {
 			updateMaps();
 			displayBoard(playerPlots);
 		}
+	}
+	
+	public void win() {
+		isWinner = true; 
+		playing = false;
 	}
 	
 	//lengthOfShip(ship e) gets length of ship from backend
@@ -324,6 +329,9 @@ public class FrontEndSunnyK implements JustinSupporter {
 		else {
 			System.out.println("Shipmate: Where would you like to fire?");
 			coords = backend.getCoordInput();
+			if(coords.length == 0) {
+				return;
+			}
 			if(coords[0] < 0 && coords[1] < 0) 
 			{
 				int type = coords[0] * -1;
@@ -341,6 +349,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 				{
 					System.out.println("Shipmate: You do not have any more of that power up!");
 					askCoordsToFire();
+					return;
 				}
 			}
 			else 
