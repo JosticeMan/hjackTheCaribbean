@@ -24,6 +24,7 @@ public class KevinFrontend implements AndrewSupport {
 	public int pCol;
 	public int tRow;
 	public int tCol;
+	public boolean starting;
 	
 	
 	public boolean mNear;
@@ -55,11 +56,14 @@ public class KevinFrontend implements AndrewSupport {
 		mClose = false;
 		tClose = false;
 		tRightInFront = false;
+		starting = false; //loop if they dont press p
 	}
 
 	public void play() {
 		startGameMessage();
+		while(starting == false) {
 		respondToInput(getUserInput());
+		}
 		  while(backend.playing()) {
 			updateMap(map);
 			respondToInput(backend.processInput(getUserInput()));
@@ -71,17 +75,17 @@ public class KevinFrontend implements AndrewSupport {
 	}
 	private void respondToInput(int i) {
 		if(backend.processInput(getUserInput()) == 0) {
-			System.out.print("There is something there, you can't move there.");
+			System.out.println("There is something there, you can't move there.");
 		}else if(backend.processInput(getUserInput()) == 2) {
-			System.out.print("That is beyond your line of sight, You can look there.");
+			System.out.println("That is beyond your line of sight, You can look there.");
 		}else if(backend.processInput(getUserInput()) == 5) {
-			System.out.print("That is outside the map. Don't be dum");
+			System.out.println("That is outside the map. Don't be dum");
 		}else if(backend.processInput(getUserInput()) == 4) {
 			//need a method that sets win to true
 		}
 	}
 	private void displayVictory() {
-		String v = "Dun-Da-Da-Dun! Congratulation, you have won the game!";
+		String v = "Dun-Da-Da-Dun! Congratulation, Ypu have found the treasure!";
 		
 	}
 
@@ -156,11 +160,10 @@ public class KevinFrontend implements AndrewSupport {
 		getNonStaticPosition();
 		for(int row = 0; row<tMap.length; row++) {
 			for(int col = 0; col < tMap[row].length; col++) {				
-				if(tMap[row][col].getNonStaticOccupant() == PLAYER) {
-					System.out.print("P ");
-					
-				}else  {
+				if(backend.withinVisibleRange(row, col)){
 					showContent(tMap, row, col);
+				}else {
+					System.out.print("X ");
 				}
 			}
 			System.out.println(" "+row);
@@ -187,6 +190,8 @@ public class KevinFrontend implements AndrewSupport {
 		}
 		else if(tMap[row][col].getNonStaticOccupant() == MONKEY) {
 			System.out.print("M ");
+		}else if(tMap[row][col].getNonStaticOccupant() == PLAYER) {
+			System.out.print("P ");
 		}else {
 			System.out.print("  ");
 		}
@@ -194,6 +199,7 @@ public class KevinFrontend implements AndrewSupport {
 	private void respondToInput(String input) {
 		if(input.equalsIgnoreCase("p")) {
 			backend.setPlay(true);
+			starting = true;
 		}else {
 			System.out.println("Please type in 'p' if u want to play");
 		}
