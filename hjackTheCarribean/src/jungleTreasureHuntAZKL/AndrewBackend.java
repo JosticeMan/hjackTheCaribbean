@@ -319,8 +319,9 @@ public class AndrewBackend implements KevinSupport{
 	 * Checks the tile the player is attempting to move into
 	 * and moves player into tile if there is NOTHING/TREASURE
 	 * @param direction
+	 * @return 
 	 */
-	public void attemptPlayerMove(int direction) {
+	public int attemptPlayerMove(int direction) {
 		int[] attemptedTile = getDirectedCoordinates(direction, playerPos[ROW], playerPos[COL]);
 		int into = checkTile(attemptedTile[0],attemptedTile[1]);
 		
@@ -329,38 +330,49 @@ public class AndrewBackend implements KevinSupport{
 			map[playerPos[ROW]][playerPos[COL]].setNonStaticOccupant(NOTHING);
 			setPlayerPos(attemptedTile[0], attemptedTile[1]);
 			stepCount--;
+			
 			updateVisibleRadius();
+			allMonkeyMove();
+			return 1;
 		}else {
 				allMonkeyMove();
 					if(into == TREE || into == ROCK) { //cannot walk into these
 						//return fail to move towards coordinates
+						return 0;
 					}else 
 						if(into == FORAGE) { //walks into forage and forage gets removed
 						map[playerPos[ROW]][playerPos[COL]].setNonStaticOccupant(NOTHING);
 						setPlayerPos(attemptedTile[0], attemptedTile[1]);
 						stepCount--;
 						map[attemptedTile[0]][attemptedTile[1]].setStaticOccupant(NOTHING);
-						
+
+						allMonkeyMove();
 						updateVisibleRadius();
+						return 1;
 					}else 
 						if(into == TREASURE) {
 						//player wins
+							return 4;
 					}
 		}
+		return -1;
 	}
 	
-	public void attemptObserve(int row, int col) {
+	public int attemptObserve(int row, int col) {
 		//checks if coordinates are within vision range
 			//checks if within map bounds
 		if(withinMap(row, col)) {
 			if(withinVisibleRange(row, col)) {
 				//give hint
-				System.out.println("You did good coordinates");
+				//System.out.println("You did good coordinates");
+				return 3;
 			}else {
-				System.out.println("You can't see there");
+				//System.out.println("You can't see there");
+				return 2;
 			}
 		}else {
-			System.out.println("Outside map");
+			//System.out.println("Outside map");
+			return 2;
 		}
 	}
 	/**
@@ -411,20 +423,16 @@ public class AndrewBackend implements KevinSupport{
 	 * then checks if user wants to look at a coordinate
 	 * otherwise nothing will happen within the backend
 	 */
-	public void processInput(String input) {
+	public int processInput(String input) {
 		if(isValidDirection(input)) {
 			String dirKeys = "wdsa";
-			attemptPlayerMove(dirKeys.indexOf(input));
-			allMonkeyMove();
+			return attemptPlayerMove(dirKeys.indexOf(input));
 		}else if(isValidCoordinates(input)){
 			int row = Integer.parseInt(input.substring(0,1));
 			int col = Integer.parseInt(input.substring(2,3));
-			attemptObserve(row, col);
-		}else if(input.length()==1) {
-			if(input.substring(0,1).equalsIgnoreCase("r")) {
-				
-			}
+			return attemptObserve(row, col);
 		}
+		return -1;
 	}
 	/**
 	 * Checks if user inputs a valid direction (similar to isValid)
