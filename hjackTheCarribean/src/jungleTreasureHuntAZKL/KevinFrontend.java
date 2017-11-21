@@ -61,7 +61,6 @@ public class KevinFrontend implements AndrewSupport {
 		startGameMessage();
 		respondToInput(getUserInput());
 		  while(backend.playing()) {
-			backend.processInput(getUserInput());
 			updateMap(map);
 			respondToInput(backend.processInput(getUserInput()));
 			displayTreasureHint();

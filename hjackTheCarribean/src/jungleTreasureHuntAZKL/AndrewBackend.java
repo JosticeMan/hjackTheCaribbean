@@ -637,7 +637,7 @@ public class AndrewBackend implements KevinSupport{
 		treasurePos[COL] = randomCol;
 		map[randomRow][randomCol].setStaticOccupant(TREASURE);
 		
-		checkPathToTreasure();
+		//checkPathToTreasure();
 	}
 	/**
 	 * Checks to see if the player has a path of OPEN tiles to get to the treasure
