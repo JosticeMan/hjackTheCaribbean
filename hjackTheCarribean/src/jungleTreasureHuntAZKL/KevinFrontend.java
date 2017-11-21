@@ -116,7 +116,7 @@ public class KevinFrontend implements AndrewSupport {
 		}
 	}
 	private void displayNumSteps() {
-		System.out.print("You have this amount of "+backend.getStepCount()+" steps left.");
+		System.out.print("You have "+backend.getStepCount()+" steps left.");
 	}
 	private void getNonStaticPosition() {
 		pRow = backend.getPlayerPos()[ROW];
@@ -142,10 +142,8 @@ public class KevinFrontend implements AndrewSupport {
 				if(tMap[row][col].getNonStaticOccupant() == PLAYER) {
 					System.out.print("P ");
 					
-				}else if(backend.getVisibleRadius()[row][col] == 1) {
+				}else  {
 					showContent(tMap, row, col);
-				}else if(backend.getVisibleRadius()[row][col] == 0){
-					System.out.print("X ");
 				}
 			}
 			System.out.println(" "+row);
@@ -172,6 +170,8 @@ public class KevinFrontend implements AndrewSupport {
 		}
 		else if(tMap[row][col].getNonStaticOccupant() == MONKEY) {
 			System.out.print("M ");
+		}else {
+			System.out.print("  ");
 		}
 	}
 	private void respondToInput(String input) {
