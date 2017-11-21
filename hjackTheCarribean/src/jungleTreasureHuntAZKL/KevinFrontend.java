@@ -34,14 +34,14 @@ public class KevinFrontend implements AndrewSupport {
 	
 	private AndrewKevinTile[][] map;
 
-	public static final void main(String[] args) {
+	public static void main(String[] args) {
 		inputSource = new Scanner(System.in);
 		KevinFrontend demo = new KevinFrontend();
 		demo.play();
 		//KevinFrontend demo = new KevinFrontend();
 		
 	}
-
+	
 	public static String getInput() {
 		return inputSource.nextLine();
 	}
@@ -66,11 +66,12 @@ public class KevinFrontend implements AndrewSupport {
 		}
 		  while(backend.playing()) {
 			updateMap(map);
-			String input = inputSource.nextLine();
-			respondToInput(backend.processInput(input));
+			respondToInput(backend.processInput(getUserInput()));
+			updateMap(map);
 			displayTreasureHint();
 			displayMonkeyHints();
 			displayNumSteps();
+			
 		}
 		printEndGame(backend.end());
 	}
@@ -83,6 +84,8 @@ public class KevinFrontend implements AndrewSupport {
 			System.out.println("That is outside the map. Don't be dum");
 		}else if(backend.processInput(getUserInput()) == 4) {
 			//need a method that sets win to true
+		}else if(backend.processInput(getUserInput()) == 1) {
+			updateMap(map);
 		}
 	}
 	private void displayVictory() {
@@ -109,10 +112,10 @@ public class KevinFrontend implements AndrewSupport {
 	private void displayTreasureHint() {
 		howtCloseTreasure();
 		if(tRightInFront == true) {
-			System.out.print("You notice something at ground reallll close to you!!");
+			System.out.println("You notice something at ground reallll close to you!!");
 		}
 		else if(tClose == true) {
-			System.out.print("You notice something strange in the ground near you!");
+			System.out.println("You notice something strange in the ground near you!");
 		}
 	}
 	private void howCloseAreMonkeys() {
@@ -130,13 +133,13 @@ public class KevinFrontend implements AndrewSupport {
 	private void displayMonkeyHints() {
 		howCloseAreMonkeys();
 		if(mClose == true) {
-			System.out.print("The rustling noises are getting closer...");
+			System.out.println("The rustling noises are getting closer...");
 		}else if(mNear == true) {
-			System.out.print("You started to hear rustling noises.");
+			System.out.println("You started to hear rustling noises.");
 		}
 	}
 	private void displayNumSteps() {
-		System.out.print("You have "+backend.getStepCount()+" steps left.");
+		System.out.println("You have "+backend.getStepCount()+" steps left.");
 	}
 	private void getNonStaticPosition() {
 		pRow = backend.getPlayerPos()[ROW];
@@ -145,9 +148,6 @@ public class KevinFrontend implements AndrewSupport {
 	private void startGameMessage() {
 		String s = "Welcome to the Treasure Hunter Game!! In this game, you need to found the treasure, to move type 'wdsa'." +"\n"+ "There will be hints when you are close to the treasure beware of the wild monkeys." +"\n"+ "If caught, game over! So listen closely for the rustling sounds! To get started type 'p'!";
 		 System.out.println(s);
-		
-	}
-	private void displayInputs() {
 		
 	}
 	private void printEndGame(Object end) {
@@ -207,7 +207,7 @@ public class KevinFrontend implements AndrewSupport {
 		
 	}
 
-	public static String getUserInput() {
+	public  String getUserInput() {
 		return inputSource.nextLine();
 
 	}
