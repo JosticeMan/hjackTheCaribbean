@@ -425,7 +425,7 @@ public class CaveRoom {
 		*/
 		openAllDoors();
 		if(level == 1) {
-			setUpLevel3(level);
+			setUpLevel1(level);
 		}
 		if(level == 2) {
 			setUpLevel2(level);
