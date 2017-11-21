@@ -155,37 +155,22 @@ public class DanielFrontend implements StevenSupport{
 		*/
 		
 		
-		
-		
-		
-		
-		
-		
-		backend.getMap()[humanX-1][humanY].setType(3); 
-		isEnemy(humanX-1, humanY); 
-		
-		backend.getMap()[humanX+1][humanY+1].setType(3);
-		isEnemy(humanX+1, humanY+1);
-		
-		backend.getMap()[humanX+1][humanY].setType(3);
-		isEnemy(humanX+1, humanY);
-		
-		backend.getMap()[humanX][humanY+1].setType(3);
-		isEnemy(humanX, humanY+1);
-		
-		backend.getMap()[humanX-1][humanY+1].setType(3);
-		isEnemy(humanX-1, humanY+1);
-				
-		backend.getMap()[humanX][humanY-1].setType(3);
-		isEnemy(humanX, humanY-1);
-		
-		backend.getMap()[humanX+1][humanY-1].setType(3);
-		isEnemy(humanX+1, humanY-1);
-			
-		backend.getMap()[humanX-1][humanY-1].setType(3);
-		isEnemy(humanX-1, humanY-1);
+		setRegularVision();
 	}
 	
+	public void setRegularVision()
+	{
+		int humanX = backend.getHuman()[0];
+		int humanY = backend.getHuman()[1];
+		int[] humanXNums = {-1,1,1,0,-1,0,1,-1};
+		int[] humanYNums = {0,1,0,1,1,-1,-1,-1};
+		
+		for (int i = 0; i < 8; i++)
+		{
+			backend.getMap()[humanX+(humanXNums[i])][humanY+(humanYNums[i])].setType(3);
+			isEnemy((humanX+(humanXNums[i])),(humanY+(humanYNums[i])));
+		}
+	}
 	public void visionBottom()
 	{
 		int humanX = backend.getHuman()[0];
