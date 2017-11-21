@@ -26,7 +26,7 @@ public class DanTrapRoom extends CaveRoom {
 			}
 		}
 		
-		return"";
+		return "";
 	}
 
 }
