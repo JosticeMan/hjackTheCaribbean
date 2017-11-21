@@ -280,14 +280,13 @@ public class StevenBackend implements DanSupport {
 					}
 				}
 				makeWalls();
-				enemyAttack();
+				enemyAttack(i);
 			}
 		}
 	}
-	public void enemyAttack() {
+	public void enemyAttack(int i) {
 		int x;
 		int y;
-		for(int i=0;i<enemyPosition.length;i++) {
 			x=enemyPosition[i][0];
 			y=enemyPosition[i][1];
 			if(enemyValue[i][0]>0) {
@@ -347,8 +346,8 @@ public class StevenBackend implements DanSupport {
 						System.out.println("You have taken "+enemyValue[i][1]+" damage from enemy "+(i+1)+" who is located at ("+enemyPosition[i][0]+","+enemyPosition[i][1]+").");
 					}
 				}
+			
 			}
-		}
 		
 	}
 
