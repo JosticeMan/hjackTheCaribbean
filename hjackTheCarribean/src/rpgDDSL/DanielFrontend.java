@@ -15,6 +15,7 @@ public class DanielFrontend implements StevenSupport{
 	private int num;
 	private boolean viewed;
 	private Ship a;
+	private boolean lost;
 	
 	public static final void main(String[] args)
 	{
@@ -59,14 +60,21 @@ public class DanielFrontend implements StevenSupport{
 	{
 		backend.setFrontend(this);
 		updateMap();
+		enemyCount();
 			while(!won) {
-				
+				haveHealth();
+				if(lost)
+				{
+					System.out.println("You lost...");
+					System.exit(0);
+				}
 				backend.movement();
 			}
 			if(won) {
 				System.out.println("You won!");
 				System.exit(0);
 			}
+			
 	}
 	public boolean isWon() {
 		return won;
@@ -182,11 +190,18 @@ public class DanielFrontend implements StevenSupport{
 	{
 		for (int i = 0; i < backend.getEnemyPosition().length; i++)
 		{
-			if (backend.getEnemyValue()[i][0] != 0)
+			if (backend.getEnemyValue()[i][0] <= 0)
 			{
 				if (x == backend.getEnemyPosition()[i][0] && y == backend.getEnemyPosition()[i][1])
 				{
 					backend.getMap()[x][y].setType(2);
+				}
+			}
+			else
+			{
+				if (x == backend.getEnemyPosition()[i][0] && y == backend.getEnemyPosition()[i][1])
+				{
+					backend.getMap()[x][y].setType(3);
 				}
 			}
 		}
@@ -462,6 +477,7 @@ public class DanielFrontend implements StevenSupport{
 	
 	public void displayHumanStats()
 	{
+		if (a.getHp() >= 0)
 		System.out.println("You currently have "+
 			a.getHp()+ " HP out of 30.\nYour attack is "+a.getAttack()+ " points.\n"+"Your speed is "+a.getSpeed()+" points."	
 				);
@@ -470,7 +486,7 @@ public class DanielFrontend implements StevenSupport{
 	{
 		for (int i = 0; i < backend.getEnemyPosition().length; i++)
 		{
-			if (backend.getEnemyValue()[i][0] != 0)
+			if (backend.getEnemyValue()[i][0] >= 0)
 			System.out.println( "Enemy "+(i+1)+"'s health is "+backend.getEnemyValue()[i][0]+"\nTheir attack is equal to "+backend.getEnemyValue()[i][1]+" points.");
 		}
 	}
@@ -484,6 +500,14 @@ public class DanielFrontend implements StevenSupport{
 		else
 		{
 			won = false;
+		}
+	}
+	
+	public void haveHealth()
+	{
+		if (a.getHp() <= 0)
+		{
+			lost = true;
 		}
 	}
 }
