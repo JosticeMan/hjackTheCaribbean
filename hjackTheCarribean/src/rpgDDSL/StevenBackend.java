@@ -290,63 +290,64 @@ public class StevenBackend implements DanSupport {
 		for(int i=0;i<enemyPosition.length;i++) {
 			x=enemyPosition[i][0];
 			y=enemyPosition[i][1];
-			x--;
-			if(x>0) {
-				if(human[0]==x&&human[1]==y) {
-					ship.setHp(ship.getHp()-enemyValue[i][1]);
-					System.out.println("You have taken "+enemyValue[i][1]+" damage from enemy "+(i+1)+" who is located at ("+enemyPosition[i][0]+","+enemyPosition[i][1]+").");
+			if(enemyValue[i][0]>0) {
+				x--;
+				if(x>0) {
+					if(human[0]==x&&human[1]==y) {
+						ship.setHp(ship.getHp()-enemyValue[i][1]);
+						System.out.println("You have taken "+enemyValue[i][1]+" damage from enemy "+(i+1)+" who is located at ("+enemyPosition[i][0]+","+enemyPosition[i][1]+").");
+					}
+				}
+				y--;
+				if(y>0&&x>0) {
+					if(human[0]==x&&human[1]==y) {
+						ship.setHp(ship.getHp()-enemyValue[i][1]);
+						System.out.println("You have taken "+enemyValue[i][1]+" damage from enemy "+(i+1)+" who is located at ("+enemyPosition[i][0]+","+enemyPosition[i][1]+").");
+					}
+				}
+				y+=2;
+				if(y<map[0].length&&x>0) {
+					if(human[0]==x&&human[1]==y) {
+						ship.setHp(ship.getHp()-enemyValue[i][1]);
+						System.out.println("You have taken "+enemyValue[i][1]+" damage from enemy "+(i+1)+" who is located at ("+enemyPosition[i][0]+","+enemyPosition[i][1]+").");
+					}
+				}
+				x++;
+				if(y<map[0].length) {
+					if(human[0]==x&&human[1]==y) {
+						ship.setHp(ship.getHp()-enemyValue[i][1]);
+						System.out.println("You have taken "+enemyValue[i][1]+" damage from enemy "+(i+1)+" who is located at ("+enemyPosition[i][0]+","+enemyPosition[i][1]+").");
+					}
+				}
+				x++;
+				if(y<map[0].length&&x<map.length) {
+					if(human[0]==x&&human[1]==y) {
+						ship.setHp(ship.getHp()-enemyValue[i][1]);
+						System.out.println("You have taken "+enemyValue[i][1]+" damage from enemy "+(i+1)+" who is located at ("+enemyPosition[i][0]+","+enemyPosition[i][1]+").");
+					}
+				}
+				y--;
+				if(x<map.length) {
+					if(human[0]==x&&human[1]==y) {
+						ship.setHp(ship.getHp()-enemyValue[i][1]);
+						System.out.println("You have taken "+enemyValue[i][1]+" damage from enemy "+(i+1)+" who is located at ("+enemyPosition[i][0]+","+enemyPosition[i][1]+").");
+					}
+				}
+				y--;
+				if(y>0&&x<map.length) {
+					if(human[0]==x&&human[1]==y) {
+						ship.setHp(ship.getHp()-enemyValue[i][1]);
+						System.out.println("You have taken "+enemyValue[i][1]+" damage from enemy "+(i+1)+" who is located at ("+enemyPosition[i][0]+","+enemyPosition[i][1]+").");
+					}
+				}
+				x--;
+				if(y>0) {
+					if(human[0]==x&&human[1]==y) {
+						ship.setHp(ship.getHp()-enemyValue[i][1]);
+						System.out.println("You have taken "+enemyValue[i][1]+" damage from enemy "+(i+1)+" who is located at ("+enemyPosition[i][0]+","+enemyPosition[i][1]+").");
+					}
 				}
 			}
-			y--;
-			if(y>0&&x>0) {
-				if(human[0]==x&&human[1]==y) {
-					ship.setHp(ship.getHp()-enemyValue[i][1]);
-					System.out.println("You have taken "+enemyValue[i][1]+" damage from enemy "+(i+1)+" who is located at ("+enemyPosition[i][0]+","+enemyPosition[i][1]+").");
-				}
-			}
-			y+=2;
-			if(y<map[0].length&&x>0) {
-				if(human[0]==x&&human[1]==y) {
-					ship.setHp(ship.getHp()-enemyValue[i][1]);
-					System.out.println("You have taken "+enemyValue[i][1]+" damage from enemy "+(i+1)+" who is located at ("+enemyPosition[i][0]+","+enemyPosition[i][1]+").");
-				}
-			}
-			x++;
-			if(y<map[0].length) {
-				if(human[0]==x&&human[1]==y) {
-					ship.setHp(ship.getHp()-enemyValue[i][1]);
-					System.out.println("You have taken "+enemyValue[i][1]+" damage from enemy "+(i+1)+" who is located at ("+enemyPosition[i][0]+","+enemyPosition[i][1]+").");
-				}
-			}
-			x++;
-			if(y<map[0].length&&x<map.length) {
-				if(human[0]==x&&human[1]==y) {
-					ship.setHp(ship.getHp()-enemyValue[i][1]);
-					System.out.println("You have taken "+enemyValue[i][1]+" damage from enemy "+(i+1)+" who is located at ("+enemyPosition[i][0]+","+enemyPosition[i][1]+").");
-				}
-			}
-			y--;
-			if(x<map.length) {
-				if(human[0]==x&&human[1]==y) {
-					ship.setHp(ship.getHp()-enemyValue[i][1]);
-					System.out.println("You have taken "+enemyValue[i][1]+" damage from enemy "+(i+1)+" who is located at ("+enemyPosition[i][0]+","+enemyPosition[i][1]+").");
-				}
-			}
-			y--;
-			if(y>0&&x<map.length) {
-				if(human[0]==x&&human[1]==y) {
-					ship.setHp(ship.getHp()-enemyValue[i][1]);
-					System.out.println("You have taken "+enemyValue[i][1]+" damage from enemy "+(i+1)+" who is located at ("+enemyPosition[i][0]+","+enemyPosition[i][1]+").");
-				}
-			}
-			x--;
-			if(y>0) {
-				if(human[0]==x&&human[1]==y) {
-					ship.setHp(ship.getHp()-enemyValue[i][1]);
-					System.out.println("You have taken "+enemyValue[i][1]+" damage from enemy "+(i+1)+" who is located at ("+enemyPosition[i][0]+","+enemyPosition[i][1]+").");
-				}
-			}
-			
 		}
 		
 	}
