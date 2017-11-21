@@ -514,6 +514,14 @@ public class StevenBackend implements DanSupport {
 	{
 		front = x;
 	}
+	
+	public void setTypeEnemy() {
+		for(int i=0;i<enemyValue.length;i++) {
+			if(enemyValue[i][0]<1) {
+				map[enemyPosition[i][0]][enemyPosition[i][1]].setType(2);
+			}
+		}
+	}
 	/*public void makeFog() {
 		int[] coord=new int[2];
 		coord[0]=human[0]--;
