@@ -114,6 +114,7 @@ public class AndrewBackend implements KevinSupport{
 	
 	private boolean play;
 	/*------CONSTANTS--------*/
+	//most of these could've been classes
 	public static final int ROW = 0;
 	public static final int COL = 1;
 	
@@ -637,7 +638,7 @@ public class AndrewBackend implements KevinSupport{
 		treasurePos[COL] = randomCol;
 		map[randomRow][randomCol].setStaticOccupant(TREASURE);
 		
-		//checkPathToTreasure();
+		checkPathToTreasure();
 	}
 	/**
 	 * Checks to see if the player has a path of OPEN tiles to get to the treasure
@@ -663,6 +664,8 @@ public class AndrewBackend implements KevinSupport{
 		
 		int[][] beenTo = new int[(map.length-2)*(map.length-2)][2];
 		int cordCount = 0;
+		
+		System.out.println(beenTo[20][1]);
 		
 		boolean openPath = false;
 		boolean adjacentOpen = false;
@@ -705,7 +708,7 @@ public class AndrewBackend implements KevinSupport{
 						map[currentRow][currentCol-1].setStaticOccupant(randomTile(OPEN));
 						currentCol--;
 					}else {
-						map[currentRow+1][currentCol-1].setStaticOccupant(randomTile(OPEN));
+						map[currentRow+1][currentCol].setStaticOccupant(randomTile(OPEN));
 						currentRow++;
 					}
 			}
