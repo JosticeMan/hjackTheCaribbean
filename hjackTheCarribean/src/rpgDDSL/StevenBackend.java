@@ -404,7 +404,7 @@ public class StevenBackend implements DanSupport {
 		String output="You may attack the follow enemies:\n";
 		for(int[] a:coord) {
 			for(int i=0;i<enemyPosition.length;i++) {
-				if(enemyPosition[i][0]==a[0]&&enemyPosition[i][1]==a[1]) {
+				if(enemyPosition[i][0]==a[0]&&enemyPosition[i][1]==a[1]&&enemyValue[i][0]>0) {
 					output+="Enemy "+(i+1)+" at coord "+"("+a[0]+","+a[1]+")\n";
 				}
 			}
@@ -416,39 +416,6 @@ public class StevenBackend implements DanSupport {
 			input = CaveExplorer.in.nextLine();
 		}
 		enemyValue[Integer.parseInt(input)-1][0]-=ship.getAttack();
-		if(enemyValue[Integer.parseInt(input)-1][0]<=0) {
-			int[][] temp1=new int[enemyValue.length-1][2];
-			int[][] temp2=new int[enemyPosition.length-1][2];
-			for(int i=0;i<temp2.length;i++) {
-				int val=0;
-				if(val==(Integer.parseInt(input)-1)) {
-					val++;
-				}
-				temp2[i][0]=enemyPosition[val][0];
-				temp2[i][1]=enemyPosition[val][1];
-				val++;
-			}
-			for(int i=0;i<temp1.length;i++) {
-				int val=0;
-				if(val==(Integer.parseInt(input)-1)) {
-					val++;
-				}
-				temp1[i][0]=enemyValue[val][0];
-				temp1[i][1]=enemyValue[val][1];
-				val++;
-			}
-			enemyPosition=new int[enemyPosition.length-1][2];
-			for(int i=0;i<temp2.length;i++) {
-				enemyPosition[i][0]=temp2[i][0];
-				enemyPosition[i][1]=temp2[i][1];
-			}
-			enemyValue=new int[enemyValue.length-1][2];
-			for(int i=0;i<temp1.length;i++) {
-				enemyValue[i][0]=temp1[i][0];
-				enemyValue[i][1]=temp1[i][1];
-			}
-			//
-		}
 		System.out.println("You have attacked enemy "+input+".");
 	}
 
@@ -457,7 +424,7 @@ public class StevenBackend implements DanSupport {
 		int[] list = new int[enemyPosition.length];
 		for(int[] a:coord) {
 			for(int i=0;i<enemyPosition.length;i++) {
-				if(enemyPosition[i][0]==a[0]&&enemyPosition[i][1]==a[1]) {
+				if(enemyPosition[i][0]==a[0]&&enemyPosition[i][1]==a[1]&&enemyValue[i][0]>0) {
 					for(int j=0;j<list.length;j++) {
 						if(list[j]==0) {
 							list[j]=i+1;
