@@ -99,7 +99,6 @@ public class FrontEndSunnyK implements JustinSupporter {
 		//asks coordinates to place ships
 		askCoordsForShips();
 		backend.commanderPlaceShip(ships);
-		//commander places his ship
 		determineFirstTurn();
 		if(!playing) {
 		}
