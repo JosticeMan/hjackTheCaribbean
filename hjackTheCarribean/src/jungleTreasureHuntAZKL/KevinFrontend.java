@@ -63,11 +63,27 @@ public class KevinFrontend implements AndrewSupport {
 		  while(backend.playing()) {
 			backend.processInput(getUserInput());
 			updateMap(map);
+			respondToInput(backend.processInput(getUserInput()));
 			displayTreasureHint();
 			displayMonkeyHints();
 			displayNumSteps();
 		}
 		printEndGame(backend.end());
+	}
+	private void respondToInput(int i) {
+		if(backend.processInput(getUserInput()) == 0) {
+			System.out.print("There is something there, you can't move there.");
+		}else if(backend.processInput(getUserInput()) == 2) {
+			System.out.print("That is beyond your line of sight, You can look there.");
+		}else if(backend.processInput(getUserInput()) == 5) {
+			System.out.print("That is outside the map. Don't be dum");
+		}else if(backend.processInput(getUserInput()) == 4) {
+			//need a method that sets win to true
+		}
+	}
+	private void displayVictory() {
+		String v = "Dun-Da-Da-Dun! Congratulation, you have won the game!";
+		
 	}
 
 	private int amountVicinityRow(int row) {
@@ -127,7 +143,9 @@ public class KevinFrontend implements AndrewSupport {
 		 System.out.println(s);
 		
 	}
-	
+	private void displayInputs() {
+		
+	}
 	private void printEndGame(Object end) {
 		// TODO Auto-generated method stub
 		
@@ -177,11 +195,9 @@ public class KevinFrontend implements AndrewSupport {
 	private void respondToInput(String input) {
 		if(input.equalsIgnoreCase("p")) {
 			backend.setPlay(true);
-		}//else if(backend.isValidCoordinates(input)) {
-		//	
-		//}else {
-		//	System.out.println("That is not valid input");
-		//}
+		}else {
+			System.out.println("Please type in 'p' if u want to play");
+		}
 		
 	}
 
