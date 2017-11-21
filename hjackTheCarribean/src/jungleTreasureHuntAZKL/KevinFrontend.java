@@ -25,11 +25,6 @@ public class KevinFrontend implements AndrewSupport {
 	public int tRow;
 	public int tCol;
 	
-	//Positions of the the monkeys
-	public int m1Row;
-	public int m1Col;
-	public int m2Row;
-	public int m2Col;
 	
 	public boolean mNear;
 	public boolean mClose;
@@ -56,7 +51,7 @@ public class KevinFrontend implements AndrewSupport {
 		tRow = backend.getTreasurePos()[ROW];
 		tCol = backend.getTreasurePos()[COL];
 		getNonStaticPosition();
-		mNear = false;
+		mNear = false; //farther than close
 		mClose = false;
 		tClose = false;
 		tRightInFront = false;
@@ -69,6 +64,7 @@ public class KevinFrontend implements AndrewSupport {
 			backend.processInput(getUserInput());
 			updateMap(map);
 			displayTreasureHint();
+			displayMonkeyHints();
 			backend.getStepCount(); // number of steps taken before limit
 		}
 		printEndGame(backend.end());
@@ -99,11 +95,30 @@ public class KevinFrontend implements AndrewSupport {
 			System.out.print("You notice something strange in the ground near you!");
 		}
 	}
+	private void howCloseAreMonkeys() {
+		for(int i = 0; i < backend.getMonkeys().length; i++) {
+			if(amountVicinityRow(backend.getMonkeys()[i][ROW]) < 2 && amountVicinityCol(backend.getMonkeys()[i][COL]) < 2) {
+				mClose = true;
+				mNear = false;
+				break;
+			}else if(amountVicinityRow(backend.getMonkeys()[i][ROW]) < 5 && amountVicinityCol(backend.getMonkeys()[i][COL]) < 5) {
+				mNear = true;
+				break;
+			}
+		}
+	}
+	private void displayMonkeyHints() {
+		howCloseAreMonkeys();
+		if(mClose == true) {
+			System.out.print("The rustling noises are getting closer...");
+		}else if(mNear == true) {
+			System.out.print("You started to hear rustling noises.");
+		}
+	}
+	private void displayNumSteps() {
+		System.out.print("You have this amount of "+backend.getStepCount()+" steps left.");
+	}
 	private void getNonStaticPosition() {
-		m1Row = backend.getMonkeys()[0][ROW];
-		m1Col = backend.getMonkeys()[0][COL];
-		m2Row = backend.getMonkeys()[1][ROW];
-		m2Col = backend.getMonkeys()[1][COL];
 		pRow = backend.getPlayerPos()[ROW];
 		pCol = backend.getPlayerPos()[COL];
 	}
