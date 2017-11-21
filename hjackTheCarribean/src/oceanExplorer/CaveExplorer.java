@@ -77,8 +77,10 @@ public class CaveExplorer {
 	public static void main(String[] args) {
 		level = 1;
 		in = new Scanner(System.in);
+
 		CaveRoom.setUpCaves(level);
 		
+
 		inventory = new Inventory();
 		startExploring();
 	}
