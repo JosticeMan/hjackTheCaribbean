@@ -388,7 +388,17 @@ public class StevenBackend implements DanSupport {
 					input = CaveExplorer.in.nextLine();
 					System.out.println("You can move "+times+" more times.");
 				}else {
-					if(front.getCoords().length>0) {
+					int count=0;
+					for(int i=0;i<front.getCoords().length;i++) {
+						for(int[] a:enemyPosition) {
+							if(a[0]==front.getCoords()[i][0]&&a[1]==front.getCoords()[i][1]) {
+								if(enemyValue[i][0]>0) {
+									count++;
+								}
+							}
+						}
+					}
+					if(count>0) {
 						System.out.println("You may now attack");
 						humanAttack();
 					}
