@@ -662,68 +662,79 @@ public class AndrewBackend implements KevinSupport{
 		int currentCol = treasurePos[COL];
 		
 		int[][] beenTo = new int[(map.length-2)*(map.length-2)][2];
+		for(int i = 0; i < beenTo.length; i++) {
+			beenTo[i] = null;
+		}
 		int cordCount = 0;
 		
 		boolean openPath = false;
-		boolean adjacentOpen = false;
 		
 		while(!openPath) {
-			//there is a looping issue if it encounters 4 open tiles in a square (going in a circle constantly) 
-
-			if(cordCount == 64)
-				openPath 
-				= true;
+			System.out.println(currentRow + ", " + currentCol);
+			if(currentRow == playerPos[ROW] && currentCol == playerPos[COL])
+				openPath = true;
+			
+			boolean adjacentOpen = false;
+			
 			for(int dir = 3; dir > -1; dir--) {
-				//won't go back to the same
-				if(cordCount == 64)
-					break;
-				beenTo[cordCount][ROW] = currentRow;
-				beenTo[cordCount][COL] = currentCol;
-				cordCount++;
 				
-				adjacentOpen = false;
-				int[] goingTo = new int[2];
-				goingTo[ROW] = getDirectedCoordinates(dir, currentRow, currentCol)[ROW];
-				goingTo[COL] = getDirectedCoordinates(dir, currentRow, currentCol)[COL];
+				int[] goInto = getDirectedCoordinates(dir, currentRow, currentCol);
+				int tileType = checkTile(goInto[ROW],goInto[COL]);
 				
-				int tileType = checkTile(goingTo[ROW],goingTo[COL]);
-				
-				if((tileType == FORAGE || tileType == NOTHING) && !inArray(goingTo, beenTo)) {
-					currentRow = goingTo[ROW];
-					currentCol = goingTo[COL];
-					if(currentRow == playerPos[ROW] && currentCol == playerPos[COL]) {
-							adjacentOpen = true;
-							openPath = true;
-							break;
-					}
+				if((tileType == ROCK || tileType == TREE) && inArray(goInto, beenTo)) {	
+				}else {
+					beenTo[cordCount] = goInto;
+					cordCount++;
+					currentRow = goInto[ROW];
+					currentCol = goInto[COL];
 					adjacentOpen = true;
 					break;
 				}
 			}
 			if(!adjacentOpen) {
+				if(currentRow == playerPos[ROW] || currentCol == playerPos[COL]) {
 					if(currentRow == playerPos[ROW]) {
-						map[currentRow][currentCol-1].setStaticOccupant(randomTile(OPEN));
-						currentCol--;
-					}else
-					if(currentCol == playerPos[COL]) {
-						map[currentRow+1][currentCol-1].setStaticOccupant(randomTile(OPEN));
-						currentRow++;
-					}
-					if(currentRow != playerPos[ROW] && currentCol != playerPos[COL]) {
-					if(Math.random() < 0.5) {
-						System.out.println(currentRow);System.out.println(currentCol);
-						map[currentRow][currentCol-1].setStaticOccupant(randomTile(OPEN));
-						currentCol--;
+						currentCol --;
+
+						map[currentRow][currentCol].setStaticOccupant(randomTile(CLOSED));
+						
+						beenTo[cordCount][ROW] = currentRow;
+						beenTo[cordCount][COL] = currentCol;
+						cordCount++;
 					}else {
-						map[currentRow+1][currentCol].setStaticOccupant(randomTile(OPEN));
-						currentRow++;
-					}}
+						currentRow --;
+
+						map[currentRow][currentCol].setStaticOccupant(randomTile(CLOSED));
+						
+						beenTo[cordCount][ROW] = currentRow;
+						beenTo[cordCount][COL] = currentCol;
+						cordCount++;
+					}
+				}else {
+					if(Math.random() < 0.5) {
+						currentCol --;
+
+						map[currentRow][currentCol].setStaticOccupant(randomTile(CLOSED));
+						
+						beenTo[cordCount][ROW] = currentRow;
+						beenTo[cordCount][COL] = currentCol;
+						cordCount++;
+					}else {
+						currentRow --;
+
+						map[currentRow][currentCol].setStaticOccupant(randomTile(CLOSED));
+						
+						beenTo[cordCount][ROW] = currentRow;
+						beenTo[cordCount][COL] = currentCol;
+						cordCount++;
+					}
+				}
 			}
 		}
 	}
 	public boolean inArray(int[] arr, int[][] bigArr) {
 		for(int i = 0; i < bigArr.length; i++) {
-			if(bigArr[i][ROW] == 0 && bigArr[i][COL] == 0)
+			if(bigArr[i] == null)
 				return false;
 			if(bigArr[i][ROW] == arr[ROW] && bigArr[i][COL] == arr[COL]) {
 				return true;
