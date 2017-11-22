@@ -90,10 +90,18 @@ public class KevinFrontend implements AndrewSupport {
 		}
 	}
 	private void displayVictory() {
+		String[] powerUps = {"BoinkRadar", "CriticalMissile", "StormCaller", "Sunny"};
 		String v = "Dun-Da-Da-Dun! Congratulation, You have found the treasure!";
-		System.out.println(v);
+		v += "\n The treasure is "+powerUps[getRandomPowerup()]+ ".";
+		System.out.println(v);	
 	}
-
+	private int getRandomPowerup() {
+		int num = (int)(Math.random()*4);
+		int[] a = CaveExplorer.getBossPowerUps();
+		int x =  a[num];
+		a[num] = x+1;
+		return num;
+	}
 	private int amountVicinityRow(int row) {
 		return Math.abs(row - pRow);
 	}
