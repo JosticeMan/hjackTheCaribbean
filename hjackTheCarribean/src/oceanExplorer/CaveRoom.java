@@ -210,6 +210,11 @@ public class CaveRoom {
 		CaveRoom[][] c = CaveExplorer.caves;
 		
 		CaveRoom jRoom = new JustinBossRoom("Captain Duran: You've entered the territory of a commander! The commander is coming soon. Prepare to play a game of battleship or run!", level);
+		CaveRoom StevenRoom = new StevenRoom("There is nothing there.");
+		c[1][0]= StevenRoom;
+		closeAllDoorsAtCoordinate(1,0,c);
+		c[1][0].setConnection(NORTH, c[0][0], new Door());
+		c[1][0].setConnection(SOUTH, c[2][0], new Door());
 		c[4][5] = jRoom;
 		c[4][5].setConnection(NORTH, c[3][5], null);
 		c[4][5].setConnection(WEST, c[4][4], new Door());
@@ -282,26 +287,24 @@ public class CaveRoom {
 	|       |   |           |
 	|___    |___|    ___ ___|
 	|   |           |   |   |
-	|   |           |   |   |
+	|   |     F     |   |   |
 	|___|    ___    |___|___|
 	|       |   |           |
 	| x     |   |           |
 	|       |___|    ___ ___|
 	|   |   |   |   |   |   |
-	|   |   |   |   |   |   |
+	| F |   |   |   |   |   |
 	|___|   |___|   |___|___|
 	|       |   |           |
 	|       |   |           |
 	|___    |___|    ___    |
 	|   |           |   |   |
-	|   |           |   | B |
+	|   |     F     |   | B |
 	|___|___ ___ ___|___|___|
 	 */
 	public static void setUpLevel3(int level) {
 		CaveRoom[][] c = CaveExplorer.caves;
-		
-		CaveRoom jRoom = new JustinBossRoom("Captain Duran: You've entered the territory of a commander! The commander is coming soon. Prepare to play a game of battleship or run!", level);
-		c[5][5] = jRoom;
+
 		closeAllDoorsAtCoordinate(5,5,c);
 		//4. Set your starting room:
 		CaveExplorer.currentRoom = CaveExplorer.caves[2][0];
@@ -427,7 +430,7 @@ public class CaveRoom {
 		*/
 		openAllDoors();
 		if(level == 1) {
-			setUpLevel3(level);
+			setUpLevel1(level);
 		}
 		if(level == 2) {
 			setUpLevel2(level);
