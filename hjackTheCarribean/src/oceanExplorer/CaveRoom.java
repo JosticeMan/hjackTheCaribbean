@@ -220,6 +220,7 @@ public class CaveRoom {
 		c[4][5].setConnection(WEST, c[4][4], new Door());
 		
 		CaveExplorer.currentRoom = CaveExplorer.caves[0][1];
+		
 		CaveExplorer.currentRoom.enter();
 		c[4][4].setConnection(WEST, c[4][3], new Door());
 		c[4][4].setConnection(NORTH, c[3][4], null);
