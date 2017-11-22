@@ -16,13 +16,8 @@ public class DanielFrontend implements StevenSupport{
 	private boolean viewed;
 	private Ship a;
 	private boolean lost;
+	private int level;
 	
-	public static final void main(String[] args)
-	{
-		DanielFrontend demo = new DanielFrontend();
-		CaveExplorer.in=new Scanner(System.in);
-		demo.intro();		
-	}
 	public void intro()
 	{	
 		if (!viewed)
@@ -82,12 +77,16 @@ public class DanielFrontend implements StevenSupport{
 	public void setWon(boolean won) {
 		this.won = won;
 	}
-	public DanielFrontend()
+	public DanielFrontend(Ship ship,int level)
 	{
-		num = 5;
-		a = new Ship(30,10,3);
-		backend = new StevenBackend(this, num);
+		num = 3*level;
+		a = ship;
+		backend = new StevenBackend(this, num,level);
 		won = false;
+		this.level=level;
+	}
+	public int getLevel() {
+		return level;
 	}
 	public void visionIfRow2()
 	{

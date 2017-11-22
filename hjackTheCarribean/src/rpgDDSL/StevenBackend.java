@@ -20,9 +20,9 @@ public class StevenBackend implements DanSupport {
 	public static final int SOUTH = 2;
 	public static final int WEST = 3;
 	
-	public StevenBackend(DanielFrontend frontend,int num)
+	public StevenBackend(DanielFrontend frontend,int num,int level)
 	{
-		map = new RPGRoom[20][20];
+		map = new RPGRoom[5*level][5*level];
 		human=new int[2];
 		enemyPosition = new int[num][2];
 		enemyValue = new int[num][2];
