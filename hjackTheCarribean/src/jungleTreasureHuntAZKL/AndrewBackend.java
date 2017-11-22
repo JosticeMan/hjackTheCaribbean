@@ -210,7 +210,7 @@ public class AndrewBackend implements KevinSupport{
 
 	@Override
 	public Object end() {
-		// TODO Auto-generated method stub
+		setPlay(false);
 		return null;
 	}
 
@@ -353,7 +353,7 @@ public class AndrewBackend implements KevinSupport{
 						return 1;
 					}else 
 						if(into == TREASURE) {
-						//player wins
+						end();
 							return 4;
 					}
 		}
@@ -416,7 +416,11 @@ public class AndrewBackend implements KevinSupport{
 	public int checkTile(int row, int col) {
 		return map[row][col].getStaticOccupant();
 	}
-	
+	public void checkLoss() {
+		if(stepCount <= 0) {
+			setPlay(false);
+		}
+	}
 	/*---- INPUT PROCESSING METHODS ----*/
 	
 	/**
@@ -434,6 +438,7 @@ public class AndrewBackend implements KevinSupport{
 			int col = Integer.parseInt(input.substring(2,3));
 			return attemptObserve(row, col);
 		}
+		checkLoss();
 		return -1;
 	}
 	/**
