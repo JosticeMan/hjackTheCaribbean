@@ -302,9 +302,10 @@ public class CaveRoom {
 		
 		CaveRoom jRoom = new JustinBossRoom("Captain Duran: You've entered the territory of a commander! The commander is coming soon. Prepare to play a game of battleship or run!", level);
 		c[5][5] = jRoom;
-		c[5][5].setConnection(WEST, c[5][4], null);
+		closeAllDoorsAtCoordinate(5,5,c);
 		//4. Set your starting room:
 		CaveExplorer.currentRoom = CaveExplorer.caves[2][0];
+		c[5][5].setConnection(NORTH, c[4][5], new Door());
 		CaveExplorer.currentRoom.enter();
 		//5. Set up doors
 		c[3][0].setConnection(SOUTH, c[4][0], null);
