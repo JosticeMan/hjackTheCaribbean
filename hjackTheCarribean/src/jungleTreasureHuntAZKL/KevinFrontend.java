@@ -207,6 +207,7 @@ public class KevinFrontend implements AndrewSupport {
 		
 	}
 
+
 		//for(AndrewKevinTile col: map[row]) {
 	//	text += col.getContent(); // Will be modified based off contents of the Tile
 	//}
