@@ -210,11 +210,14 @@ public class CaveRoom {
 		CaveRoom[][] c = CaveExplorer.caves;
 		
 		CaveRoom jRoom = new JustinBossRoom("Captain Duran: You've entered the territory of a commander! The commander is coming soon. Prepare to play a game of battleship or run!", level);
+		CaveRoom StevenRoom = new StevenRoom("There is nothing there.");
+		c[1][0]=StevenRoom;
 		c[4][5] = jRoom;
 		c[4][5].setConnection(NORTH, c[3][5], null);
 		c[4][5].setConnection(WEST, c[4][4], new Door());
 		
 		CaveExplorer.currentRoom = CaveExplorer.caves[0][1];
+		
 		CaveExplorer.currentRoom.enter();
 		c[4][4].setConnection(WEST, c[4][3], new Door());
 		c[4][4].setConnection(NORTH, c[3][4], null);
