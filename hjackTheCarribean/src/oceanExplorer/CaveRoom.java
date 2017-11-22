@@ -306,6 +306,8 @@ public class CaveRoom {
 	public static void setUpLevel3(int level) {
 		CaveRoom[][] c = CaveExplorer.caves;
 
+		CaveRoom jRoom = new JustinBossRoom("Captain Duran: You've entered the territory of a commander! The commander is coming soon. Prepare to play a game of battleship or run!", level);
+		c[5][5] = jRoom;
 		closeAllDoorsAtCoordinate(5,5,c);
 		//4. Set your starting room:
 		CaveExplorer.currentRoom = CaveExplorer.caves[2][0];
