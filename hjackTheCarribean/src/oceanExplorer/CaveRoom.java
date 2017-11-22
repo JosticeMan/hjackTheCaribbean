@@ -194,10 +194,10 @@ public class CaveRoom {
 		|   |   |               |
 		|   |___|    ___ ___    |
 		|           |   |   |   |
-		|           |   |   |   |
+		|     F     |   |   |   |
 		|    ___    |___|___|   |
 		|   |   |   |           |
-		|   |   |   |           |
+		| F |   |   |           |
 		|   |___|   |___ ___ ___|
 		|   |                   |
 		|   |                 B |
@@ -218,6 +218,18 @@ public class CaveRoom {
 		c[4][5] = jRoom;
 		c[4][5].setConnection(NORTH, c[3][5], null);
 		c[4][5].setConnection(WEST, c[4][4], new Door());
+		
+		CaveRoom fRoom = new JustinFogRoom("This area is populated by dense fog. You can barely see.", 1);
+		c[3][0] = fRoom;
+		closeAllDoorsAtCoordinate(3,0,c);
+		c[3][0].setConnection(NORTH, c[2][0], new Door());
+		c[3][0].setConnection(SOUTH, c[4][0], new Door());
+		
+		CaveRoom fRoom1 = new JustinFogRoom("This area is populated by dense fog. You can barely see.", 1);
+		c[2][1] = fRoom1;
+		closeAllDoorsAtCoordinate(2,1,c);
+		c[2][1].setConnection(WEST, c[2][0], new Door());
+		c[2][1].setConnection(EAST, c[2][2], new Door());
 		
 		CaveExplorer.currentRoom = CaveExplorer.caves[0][1];
 		
@@ -251,7 +263,7 @@ public class CaveRoom {
 		|   |   |             B |
 		|   |___|___     ___ ___|
 		|               |   |   |
-		| x             |   |   |
+		| x       F     |   |   |
 		|___     ___    |___|   |
 		|   |   |   |           |
 		|   |   |   |           |
@@ -266,6 +278,12 @@ public class CaveRoom {
 		CaveRoom jRoom = new JustinBossRoom("Captain Duran: You've entered the territory of a commander! The commander is coming soon. Prepare to play a game of battleship or run!", level);
 		c[2][5] = jRoom;
 		c[2][5].setConnection(WEST, c[2][4], new Door());
+		
+		CaveRoom fRoom = new JustinFogRoom("This area is populated by dense fog. You can barely see.", 1);
+		c[3][2] = fRoom;
+		closeAllDoorsAtCoordinate(3,2,c);
+		c[3][2].setConnection(WEST, c[3][1], new Door());
+		c[3][2].setConnection(EAST, c[3][3], new Door());
 		//4. Set your starting room:
 		CaveExplorer.currentRoom = CaveExplorer.caves[3][0];
 		CaveExplorer.currentRoom.enter();
@@ -309,13 +327,29 @@ public class CaveRoom {
 		CaveRoom jRoom = new JustinBossRoom("Captain Duran: You've entered the territory of a commander! The commander is coming soon. Prepare to play a game of battleship or run!", level);
 		c[5][5] = jRoom;
 		closeAllDoorsAtCoordinate(5,5,c);
+		c[5][5].setConnection(NORTH, c[4][5], new Door());
+		
+		CaveRoom fRoom = new JustinFogRoom("This area is populated by dense fog. You can barely see.", 1);
+		c[3][0] = fRoom;
+		closeAllDoorsAtCoordinate(3,0,c);
+		c[3][0].setConnection(NORTH, c[2][0], new Door());
+		
+		CaveRoom fRoom1 = new JustinFogRoom("This area is populated by dense fog. You can barely see.", 1);
+		c[1][2] = fRoom1;
+		closeAllDoorsAtCoordinate(1,2,c);
+		c[1][2].setConnection(WEST, c[1][1], new Door());
+		c[1][2].setConnection(EAST, c[1][3], new Door());
+		
+		CaveRoom fRoom2 = new JustinFogRoom("This area is populated by dense fog. You can barely see.", 1);
+		c[5][2] = fRoom2;
+		closeAllDoorsAtCoordinate(5,2,c);
+		c[5][2].setConnection(WEST, c[5][1], new Door());
+		c[5][2].setConnection(EAST, c[5][3], new Door());
+		
 		//4. Set your starting room:
 		CaveExplorer.currentRoom = CaveExplorer.caves[2][0];
-		c[5][5].setConnection(NORTH, c[4][5], new Door());
 		CaveExplorer.currentRoom.enter();
 		//5. Set up doors
-		c[3][0].setConnection(SOUTH, c[4][0], null);
-		c[3][0].setConnection(EAST, c[3][1], null);
 		closeAllDoorsAtCoordinate(5,4,c);
 		closeAllDoorsAtCoordinate(5,0,c);
 		closeAllDoorsAtCoordinate(4,2,c);
