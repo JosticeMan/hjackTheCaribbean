@@ -404,7 +404,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 	{
 		
 		//NESW 0123
-		if(direction == )
+		if(direction ==)
 		if(playerPlots[coord1][coord2])
 		{
 			
