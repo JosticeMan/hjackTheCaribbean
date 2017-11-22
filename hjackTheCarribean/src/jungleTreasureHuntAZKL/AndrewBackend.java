@@ -163,7 +163,7 @@ public class AndrewBackend implements KevinSupport{
 		createMapRockBorder();
 			
 		//stepCount is based off the size of the map, for now it'll be 10
-		stepCount = 10;
+		stepCount = 20;
 		
 		//creates and sets player starting position
 		playerPos = new int[2];
@@ -675,7 +675,7 @@ public class AndrewBackend implements KevinSupport{
 		boolean openPath = false;
 		
 		while(!openPath) {
-			System.out.println(currentRow + ", " + currentCol);
+			//System.out.println(currentRow + ", " + currentCol);
 			if(currentRow == playerPos[ROW] && currentCol == playerPos[COL])
 				openPath = true;
 			
