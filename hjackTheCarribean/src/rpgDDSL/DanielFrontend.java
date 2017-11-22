@@ -45,7 +45,7 @@ public class DanielFrontend implements StevenSupport{
 				{
 					System.out.println("Your goal is to beat up all the pirates that invaded your ship.\n"
 							+ "You are represented by 'H' while enemies are represented by 'E.'\nYour field of view is locked because of all the fog around you, represented by X."
-							+ "\nLocate the pirates and then engage in battle with them by inputting 'r' once you are next to them to attack them."
+							+ "\nLocate the pirates and then engage in battle with them by inputting the enemy number once you can attack them."
 							+ "\nDepending on your speed, you can move a certain amount of times. Pay attention to your stats!");
 					viewed = true;
 					intro();
@@ -197,7 +197,14 @@ public class DanielFrontend implements StevenSupport{
 
 				if (x == backend.getEnemyPosition()[i][0] && y == backend.getEnemyPosition()[i][1])
 				{
-					backend.getMap()[x][y].setType(2);
+					if (backend.getEnemyValue()[i][0] <= 0)
+					{
+						backend.getMap()[x][y].setType(3);
+					}
+					else
+					{
+						backend.getMap()[x][y].setType(2);
+					}
 				}
 		}
 	}
