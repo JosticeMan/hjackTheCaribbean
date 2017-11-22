@@ -62,35 +62,35 @@ public class KevinFrontend implements AndrewSupport {
 	public void play() {
 		startGameMessage();
 		while(starting == false) {
-		respondToInput(getUserInput());
+			startInput(getInput());
 		}
-		  while(backend.playing()) {
-			updateMap(map);
-			respondToInput(backend.processInput(getUserInput()));
+		  	while(backend.playing()) {
 			updateMap(map);
 			displayTreasureHint();
 			displayMonkeyHints();
 			displayNumSteps();
-			
+			respondToInput(backend.processInput(getInput()));
 		}
-		printEndGame(backend.end());
+		printEndGame();
 	}
+
 	private void respondToInput(int i) {
-		if(backend.processInput(getUserInput()) == 0) {
+		if(i == 0) {
 			System.out.println("There is something there, you can't move there.");
-		}else if(backend.processInput(getUserInput()) == 2) {
+		}else if(i == 2) {
 			System.out.println("That is beyond your line of sight, You can look there.");
-		}else if(backend.processInput(getUserInput()) == 5) {
+		}else if(i == 5) {
 			System.out.println("That is outside the map. Don't be dum");
-		}else if(backend.processInput(getUserInput()) == 4) {
-			//need a method that sets win to true
-		}else if(backend.processInput(getUserInput()) == 1) {
-			updateMap(map);
+		}else if(i == 4) {//need to fix;
+			backend.setPlay(false);
+			displayVictory();
+		}else if(i == -1) {
+			System.out.println("That is not a valid key. Please type 'wdsa'.");
 		}
 	}
 	private void displayVictory() {
-		String v = "Dun-Da-Da-Dun! Congratulation, Ypu have found the treasure!";
-		
+		String v = "Dun-Da-Da-Dun! Congratulation, You have found the treasure!";
+		System.out.println(v);
 	}
 
 	private int amountVicinityRow(int row) {
@@ -147,11 +147,10 @@ public class KevinFrontend implements AndrewSupport {
 	}
 	private void startGameMessage() {
 		String s = "Welcome to the Treasure Hunter Game!! In this game, you need to found the treasure, to move type 'wdsa'." +"\n"+ "There will be hints when you are close to the treasure beware of the wild monkeys." +"\n"+ "If caught, game over! So listen closely for the rustling sounds! To get started type 'p'!";
-		 System.out.println(s);
+		System.out.println(s);
 		
 	}
-	private void printEndGame(Object end) {
-		// TODO Auto-generated method stub
+	private void printEndGame() {
 		
 	}
 
@@ -197,20 +196,17 @@ public class KevinFrontend implements AndrewSupport {
 			System.out.print("  ");
 		}
 	}
-	private void respondToInput(String input) {
+	private void startInput(String input) {
 		if(input.equalsIgnoreCase("p")) {
 			backend.setPlay(true);
 			starting = true;
+			System.out.println("Let the hunt begin.");
 		}else {
 			System.out.println("Please type in 'p' if u want to play");
 		}
 		
 	}
 
-	public  String getUserInput() {
-		return inputSource.nextLine();
-
-	}
 		//for(AndrewKevinTile col: map[row]) {
 	//	text += col.getContent(); // Will be modified based off contents of the Tile
 	//}
