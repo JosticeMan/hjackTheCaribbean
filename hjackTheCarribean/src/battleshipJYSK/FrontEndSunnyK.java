@@ -326,31 +326,19 @@ public class FrontEndSunnyK implements JustinSupporter {
 			coords = backend.randomShipHit();
 			backend.hit(coords[0], coords[1], backend.getCommanderPlots());
 		}
-		else {
+		else 
+		{
 			System.out.println("Shipmate: Where would you like to fire?");
 			coords = backend.getCoordInput();
-			if(coords.length == 0) {
+			if(coords.length == 0) 
+			{
 				return;
 			}
 			if(coords[0] < 0 && coords[1] < 0) 
 			{
 				int type = coords[0] * -1;
-				if(backend.hasPowerUp(type)) 
-				{
-					backend.decrementPowerUp(type);
-					backend.processPowerUp(type);
-					usedPowerup = true;
-					if(backend.isCommanderSkip()) 
-					{
-						askCoordsToFire();
-					}
-				}
-				else 
-				{
-					System.out.println("Shipmate: You do not have any more of that power up!");
-					askCoordsToFire();
-					return;
-				}
+				usedPowerup = checkAndUsePowerup(type, usedPowerup);
+				return;
 			}
 			else 
 			{
@@ -375,6 +363,54 @@ public class FrontEndSunnyK implements JustinSupporter {
 			System.out.println("Shipmate: Bomb ahoy! You striked " + coords[0] + "," + coords[1] + "! " + j);
 			CaveExplorer.pause(1500);
 		}
+	}
+	
+	public boolean checkAndUsePowerup(int type, boolean usedPowerup)
+	{
+		if(backend.hasPowerUp(type)) 
+		{
+			backend.decrementPowerUp(type);
+			backend.processPowerUp(type);
+			checkStormcaller();
+			return true;
+		}
+		else 
+		{
+			System.out.println("Shipmate: You do not have any more of that power up!");
+			askCoordsToFire();
+			return false;
+		}
+	}
+	
+	public void checkStormcaller()
+	{
+		if(backend.isCommanderSkip())
+			askCoordsToFire();
+	}
+	
+	public void torpedo()
+	{
+		int[] coords = backend.getCoordInput();
+		int direction = backend.interpretDirectionInput();
+		
+		while(tryTorpedoPlacement())
+		{
+			
+		}
+		
+		
+	}
+	public boolean tryTorpedoPlacement(int coord1, int coord2, int direction)
+	{
+		
+		//NESW 0123
+		if(direction == )
+		if(playerPlots[coord1][coord2])
+		{
+			
+		}
+		
+		return true;
 	}
 	
 	public boolean isGameOver()
