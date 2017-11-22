@@ -437,6 +437,8 @@ public class AndrewBackend implements KevinSupport{
 			int row = Integer.parseInt(input.substring(0,1));
 			int col = Integer.parseInt(input.substring(2,3));
 			return attemptObserve(row, col);
+		}else if(input.equalsIgnoreCase("get me out")) {
+			return 8;
 		}
 		checkLoss();
 		return -1;
