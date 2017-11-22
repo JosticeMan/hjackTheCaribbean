@@ -114,7 +114,7 @@ public class AndrewBackend implements KevinSupport{
 	
 	private boolean play;
 	/*------CONSTANTS--------*/
-	//most of these could've been classes
+	//most of these could've been classes and subclasses
 	public static final int ROW = 0;
 	public static final int COL = 1;
 	
@@ -418,7 +418,7 @@ public class AndrewBackend implements KevinSupport{
 	}
 	public void checkLoss() {
 		if(stepCount <= 0) {
-			setPlay(false);
+			play = false;
 		}
 	}
 	/*---- INPUT PROCESSING METHODS ----*/
@@ -430,6 +430,7 @@ public class AndrewBackend implements KevinSupport{
 	 * otherwise nothing will happen within the backend
 	 */
 	public int processInput(String input) {
+		checkLoss();
 		if(isValidDirection(input)) {
 			String dirKeys = "wdsa";
 			return attemptPlayerMove(dirKeys.indexOf(input));
@@ -440,7 +441,6 @@ public class AndrewBackend implements KevinSupport{
 		}else if(input.equalsIgnoreCase("get me out")) {
 			return 8;
 		}
-		checkLoss();
 		return -1;
 	}
 	/**
