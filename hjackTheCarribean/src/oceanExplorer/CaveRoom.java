@@ -428,9 +428,11 @@ public class CaveRoom {
 		CaveExplorer.caves[0][3].setConnection(WEST,CaveExplorer.caves[0][2],new Door());
 		//end
 		//Kevin room
-		CaveExplorer.caves[0][0] = new KevinRoom("This is Kevin Room");
-		CaveExplorer.caves[0][0].setConnection(EAST, CaveExplorer.caves[0][1], new Door());
-		CaveExplorer.caves[0][0].setConnection(SOUTH, CaveExplorer.caves[1][0], new Door());
+		CaveExplorer.caves[1][1] = new KevinRoom("-This is Kevin Room- OH NO! A tsunami wave suddenly appeared! It is gonna blow you away!");
+		CaveExplorer.caves[1][1].setConnection(NORTH, CaveExplorer.caves[0][1], new Door());
+		CaveExplorer.caves[1][1].setConnection(SOUTH, CaveExplorer.caves[2][1], new Door());
+		CaveExplorer.caves[1][1].setConnection(EAST, CaveExplorer.caves[1][0], new Door());
+		CaveExplorer.caves[1][1].setConnection(WEST, CaveExplorer.caves[1][2], new Door());
 			
 		//end
 		//Sunny's Room

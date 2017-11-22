@@ -32,6 +32,18 @@ public class AndrewRoom extends CaveRoom {
 	
 	public void performAction(int direction) {
 		if(direction == 4) {
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			System.out.println("You've reversed the spell!");
 			changeValidKeys();
 		}else if(direction == 5) {
