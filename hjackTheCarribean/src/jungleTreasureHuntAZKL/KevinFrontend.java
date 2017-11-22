@@ -152,7 +152,7 @@ public class KevinFrontend implements AndrewSupport {
 		
 	}
 	private void printEndGame() {
-		if(backend.getStepCount() > 0 && treasureFound == false) {
+		if(backend.getStepCount() == 0 && treasureFound == false) {
 			System.out.println("Awwwww, you ran out of steps out to found the treasure! That is unfortunate.");
 		}else {
 			displayVictory();
