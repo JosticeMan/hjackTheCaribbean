@@ -63,12 +63,20 @@ public class DanielFrontend implements StevenSupport{
 		enemyCount();
 			while(!won) {
 				haveHealth();
+				enemyAlive();
+				if(won) {
+					System.out.println("You won!");
+					System.exit(0);
+				}
 				if(lost)
 				{
 					System.out.println("You lost...");
 					System.exit(0);
 				}
+
 				backend.movement();
+				
+				
 			}
 			if(won) {
 				System.out.println("You won!");
@@ -84,7 +92,7 @@ public class DanielFrontend implements StevenSupport{
 	}
 	public DanielFrontend()
 	{
-		num = 5;
+		num = 1;
 		a = new Ship(30,10,3);
 		backend = new StevenBackend(this, num);
 		won = false;
@@ -197,11 +205,7 @@ public class DanielFrontend implements StevenSupport{
 
 				if (x == backend.getEnemyPosition()[i][0] && y == backend.getEnemyPosition()[i][1])
 				{
-					if (backend.getEnemyValue()[i][0] <= 0)
-					{
-						backend.getMap()[x][y].setType(3);
-					}
-					else
+					if (backend.getEnemyValue()[i][0] >= 0)
 					{
 						backend.getMap()[x][y].setType(2);
 					}
@@ -513,80 +517,20 @@ public class DanielFrontend implements StevenSupport{
 		}
 	}
 	
-	/*
-	 public void visionRegular()
+	public void enemyAlive()
 	{
-		int humanX = backend.getHuman()[0];
-		int humanY = backend.getHuman()[1];
+		int ctr = 0;
+		for (int i = 0; i < backend.getEnemyPosition().length; i++)
+		{
+			if (backend.getEnemyValue()[i][0] <= 0)
+			{
+				ctr++;
+			}
+		}
 		
-		int humanXSub1 = humanX-1;
-		int humanYSub1 = humanY-1;
-		int humanXSub2 = humanX-2;
-		int humanYSub2 = humanY-2;
-		
-		int humanXAdd1 = humanX+1;
-		int humanYAdd1 = humanY+1;
-		int humanXAdd2 = humanX+2;
-		int humanYAdd2 = humanY+2;
-		
-		
-		/*
-		humanXSub2 humanYSub2 
-		humanXSub2 humanY 
-		humanXSub2 humanYAdd2 
-		humanX humanYSub2
-		humanX humanYAdd2 
-		humanXAdd2 humanYSub2
-		humanXAdd2 humanY
-		humanXAdd2 humanYAdd2
-		humanXSub1 humanYSub1
-		humanXSub1 humanY 
-		humanXSub1 humanYAdd1
-		humanX humanYSub1
-		humanX humanYAdd1
-		humanXAdd1 humanYSub1
-		humanXAdd1 humanY
-		humanXAdd1 humanYAdd1 
-		humanXSub1 humanYSub2 
-		humanXAdd1 humanYSub2
-		humanXAdd2 humanYSub1
-		humanXAdd2 humanYAdd1
-		humanXAdd1 humanYAdd2
-		humanXSub1 humanYAdd2
-		humanXSub2 humanYAdd1
-		humanXSub2 humanYSub1 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		backend.getMap()[humanX-1][humanY].setType(3); 
-		isEnemy(humanX-1, humanY); 
-		
-		backend.getMap()[humanX+1][humanY+1].setType(3);
-		isEnemy(humanX+1, humanY+1);
-		
-		backend.getMap()[humanX+1][humanY].setType(3);
-		isEnemy(humanX+1, humanY);
-		
-		backend.getMap()[humanX][humanY+1].setType(3);
-		isEnemy(humanX, humanY+1);
-		
-		backend.getMap()[humanX-1][humanY+1].setType(3);
-		isEnemy(humanX-1, humanY+1);
-				
-		backend.getMap()[humanX][humanY-1].setType(3);
-		isEnemy(humanX, humanY-1);
-		
-		backend.getMap()[humanX+1][humanY-1].setType(3);
-		isEnemy(humanX+1, humanY-1);
-			
-		backend.getMap()[humanX-1][humanY-1].setType(3);
-		isEnemy(humanX-1, humanY-1);
+		if (ctr == num)
+		{
+			won = true;
+		}
 	}
-	 */
 }
