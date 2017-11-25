@@ -62,11 +62,19 @@ public class AndrewRoom extends CaveRoom {
 	//OVERIDE
 	
 	public void performAction(int direction) {
-		if(direction == centerDirection(directionFacing)) {
+		if(turnCount == 0) {
+			setValidKeys("wdsa");
+		}
+		else {
+			setValidKeys("----wdsa");
+		}
+		
+		int newDir = direction - 4;
+		if(newDir == centerDirection(directionFacing)) {
 			//user heads deeper into the center and faster
 			distanceFromCenter -= 2;
 			trueDescription = "The ship heads deeper to the center.";
-		}else if(direction == oppositeDirection(centerDirection(directionFacing))){
+		}else if(newDir == oppositeDirection(centerDirection(directionFacing))){
 			//user goes the proper direction against the center
 			trueDescription = "The ship maintains its distance from the center.";
 		}else {
@@ -98,16 +106,15 @@ public class AndrewRoom extends CaveRoom {
 	}
 	
 	public void setValidKeys(String a) {
-		currentValidKeys = "wdsa";
+		currentValidKeys = a;
 	}
 	
+	public String validKeys() {
+		return currentValidKeys;
+	}
 	
-	
-	
-	
-	//causes glitches if respondToKey is overriden
+	//causes glitches if respondToKey is overridden
 	public void respondToKey(int direction) {
-		if(turnCount == 0){
 			if(direction < 4) {
 				if(borderingRooms[direction] != null && 
 						getDoor(direction) != null) {
@@ -117,7 +124,6 @@ public class AndrewRoom extends CaveRoom {
 					CaveExplorer.inventory.updateMap();
 				}
 			}
-		}
 		else {
 			performAction(direction);
 		}
