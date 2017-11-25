@@ -38,10 +38,7 @@ public class AndrewRoom extends CaveRoom {
 		 * Whirlpool will always spin counter clock-wise (coriolis effect in S Hemisphere)
 		 * So the center will always be to the left and user will be moving left
 		 */
-		//directionFacing = CaveExplorer.inventory.getLastDirection(); //will get the first direction the user is facing
 		directionFacing = (int)(Math.random()*4);
-		//Will be random for now
-		/** HAVE TO MAKE getLastDirection() WORK PROPERLY IN INVENTORY**/
 		
 		trueDescription += "\nThe ship is pointed to the "+translateDirection(directionFacing)+"."; //always tell the user their direction
 		
@@ -99,7 +96,16 @@ public class AndrewRoom extends CaveRoom {
 	public void enter() {
 		setContents("G");
 	}
-
+	
+	public void setValidKeys(String a) {
+		currentValidKeys = "wdsa";
+	}
+	
+	
+	
+	
+	
+	//causes glitches if respondToKey is overriden
 	public void respondToKey(int direction) {
 		if(turnCount == 0){
 			if(direction < 4) {
