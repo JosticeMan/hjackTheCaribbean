@@ -11,9 +11,7 @@ package oceanExplorer;
  *
  */
 public class AndrewRoom extends CaveRoom {
-
-	private CaveRoom[] borderingRooms;
-	private Door[] doors;
+	
 	private String currentValidKeys;
 	
 	private int turnCount; //amount of turns until the whirlpool disappears
@@ -21,31 +19,29 @@ public class AndrewRoom extends CaveRoom {
 	
 	private int directionFacing; //direction the user's ship is facing
 	
-	private String trueDescription;
+	private String trueDescription; //what will really be printed
+	
+	private boolean entered = false; //keep track if whirlpool was already entered
 
 	public AndrewRoom() {
-		super("You are in a whirlpool");
-		borderingRooms = new CaveRoom[4];
-		doors = new Door[4];
-		setDirections();
-		
-		trueDescription = "The ship is in a whirlpool";
-	
-		turnCount = (int)(Math.random()*6)+4;
-		distanceFromCenter = turnCount-1; //user will have to input the right thing at least once to survive
-		
-		/**
-		 * Whirlpool will always spin counter clock-wise (coriolis effect in S Hemisphere)
-		 * So the center will always be to the left and user will be moving left
-		 */
-		directionFacing = (int)(Math.random()*4);
-		
-		trueDescription += "\nThe ship is pointed to the "+translateDirection(directionFacing)+"."; //always tell the user their direction
-		
-		setDescription(trueDescription);
+		super("");
+			if(!entered) {
+				trueDescription = "The ship is in a whirlpool";
+				turnCount = (int)(Math.random()*6)+4;
+				distanceFromCenter = turnCount-1; //user will have to input the right thing at least once to survive
+				/**
+				 * Whirlpool will always spin counter clock-wise (coriolis effect in S Hemisphere)
+				 * So the center will always be to the left and user will be moving left
+				 */
+				directionFacing = (int)(Math.random()*4);
+				trueDescription += "\nThe ship is pointed to the "+translateDirection(directionFacing)+"."; //always tell the user their direction
+				setDescription(trueDescription);
+				setValidKeys("----wdsa");
+			}else {
+				setDescription("This used to be a whirlpool.");
+				setValidKeys("wdsa");
+			}
 	}
-	
-
 	
 	public int centerDirection(int direction){
 		if(direction == 0){
@@ -59,16 +55,13 @@ public class AndrewRoom extends CaveRoom {
 		return dir[direction];
 	}
 	
+	public void setValidKeys(String a) {
+		currentValidKeys = a;
+	}
+	
 	//OVERIDE
 	
 	public void performAction(int direction) {
-		if(turnCount == 0) {
-			setValidKeys("wdsa");
-		}
-		else {
-			setValidKeys("----wdsa");
-		}
-		
 		int newDir = direction - 4;
 		if(newDir == centerDirection(directionFacing)) {
 			//user heads deeper into the center and faster
@@ -91,9 +84,12 @@ public class AndrewRoom extends CaveRoom {
 		
 		//user survives
 		if(turnCount == 0) {
-			setDescription("The whirlpool disappears.");
+			setDescription("The whirlpool disappeared.");
 			setContents("x");
 			//OPTIONAL: user is launched towards the last direction they were facing
+			entered = true;
+			respondToKey(newDir);
+			setValidKeys("wdsa");
 		}
 		if(distanceFromCenter <= 0) {
 			//user loses
@@ -102,11 +98,11 @@ public class AndrewRoom extends CaveRoom {
 	}
 	
 	public void enter() {
-		setContents("G");
-	}
-	
-	public void setValidKeys(String a) {
-		currentValidKeys = a;
+		if(entered){
+			setContents("x");
+		}else {
+			setContents("W");
+		}
 	}
 	
 	public String validKeys() {
@@ -114,21 +110,5 @@ public class AndrewRoom extends CaveRoom {
 	}
 	
 	//causes glitches if respondToKey is overridden
-	public void respondToKey(int direction) {
-			if(direction < 4) {
-				if(borderingRooms[direction] != null && 
-						getDoor(direction) != null) {
-					CaveExplorer.currentRoom.leave();
-					CaveExplorer.currentRoom = borderingRooms[direction];
-					CaveExplorer.currentRoom.enter();
-					CaveExplorer.inventory.updateMap();
-				}
-			}
-		else {
-			performAction(direction);
-		}
-	}
-	
-
 }
 
