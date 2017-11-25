@@ -26,7 +26,7 @@ public class AndrewRoom extends CaveRoom {
 	public AndrewRoom() {
 		super("");
 			if(!entered) {
-				trueDescription = "The ship is in a whirlpool";
+				trueDescription = "Arghh, the sea be opening an entrance to Davy Jones' Locker.";
 				turnCount = (int)(Math.random()*6)+4;
 				distanceFromCenter = turnCount-1; //user will have to input the right thing at least once to survive
 				/**
@@ -38,7 +38,7 @@ public class AndrewRoom extends CaveRoom {
 				setDescription(trueDescription);
 				setValidKeys("----wdsa");
 			}else {
-				setDescription("This used to be a whirlpool.");
+				setDescription("This used to be where we fought the sea and lived to tell the tale.");
 				setValidKeys("wdsa");
 			}
 	}
@@ -66,13 +66,13 @@ public class AndrewRoom extends CaveRoom {
 		if(newDir == centerDirection(directionFacing)) {
 			//user heads deeper into the center and faster
 			distanceFromCenter -= 2;
-			trueDescription = "The ship heads deeper to the center.";
+			trueDescription = "Cap'n be bringing us closer to Jones' locker!";
 		}else if(newDir == oppositeDirection(centerDirection(directionFacing))){
 			//user goes the proper direction against the center
-			trueDescription = "The ship maintains its distance from the center.";
+			trueDescription = "Yo-ho-ho, we be keep'n the locker at bay.";
 		}else {
 			distanceFromCenter --;
-			trueDescription = "The whirlpool pulls the ship in closer.";
+			trueDescription = "Avast, we can be doin' better Cap'n!";
 		}
 			turnCount --;
 			
@@ -84,7 +84,7 @@ public class AndrewRoom extends CaveRoom {
 		
 		//user survives
 		if(turnCount == 0) {
-			setDescription("The whirlpool disappeared.");
+			setDescription("Aye, the sea be calm now.");
 			setContents("x");
 			//OPTIONAL: user is launched towards the last direction they were facing
 			entered = true;
