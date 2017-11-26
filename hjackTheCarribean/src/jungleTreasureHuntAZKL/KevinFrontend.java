@@ -97,7 +97,7 @@ public class KevinFrontend implements AndrewSupport {
 	}
 	private int getRandomPowerup() {
 		int num = (int)(Math.random()*4);
-		int[] a = CaveExplorer.getBossPowerUps();
+		int[] a = CaveExplorer.inventory.getBossPowerUps();
 		int x =  a[num];
 		a[num] = x+1;
 		return num;

@@ -145,6 +145,10 @@ public class CaveRoom {
 		}
 	} 
 
+
+
+
+
 	
 	public void nothingCanBeDone() {
 		
@@ -154,6 +158,10 @@ public class CaveRoom {
 		return direction;
 	}
 	
+
+
+
+
 
 	/**
 	 * Override to give response to keys other than wasd
@@ -210,6 +218,7 @@ public class CaveRoom {
 		CaveRoom[][] c = CaveExplorer.caves;
 		
 		CaveRoom jRoom = new JustinBossRoom("Captain Duran: You've entered the territory of a commander! The commander is coming soon. Prepare to play a game of battleship or run!", level);
+
 		CaveRoom StevenRoom = new StevenRoom("There is nothing there.");
 		c[1][0]= StevenRoom;
 		closeAllDoorsAtCoordinate(1,0,c);
@@ -217,6 +226,15 @@ public class CaveRoom {
 		c[1][0].setConnection(SOUTH, c[2][0], new Door());
 		CaveRoom StevenDanRoom =new StevenDanRoom("You have encountered enemies. Prepare to fight!");
 		
+
+		CaveRoom StevenRoom = new StevenRoom("There is nothing there.");
+		c[1][0]= StevenRoom;
+		closeAllDoorsAtCoordinate(1,0,c);
+		c[1][0].setConnection(NORTH, c[0][0], new Door());
+		c[1][0].setConnection(SOUTH, c[2][0], new Door());
+		CaveRoom StevenDanRoom =new StevenDanRoom("You have encountered enemies. Prepare to fight!");
+		
+
 		c[4][5] = jRoom;
 		c[4][5].setConnection(NORTH, c[3][5], null);
 		c[4][5].setConnection(WEST, c[4][4], new Door());
@@ -447,14 +465,24 @@ public class CaveRoom {
 		//Justin's Room (This will be the room for boss fights)
 		CaveRoom jRoom = new JustinBossRoom("Captain Duran: You've entered the territory of a commander! The commander is coming soon. Prepare to play a game of battleship or run!", level);
 		CaveExplorer.caves[2][4] = jRoom;
+<<<<<<< HEAD
 
 
 
+=======
+
+
+
+>>>>>>> refs/heads/set
 		CaveExplorer.caves[1][1].setConnection(EAST,CaveExplorer.caves[1][2],new Door());
 		CaveExplorer.caves[1][2].setConnection(SOUTH,CaveExplorer.caves[2][2],new Door());
 		CaveExplorer.caves[2][2].setConnection(EAST,CaveExplorer.caves[2][3],new Door());
 		CaveExplorer.caves[2][3].setConnection(EAST,CaveExplorer.caves[2][4],new Door());
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> refs/heads/set
 		//end
 		//Justin's 2nd Room 
 		CaveRoom j2Room = new JustinFogRoom("This area is populated by dense fog. You can barely see.", 1);
