@@ -650,6 +650,16 @@ public class BackEndJustinY implements SunnySupporter {
 	}
 	
 	/**
+	 * Handles the code regarding the implementation of the cheat code
+	 * @return
+	 */
+	public int[] handleCheatCode() {
+		frontend.win();
+		int[] itemp = {};
+		return itemp;
+	}
+	
+	/**
 	 * This method will return the coordinates that the user inputs
 	 * CREDITS TO: NOCKLES for providing the method through his example
 	 * @return
@@ -658,9 +668,7 @@ public class BackEndJustinY implements SunnySupporter {
 		String input = CaveExplorer.in.nextLine();
 		//CHEATCODE
 		if(input.equalsIgnoreCase("win")) {
-			frontend.win();
-			int[] itemp = {};
-			return itemp;
+			return handleCheatCode();
 		}
 		//CHEATCODE
 		if(determineType(input) != -1 && frontend.isPlaying()) {
@@ -676,6 +684,9 @@ public class BackEndJustinY implements SunnySupporter {
 					CaveExplorer.print("Captain Duran: You can also type 'radar', 'missile', and 'storm' to activate a powerup!");
 				}
 				input = CaveExplorer.in.nextLine();
+				if(input.equalsIgnoreCase("win")) {
+					return handleCheatCode();
+				}
 				if(determineType(input) != -1 && frontend.isPlaying()) {
 					int[] jtemp = {determineType(input) * -1, determineType(input) * -1};
 					return jtemp;
