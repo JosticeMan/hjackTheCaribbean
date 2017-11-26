@@ -130,14 +130,6 @@ public class CaveExplorer {
 		}
 	}
 	
-
-	public static void printEnd() {
-		for(String line: endOfGame) {
-			sprint(line);
-			pause(1000);
-		}
-	}
-	
 	public static void printVictory() {
 		pause(250);
 		for(String line: victory) {
@@ -171,42 +163,6 @@ public class CaveExplorer {
 			pause(1000);
 		}
 	}
-	
-
-	public static void printVictory() {
-		pause(250);
-		for(String line: victory) {
-			sprint(line);
-		}
-		pause(500);
-	}
-	
-	public static void printGameOver() {
-		pause(250);
-		for(String line: gameO) {
-			sprint(line);
-		}
-		pause(1000);
-		for(String entry: gameOver1) {
-			sprint(entry);
-			pause(1000);
-		}
-	}
-	
-	public static void printIntroduction(int level) {
-		if(level == 1)
-		{
-			for(String line: logo) {
-				sprint(line);
-			}
-		}
-		pause(1000);
-		for(String entry: intro[level - 1]) {
-			sprint(entry);
-			pause(1000);
-		}
-	}
-	
 
 	private static void npcActions() {
 		for(NPC n: npcs) {

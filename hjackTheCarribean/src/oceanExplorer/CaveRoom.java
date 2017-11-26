@@ -1,5 +1,8 @@
 package oceanExplorer;
 
+import jungleTreasureHuntAZKL.AndrewKevinRoom;
+import jungleTreasureHuntAZKL.AndrewRoom;
+
 public class CaveRoom {
 
 	private String description; //Tells the room looks like
@@ -196,14 +199,14 @@ public class CaveRoom {
 	  	LEVEL 1:
 		 _______________________ 
 		|       |   |   |       |
-		|     x |   |   |       |
+		|     x |   |   |     A |
 		|    ___|___|___|       |
 		|   |   |               |
 		| M |   |               |
 		|   |___|    ___ ___    |
 		|           |   |   |   |
-		| E   F   E |   |   |   |
-		|    ___    |___|___|   |
+		| E   F   E | L |   |   |
+		|    ___    |   |___|   |
 		|   |   |   |           |
 		| F |   |   |           |
 		|   |___|   |___ ___ ___|
@@ -267,6 +270,13 @@ public class CaveRoom {
 		closeAllDoorsAtCoordinate(5,1,c);
 		closeAllDoorsAtCoordinate(2,3,c);
 		closeAllDoorsAtCoordinate(5,3,c);
+		
+		CaveRoom lRoom = new AndrewKevinRoom();
+		c[2][4] = lRoom;
+		c[2][4].setConnection(SOUTH,c[3][4],new Door());
+		
+		CaveRoom aRoom = new AndrewRoom();
+		c[0][5] = aRoom;
 	}
 	
 	/*
@@ -274,8 +284,8 @@ public class CaveRoom {
 		
 		 _______________________ 
 		|   |   |               |
-		|   |   |               |
-		|   |___|    ___     ___|
+		|   | L |         A     |
+		|   |   |    ___     ___|
 		|           |   |   |   |
 		|           |   |   |   |
 		|    ___    |___|   |___|
@@ -317,6 +327,13 @@ public class CaveRoom {
 		closeAllDoorsAtCoordinate(4,2,c);
 		closeAllDoorsAtCoordinate(1,5,c);
 		closeAllDoorsAtCoordinate(5,4,c);
+		
+		CaveRoom lRoom = new AndrewKevinRoom();
+		c[0][1] = lRoom;
+		c[0][1].setConnection(SOUTH,c[1][1],new Door());
+		
+		CaveRoom aRoom = new AndrewRoom();
+		c[0][4] = aRoom;
 	}
 
 	/*
@@ -324,12 +341,12 @@ public class CaveRoom {
 	 _______________________ 
 	|       |   |           |
 	|       |   |           |
-	|___    |___|    ___ ___|
+	|___    |___|        ___|
 	|   |           |   |   |
-	|   |     F     |   |   |
+	|   |     F     | L |   |
 	|___|    ___    |___|___|
 	|       |   |           |
-	| x     |   |           |
+	| x     |   |     A     |
 	|       |___|    ___ ___|
 	|   |   |   |   |   |   |
 	| F |   |   |   |   |   |
@@ -381,6 +398,13 @@ public class CaveRoom {
 		closeAllDoorsAtCoordinate(0,2,c);
 		closeAllDoorsAtCoordinate(1,4,c);
 		closeAllDoorsAtCoordinate(1,5,c);
+		
+		CaveRoom lRoom = new AndrewKevinRoom();
+		c[1][4] = lRoom;
+		c[1][4].setConnection(NORTH,c[0][4],new Door());
+		
+		CaveRoom aRoom = new AndrewRoom();
+		c[2][4] = aRoom;
 	}
 	
 	public static void openAllDoors() {
