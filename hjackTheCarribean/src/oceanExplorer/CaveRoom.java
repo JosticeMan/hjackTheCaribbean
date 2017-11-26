@@ -191,16 +191,16 @@ public class CaveRoom {
 		|     x |   |   |       |
 		|    ___|___|___|       |
 		|   |   |               |
-		|   |   |               |
+		| M |   |               |
 		|   |___|    ___ ___    |
 		|           |   |   |   |
-		|     F     |   |   |   |
+		| E   F   E |   |   |   |
 		|    ___    |___|___|   |
 		|   |   |   |           |
 		| F |   |   |           |
 		|   |___|   |___ ___ ___|
 		|   |                   |
-		|   |                 B |
+		|   |     E   E       B |
 		|   |___     ___     ___|
 		|   |   |   |   |       |
 		|   |   |   |   |       |
@@ -210,11 +210,13 @@ public class CaveRoom {
 		CaveRoom[][] c = CaveExplorer.caves;
 		
 		CaveRoom jRoom = new JustinBossRoom("Captain Duran: You've entered the territory of a commander! The commander is coming soon. Prepare to play a game of battleship or run!", level);
-		//CaveRoom StevenRoom = new StevenRoom("There is nothing there.");
-		//c[1][0]= StevenRoom;
+		CaveRoom StevenRoom = new StevenRoom("There is nothing there.");
+		c[1][0]= StevenRoom;
 		closeAllDoorsAtCoordinate(1,0,c);
 		c[1][0].setConnection(NORTH, c[0][0], new Door());
 		c[1][0].setConnection(SOUTH, c[2][0], new Door());
+		CaveRoom StevenDanRoom =new StevenDanRoom("You have encountered enemies. Prepare to fight!");
+		
 		c[4][5] = jRoom;
 		c[4][5].setConnection(NORTH, c[3][5], null);
 		c[4][5].setConnection(WEST, c[4][4], new Door());

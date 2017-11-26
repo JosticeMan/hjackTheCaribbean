@@ -67,7 +67,6 @@ public class DanielFrontend implements StevenSupport{
 			}
 			if(won) {
 				System.out.println("You won!");
-				System.exit(0);
 			}
 			
 	}

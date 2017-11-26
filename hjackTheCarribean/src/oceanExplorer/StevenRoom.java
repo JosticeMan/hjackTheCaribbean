@@ -63,7 +63,7 @@ public class StevenRoom extends CaveRoom {
 	
 	public String getDescription() {
 		if(CaveExplorer.inventory.getBeginningShip()==null) {
-			return "You have found materials to build your ship. How would you like to customize it?";
+			return "Would you like to customize your ship now? (Press yes to continue or any other input to keep exploring the previous area)";
 		}
 		return super.getDescription();
 
