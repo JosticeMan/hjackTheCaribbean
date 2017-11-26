@@ -222,7 +222,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * @return
 	 */
 	public int numberOfShips() {
-		return CaveExplorer.inventory.getShip().length; //Should be something like CaveExplorer.inventory.getShips().length;
+		return CaveExplorer.inventory.getShip()[frontend.getCommanderLevel() - 1].length; //Should be something like CaveExplorer.inventory.getShips().length;
 	}
 	
 	/**
@@ -286,15 +286,15 @@ public class BackEndJustinY implements SunnySupporter {
 	 * @return
 	 */
 	public int[] commanderMove(int level) {
+		int cLevel = level;
 		if(skipCommanderTurn) {
 			return handleCommanderSkip();
 		}
-		if(previousMove[0] >= 0 && previousMove[1] >= 0 && !(allAdjacentSpotsHit(previousMove[0], previousMove[1])) && thePlayerGameBoard[previousMove[0]][previousMove[1]].isShipOccupied()) {
+		if(cLevel != 3 && previousMove[0] >= 0 && previousMove[1] >= 0 && !(allAdjacentSpotsHit(previousMove[0], previousMove[1])) && thePlayerGameBoard[previousMove[0]][previousMove[1]].isShipOccupied()) {
 			//System.out.println(true);
 			return handleAdjacentHit();
 		}
 		//int cLevel = frontend.getCommanderLevel();
-		int cLevel = level;
 		int[][] possibleMoves = new int[3][2];
 		int[] randomChoice = randomCoordinates(boardSize());
 		while(thePlayerGameBoard[randomChoice[0]][randomChoice[1]].isHasBeenHit()) {
