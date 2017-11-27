@@ -90,8 +90,8 @@ public class FrontEndSunnyK implements JustinSupporter {
 	{
 		CaveExplorer.pause(500);
 		displayBoard(playerPlots);
-		playing = true;
 		askCoordsForShips();
+		playing = true;
 		backend.commanderPlaceShip(ships);
 		determineFirstTurn();
 		if(!playing) {
