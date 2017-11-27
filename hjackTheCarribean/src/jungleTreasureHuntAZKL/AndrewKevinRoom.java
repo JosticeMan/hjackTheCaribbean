@@ -22,7 +22,7 @@ public class AndrewKevinRoom extends CaveRoom {
 	}
 	
 	public void performAction(int direction) {
-		if(direction == 5) {
+		if(direction == 4) {
 		    game = new KevinFrontend();
 		    game.play();
 		} else {
