@@ -80,8 +80,16 @@ public class CaveExplorer {
 		level = 1;
 		in = new Scanner(System.in);
 
+
+
+
+
 		CaveRoom.setUpCaves(level);
 		
+
+
+
+
 
 		inventory = new Inventory();
 		startExploring();
@@ -155,7 +163,7 @@ public class CaveExplorer {
 			pause(1000);
 		}
 	}
-	
+
 	private static void npcActions() {
 		for(NPC n: npcs) {
 			n.act();

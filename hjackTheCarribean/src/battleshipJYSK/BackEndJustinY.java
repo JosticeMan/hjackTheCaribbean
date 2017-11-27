@@ -222,7 +222,7 @@ public class BackEndJustinY implements SunnySupporter {
 	 * @return
 	 */
 	public int numberOfShips() {
-		return CaveExplorer.inventory.getShip().length; //Should be something like CaveExplorer.inventory.getShips().length;
+		return CaveExplorer.inventory.getShip()[frontend.getCommanderLevel() - 1].length; //Should be something like CaveExplorer.inventory.getShips().length;
 	}
 	
 	/**
@@ -286,15 +286,15 @@ public class BackEndJustinY implements SunnySupporter {
 	 * @return
 	 */
 	public int[] commanderMove(int level) {
+		int cLevel = level;
 		if(skipCommanderTurn) {
 			return handleCommanderSkip();
 		}
-		if(previousMove[0] >= 0 && previousMove[1] >= 0 && !(allAdjacentSpotsHit(previousMove[0], previousMove[1])) && thePlayerGameBoard[previousMove[0]][previousMove[1]].isShipOccupied()) {
+		if(cLevel != 3 && previousMove[0] >= 0 && previousMove[1] >= 0 && !(allAdjacentSpotsHit(previousMove[0], previousMove[1])) && thePlayerGameBoard[previousMove[0]][previousMove[1]].isShipOccupied()) {
 			//System.out.println(true);
 			return handleAdjacentHit();
 		}
 		//int cLevel = frontend.getCommanderLevel();
-		int cLevel = level;
 		int[][] possibleMoves = new int[3][2];
 		int[] randomChoice = randomCoordinates(boardSize());
 		while(thePlayerGameBoard[randomChoice[0]][randomChoice[1]].isHasBeenHit()) {
@@ -650,6 +650,16 @@ public class BackEndJustinY implements SunnySupporter {
 	}
 	
 	/**
+	 * Handles the code regarding the implementation of the cheat code
+	 * @return
+	 */
+	public int[] handleCheatCode() {
+		frontend.win();
+		int[] itemp = {};
+		return itemp;
+	}
+	
+	/**
 	 * This method will return the coordinates that the user inputs
 	 * CREDITS TO: NOCKLES for providing the method through his example
 	 * @return
@@ -658,9 +668,7 @@ public class BackEndJustinY implements SunnySupporter {
 		String input = CaveExplorer.in.nextLine();
 		//CHEATCODE
 		if(input.equalsIgnoreCase("win")) {
-			frontend.win();
-			int[] itemp = {};
-			return itemp;
+			return handleCheatCode();
 		}
 		//CHEATCODE
 		if(determineType(input) != -1 && frontend.isPlaying()) {
@@ -676,6 +684,9 @@ public class BackEndJustinY implements SunnySupporter {
 					CaveExplorer.print("Captain Duran: You can also type 'radar', 'missile', and 'storm' to activate a powerup!");
 				}
 				input = CaveExplorer.in.nextLine();
+				if(input.equalsIgnoreCase("win")) {
+					return handleCheatCode();
+				}
 				if(determineType(input) != -1 && frontend.isPlaying()) {
 					int[] jtemp = {determineType(input) * -1, determineType(input) * -1};
 					return jtemp;

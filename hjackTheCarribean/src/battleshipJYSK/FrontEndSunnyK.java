@@ -14,7 +14,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 	private boolean isPlayerTurn; //This tracks whose turn it is
 	private String userName; //User name of the player
 	private boolean isWinner;
-	private Ship[] ships;
+	private Ship[][] ships;
 	
 	private JustinSunnyPlot[][] playerPlots;
     private JustinSunnyPlot[][] commanderPlots;
@@ -92,7 +92,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 		displayBoard(playerPlots);
 		playing = true;
 		askCoordsForShips();
-		backend.commanderPlaceShip(ships);
+		backend.commanderPlaceShip(ships[commanderLevel - 1]);
 		determineFirstTurn();
 		if(!playing) {
 		}
@@ -273,7 +273,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 	{	
 		for(int i = 0; i < backend.numberOfShips(); i++)
 		{
-			int lengthOfCurrentShip = backend.lengthOfShip(ships[i]);
+			int lengthOfCurrentShip = backend.lengthOfShip(ships[commanderLevel - 1][i]);
 			
 			System.out.println("Shipmate: Where would you like to position ship #"+(i+1)+" of length " + lengthOfCurrentShip +"?");
 			int[] coords =  backend.getCoordInput();

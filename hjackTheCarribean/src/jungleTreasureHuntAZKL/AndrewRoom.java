@@ -1,5 +1,6 @@
-package oceanExplorer;
+package jungleTreasureHuntAZKL;
 
+import oceanExplorer.CaveRoom;
 
 /**
  * Whirlpool room

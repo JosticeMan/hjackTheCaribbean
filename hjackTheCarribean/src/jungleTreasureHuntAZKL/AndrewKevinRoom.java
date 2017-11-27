@@ -1,6 +1,7 @@
-package oceanExplorer;
+package jungleTreasureHuntAZKL;
 
 import jungleTreasureHuntAZKL.KevinFrontend;
+import oceanExplorer.CaveRoom;
 
 public class AndrewKevinRoom extends CaveRoom {
 	
