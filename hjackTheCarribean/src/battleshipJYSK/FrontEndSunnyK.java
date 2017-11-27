@@ -453,7 +453,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 			System.out.println("That is not a valid coordinate");
 			return false;
 		}
-		//check if has ship
+		//check if has a ship
 		if(!commanderPlots[coord1][coord2].isShipOccupied())
 		{
 			if(direction == 0 || direction == 2)
