@@ -47,6 +47,7 @@ public class StevenRoom extends CaveRoom {
 				}
 				if(stat==0) {
 					make=false;
+					CaveExplorer.print("Congratulations on your new ship! Your adventure begins now. Step foward into the vast ocean.");
 					CaveExplorer.inventory.setBeginningShip(new Ship(hp,atk,spd));
 					visited=true;
 					CaveExplorer.currentRoom.leave();

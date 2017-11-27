@@ -112,7 +112,7 @@ public class CaveExplorer {
 	}
 	
 	public static void startExploring() {
-		printIntroduction(level); //This will introduce the player to the game world of the Caribbean
+		//printIntroduction(level); //This will introduce the player to the game world of the Caribbean
 		while(playing) {
 			//npcActions();
  			print(inventory.getDescription());

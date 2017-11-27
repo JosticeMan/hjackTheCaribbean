@@ -4,31 +4,64 @@ import rpgDDSL.DanielFrontend;
 
 public class StevenDanRoom extends CaveRoom {
 	
-	public boolean visited;
+	private DanielFrontend game;
+	private boolean visited;
 	
-	public StevenDanRoom(String description) {
-		super(description);
+	public StevenDanRoom() {
+		super("You are being attacked by rouge pirates! Prepare to fight or flee with your life. (Surrender with a directional key or press f to fight!)");
 		visited=false;
 	}
-	public void interpretInput(String input) {
-		fight();
-		input=CaveExplorer.in.nextLine();
-		super.interpretInput(input);
-		
+
+	//OVERRIDE
+	
+	public String validKeys() {
+		if(!visited)
+			return "wdsaf";
+		else
+			return super.validKeys();
 	}
-	public void fight() {
-		DanielFrontend a=new DanielFrontend(CaveExplorer.inventory.getBeginningShip(),CaveExplorer.level);
-		a.play();
-		if(a.isWon()) {
-			visited=true;
+	
+	public void printAllowedEntry() {
+		if(!visited)
+			System.out.println("Press 'f' to begin the treasure hunt or a direction key to surrender.");
+		else 
+			super.printAllowedEntry();
+	}
+	
+	public void performAction(int direction) {
+		if(!visited) {
+			if(direction == 4) {
+				visited=true;
+			    game = new DanielFrontend(CaveExplorer.inventory.getBeginningShip(),CaveExplorer.getLevel());
+			    game.play();
+			} else if(direction<4){
+				System.out.println("You have decided to surrender.");
+				System.exit(0);
+			}else {
+				printAllowedEntry();
+			}
+		}
+		else {
+			super.performAction(direction);
 		}
 	}
+	
 	public String getContents() {
 		if(!visited) {
 			return "E";
 		}
-		return super.getContents();
-		
+		else {
+			return " ";
+		}
 	}
+	
+	public String getDescription() {
+		if(!visited) {
+			return super.getDescription();
+		}else {
+			return "You have defeated the priates here.";
+		}
+	}
+	
 
 }

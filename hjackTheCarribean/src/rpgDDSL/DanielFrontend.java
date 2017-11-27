@@ -56,26 +56,19 @@ public class DanielFrontend implements StevenSupport{
 		backend.setFrontend(this);
 		updateMap();
 		enemyCount();
-			while(!won) {
-				haveHealth();
-				enemyAlive();
-				if(won) {
-					System.out.println("You won!");
-					System.exit(0);
-				}
-				if(lost)
-				{
-					System.out.println("You lost...");
-					System.exit(0);
-				}
-
-				backend.movement();
-				
-				
+		while(!won) {
+			haveHealth();
+			enemyAlive();
+			if(lost)
+			{
+				System.out.println("You lost...");
+				System.exit(0);
 			}
-			if(won) {
-				System.out.println("You won!");
-			}
+			backend.movement();	
+		}
+		if(won) {
+			System.out.println("You won!");
+		}
 			
 	}
 	public boolean isWon() {

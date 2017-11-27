@@ -226,10 +226,12 @@ public class CaveRoom {
 		c[1][0]= StevenRoom;
 		closeAllDoorsAtCoordinate(1,0,c);
 		c[1][0].setConnection(NORTH, c[0][0], new Door());
+		CaveRoom StevenDanRoom =new StevenDanRoom();
+		c[2][0]=StevenDanRoom;
+		//c[2][2]=StevenDanRoom;
+		//c[2][1].setConnection(EAST, c[2][2], new Door());
+		//c[2][4]=StevenDanRoom;
 		c[1][0].setConnection(SOUTH, c[2][0], new Door());
-		CaveRoom StevenDanRoom =new StevenDanRoom("You have encountered enemies. Prepare to fight!");
-		
-
 		c[4][5] = jRoom;
 		c[4][5].setConnection(NORTH, c[3][5], null);
 		c[4][5].setConnection(WEST, c[4][4], new Door());

@@ -364,8 +364,8 @@ public class StevenBackend implements DanSupport {
 		System.out.println("You can move "+times+" more times.");
 		input = CaveExplorer.in.nextLine();
 		if(input.equals("cheat")) {
+			System.out.println("aa");
 			front.setWon(true);
-			front.play();
 		}else {
 			while(times>0) {
 				while (!isValid(input) || !checkWalls(input, getHuman()))
