@@ -409,6 +409,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 	{
 		System.out.println("Where would you like to fire your torpedo?");
 		int[] coords =  backend.getCoordInput();
+		int direction = -1;
 		if(coords.length == 0) 
 		{
 			return;
@@ -416,10 +417,8 @@ public class FrontEndSunnyK implements JustinSupporter {
 		else
 		{
 			System.out.println("Where would you like the torpedo to direct to? Enter 'N','E','S','W'");
-			int dir = backend.interpretDirectionInput();
-			
-			usedTorpedo(true);
-			torpedo(coords, dir);
+			direction = backend.interpretDirectionInput();
+			torpedo(coords, direction);
 		}
 	}
 	
@@ -460,6 +459,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 			{
 				return !commanderPlots[coord1][coord2 + dirEquate[direction]].isShipOccupied();
 			}
+			return false;
 		}
 		return false;
 	}
