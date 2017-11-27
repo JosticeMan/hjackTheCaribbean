@@ -390,9 +390,9 @@ public class StevenBackend implements DanSupport {
 				}else {
 					int count=0;
 					for(int i=0;i<front.getCoords().length;i++) {
-						for(int[] a:enemyPosition) {
-							if(a[0]==front.getCoords()[i][0]&&a[1]==front.getCoords()[i][1]) {
-								if(enemyValue[i][0]>0) {
+						for(int j = 0; j < enemyPosition.length; j++) {
+							if(enemyPosition[j][0]==front.getCoords()[i][0]&&enemyPosition[j][1]==front.getCoords()[i][1]) {
+								if(enemyValue[j][0]>0) {
 									count++;
 								}
 							}
@@ -400,6 +400,7 @@ public class StevenBackend implements DanSupport {
 					}
 					if(count>0) {
 						System.out.println("You may now attack");
+						
 						humanAttack();
 					}
 					else {

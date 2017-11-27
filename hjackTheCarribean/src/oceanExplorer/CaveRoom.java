@@ -230,14 +230,6 @@ public class CaveRoom {
 		CaveRoom StevenDanRoom =new StevenDanRoom("You have encountered enemies. Prepare to fight!");
 		
 
-		CaveRoom StevenRoom = new StevenRoom("There is nothing there.");
-		c[1][0]= StevenRoom;
-		closeAllDoorsAtCoordinate(1,0,c);
-		c[1][0].setConnection(NORTH, c[0][0], new Door());
-		c[1][0].setConnection(SOUTH, c[2][0], new Door());
-		CaveRoom StevenDanRoom =new StevenDanRoom("You have encountered enemies. Prepare to fight!");
-		
-
 		c[4][5] = jRoom;
 		c[4][5].setConnection(NORTH, c[3][5], null);
 		c[4][5].setConnection(WEST, c[4][4], new Door());
@@ -287,13 +279,13 @@ public class CaveRoom {
 		|   | L |         A     |
 		|   |   |    ___     ___|
 		|           |   |   |   |
-		|           |   |   |   |
+		|     E     |   | E |   |
 		|    ___    |___|   |___|
 		|   |   |               |
-		|   |   |             B |
+		|   |   |     E       B |
 		|   |___|___     ___ ___|
 		|               |   |   |
-		| x       F     |   |   |
+		| x   E   F     |   |   |
 		|___     ___    |___|   |
 		|   |   |   |           |
 		|   |   |   |           |
@@ -349,10 +341,10 @@ public class CaveRoom {
 	| x     |   |     A     |
 	|       |___|    ___ ___|
 	|   |   |   |   |   |   |
-	| F |   |   |   |   |   |
+	| F | E |   | E |   |   |
 	|___|   |___|   |___|___|
 	|       |   |           |
-	|       |   |           |
+	|       |   |         E |
 	|___    |___|    ___    |
 	|   |           |   |   |
 	|   |     F     |   | B |
