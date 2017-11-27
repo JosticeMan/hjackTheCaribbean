@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import oceanExplorer.CaveExplorer;
 import oceanExplorer.CaveRoom;
+import oceanExplorer.Inventory;
 public class KevinFrontend implements AndrewSupport {
 	
 	public static final int ROCK = 1;
@@ -67,12 +68,23 @@ public class KevinFrontend implements AndrewSupport {
 		}
 		  	while(backend.playing()) {
 			updateMap(map);
-			displayTreasureHint();
-			displayMonkeyHints();
-			displayNumSteps();
-			respondToInput(backend.processInput(getInput()));
+			if(isPlayerOnTreasure()) {
+				treasureFound = true;
+				backend.setPlay(false);
+			}else {
+				displayTreasureHint();
+				displayMonkeyHints();
+				displayNumSteps();
+				respondToInput(backend.processInput(getInput()));
+			}
 		}
 		printEndGame();
+	}
+	private boolean isPlayerOnTreasure() {
+		if(pRow == tRow && pCol == tCol) {
+			return true;
+		}
+		return false;
 	}
 
 	private void respondToInput(int i) {
@@ -82,13 +94,16 @@ public class KevinFrontend implements AndrewSupport {
 			System.out.println("That is beyond your line of sight, You can look there.");
 		}else if(i == 5) {
 			System.out.println("That is outside the map. Don't be dum");
-		}else if(i == 4 || i ==8) {
+		}else if(i ==8) {
 			treasureFound = true;
 			backend.setPlay(false);
-		}else if(i == -1) {
-			System.out.println("That is not a valid key. Please type 'wdsa'.");
+		}else if(i == 3) {
+			System.out.println("There is nothing there.");
+		}else if(i==4) {
+			System.out.println("The treasure is there, go get it!");
 		}
 	}
+
 	private void displayVictory() {
 		String[] powerUps = {"BoinkRadar", "CriticalMissile", "StormCaller", "Sunny"};
 		String v = "Dun-Da-Da-Dun! Congratulation, You have found the treasure!";
@@ -97,7 +112,7 @@ public class KevinFrontend implements AndrewSupport {
 	}
 	private int getRandomPowerup() {
 		int num = (int)(Math.random()*4);
-		int[] a = CaveExplorer.inventory.getBossPowerUps();
+		int[] a = Inventory.getBossPowerUps();
 		int x =  a[num];
 		a[num] = x+1;
 		return num;
@@ -155,7 +170,7 @@ public class KevinFrontend implements AndrewSupport {
 		pCol = backend.getPlayerPos()[COL];
 	}
 	private void startGameMessage() {
-		String s = "Welcome to the Treasure Hunter Game!! In this game, you need to found the treasure, to move type 'wdsa'." +"\n"+ "There will be hints when you are close to the treasure beware of the wild monkeys." +"\n"+ "If caught, game over! So listen closely for the rustling sounds! To get started type 'p'!";
+		String s = "Welcome to the Treasure Hunter Game!! In this game, you need to found the treasure, to move type 'wdsa'." +"\n"+ "You get a limited number of steps! There will be signs when you are close to the treasure, beware of the wild monkeys." +"\n"+ "If caught, you lose some steps! So listen closely for the rustling sounds! To win you need to on top of the treasure," +"\n"+ "you can type in coords to see if there is treasure or not. To get started type 'p'!";
 		System.out.println(s);
 		
 	}
@@ -213,7 +228,7 @@ public class KevinFrontend implements AndrewSupport {
 		if(input.equalsIgnoreCase("p")) {
 			backend.setPlay(true);
 			starting = true;
-			System.out.println("Let the hunt begin.");
+			System.out.println("Let the hunting begin.");
 		}else {
 			System.out.println("Please type in 'p' if u want to play");
 		}
