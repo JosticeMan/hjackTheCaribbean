@@ -16,7 +16,6 @@ public class FrontEndSunnyK implements JustinSupporter {
 	private boolean isWinner;
 	private Ship[][] ships;
 	private boolean hasUsedTorpedo;
-	
 	private JustinSunnyPlot[][] playerPlots;
     private JustinSunnyPlot[][] commanderPlots;
     private String[][] quotes;
