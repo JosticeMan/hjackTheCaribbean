@@ -276,7 +276,7 @@ public class CaveRoom {
 		c[2][4].setConnection(SOUTH,c[3][4],new Door());
 		
 		CaveRoom aRoom = new AndrewRoom();
-		c[0][5] = aRoom;
+		c[0][4] = aRoom;
 	}
 	
 	/*
