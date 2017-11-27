@@ -7,7 +7,7 @@ import oceanExplorer.CaveRoom;
  * User will be unable to move and will turn the user a certain amount of time
  * Then it will send the user into a room in the direction they will be facing last.
  * 
- * 
+ * To win just imagine facing the ship direction as you go around counter clockwise and go the opposite dir of where the center is.
  * @author BT_1N3_06
  *
  */
@@ -94,7 +94,10 @@ public class AndrewRoom extends CaveRoom {
 		}
 		if(distanceFromCenter <= 0) {
 			//user loses
-			setDescription("Shipmate: CAP'N! NOT THE LOCKER! YOU LOSE.");
+			setDescription("Shipmate: CAP'N! NOT THE LOCKER!");
+			CaveExplorer.printEnd();
+			CaveExplorer.setPlaying(false);
+			
 		}
 	}
 	
