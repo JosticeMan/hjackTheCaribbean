@@ -121,7 +121,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 		}
 		else 
 		{
-												CaveExplorer.pause(500);
+			CaveExplorer.pause(500);
 			commanderMakesMove();
 			if(isGameOver())
 			{
@@ -129,7 +129,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 			}
 			else 
 			{
-												CaveExplorer.pause(500);
+				CaveExplorer.pause(500);
 				updateBothMaps();
 				rotateTurns();
 			}
@@ -162,7 +162,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 			}
 			else 
 			{
-													CaveExplorer.pause(500);
+				CaveExplorer.pause(500);
 				commanderMakesMove();
 				if(isGameOver())
 				{
@@ -170,7 +170,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 				}
 				else 
 				{
-													CaveExplorer.pause(500);
+					CaveExplorer.pause(500);
 					updateBothMaps();
 					rotateTurns();
 				}
@@ -182,13 +182,13 @@ public class FrontEndSunnyK implements JustinSupporter {
 	{
 		while(playing)
 		{
-										CaveExplorer.pause(500);
+			CaveExplorer.pause(500);
 			askCoordsToFire();
 			if(!playing) 
 			{
 				return;
 			}
-										CaveExplorer.pause(500);
+			CaveExplorer.pause(500);
 			updateBothMaps();
 			if(isGameOver())
 			{
@@ -196,13 +196,13 @@ public class FrontEndSunnyK implements JustinSupporter {
 			}
 			else 
 			{
-										CaveExplorer.pause(500);
+				CaveExplorer.pause(500);
 				commanderMakesMove();
 				if(isGameOver())
 				{
 					playing = false;
 				}
-										CaveExplorer.pause(500);
+				CaveExplorer.pause(500);
 				updateBothMaps();
 			}
 		}
@@ -326,31 +326,19 @@ public class FrontEndSunnyK implements JustinSupporter {
 			coords = backend.randomShipHit();
 			backend.hit(coords[0], coords[1], backend.getCommanderPlots());
 		}
-		else {
+		else 
+		{
 			System.out.println("Shipmate: Where would you like to fire?");
 			coords = backend.getCoordInput();
-			if(coords.length == 0) {
+			if(coords.length == 0) 
+			{
 				return;
 			}
 			if(coords[0] < 0 && coords[1] < 0) 
 			{
 				int type = coords[0] * -1;
-				if(backend.hasPowerUp(type)) 
-				{
-					backend.decrementPowerUp(type);
-					backend.processPowerUp(type);
-					usedPowerup = true;
-					if(backend.isCommanderSkip()) 
-					{
-						askCoordsToFire();
-					}
-				}
-				else 
-				{
-					System.out.println("Shipmate: You do not have any more of that power up!");
-					askCoordsToFire();
-					return;
-				}
+				usedPowerup = checkAndUsePowerup(type);
+				return;
 			}
 			else 
 			{
@@ -376,6 +364,74 @@ public class FrontEndSunnyK implements JustinSupporter {
 			CaveExplorer.pause(1500);
 		}
 	}
+	
+	public boolean checkAndUsePowerup(int type)
+	{
+		if(backend.hasPowerUp(type)) 
+		{
+			backend.decrementPowerUp(type);
+			backend.processPowerUp(type);
+			checkStormcaller();
+			return true;
+		}
+		else 
+		{
+			System.out.println("Shipmate: You do not have any more of that power up!");
+			askCoordsToFire();
+			return false;
+		}
+	}
+	
+	public void checkStormcaller()
+	{
+		if(backend.isCommanderSkip())
+			askCoordsToFire();
+	}
+	
+	public void torpedo()
+	{
+		int[] coords = backend.getCoordInput();
+		int direction = backend.interpretDirectionInput();
+		int[] dirEquate = {-1, 1, 1, -1};
+		
+		while(!tryTorpedoPlacement(coords[0], coords[1], direction))
+		{
+			coords = backend.getCoordInput();
+			direction = backend.interpretDirectionInput();
+		}
+		
+		playerPlots[coords[0]][coords[1]].setHasBeenHit(true);
+		if(direction == 0 || direction == 2)
+		{
+			playerPlots[coords[0] + dirEquate[direction]][coords[1]].setHasBeenHit(true);
+		}
+		if(direction == 1 || direction == 3)
+		{
+			playerPlots[coords[0]][coords[1] + dirEquate[direction]].setHasBeenHit(true);
+		}
+
+		
+	}
+	public boolean tryTorpedoPlacement(int coord1, int coord2, int direction)
+	{
+		int[] dirEquate = {-1, 1, 1, -1};
+		//NESW 0123
+		
+		//check if has ship
+		if(!playerPlots[coord1][coord2].isShipOccupied())
+		{
+			if(direction == 0 || direction == 2)
+			{
+				return !playerPlots[coord1 + dirEquate[direction]][coord2].isShipOccupied();
+			}
+			if(direction == 1 || direction == 3)
+			{
+				return !playerPlots[coord1][coord2 + dirEquate[direction]].isShipOccupied();
+			}
+		}
+		return false;
+	}
+	
 	
 	public boolean isGameOver()
 	{
