@@ -67,16 +67,16 @@ public class KevinFrontend implements AndrewSupport {
 			startInput(getInput());
 		}
 		  	while(backend.playing()) {
-			updateMap(map);
 			if(isPlayerOnTreasure()) {
 				treasureFound = true;
 				backend.setPlay(false);
 			}else {
+				updateMap(map);
 				displayTreasureHint();
 				displayMonkeyHints();
 				displayNumSteps();
-				respondToInput(backend.processInput(getInput()));
-			}
+				respondToInput(backend.processInput(getInput()));	
+			}	
 		}
 		printEndGame();
 	}
@@ -105,17 +105,8 @@ public class KevinFrontend implements AndrewSupport {
 	}
 
 	private void displayVictory() {
-		String[] powerUps = {"BoinkRadar", "CriticalMissile", "StormCaller", "Sunny"};
 		String v = "Dun-Da-Da-Dun! Congratulation, You have found the treasure!";
-		v += "\n The treasure is "+powerUps[getRandomPowerup()]+ ".";
-		System.out.println(v);	
-	}
-	private int getRandomPowerup() {
-		int num = (int)(Math.random()*4);
-		int[] a = Inventory.getBossPowerUps();
-		int x =  a[num];
-		a[num] = x+1;
-		return num;
+		System.out.println(v);
 	}
 	private int amountVicinityRow(int row) {
 		return Math.abs(row - pRow);
@@ -170,7 +161,7 @@ public class KevinFrontend implements AndrewSupport {
 		pCol = backend.getPlayerPos()[COL];
 	}
 	private void startGameMessage() {
-		String s = "Welcome to the Treasure Hunter Game!! In this game, you need to found the treasure, to move type 'wdsa'." +"\n"+ "You get a limited number of steps! There will be signs when you are close to the treasure, beware of the wild monkeys." +"\n"+ "If caught, you lose some steps! So listen closely for the rustling sounds! To win you need to on top of the treasure," +"\n"+ "you can type in coords to see if there is treasure or not. To get started type 'p'!";
+		String s = "Welcome to the Treasure Hunter Game!! In this game, you need to found the treasure, to move type 'wdsa'." +"\n"+ "You get a limited number of steps! There will be signs when you are close to the treasure, beware of the wild monkeys." +"\n"+ "If caught, you lose some steps! So listen closely for the rustling sounds! To win you need to on top of the treasure," +"\n"+ "you can type in coords to see if there is treasure or not. To get started type 'p'!" +"\n"+ "The cheat code is get me out";
 		System.out.println(s);
 		
 	}
