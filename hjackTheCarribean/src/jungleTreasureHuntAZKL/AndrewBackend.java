@@ -114,7 +114,7 @@ public class AndrewBackend implements KevinSupport{
 	
 	private boolean play;
 	/*------CONSTANTS--------*/
-	//most of these could've been classes
+	//most of these could've been classes and subclasses
 	public static final int ROW = 0;
 	public static final int COL = 1;
 	
@@ -163,7 +163,7 @@ public class AndrewBackend implements KevinSupport{
 		createMapRockBorder();
 			
 		//stepCount is based off the size of the map, for now it'll be 10
-		stepCount = 10;
+		stepCount = 20;
 		
 		//creates and sets player starting position
 		playerPos = new int[2];
@@ -418,7 +418,7 @@ public class AndrewBackend implements KevinSupport{
 	}
 	public void checkLoss() {
 		if(stepCount <= 0) {
-			setPlay(false);
+			play = false;
 		}
 	}
 	/*---- INPUT PROCESSING METHODS ----*/
@@ -430,6 +430,7 @@ public class AndrewBackend implements KevinSupport{
 	 * otherwise nothing will happen within the backend
 	 */
 	public int processInput(String input) {
+		checkLoss();
 		if(isValidDirection(input)) {
 			String dirKeys = "wdsa";
 			return attemptPlayerMove(dirKeys.indexOf(input));
@@ -437,8 +438,9 @@ public class AndrewBackend implements KevinSupport{
 			int row = Integer.parseInt(input.substring(0,1));
 			int col = Integer.parseInt(input.substring(2,3));
 			return attemptObserve(row, col);
+		}else if(input.equalsIgnoreCase("get me out")) {
+			return 8;
 		}
-		checkLoss();
 		return -1;
 	}
 	/**
@@ -675,7 +677,7 @@ public class AndrewBackend implements KevinSupport{
 		boolean openPath = false;
 		
 		while(!openPath) {
-			System.out.println(currentRow + ", " + currentCol);
+			//System.out.println(currentRow + ", " + currentCol);
 			if(currentRow == playerPos[ROW] && currentCol == playerPos[COL])
 				openPath = true;
 			

@@ -25,7 +25,7 @@ public class KevinFrontend implements AndrewSupport {
 	public int tRow;
 	public int tCol;
 	public boolean starting;
-	
+	public boolean treasureFound;
 	
 	public boolean mNear;
 	public boolean mClose;
@@ -57,6 +57,7 @@ public class KevinFrontend implements AndrewSupport {
 		tClose = false;
 		tRightInFront = false;
 		starting = false; //loop if they dont press p
+		treasureFound  = false;
 	}
 
 	public void play() {
@@ -81,18 +82,26 @@ public class KevinFrontend implements AndrewSupport {
 			System.out.println("That is beyond your line of sight, You can look there.");
 		}else if(i == 5) {
 			System.out.println("That is outside the map. Don't be dum");
-		}else if(i == 4) {//need to fix;
+		}else if(i == 4 || i ==8) {
+			treasureFound = true;
 			backend.setPlay(false);
-			displayVictory();
 		}else if(i == -1) {
 			System.out.println("That is not a valid key. Please type 'wdsa'.");
 		}
 	}
 	private void displayVictory() {
+		String[] powerUps = {"BoinkRadar", "CriticalMissile", "StormCaller", "Sunny"};
 		String v = "Dun-Da-Da-Dun! Congratulation, You have found the treasure!";
-		System.out.println(v);
+		v += "\n The treasure is "+powerUps[getRandomPowerup()]+ ".";
+		System.out.println(v);	
 	}
-
+	private int getRandomPowerup() {
+		int num = (int)(Math.random()*4);
+		int[] a = CaveExplorer.inventory.getBossPowerUps();
+		int x =  a[num];
+		a[num] = x+1;
+		return num;
+	}
 	private int amountVicinityRow(int row) {
 		return Math.abs(row - pRow);
 	}
@@ -151,7 +160,11 @@ public class KevinFrontend implements AndrewSupport {
 		
 	}
 	private void printEndGame() {
-		
+		if(backend.getStepCount() == 0 && treasureFound == false) {
+			System.out.println("Awwwww, you ran out of steps out to found the treasure! That is unfortunate.");
+		}else {
+			displayVictory();
+		}
 	}
 
 	public void updateMap(AndrewKevinTile[][] tMap) {
@@ -206,6 +219,7 @@ public class KevinFrontend implements AndrewSupport {
 		}
 		
 	}
+
 
 		//for(AndrewKevinTile col: map[row]) {
 	//	text += col.getContent(); // Will be modified based off contents of the Tile

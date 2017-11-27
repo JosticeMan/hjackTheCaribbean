@@ -2,19 +2,21 @@ package oceanExplorer;
 
 public class JustinBossRoom extends CaveRoom {
 
-	private JustinSunnyCommander currentCommander;
+	private JustinCommander currentCommander;
 	
 	public static final String[] FIRST_START = {"J", "M", "Chr", "T", "Th", "D", "Fr"};
 	public static final String[] FIRST_MIDDLE = {"usti", "ist", "oma", "o", "e", "or", "aphin"};
 	public static final String[] FIRST_END = {"n", "y", "er", "old", "tian", "s", "d"};
 	
+	public static final String[] NATIONALITY = {" of France", " of Spain", " of England"};
+	
 	public JustinBossRoom(String description, int level) {
 		super(description); //This manages the description
-		currentCommander = new JustinSunnyCommander(randomFirstName(), level);
+		currentCommander = new JustinCommander(randomFirstName(level), level);
 	}
 	
-	public static String randomFirstName() {
-		return CaveExplorer.randomString(FIRST_START) + CaveExplorer.randomString(FIRST_MIDDLE) + CaveExplorer.randomString(FIRST_END);
+	public static String randomFirstName(int level) {
+		return CaveExplorer.randomString(FIRST_START) + CaveExplorer.randomString(FIRST_MIDDLE) + CaveExplorer.randomString(FIRST_END) + NATIONALITY[level - 1];
 	}
 	
 	//-------------------------
@@ -40,7 +42,7 @@ public class JustinBossRoom extends CaveRoom {
 		if(direction == 4) {
 		    currentCommander.interact();
 		} else {
-			System.out.println("Random Sailor: Are you really that afraid!? What are you pressing?");
+			System.out.println("Shipmate: Are you really that afraid!? What are you pressing?");
 		}
 	}
 	

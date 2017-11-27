@@ -2,11 +2,11 @@ package oceanExplorer;
 
 public class SunnyRoom extends CaveRoom {
 
-	private NPC presentNPC;
+	private SunnyNPC presentNPC;
 	
 	public SunnyRoom(String description) {
 		super(description);
-		presentNPC = null;
+		presentNPC = new SunnyNPC();
 	
 	}
 
@@ -18,7 +18,7 @@ public class SunnyRoom extends CaveRoom {
 		return presentNPC == null;
 	}
 	
-	public void enterNPC(NPC m) {
+	public void enterNPC(SunnyNPC m) {
 		presentNPC = m;
 	}
 	
@@ -65,12 +65,12 @@ public class SunnyRoom extends CaveRoom {
 	}
 	
 	public String getContents() {
-		//if(containsNPC() && presentNPC.isActive()) {
-			return "S";
-		//}
-		//else {
-		//	return super.getContents();
-		//}
+		if(containsNPC() && presentNPC.isActive()) {
+			return "P";
+		}
+		else {
+			return super.getContents();
+		}
 	}
 	
 	public String getDescription() {
