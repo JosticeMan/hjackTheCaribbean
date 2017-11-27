@@ -1,5 +1,6 @@
 package jungleTreasureHuntAZKL;
 
+import oceanExplorer.CaveExplorer;
 import oceanExplorer.CaveRoom;
 
 /**

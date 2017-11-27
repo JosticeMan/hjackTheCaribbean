@@ -8,7 +8,8 @@ public class AndrewKevinRoom extends CaveRoom {
 	private KevinFrontend game;
 	
 	public AndrewKevinRoom() {
-		super("Shipmate: Land Ho Cap'n! There be treasure in this jungle, I smell it!");
+		super("Shipmate: Land Ho Cap'n! There be treasure in this jungle, I smell it! \n"
+				+ "Shipmate: The 'f' seems to be the key.");
 	}
 
 	//OVERRIDE
