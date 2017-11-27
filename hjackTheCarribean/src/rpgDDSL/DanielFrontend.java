@@ -383,40 +383,33 @@ public class DanielFrontend implements StevenSupport{
 			{
 				// Check directions around human in a 2 by 2 grid
 				if ((humanXSub2 == backend.getEnemyPosition()[i][0] && humanYSub2 == backend.getEnemyPosition()[i][1])
-					||  (humanXSub2 == backend.getEnemyPosition()[i][0] && humanY == backend.getEnemyPosition()[i][1])
-					||  (humanXSub2 == backend.getEnemyPosition()[i][0] && humanYAdd2 == backend.getEnemyPosition()[i][1])
-					||  (humanX == backend.getEnemyPosition()[i][0] && humanYSub2 == backend.getEnemyPosition()[i][1]) 
-					||  (humanX == backend.getEnemyPosition()[i][0] && humanYAdd2 == backend.getEnemyPosition()[i][1])
-					||  (humanXAdd2 == backend.getEnemyPosition()[i][0] && humanYSub2 == backend.getEnemyPosition()[i][1])
-					||  (humanXAdd2 == backend.getEnemyPosition()[i][0] && humanY == backend.getEnemyPosition()[i][1])
-					|| 	(humanXAdd2 == backend.getEnemyPosition()[i][0] && humanYAdd2 == backend.getEnemyPosition()[i][1])
-					||	(humanXSub1 == backend.getEnemyPosition()[i][0] && humanYSub1 == backend.getEnemyPosition()[i][1])
+					||  (humanXSub2 == backend.getEnemyPosition()[i][0] && humanY == backend.getEnemyPosition()[i][1])					
+					||  (humanXAdd2 == backend.getEnemyPosition()[i][0] && humanY == backend.getEnemyPosition()[i][1])								
+					||	(humanXAdd2 == backend.getEnemyPosition()[i][0] && humanYSub1 == backend.getEnemyPosition()[i][1])
+					||  (humanXAdd2 == backend.getEnemyPosition()[i][0] && humanYAdd1 == backend.getEnemyPosition()[i][1])					
+					||  (humanXSub2 == backend.getEnemyPosition()[i][0] && humanYAdd1 == backend.getEnemyPosition()[i][1])
+					||  (humanXSub2 == backend.getEnemyPosition()[i][0] && humanYSub1 == backend.getEnemyPosition()[i][1])
+					||  (humanXSub1 == backend.getEnemyPosition()[i][0] && humanYSub1 == backend.getEnemyPosition()[i][1])
 					||  (humanXSub1 == backend.getEnemyPosition()[i][0] && humanY == backend.getEnemyPosition()[i][1])
 					||  (humanXSub1 == backend.getEnemyPosition()[i][0] && humanYAdd1 == backend.getEnemyPosition()[i][1])
 					||  (humanX == backend.getEnemyPosition()[i][0] && humanYSub1 == backend.getEnemyPosition()[i][1]) 
 					||  (humanX == backend.getEnemyPosition()[i][0] && humanYAdd1 == backend.getEnemyPosition()[i][1])
 					||  (humanXAdd1 == backend.getEnemyPosition()[i][0] && humanYSub1 == backend.getEnemyPosition()[i][1])
 					||  (humanXAdd1 == backend.getEnemyPosition()[i][0] && humanY == backend.getEnemyPosition()[i][1])
-					|| 	(humanXAdd1 == backend.getEnemyPosition()[i][0] && humanYAdd1 == backend.getEnemyPosition()[i][1])
-					||  (humanXSub1 == backend.getEnemyPosition()[i][0] && humanYSub2 == backend.getEnemyPosition()[i][1])
-					||  (humanXAdd1 == backend.getEnemyPosition()[i][0] && humanYSub2 == backend.getEnemyPosition()[i][1])
-					||	(humanXAdd2 == backend.getEnemyPosition()[i][0] && humanYSub1 == backend.getEnemyPosition()[i][1])
-					||  (humanXAdd2 == backend.getEnemyPosition()[i][0] && humanYAdd1 == backend.getEnemyPosition()[i][1])
-					||  (humanXAdd1 == backend.getEnemyPosition()[i][0] && humanYAdd2 == backend.getEnemyPosition()[i][1])
-					||  (humanXSub1 == backend.getEnemyPosition()[i][0] && humanYAdd2 == backend.getEnemyPosition()[i][1])
-					||  (humanXSub2 == backend.getEnemyPosition()[i][0] && humanYAdd1 == backend.getEnemyPosition()[i][1])
-					||  (humanXSub2 == backend.getEnemyPosition()[i][0] && humanYSub1 == backend.getEnemyPosition()[i][1]))
+					|| 	(humanXAdd1 == backend.getEnemyPosition()[i][0] && humanYAdd1 == backend.getEnemyPosition()[i][1]))
 				{
 					holder[i][0] = backend.getEnemyPosition()[i][0];
 					holder[i][1] = backend.getEnemyPosition()[i][1];					
 				}
 				
+				// int[] humanXNums2 = {-2,-2,-2,2,2,2};
+				// int[] humanYNums2 = {-1,0,1,-1,0,1};
 			}
 			else
 			{
 				if (humanX+1 < backend.getMap().length && humanX-1 > 0 && humanY-1 > 0 && humanY+1 < backend.getMap()[0].length)
 				{
-					// checks 8 cardinal directions
+					// checks 8 directions
 					if ((humanXSub1 == backend.getEnemyPosition()[i][0] && humanYSub1 == backend.getEnemyPosition()[i][1])
 							||  (humanXSub1 == backend.getEnemyPosition()[i][0] && humanY == backend.getEnemyPosition()[i][1])
 							||  (humanXSub1 == backend.getEnemyPosition()[i][0] && humanYAdd1 == backend.getEnemyPosition()[i][1])

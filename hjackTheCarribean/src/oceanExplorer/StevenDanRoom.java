@@ -8,7 +8,7 @@ public class StevenDanRoom extends CaveRoom {
 	private boolean visited;
 	
 	public StevenDanRoom() {
-		super("You are being attacked by rouge pirates! Prepare to fight or flee with your life. (Surrender with a directional key or press f to fight!)");
+		super("You are being attacked by rogue pirates! Prepare to fight or flee with your life. (Surrender with a directional key or press f to fight!)");
 		visited=false;
 	}
 
