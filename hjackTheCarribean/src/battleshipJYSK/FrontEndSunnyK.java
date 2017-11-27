@@ -448,15 +448,22 @@ public class FrontEndSunnyK implements JustinSupporter {
 		int[] dirEquate = {-1, 1, 1, -1};
 		//NESW 0123
 		
+		if(coord1 < 0 || coord1 > playerPlots.length || coord2 < 0 || coord2 > playerPlots.length)
+		{
+			System.out.println("That is not a valid coordinate");
+			return false;
+		}
 		//check if has ship
 		if(!commanderPlots[coord1][coord2].isShipOccupied())
 		{
 			if(direction == 0 || direction == 2)
 			{
+				checkTorpedoOutOfBounds(coord1, direction);
 				return !commanderPlots[coord1 + dirEquate[direction]][coord2].isShipOccupied();
 			}
 			if(direction == 1 || direction == 3)
 			{
+				checkTorpedoOutOfBounds(coord2, direction);
 				return !commanderPlots[coord1][coord2 + dirEquate[direction]].isShipOccupied();
 			}
 			return false;
@@ -464,6 +471,14 @@ public class FrontEndSunnyK implements JustinSupporter {
 		return false;
 	}
 	
+	public void checkTorpedoOutOfBounds(int coord, int direction)
+	{
+		int[] dirEquate = {-1, 1, 1, -1};
+		if(coord + dirEquate[direction] < 0 || coord + dirEquate[direction] > playerPlots.length )
+		{	
+			System.out.println("That is not a valid coordinate");
+		}
+	}
 	
 	public boolean isGameOver()
 	{
