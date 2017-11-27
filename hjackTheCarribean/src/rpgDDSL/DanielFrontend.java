@@ -20,39 +20,21 @@ public class DanielFrontend implements StevenSupport{
 	
 	public void intro()
 	{	
-		if (!viewed)
-		{
-			System.out.println("You've encountered rogue pirates! Do your best to defeat them all.\n Enter 'i' for instructions, or get into the action by entering 'p.'");
-		}
-		else
-		{
-			System.out.println("\nEnter 'p' to play the game, or reread the instructions by entering 'i'.");
-		}
-		String input = CaveExplorer.in.nextLine();
-	
-			if (input.equals("p"))
-			{
-				play();
-			}
-			else
-			{
-				if (input.equals("i"))
-				{
-					System.out.println("Your goal is to beat up all the pirates that invaded your ship.\n"
-							+ "You are represented by 'H' while enemies are represented by 'E.'\nYour field of view is locked because of all the fog around you, represented by X."
-							+ "\nLocate the pirates and then engage in battle with them by inputting the enemy number once you can attack them."
-							+ "\nDepending on your speed, you can move a certain amount of times. Pay attention to your stats!");
-					viewed = true;
-					intro();
-				}
-				else
-				{
-					intro();
-				}
-			}
+		System.out.println("You've encountered rogue pirates! Do your best to defeat them all.\n");
+		System.out.println("Your goal is to beat up all the pirates that invaded your ship.\n"
+				+ "You are represented by 'H' while enemies are represented by 'E.'\nYour field of view is locked because of all the fog around you, represented by X."
+				+ "\nLocate the pirates and then engage in battle with them by inputting the enemy number once you can attack them."
+				+ "\nDepending on your speed, you can move a certain amount of times. Pay attention to your stats!");
+
+		viewed = true;
+			play();
 	}
 	public void play() 
 	{
+		if (!viewed)
+		{
+			intro();
+		}
 		backend.setFrontend(this);
 		updateMap();
 		enemyCount();
@@ -477,7 +459,7 @@ public class DanielFrontend implements StevenSupport{
 	{
 		if (a.getHp() >= 0)
 		System.out.println("You currently have "+
-			a.getHp()+ " HP out of 30.\nYour attack is "+a.getAttack()+ " points.\n"+"Your speed is "+a.getSpeed()+" points."	
+			a.getHp()+"\nYour attack is "+a.getAttack()+ " points.\n"+"Your speed is "+a.getSpeed()+" points."	
 				);
 	}
 	public void displayEnemyStats()
