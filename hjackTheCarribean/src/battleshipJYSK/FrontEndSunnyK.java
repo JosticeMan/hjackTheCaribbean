@@ -15,6 +15,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 	private String userName; //User name of the player
 	private boolean isWinner;
 	private Ship[][] ships;
+	private boolean hasUsedTorpedo;
 	
 	private JustinSunnyPlot[][] playerPlots;
     private JustinSunnyPlot[][] commanderPlots;
@@ -90,6 +91,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 	{
 		CaveExplorer.pause(500);
 		displayBoard(playerPlots);
+		usedTorpedo(false);
 		playing = true;
 		askCoordsForShips();
 		backend.commanderPlaceShip(ships[commanderLevel - 1]);
@@ -328,6 +330,17 @@ public class FrontEndSunnyK implements JustinSupporter {
 		}
 		else 
 		{
+			if(!hasUsedTorpedo)
+			{
+				System.out.println("You have 1 torpedo, would you like to use one?");
+				String input = CaveExplorer.in.nextLine();
+				if(input.equalsIgnoreCase("yes"))
+				{
+					askCoordsTorpedo();	
+					return;
+				}
+			}
+			
 			System.out.println("Shipmate: Where would you like to fire?");
 			coords = backend.getCoordInput();
 			if(coords.length == 0) 
@@ -388,10 +401,31 @@ public class FrontEndSunnyK implements JustinSupporter {
 			askCoordsToFire();
 	}
 	
-	public void torpedo()
+	public void usedTorpedo(boolean used)
 	{
-		int[] coords = backend.getCoordInput();
-		int direction = backend.interpretDirectionInput();
+		hasUsedTorpedo = used;
+	}
+	
+	public void askCoordsTorpedo()
+	{
+		System.out.println("Where would you like to fire your torpedo?");
+		int[] coords =  backend.getCoordInput();
+		if(coords.length == 0) 
+		{
+			return;
+		}
+		else
+		{
+			System.out.println("Where would you like the torpedo to direct to? Enter 'N','E','S','W'");
+			int dir = backend.interpretDirectionInput();
+			
+			usedTorpedo(true);
+			torpedo(coords, dir);
+		}
+	}
+	
+	public void torpedo(int[] coords, int direction)
+	{
 		int[] dirEquate = {-1, 1, 1, -1};
 		
 		while(!tryTorpedoPlacement(coords[0], coords[1], direction))
@@ -400,17 +434,16 @@ public class FrontEndSunnyK implements JustinSupporter {
 			direction = backend.interpretDirectionInput();
 		}
 		
-		playerPlots[coords[0]][coords[1]].setHasBeenHit(true);
+		commanderPlots[coords[0]][coords[1]].setHasBeenHit(true);
 		if(direction == 0 || direction == 2)
 		{
-			playerPlots[coords[0] + dirEquate[direction]][coords[1]].setHasBeenHit(true);
+			commanderPlots[coords[0] + dirEquate[direction]][coords[1]].setHasBeenHit(true);
 		}
 		if(direction == 1 || direction == 3)
 		{
-			playerPlots[coords[0]][coords[1] + dirEquate[direction]].setHasBeenHit(true);
+			commanderPlots[coords[0]][coords[1] + dirEquate[direction]].setHasBeenHit(true);
 		}
-
-		
+		usedTorpedo(true);
 	}
 	public boolean tryTorpedoPlacement(int coord1, int coord2, int direction)
 	{
@@ -418,15 +451,15 @@ public class FrontEndSunnyK implements JustinSupporter {
 		//NESW 0123
 		
 		//check if has ship
-		if(!playerPlots[coord1][coord2].isShipOccupied())
+		if(!commanderPlots[coord1][coord2].isShipOccupied())
 		{
 			if(direction == 0 || direction == 2)
 			{
-				return !playerPlots[coord1 + dirEquate[direction]][coord2].isShipOccupied();
+				return !commanderPlots[coord1 + dirEquate[direction]][coord2].isShipOccupied();
 			}
 			if(direction == 1 || direction == 3)
 			{
-				return !playerPlots[coord1][coord2 + dirEquate[direction]].isShipOccupied();
+				return !commanderPlots[coord1][coord2 + dirEquate[direction]].isShipOccupied();
 			}
 		}
 		return false;
