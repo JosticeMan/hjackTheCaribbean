@@ -96,7 +96,7 @@ public class AndrewRoom extends CaveRoom {
 		if(distanceFromCenter <= 0) {
 			//user loses
 			setDescription("Shipmate: CAP'N! NOT THE LOCKER!");
-			CaveExplorer.printEnd();
+			CaveExplorer.printGameOver();
 			CaveExplorer.setPlaying(false);
 			
 		}
