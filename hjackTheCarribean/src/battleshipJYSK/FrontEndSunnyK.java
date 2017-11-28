@@ -91,10 +91,12 @@ public class FrontEndSunnyK implements JustinSupporter {
 		displayBoard(playerPlots);
 		usedTorpedo(false);
 		askCoordsForShips();
-		//playing = true;
+		if(isWinner) {
+			return;
+		}
+		playing = true;
 		backend.commanderPlaceShip(ships[commanderLevel - 1]);
 		determineFirstTurn();
-		playing = true;
 		if(!playing) {
 		}
 		else if(isPlayerTurn) 
@@ -418,15 +420,12 @@ public class FrontEndSunnyK implements JustinSupporter {
 		{
 			System.out.println("Where would you like the torpedo to direct to? Enter 'N','E','S','W'");
 			direction = backend.interpretDirectionInput();
-			if(!tryTorpedoPlacement(coords, direction))
+			while(!tryTorpedoPlacement(coords, direction))
 			{
 				System.out.println("That torpedo placement is invalid, please try again.");
-				askCoordsTorpedo();
+				coords =  backend.getCoordInput();
 			}
-			else
-			{
-				torpedo(coords, direction);
-			}
+			torpedo(coords, direction);
 		}
 	}
 	
