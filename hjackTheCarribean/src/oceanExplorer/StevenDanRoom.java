@@ -51,7 +51,7 @@ public class StevenDanRoom extends CaveRoom {
 			return "E";
 		}
 		else {
-			return " ";
+			return super.getContents();
 		}
 	}
 	
