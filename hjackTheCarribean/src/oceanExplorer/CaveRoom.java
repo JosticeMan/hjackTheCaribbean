@@ -293,6 +293,15 @@ public class CaveRoom {
 		
 		CaveRoom aRoom = new AndrewRoom();
 		c[0][4] = aRoom;
+		CaveRoom kRoom = new KevinRoom("There is nothing there.");
+		c[1][5] = kRoom;
+		closeAllDoorsAtCoordinate(1,5,c);
+		c[1][5].setConnection(SOUTH, c[2][5], new Door());
+		c[1][5].setConnection(WEST, c[1][4], new Door());
+		c[1][5].setConnection(NORTH, c[0][5], new Door());
+	
+		
+
 	}
 	
 	/*
@@ -378,6 +387,12 @@ public class CaveRoom {
 		c[0][4].setConnection(WEST,c[0][3],new Door());
 		c[0][4].setConnection(EAST,c[0][5],new Door());
 		c[0][4].setConnection(SOUTH,c[1][4],new Door());
+		CaveRoom kRoom = new KevinRoom("There is nothing there.");
+		c[2][0] = kRoom;
+		closeAllDoorsAtCoordinate(2,0,c);
+		c[2][0].setConnection(SOUTH, c[3][0], new Door());
+		c[2][0].setConnection(EAST, c[2][1], new Door());
+		c[2][0].setConnection(NORTH, c[1][0], new Door());
 	}
 
 	/*

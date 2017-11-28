@@ -1,38 +1,34 @@
 package oceanExplorer;
 
 public class KevinRoom extends CaveRoom {
-
+	int nTimes;
+	int cTimes;
 	public KevinRoom(String description) {
 		super(description);
-	}
-	public String validKeys() {
-		return "f";
+		nTimes = genRanNum();
+		cTimes = 0;
 	}
 	
-	public void printAllowedEntry() {
-		System.out.println("You can only enter f to interact!");
-	}
-	public void performAction(int direction) {
-		if(direction ==1) {
-			if((int)(Math.random()*2)+1 ==1 ){
-				CaveExplorer.currentRoom = CaveExplorer.caves[0][1];
-				CaveExplorer.currentRoom.enter();
-			}
-			else if((int)(Math.random()+1)*4 ==2 ){
-				CaveExplorer.currentRoom = CaveExplorer.caves[2][1];
-				CaveExplorer.currentRoom.enter();
-			}
-		}
 
+	public void interpretInput(String input) {
+		if(cTimes < nTimes) {
+		cTimes++;
+
+		}else {
+			super.interpretInput(input);
+		}
+		
+		System.out.println(cTimes);
+		System.out.println(nTimes);
 	} 
 	public String getContents() {
 		return "K";
 	}
 	public String getDescription() {
-		return super.getDescription() + "\n In this room, You can only pressed f!";
+		return "Shipmate: Oh no! There is no wind Captain, We need to wait for the wind to come! Continue to press the desire direction to move.";
 		
 	}
 	public int genRanNum() {
-		return (int)(Math.random()*6);
+		return (int)((Math.random()+1)*3);
 	}
 }
