@@ -44,7 +44,7 @@ public class KevinFrontend implements AndrewSupport {
 	}
 	
 	public static String getInput() {
-		return inputSource.nextLine();
+		return CaveExplorer.in.nextLine();
 	}
 	
 	public KevinFrontend() {
