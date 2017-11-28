@@ -299,9 +299,6 @@ public class CaveRoom {
 		c[1][5].setConnection(SOUTH, c[2][5], new Door());
 		c[1][5].setConnection(WEST, c[1][4], new Door());
 		c[1][5].setConnection(NORTH, c[0][5], new Door());
-	
-		
-
 	}
 	
 	/*
@@ -482,6 +479,8 @@ public class CaveRoom {
 		
 		CaveRoom aRoom = new AndrewRoom();
 		c[2][4] = aRoom;
+		c[2][4].setConnection(EAST,c[2][5],new Door());
+		c[2][4].setConnection(WEST,c[2][3],new Door());
 	}
 	
 	public static void openAllDoors() {
