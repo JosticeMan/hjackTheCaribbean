@@ -424,6 +424,8 @@ public class FrontEndSunnyK implements JustinSupporter {
 			{
 				System.out.println("That torpedo placement is invalid, please try again.");
 				coords =  backend.getCoordInput();
+				System.out.println("Where would you like the torpedo to direct to? Enter 'N','E','S','W'");
+				direction = backend.interpretDirectionInput();
 			}
 			torpedo(coords, direction);
 		}
@@ -495,7 +497,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 	public boolean isTorpedoOutOfBounds(int coord, int direction)
 	{
 		int[] dirEquate = {-1, 1, 1, -1};
-		return (coord + dirEquate[direction] < 0 || coord + dirEquate[direction] > playerPlots.length);
+		return (coord + dirEquate[direction] < 0 || coord + dirEquate[direction] >= playerPlots.length);
 	}
 	
 	public boolean isGameOver()
