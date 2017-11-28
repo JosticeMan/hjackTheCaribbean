@@ -47,6 +47,7 @@ public class StevenRoom extends CaveRoom {
 				}
 				if(stat==0) {
 					make=false;
+					CaveExplorer.print("Congratulations on your new ship! Your adventure begins now. Step foward into the vast ocean.");
 					CaveExplorer.inventory.setBeginningShip(new Ship(hp,atk,spd));
 					visited=true;
 					CaveExplorer.currentRoom.leave();
@@ -63,7 +64,7 @@ public class StevenRoom extends CaveRoom {
 	
 	public String getDescription() {
 		if(CaveExplorer.inventory.getBeginningShip()==null) {
-			return "You have found materials to build your ship. How would you like to customize it?";
+			return "Would you like to customize your ship now? (Press yes to continue or any other input to keep exploring the previous area)";
 		}
 		return super.getDescription();
 

@@ -9,12 +9,11 @@ public class Inventory {
 	private Ship beginningShip;
 
 	private int kItems;
-	private Ship[] ships;
+	private Ship[][] ships;
 
 
 	//
 	
-
 	
 	private int lastDirection;
 
@@ -31,7 +30,9 @@ public class Inventory {
 	public Inventory() {
 		updateMap();
 		desc = "";
-		Ship[] t = {new Ship(10,100,40), new Ship(20, 100, 40), new Ship(30,40,40)};
+		Ship[][] t = {{new Ship(20,100,40), new Ship(20, 100, 40), new Ship(30,40,40)}, 
+					  {new Ship(20,100,40), new Ship(20, 100, 40), new Ship(30,40,40), new Ship(30, 40, 40)}, 
+					  {new Ship(20,100,40), new Ship(20, 100, 40), new Ship(30,40,40), new Ship(30, 40, 40), new Ship(20, 100, 40)}};
 		ships = t;
 		int[] bossTemp = {1,1,1};
 		bossPowerUps = bossTemp;
@@ -56,7 +57,7 @@ public class Inventory {
 
 	public void updateMap() {
 		if(JustinFogRoom.isOccupied() && !JustinFogRoom.isClear()) {
-			map = "Your map is rendered useless by the dense fog that has surrounded your ship. \n";
+			map = "\n \n \n \n \nYour map is rendered useless by the dense fog that has surrounded your ship. \n";
 		}
 		else {
 			map = " ";
@@ -105,7 +106,7 @@ public class Inventory {
 		this.beginningShip = beginningShip;
 	}
 
-	public Ship[] getShip() {
+	public Ship[][] getShip() {
 		return ships;
 	}
 

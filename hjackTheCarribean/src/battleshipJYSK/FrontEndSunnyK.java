@@ -14,8 +14,8 @@ public class FrontEndSunnyK implements JustinSupporter {
 	private boolean isPlayerTurn; //This tracks whose turn it is
 	private String userName; //User name of the player
 	private boolean isWinner;
-	private Ship[] ships;
-	
+	private Ship[][] ships;
+	private boolean hasUsedTorpedo;
 	private JustinSunnyPlot[][] playerPlots;
     private JustinSunnyPlot[][] commanderPlots;
     private String[][] quotes;
@@ -23,8 +23,7 @@ public class FrontEndSunnyK implements JustinSupporter {
     private String[][] quotes1;
 
     /*
-	public static final void main(String[] args)
-	{
+	public static final void main(String[] args){
 		FrontEndSunnyK test = new FrontEndSunnyK();
 		test.play(1, "Sunny", "Commander");
 	}
@@ -90,9 +89,13 @@ public class FrontEndSunnyK implements JustinSupporter {
 	{
 		CaveExplorer.pause(500);
 		displayBoard(playerPlots);
+		usedTorpedo(false);
 		askCoordsForShips();
+		if(isWinner) {
+			return;
+		}
 		playing = true;
-		backend.commanderPlaceShip(ships);
+		backend.commanderPlaceShip(ships[commanderLevel - 1]);
 		determineFirstTurn();
 		if(!playing) {
 		}
@@ -121,7 +124,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 		}
 		else 
 		{
-												CaveExplorer.pause(500);
+			CaveExplorer.pause(500);
 			commanderMakesMove();
 			if(isGameOver())
 			{
@@ -129,7 +132,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 			}
 			else 
 			{
-												CaveExplorer.pause(500);
+				CaveExplorer.pause(500);
 				updateBothMaps();
 				rotateTurns();
 			}
@@ -162,7 +165,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 			}
 			else 
 			{
-													CaveExplorer.pause(500);
+				CaveExplorer.pause(500);
 				commanderMakesMove();
 				if(isGameOver())
 				{
@@ -170,7 +173,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 				}
 				else 
 				{
-													CaveExplorer.pause(500);
+					CaveExplorer.pause(500);
 					updateBothMaps();
 					rotateTurns();
 				}
@@ -182,13 +185,13 @@ public class FrontEndSunnyK implements JustinSupporter {
 	{
 		while(playing)
 		{
-										CaveExplorer.pause(500);
+			CaveExplorer.pause(500);
 			askCoordsToFire();
 			if(!playing) 
 			{
 				return;
 			}
-										CaveExplorer.pause(500);
+			CaveExplorer.pause(500);
 			updateBothMaps();
 			if(isGameOver())
 			{
@@ -196,13 +199,13 @@ public class FrontEndSunnyK implements JustinSupporter {
 			}
 			else 
 			{
-										CaveExplorer.pause(500);
+				CaveExplorer.pause(500);
 				commanderMakesMove();
 				if(isGameOver())
 				{
 					playing = false;
 				}
-										CaveExplorer.pause(500);
+				CaveExplorer.pause(500);
 				updateBothMaps();
 			}
 		}
@@ -273,7 +276,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 	{	
 		for(int i = 0; i < backend.numberOfShips(); i++)
 		{
-			int lengthOfCurrentShip = backend.lengthOfShip(ships[i]);
+			int lengthOfCurrentShip = backend.lengthOfShip(ships[commanderLevel - 1][i]);
 			
 			System.out.println("Shipmate: Where would you like to position ship #"+(i+1)+" of length " + lengthOfCurrentShip +"?");
 			int[] coords =  backend.getCoordInput();
@@ -326,31 +329,30 @@ public class FrontEndSunnyK implements JustinSupporter {
 			coords = backend.randomShipHit();
 			backend.hit(coords[0], coords[1], backend.getCommanderPlots());
 		}
-		else {
+		else 
+		{
+			if(!hasUsedTorpedo)
+			{
+				System.out.println("You have 1 torpedo, would you like to use one?");
+				String input = CaveExplorer.in.nextLine();
+				if(input.equalsIgnoreCase("yes"))
+				{
+					askCoordsTorpedo();	
+					return;
+				}
+			}
+			
 			System.out.println("Shipmate: Where would you like to fire?");
 			coords = backend.getCoordInput();
-			if(coords.length == 0) {
+			if(coords.length == 0) 
+			{
 				return;
 			}
 			if(coords[0] < 0 && coords[1] < 0) 
 			{
 				int type = coords[0] * -1;
-				if(backend.hasPowerUp(type)) 
-				{
-					backend.decrementPowerUp(type);
-					backend.processPowerUp(type);
-					usedPowerup = true;
-					if(backend.isCommanderSkip()) 
-					{
-						askCoordsToFire();
-					}
-				}
-				else 
-				{
-					System.out.println("Shipmate: You do not have any more of that power up!");
-					askCoordsToFire();
-					return;
-				}
+				usedPowerup = checkAndUsePowerup(type);
+				return;
 			}
 			else 
 			{
@@ -377,6 +379,126 @@ public class FrontEndSunnyK implements JustinSupporter {
 		}
 	}
 	
+	public boolean checkAndUsePowerup(int type)
+	{
+		if(backend.hasPowerUp(type)) 
+		{
+			backend.decrementPowerUp(type);
+			backend.processPowerUp(type);
+			checkStormcaller();
+			return true;
+		}
+		else 
+		{
+			System.out.println("Shipmate: You do not have any more of that power up!");
+			askCoordsToFire();
+			return false;
+		}
+	}
+	
+	public void checkStormcaller()
+	{
+		if(backend.isCommanderSkip())
+			askCoordsToFire();
+	}
+	
+	public void usedTorpedo(boolean used)
+	{
+		hasUsedTorpedo = used;
+	}
+	
+	public void askCoordsTorpedo()
+	{
+		System.out.println("Where would you like to fire your torpedo?");
+		int[] coords =  backend.getCoordInput();
+		int direction = -1;
+		if(coords.length == 0) 
+		{
+			return;
+		}
+		else
+		{
+			System.out.println("Where would you like the torpedo to direct to? Enter 'N','E','S','W'");
+			direction = backend.interpretDirectionInput();
+			while(!tryTorpedoPlacement(coords, direction))
+			{
+				System.out.println("That torpedo placement is invalid, please try again.");
+				coords =  backend.getCoordInput();
+			}
+			torpedo(coords, direction);
+		}
+	}
+	
+	//DOES NOT CHECK TORPEDO COORDS, JUST USES IT
+	public void torpedo(int[] coords, int direction)
+	{
+		int[] dirEquate = {-1, 1, 1, -1};
+		
+		commanderPlots[coords[0]][coords[1]].setHasBeenHit(true);
+		if(direction == 0 || direction == 2)
+		{
+			commanderPlots[coords[0] + dirEquate[direction]][coords[1]].setHasBeenHit(true);
+		}
+		if(direction == 1 || direction == 3)
+		{
+			commanderPlots[coords[0]][coords[1] + dirEquate[direction]].setHasBeenHit(true);
+		}
+		usedTorpedo(true);
+	}
+	
+	public boolean tryTorpedoPlacement(int[] coords, int direction)
+	{
+		int[] dirEquate = {-1, 1, 1, -1};
+		//NESW 0123
+		
+		//CHECK IF INITIAL COORD IS OUT OF BOUNDS
+		if(coords[0] < 0 || coords[0] > playerPlots.length || coords[1] < 0 || coords[1] > playerPlots.length)
+		{
+			System.out.println("1");
+			return false;
+		}
+		
+		//CHECK DIRECTION IS OUT OF BOUNDS
+		if(direction == 0 || direction == 2)
+		{
+			if(isTorpedoOutOfBounds(coords[0], direction))
+			{
+				System.out.println("2");
+				return false;
+			}
+		}	
+		if(direction == 1 || direction == 3)
+		{
+			if(isTorpedoOutOfBounds(coords[1], direction))
+			{
+				System.out.println("2");
+				return false;
+			}
+		}
+		
+		//CHECK IF HAS BEEN HIT
+		if(!commanderPlots[coords[0]][coords[1]].isHasBeenHit())
+		{
+			if(direction == 0 || direction == 2)
+			{
+				System.out.println("3");
+				return !(commanderPlots[coords[0] + dirEquate[direction]][coords[1]].isHasBeenHit()); 
+			}
+			if(direction == 1 || direction == 3)
+			{
+				System.out.println("3");
+				return !(commanderPlots[coords[0]][coords[1] + dirEquate[direction]].isHasBeenHit()); 
+			}
+		}
+		return true;
+	}
+	
+	public boolean isTorpedoOutOfBounds(int coord, int direction)
+	{
+		int[] dirEquate = {-1, 1, 1, -1};
+		return (coord + dirEquate[direction] < 0 || coord + dirEquate[direction] > playerPlots.length);
+	}
+	
 	public boolean isGameOver()
 	{
 		if(backend.isThereWinner())
@@ -388,7 +510,7 @@ public class FrontEndSunnyK implements JustinSupporter {
 	}
 	
 	
-	 // This method flips a coin that determines who makes the first move 
+	 // This method flips a coin that determines who makes the first move
 	public void determineFirstTurn() {
 		if(Math.random() < .50) {
 			isPlayerTurn = true;

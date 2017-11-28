@@ -360,12 +360,9 @@ public class StevenBackend implements DanSupport {
 	public void movement() {
 		int times=ship.getSpeed();
 		String input;
-		front.updateMap();
-		System.out.println("You can move "+times+" more times.");
 		input = CaveExplorer.in.nextLine();
 		if(input.equals("cheat")) {
 			front.setWon(true);
-			front.play();
 		}else {
 			while(times>0) {
 				while (!isValid(input) || !checkWalls(input, getHuman()))
@@ -390,14 +387,15 @@ public class StevenBackend implements DanSupport {
 				}else {
 					int count=0;
 					for(int i=0;i<front.getCoords().length;i++) {
-						for(int[] a:enemyPosition) {
-							if(a[0]==front.getCoords()[i][0]&&a[1]==front.getCoords()[i][1]) {
-								if(enemyValue[i][0]>0) {
+						for(int j = 0; j < enemyPosition.length; j++) {
+							if(enemyPosition[j][0]==front.getCoords()[i][0]&&enemyPosition[j][1]==front.getCoords()[i][1]) {
+								if(enemyValue[j][0]>0) {
 									count++;
 								}
 							}
 						}
 					}
+					front.updateMap();
 					if(count>0) {
 						System.out.println("You may now attack");
 						humanAttack();
@@ -406,7 +404,6 @@ public class StevenBackend implements DanSupport {
 						System.out.println("There is no one to attack. It is now the enemies turn");
 					}
 				}
-				front.updateMap();
 			}
 			enemyAction(false);
 			front.updateMap();
