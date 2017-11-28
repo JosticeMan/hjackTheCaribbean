@@ -337,6 +337,7 @@ public class CaveRoom {
 		closeAllDoorsAtCoordinate(3,1,c);
 		c[3][1].setConnection(EAST,c[3][2],new Door());
 		c[3][1].setConnection(WEST,c[3][0],new Door());
+		c[3][1].setConnection(SOUTH,c[4][1],new Door());
 		c[1][4]=StevenDanRoom3;
 		closeAllDoorsAtCoordinate(1,4,c);
 		c[1][4].setConnection(NORTH,c[0][4],new Door());
@@ -373,6 +374,10 @@ public class CaveRoom {
 		
 		CaveRoom aRoom = new AndrewRoom();
 		c[0][4] = aRoom;
+		closeAllDoorsAtCoordinate(0,4,c);
+		c[0][4].setConnection(WEST,c[0][3],new Door());
+		c[0][4].setConnection(EAST,c[0][5],new Door());
+		c[0][4].setConnection(SOUTH,c[1][4],new Door());
 	}
 
 	/*
@@ -413,7 +418,7 @@ public class CaveRoom {
 		c[3][3].setConnection(SOUTH, c[4][3], new Door());
 		c[4][5]=StevenDanRoom3;
 		closeAllDoorsAtCoordinate(4,5,c);
-		c[4][5].setConnection(WEST, c[4][5], new Door());
+		c[4][5].setConnection(WEST, c[4][4], new Door());
 		c[4][5].setConnection(SOUTH, c[5][5], new Door());
 		
 		CaveRoom jRoom = new JustinBossRoom("Captain Duran: You've entered the territory of a commander! The commander is coming soon. Prepare to play a game of battleship or run!", level);
@@ -456,7 +461,9 @@ public class CaveRoom {
 		
 		CaveRoom lRoom = new AndrewKevinRoom();
 		c[1][4] = lRoom;
+		closeAllDoorsAtCoordinate(1,4,c);
 		c[1][4].setConnection(NORTH,c[0][4],new Door());
+		c[1][4].setConnection(SOUTH,c[2][4],new Door());
 		
 		CaveRoom aRoom = new AndrewRoom();
 		c[2][4] = aRoom;

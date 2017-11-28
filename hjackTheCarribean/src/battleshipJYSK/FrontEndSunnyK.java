@@ -92,6 +92,9 @@ public class FrontEndSunnyK implements JustinSupporter {
 		displayBoard(playerPlots);
 		usedTorpedo(false);
 		askCoordsForShips();
+		if(isWinner) {
+			return;
+		}
 		playing = true;
 		backend.commanderPlaceShip(ships[commanderLevel - 1]);
 		determineFirstTurn();
