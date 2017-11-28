@@ -57,7 +57,7 @@ public class Inventory {
 
 	public void updateMap() {
 		if(JustinFogRoom.isOccupied() && !JustinFogRoom.isClear()) {
-			map = "Your map is rendered useless by the dense fog that has surrounded your ship. \n";
+			map = "\n \n \n \n \n Your map is rendered useless by the dense fog that has surrounded your ship. \n";
 		}
 		else {
 			map = " ";
