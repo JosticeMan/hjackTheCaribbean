@@ -60,6 +60,7 @@ public class JustinFogRoom extends CaveRoom {
 			isClear = true;
 		}
 		inRoom = true;
+		CaveExplorer.inventory.updateMap();
 	}
 	
 	public String getDescription() {

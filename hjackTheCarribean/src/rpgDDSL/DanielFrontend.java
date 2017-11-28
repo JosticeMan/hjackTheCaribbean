@@ -52,6 +52,7 @@ public class DanielFrontend implements StevenSupport{
 		if(won) {
 			System.out.println("You won!");
 		}
+		CaveExplorer.inventory.updateMap();
 			
 	}
 	public boolean isWon() {
