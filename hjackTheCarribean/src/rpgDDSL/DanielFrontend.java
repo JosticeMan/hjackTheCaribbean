@@ -26,14 +26,13 @@ public class DanielFrontend implements StevenSupport{
 				+ "\nLocate the pirates and then engage in battle with them by inputting the enemy number once you can attack them."
 				+ "\nDepending on your speed, you can move a certain amount of times. Pay attention to your stats!");
 
-		viewed = true;
-			play();
 	}
 	public void play() 
 	{
 		if (!viewed)
 		{
 			intro();
+			viewed = true;
 		}
 		backend.setFrontend(this);
 		updateMap();
@@ -46,7 +45,9 @@ public class DanielFrontend implements StevenSupport{
 				System.out.println("You lost...");
 				System.exit(0);
 			}
-			backend.movement();	
+			if(!won) {
+				backend.movement();
+			}
 		}
 		if(won) {
 			System.out.println("You won!");

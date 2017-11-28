@@ -398,7 +398,6 @@ public class StevenBackend implements DanSupport {
 					front.updateMap();
 					if(count>0) {
 						System.out.println("You may now attack");
-						
 						humanAttack();
 					}
 					else {
