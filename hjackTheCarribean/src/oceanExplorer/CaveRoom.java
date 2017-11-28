@@ -320,10 +320,33 @@ public class CaveRoom {
 	*/
 	public static void setUpLevel2(int level) {
 		CaveRoom[][] c = CaveExplorer.caves;
-		
+		CaveRoom StevenDanRoom1 = new StevenDanRoom();
+		CaveRoom StevenDanRoom2= new StevenDanRoom();
+		CaveRoom StevenDanRoom3 = new StevenDanRoom();
+		CaveRoom StevenDanRoom4 = new StevenDanRoom();
+		CaveRoom StevenDanRoom5 = new StevenDanRoom();
 		CaveRoom jRoom = new JustinBossRoom("Captain Duran: You've entered the territory of a commander! The commander is coming soon. Prepare to play a game of battleship or run!", level);
 		c[2][5] = jRoom;
 		c[2][5].setConnection(WEST, c[2][4], new Door());
+		c[1][1]=StevenDanRoom1;
+		closeAllDoorsAtCoordinate(1,1,c);
+		c[1][1].setConnection(NORTH,c[0][1],new Door());
+		c[1][1].setConnection(EAST,c[1][2],new Door());
+		c[1][1].setConnection(WEST,c[1][0],new Door());
+		c[3][1]=StevenDanRoom2;
+		closeAllDoorsAtCoordinate(3,1,c);
+		c[3][1].setConnection(EAST,c[3][2],new Door());
+		c[3][1].setConnection(WEST,c[3][0],new Door());
+		c[1][4]=StevenDanRoom3;
+		closeAllDoorsAtCoordinate(1,4,c);
+		c[1][4].setConnection(NORTH,c[0][4],new Door());
+		c[1][4].setConnection(SOUTH,c[2][4],new Door());
+		c[2][3]=StevenDanRoom4;
+		closeAllDoorsAtCoordinate(2,3,c);
+		c[2][3].setConnection(EAST,c[2][4],new Door());
+		c[2][3].setConnection(WEST,c[2][2],new Door());
+		c[2][3].setConnection(SOUTH,c[3][3],new Door());
+		
 		
 		CaveRoom fRoom = new JustinFogRoom("This area is populated by dense fog. You can barely see.", 1);
 		c[3][2] = fRoom;
@@ -376,7 +399,23 @@ public class CaveRoom {
 	 */
 	public static void setUpLevel3(int level) {
 		CaveRoom[][] c = CaveExplorer.caves;
-
+		
+		CaveRoom StevenDanRoom1 = new StevenDanRoom();
+		CaveRoom StevenDanRoom2= new StevenDanRoom();
+		CaveRoom StevenDanRoom3 = new StevenDanRoom();
+		c[3][1]=StevenDanRoom1;
+		closeAllDoorsAtCoordinate(3,1,c);
+		c[3][1].setConnection(NORTH, c[2][1], new Door());
+		c[3][1].setConnection(SOUTH, c[4][1], new Door());
+		c[3][3]=StevenDanRoom2;
+		closeAllDoorsAtCoordinate(3,3,c);
+		c[3][3].setConnection(NORTH, c[2][3], new Door());
+		c[3][3].setConnection(SOUTH, c[4][3], new Door());
+		c[4][5]=StevenDanRoom3;
+		closeAllDoorsAtCoordinate(4,5,c);
+		c[4][5].setConnection(WEST, c[4][5], new Door());
+		c[4][5].setConnection(SOUTH, c[5][5], new Door());
+		
 		CaveRoom jRoom = new JustinBossRoom("Captain Duran: You've entered the territory of a commander! The commander is coming soon. Prepare to play a game of battleship or run!", level);
 		c[5][5] = jRoom;
 		closeAllDoorsAtCoordinate(5,5,c);
