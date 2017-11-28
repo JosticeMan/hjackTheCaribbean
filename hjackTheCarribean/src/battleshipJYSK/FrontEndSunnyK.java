@@ -23,8 +23,7 @@ public class FrontEndSunnyK implements JustinSupporter {
     private String[][] quotes1;
 
     /*
-	public static final void main(String[] args)
-	{
+	public static final void main(String[] args){
 		FrontEndSunnyK test = new FrontEndSunnyK();
 		test.play(1, "Sunny", "Commander");
 	}
@@ -92,12 +91,10 @@ public class FrontEndSunnyK implements JustinSupporter {
 		displayBoard(playerPlots);
 		usedTorpedo(false);
 		askCoordsForShips();
-		if(isWinner) {
-			return;
-		}
-		playing = true;
+		//playing = true;
 		backend.commanderPlaceShip(ships[commanderLevel - 1]);
 		determineFirstTurn();
+		playing = true;
 		if(!playing) {
 		}
 		else if(isPlayerTurn) 
@@ -421,19 +418,22 @@ public class FrontEndSunnyK implements JustinSupporter {
 		{
 			System.out.println("Where would you like the torpedo to direct to? Enter 'N','E','S','W'");
 			direction = backend.interpretDirectionInput();
-			torpedo(coords, direction);
+			if(!tryTorpedoPlacement(coords, direction))
+			{
+				System.out.println("That torpedo placement is invalid, please try again.");
+				askCoordsTorpedo();
+			}
+			else
+			{
+				torpedo(coords, direction);
+			}
 		}
 	}
 	
+	//DOES NOT CHECK TORPEDO COORDS, JUST USES IT
 	public void torpedo(int[] coords, int direction)
 	{
 		int[] dirEquate = {-1, 1, 1, -1};
-		
-		while(!tryTorpedoPlacement(coords[0], coords[1], direction))
-		{
-			coords = backend.getCoordInput();
-			direction = backend.interpretDirectionInput();
-		}
 		
 		commanderPlots[coords[0]][coords[1]].setHasBeenHit(true);
 		if(direction == 0 || direction == 2)
@@ -446,41 +446,58 @@ public class FrontEndSunnyK implements JustinSupporter {
 		}
 		usedTorpedo(true);
 	}
-	public boolean tryTorpedoPlacement(int coord1, int coord2, int direction)
+	
+	public boolean tryTorpedoPlacement(int[] coords, int direction)
 	{
 		int[] dirEquate = {-1, 1, 1, -1};
 		//NESW 0123
 		
-		if(coord1 < 0 || coord1 > playerPlots.length || coord2 < 0 || coord2 > playerPlots.length)
+		//CHECK IF INITIAL COORD IS OUT OF BOUNDS
+		if(coords[0] < 0 || coords[0] > playerPlots.length || coords[1] < 0 || coords[1] > playerPlots.length)
 		{
-			System.out.println("That is not a valid coordinate");
+			System.out.println("1");
 			return false;
 		}
-		//check if has a ship
-		if(!commanderPlots[coord1][coord2].isShipOccupied())
+		
+		//CHECK DIRECTION IS OUT OF BOUNDS
+		if(direction == 0 || direction == 2)
+		{
+			if(isTorpedoOutOfBounds(coords[0], direction))
+			{
+				System.out.println("2");
+				return false;
+			}
+		}	
+		if(direction == 1 || direction == 3)
+		{
+			if(isTorpedoOutOfBounds(coords[1], direction))
+			{
+				System.out.println("2");
+				return false;
+			}
+		}
+		
+		//CHECK IF HAS BEEN HIT
+		if(!commanderPlots[coords[0]][coords[1]].isHasBeenHit())
 		{
 			if(direction == 0 || direction == 2)
 			{
-				checkTorpedoOutOfBounds(coord1, direction);
-				return !commanderPlots[coord1 + dirEquate[direction]][coord2].isShipOccupied();
+				System.out.println("3");
+				return !(commanderPlots[coords[0] + dirEquate[direction]][coords[1]].isHasBeenHit()); 
 			}
 			if(direction == 1 || direction == 3)
 			{
-				checkTorpedoOutOfBounds(coord2, direction);
-				return !commanderPlots[coord1][coord2 + dirEquate[direction]].isShipOccupied();
+				System.out.println("3");
+				return !(commanderPlots[coords[0]][coords[1] + dirEquate[direction]].isHasBeenHit()); 
 			}
-			return false;
 		}
-		return false;
+		return true;
 	}
 	
-	public void checkTorpedoOutOfBounds(int coord, int direction)
+	public boolean isTorpedoOutOfBounds(int coord, int direction)
 	{
 		int[] dirEquate = {-1, 1, 1, -1};
-		if(coord + dirEquate[direction] < 0 || coord + dirEquate[direction] > playerPlots.length )
-		{	
-			System.out.println("That is not a valid coordinate");
-		}
+		return (coord + dirEquate[direction] < 0 || coord + dirEquate[direction] > playerPlots.length);
 	}
 	
 	public boolean isGameOver()
