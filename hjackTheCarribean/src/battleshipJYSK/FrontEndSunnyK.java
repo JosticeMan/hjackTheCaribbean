@@ -454,7 +454,6 @@ public class FrontEndSunnyK implements JustinSupporter {
 		//CHECK IF INITIAL COORD IS OUT OF BOUNDS
 		if(coords[0] < 0 || coords[0] > playerPlots.length || coords[1] < 0 || coords[1] > playerPlots.length)
 		{
-			System.out.println("1");
 			return false;
 		}
 		
@@ -463,7 +462,6 @@ public class FrontEndSunnyK implements JustinSupporter {
 		{
 			if(isTorpedoOutOfBounds(coords[0], direction))
 			{
-				System.out.println("2");
 				return false;
 			}
 		}	
@@ -471,24 +469,25 @@ public class FrontEndSunnyK implements JustinSupporter {
 		{
 			if(isTorpedoOutOfBounds(coords[1], direction))
 			{
-				System.out.println("2");
 				return false;
 			}
 		}
 		
-		//CHECK IF HAS BEEN HIT
+		//CHECK IF HAS BEEN HIT 
 		if(!commanderPlots[coords[0]][coords[1]].isHasBeenHit())
 		{
 			if(direction == 0 || direction == 2)
 			{
-				System.out.println("3");
 				return !(commanderPlots[coords[0] + dirEquate[direction]][coords[1]].isHasBeenHit()); 
 			}
 			if(direction == 1 || direction == 3)
 			{
-				System.out.println("3");
 				return !(commanderPlots[coords[0]][coords[1] + dirEquate[direction]].isHasBeenHit()); 
 			}
+		}
+		else
+		{
+			return false;
 		}
 		return true;
 	}
@@ -509,7 +508,6 @@ public class FrontEndSunnyK implements JustinSupporter {
 		return false;
 	}
 	
-	
 	 // This method flips a coin that determines who makes the first move
 	public void determineFirstTurn() {
 		if(Math.random() < .50) {
@@ -529,5 +527,4 @@ public class FrontEndSunnyK implements JustinSupporter {
 	public int getCommanderLevel() {
 		return this.commanderLevel;
 	}
-	
 }
